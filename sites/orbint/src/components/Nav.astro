@@ -1,16 +1,17 @@
 ---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const navLinks = [
-  { label: 'Mission', href: '/#mission' },
-  { label: 'Careers', href: '/#careers' },
-  { label: 'News', href: '/news' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Mission', href: `${b}/#mission` },
+  { label: 'Careers', href: `${b}/#careers` },
+  { label: 'News', href: `${b}/news` },
+  { label: 'Contact', href: `${b}/#contact` },
 ];
 ---
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/" class="nav-logo" aria-label="Orbint home">
-      <img src="/images/logo-white.png" alt="Orbint" height="32" />
+    <a href={`${b}/`} class="nav-logo" aria-label="Orbint home">
+      <img src={`${b}/images/logo-white.png`} alt="Orbint" height="32" />
     </a>
     <ul class="nav-links">
       {navLinks.map(link => (

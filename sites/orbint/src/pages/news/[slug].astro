@@ -14,6 +14,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const formatted = entry.data.date.toLocaleDateString('en-GB', {
   day: 'numeric',
@@ -27,12 +28,12 @@ const formatted = entry.data.date.toLocaleDateString('en-GB', {
 
   <main class="main">
     <div class="container">
-      <a href="/news" class="back-link">← All news</a>
+      <a href={`${b}/news`} class="back-link">← All news</a>
 
       <article class="article">
         {entry.data.image && (
           <div class="article-image">
-            <img src={entry.data.image} alt="" />
+            <img src={`${b}${entry.data.image}`} alt="" />
             {entry.data.imageCredit && (
               <p class="image-credit">{entry.data.imageCredit}</p>
             )}

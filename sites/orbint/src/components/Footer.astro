@@ -1,15 +1,16 @@
 ---
 const year = new Date().getFullYear();
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <footer class="footer">
   <div class="footer-inner">
-    <a href="/" class="footer-logo" aria-label="Orbint home">
-      <img src="/images/logo-white.png" alt="Orbint" height="28" />
+    <a href={`${b}/`} class="footer-logo" aria-label="Orbint home">
+      <img src={`${b}/images/logo-white.png`} alt="Orbint" height="28" />
     </a>
     <nav class="footer-nav" aria-label="Legal">
-      <a href="/impressum">Impressum</a>
-      <a href="/privacy">Privacy Policy</a>
+      <a href={`${b}/impressum`}>Impressum</a>
+      <a href={`${b}/privacy`}>Privacy Policy</a>
     </nav>
     <p class="footer-copy">© {year} Orbint GmbH</p>
   </div>
