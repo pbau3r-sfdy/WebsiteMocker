@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Terms & Conditions" description="Terms and conditions for Starflight Dynamics GmbH.">
+  <Nav />
+  <main class="main">
+    <div class="container">
+      <h1>Terms &amp; Conditions</h1>
+      <p class="subtitle">Starflight Dynamics GmbH</p>
+
+      <section>
+        <p>
+          Our terms and conditions are currently being updated. Please check back soon.
+        </p>
+        <p>
+          For any questions in the meantime, please contact us at
+          <a href="mailto:mission-control@starflight-dynamics.com">mission-control@starflight-dynamics.com</a>
+        </p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .main { padding-top: 8rem; padding-bottom: 6rem; min-height: 80vh; }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; margin-bottom: .5rem;
+  }
+  .subtitle { color: var(--text-muted); margin-bottom: 3rem; }
+  section { margin-bottom: 2.5rem; }
+  p { color: var(--text-muted); line-height: 1.75; margin-bottom: .75rem; }
+  a { color: var(--accent); }
+  a:hover { opacity: .75; }
+</style>

@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Careers"
+  description="Join the SFDY crew — help us build the industries of the future in space."
+>
+  <Nav />
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content container">
+      <h1 class="hero-headline">JOIN THE SFDY CREW!</h1>
+    </div>
+  </section>
+
+  <!-- ── Hi at SFDY ────────────────────────────────────────── -->
+  <section class="content-section">
+    <div class="container content-block">
+      <div class="section-label">HI AT SFDY</div>
+      <p class="section-body">
+        We're in the business of breaking barriers and exploring new frontiers in space. We're looking
+        for people who are ready to challenge the norms and contribute to our journey of innovation
+        and discovery. If you're passionate about space and want to make a real difference in an
+        exciting industry, this is your opportunity!
+      </p>
+    </div>
+  </section>
+
+  <!-- ── More Than a Company ───────────────────────────────── -->
+  <section class="content-section alt-bg">
+    <div class="container content-block">
+      <div class="section-label">MORE THAN A COMPANY</div>
+      <p class="section-body">
+        STARFLIGHT DYNAMICS is a community of dreamers, thinkers and doers. We are a team united by
+        a common goal: to build the industries of the future in space. Every project — from testing
+        materials to operating orbital facilities — represents progress toward innovation and
+        sustainability.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Get On Board ──────────────────────────────────────── -->
+  <section class="content-section">
+    <div class="container content-block">
+      <div class="section-label">GET ON BOARD</div>
+      <p class="section-body">
+        Ready to be part of something extraordinary? We'd love to hear from you.
+      </p>
+      <a href="mailto:join-the-crew@starflight-dynamics.com" class="cta-link">
+        join-the-crew@starflight-dynamics.com
+      </a>
+    </div>
+  </section>
+
+  <!-- ── From Munich to the Stars ─────────────────────────── -->
+  <section class="content-section alt-bg">
+    <div class="container content-block">
+      <div class="section-label">FROM MUNICH TO THE STARS</div>
+      <p class="section-body">
+        Our Munich headquarters sits in the heart of Space Valley, surrounded by Alpine scenery and
+        world-class engineering expertise.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Open Positions ────────────────────────────────────── -->
+  <section class="content-section">
+    <div class="container content-block">
+      <div class="section-label">OPEN POSITIONS</div>
+      <p class="section-body">
+        A complete list of our current vacancies will be available here soon. Proactive applications
+        are always welcome — reach out to
+        <a href="mailto:join-the-crew@starflight-dynamics.com" class="inline-link">join-the-crew@starflight-dynamics.com</a>
+      </p>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('/images/careers-hero.jpg');
+    background-size: cover;
+    background-position: center 30%;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(7,8,15,0.5) 0%, rgba(7,8,15,0.8) 70%, var(--bg) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    padding-top: 10rem; padding-bottom: 5rem;
+  }
+  .hero-headline {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: .04em; text-transform: uppercase;
+    color: var(--text);
+    max-width: 20ch;
+  }
+
+  /* ── Content sections ── */
+  .content-section { padding: 5rem 0; }
+  .alt-bg { background: var(--bg-card); }
+  .content-block { max-width: 760px; }
+  .section-label {
+    font-family: var(--font-head);
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+  }
+  .section-body {
+    font-size: 1.125rem; color: var(--text-muted);
+    line-height: 1.8; max-width: 64ch;
+  }
+  .cta-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: var(--font-head);
+    font-size: 1.125rem; font-weight: 600;
+    color: var(--accent);
+    transition: opacity .2s;
+  }
+  .cta-link:hover { opacity: .75; }
+  .inline-link { color: var(--accent); transition: opacity .2s; }
+  .inline-link:hover { opacity: .75; }
+</style>

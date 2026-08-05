@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Imprint" description="Legal notice for Levion Materials.">
+  <Nav />
+  <main class="main">
+    <div class="container">
+      <h1>Imprint</h1>
+      <p class="subtitle">Legal notice</p>
+
+      <section>
+        <h2>Service Provider</h2>
+        <p>
+          Levion Materials<br />
+          (operated by Starflight Dynamics UAB)<br />
+          Gyneju str. 4-333<br />
+          01110 Vilnius, Lithuania
+        </p>
+      </section>
+
+      <section>
+        <h2>Legal Representative</h2>
+        <p>Dr. Philipp Bauer</p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          E-Mail: <a href="mailto:lab@levion-materials.com">lab@levion-materials.com</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>Register Entry</h2>
+        <p>
+          Levion Materials is operated under Starflight Dynamics UAB, registered in the Republic of Lithuania. Formal register details will be published once the dedicated legal entity is established.
+        </p>
+      </section>
+
+      <section>
+        <h2>Disclaimer</h2>
+        <p>
+          The content of this website has been compiled with the utmost care. However, we cannot guarantee the accuracy, completeness, or topicality of the content. As a service provider, we are responsible for our own content on these pages in accordance with general law. We are not obligated to monitor transmitted or stored third-party information.
+        </p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .main { padding-top: 8rem; padding-bottom: 6rem; min-height: 80vh; }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 {
+    font-family: var(--font-head);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; margin-bottom: .5rem;
+  }
+  .subtitle { color: var(--text-muted); margin-bottom: 3rem; }
+  section { margin-bottom: 2.5rem; }
+  h2 {
+    font-family: var(--font-head);
+    font-size: 1.125rem; font-weight: 600; color: var(--accent);
+    margin-bottom: .75rem; padding-bottom: .5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  p { color: var(--text-muted); line-height: 1.75; margin-bottom: .75rem; }
+  a { color: var(--accent); }
+  a:hover { opacity: .75; }
+</style>

@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Investors"
+  description="Connect with Starflight Dynamics — orbital propulsion systems for the next generation of space missions."
+>
+  <Nav />
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content container">
+      <h1 class="hero-headline">INVESTORS</h1>
+    </div>
+  </section>
+
+  <!-- ── Pitch Deck / Contact ──────────────────────────────── -->
+  <section class="content-section">
+    <div class="container content-block">
+      <div class="section-label">GET IN TOUCH</div>
+      <p class="section-body">
+        For any in-depth information and our pitch deck, please do not hesitate to reach out. We are
+        always happy to connect with investors who share our vision for the future of space.
+      </p>
+      <a href="mailto:invest.in@starflight-dynamics.com" class="cta-link">
+        invest.in@starflight-dynamics.com
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ────────────────────────────────────────── -->
+  <section class="newsletter-section">
+    <div class="container newsletter-inner">
+      <div class="newsletter-left">
+        <p class="newsletter-eyebrow">#SFDY-UPDATES</p>
+        <h2 class="newsletter-heading">Stay in the loop.</h2>
+        <p class="newsletter-sub">Subscribe to our newsletter for mission updates, company news, and insights from the frontier.</p>
+      </div>
+      <div class="newsletter-right">
+        <form class="newsletter-form" action="https://formspree.io/f/placeholder" method="POST">
+          <input type="email" name="email" placeholder="your@email.com" required />
+          <button type="submit">SIGN UP</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('/images/investors-hero.jpg');
+    background-size: cover;
+    background-position: center 40%;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(7,8,15,0.45) 0%, rgba(7,8,15,0.8) 70%, var(--bg) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    padding-top: 10rem; padding-bottom: 5rem;
+  }
+  .hero-headline {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800; line-height: 1.0;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--text);
+  }
+
+  /* ── Content ── */
+  .content-section { padding: 6rem 0; }
+  .content-block { max-width: 760px; }
+  .section-label {
+    font-family: var(--font-head);
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+  }
+  .section-body {
+    font-size: 1.125rem; color: var(--text-muted);
+    line-height: 1.8; max-width: 64ch;
+    margin-bottom: .5rem;
+  }
+  .cta-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: var(--font-head);
+    font-size: 1.125rem; font-weight: 600;
+    color: var(--accent);
+    transition: opacity .2s;
+  }
+  .cta-link:hover { opacity: .75; }
+
+  /* ── Newsletter ── */
+  .newsletter-section {
+    background: #ffffff;
+    padding: 5rem 0;
+  }
+  .newsletter-inner {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .newsletter-left { flex: 1; min-width: 260px; }
+  .newsletter-right { flex: 1; min-width: 260px; }
+  .newsletter-eyebrow {
+    font-family: var(--font-head);
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: #384AD3; margin-bottom: .75rem;
+  }
+  .newsletter-heading {
+    font-family: var(--font-head);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 800; color: #0a0a0a;
+    margin-bottom: .75rem; line-height: 1.1;
+  }
+  .newsletter-sub {
+    font-size: 1.0625rem; color: #555;
+    line-height: 1.7;
+  }
+  .newsletter-form { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .newsletter-form input {
+    flex: 1; min-width: 200px;
+    padding: .8125rem 1.25rem;
+    border: 1px solid #ccc; border-radius: var(--radius);
+    font-size: 1rem; color: #0a0a0a;
+    outline: none;
+  }
+  .newsletter-form input:focus { border-color: #384AD3; }
+  .newsletter-form button {
+    padding: .8125rem 1.75rem;
+    background: #384AD3; color: #fff;
+    border: none; border-radius: var(--radius);
+    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
+    letter-spacing: .04em; cursor: pointer;
+    transition: opacity .2s;
+    white-space: nowrap;
+  }
+  .newsletter-form button:hover { opacity: .85; }
+</style>

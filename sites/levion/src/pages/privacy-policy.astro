@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy Policy" description="Privacy policy for Levion Materials — how we handle your personal data.">
+  <Nav />
+  <main class="main">
+    <div class="container">
+      <h1>Privacy Policy</h1>
+      <p class="subtitle">Last updated: August 2026</p>
+
+      <section>
+        <h2>1. Controller</h2>
+        <p>
+          Levion Materials (operated by Starflight Dynamics UAB)<br />
+          Gyneju str. 4-333, 01110 Vilnius, Lithuania<br />
+          E-Mail: <a href="mailto:lab@levion-materials.com">lab@levion-materials.com</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Data We Collect</h2>
+        <p>When you use our website or contact us, we may collect the following personal data:</p>
+        <ul>
+          <li>Name and email address (when you submit a contact form or newsletter signup)</li>
+          <li>Message content you provide via our contact form</li>
+          <li>Technical data automatically collected during your visit (IP address, browser type, pages visited, time of visit)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. Purpose and Legal Basis</h2>
+        <p>We process your personal data for the following purposes:</p>
+        <ul>
+          <li><strong>Contact requests:</strong> To respond to your inquiry — legal basis: Article 6(1)(b) GDPR (performance of a contract or pre-contractual measures) or Article 6(1)(f) GDPR (legitimate interests).</li>
+          <li><strong>Newsletter:</strong> To send you updates about Levion Materials — legal basis: Article 6(1)(a) GDPR (your consent). You may withdraw consent at any time by contacting us.</li>
+          <li><strong>Website operation:</strong> To ensure technical functionality and security — legal basis: Article 6(1)(f) GDPR (legitimate interests).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Data Retention</h2>
+        <p>
+          We retain personal data only as long as necessary for the purposes described above, or as required by applicable law. Contact form submissions are retained for up to 24 months unless you request earlier deletion.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Third-Party Services</h2>
+        <p>
+          Our contact and newsletter forms are processed via Formspree (formspree.io). By submitting a form, your data is transferred to Formspree's servers. Please review Formspree's privacy policy at https://formspree.io/legal/privacy-policy.
+        </p>
+        <p>
+          This website is hosted on GitHub Pages. GitHub may collect technical access data. Please review GitHub's privacy policy at https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Your Rights</h2>
+        <p>Under the GDPR, you have the following rights regarding your personal data:</p>
+        <ul>
+          <li>Right of access (Article 15 GDPR)</li>
+          <li>Right to rectification (Article 16 GDPR)</li>
+          <li>Right to erasure (Article 17 GDPR)</li>
+          <li>Right to restriction of processing (Article 18 GDPR)</li>
+          <li>Right to data portability (Article 20 GDPR)</li>
+          <li>Right to object (Article 21 GDPR)</li>
+          <li>Right to withdraw consent at any time without affecting the lawfulness of processing before withdrawal</li>
+        </ul>
+        <p>
+          To exercise any of these rights, please contact us at <a href="mailto:lab@levion-materials.com">lab@levion-materials.com</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Right to Lodge a Complaint</h2>
+        <p>
+          You have the right to lodge a complaint with a supervisory authority. The competent supervisory authority in Lithuania is the State Data Protection Inspectorate (Valstybinė duomenų apsaugos inspekcija), A. Juozapavičiaus g. 6, 09310 Vilnius, Lithuania.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Changes to This Policy</h2>
+        <p>
+          We may update this privacy policy from time to time. The current version is always available at this URL. We encourage you to review it periodically.
+        </p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .main { padding-top: 8rem; padding-bottom: 6rem; min-height: 80vh; }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 {
+    font-family: var(--font-head);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; margin-bottom: .5rem;
+  }
+  .subtitle { color: var(--text-muted); margin-bottom: 3rem; }
+  section { margin-bottom: 2.5rem; }
+  h2 {
+    font-family: var(--font-head);
+    font-size: 1.125rem; font-weight: 600; color: var(--accent);
+    margin-bottom: .75rem; padding-bottom: .5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  p { color: var(--text-muted); line-height: 1.75; margin-bottom: .75rem; }
+  ul {
+    color: var(--text-muted); line-height: 1.75;
+    padding-left: 1.5rem; margin-bottom: .75rem;
+  }
+  li { margin-bottom: .35rem; }
+  a { color: var(--accent); }
+  a:hover { opacity: .75; }
+  strong { color: var(--text); }
+</style>

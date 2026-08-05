@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const members = [
+  {
+    name:  'Dr. Philipp Bauer',
+    role:  'Founder & CEO',
+    photo: '/images/team/team-philipp.png',
+  },
+  {
+    name:  'Dr. Tina Sorgenfrei',
+    role:  'Chief Material Scientist',
+    photo: '/images/team/team-tina.png',
+  },
+  {
+    name:  'Jonas Radtke',
+    role:  'VP Operations',
+    photo: '/images/team/team-jonas.png',
+  },
+  {
+    name:  'Dmitrii Tarabashchuk',
+    role:  'System Analysis Engineer',
+    photo: '/images/team/team-dmitrii.png',
+  },
+  {
+    name:  'Charlotte Frey',
+    role:  'Team Assistant & HR',
+    photo: '/images/team/team-charlotte.png',
+  },
+];
+---
+
+<Layout title="Team" description="Meet the Levion Materials team — experts in space manufacturing, crystal growth, and orbital systems.">
+  <Nav />
+
+  <main class="main">
+    <div class="container">
+      <header class="page-header">
+        <p class="section-label">THE TEAM</p>
+        <h1 class="page-title">The Team</h1>
+        <p class="page-sub">Experts on Earth and in Space</p>
+      </header>
+
+      <div class="team-grid">
+        {members.map(m => (
+          <article class="team-card">
+            <div class="team-photo-wrap">
+              <img src={m.photo} alt={m.name} class="team-photo" />
+            </div>
+            <div class="team-info">
+              <h2 class="team-name">{m.name}</h2>
+              <p class="team-role">{m.role}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .main { padding-top: 7rem; padding-bottom: 6rem; min-height: 70vh; }
+  .page-header { margin-bottom: 4rem; }
+  .section-label {
+    font-family: var(--font-head);
+    font-size: .6875rem; font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .75rem;
+  }
+  .page-title {
+    font-family: var(--font-head);
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    font-weight: 700; line-height: 1.1;
+    margin-bottom: .5rem;
+  }
+  .page-sub { font-size: 1.125rem; color: var(--text-muted); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2rem;
+  }
+  .team-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 2);
+    overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .team-card:hover {
+    border-color: var(--accent-dim);
+    transform: translateY(-3px);
+  }
+  .team-photo-wrap {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .team-photo {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    transition: transform .3s;
+  }
+  .team-card:hover .team-photo { transform: scale(1.04); }
+  .team-info { padding: 1.25rem 1.5rem; }
+  .team-name {
+    font-family: var(--font-head); font-size: 1rem; font-weight: 600;
+    margin-bottom: .25rem;
+  }
+  .team-role { font-size: .875rem; color: var(--accent); }
+</style>

@@ -1,0 +1,23 @@
+{
+  "site":    "sfdy",
+  "updated": "2026-08-06",
+  "brand": {
+    "names":   ["Starflight Dynamics"],
+    "handles": { "twitter": null, "instagram": null, "linkedin": null },
+    "avoid":   []
+  },
+  "primary":   [],
+  "secondary": [],
+  "hashtags": {
+    "twitter":   [],
+    "linkedin":  [],
+    "instagram": []
+  },
+  "seo": {
+    "meta_description": "Starflight Dynamics — placeholder tagline. Update via /wm-update-hero.",
+    "keywords":         []
+  },
+  "people":    [],
+  "partners":  [],
+  "locations": []
+}
