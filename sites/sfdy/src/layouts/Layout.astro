@@ -25,14 +25,18 @@ const siteName = 'Starflight Dynamics';
   <meta property="og:type"        content="website" />
   {image && <meta property="og:image" content={image} />}
 
-  <!-- Google Fonts: DM Sans — closest free equivalent to Avenir LT (used on live Wix site) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
-
   <title>{title} — {siteName}</title>
 
   <style is:global>
+    /* ── Fonts ──────────────────────────────────────────────── */
+    @font-face {
+      font-family: 'Avenir Next';
+      src: url('/fonts/avenir-next-bold.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     /* ── Design tokens ──────────────────────────────────────── */
     :root {
       --bg:          #07080f;
@@ -45,8 +49,10 @@ const siteName = 'Starflight Dynamics';
       --accent-dark: #29e088;
       --accent-dim:  rgba(61,255,160,0.12);
       --radius:      8px;
-      --font-head:   'DM Sans', system-ui, sans-serif;
-      --font-body:   'DM Sans', system-ui, sans-serif;
+      /* Headings: self-hosted Avenir Next Bold */
+      --font-head:   'Avenir Next', 'Avenir', 'DM Sans', system-ui, sans-serif;
+      /* Body: system Avenir on Apple; DM Sans on Windows/Android */
+      --font-body:   'Avenir Next', 'Avenir', 'DM Sans', system-ui, sans-serif;
     }
 
     /* ── Reset ──────────────────────────────────────────────── */
