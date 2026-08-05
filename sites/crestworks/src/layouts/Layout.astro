@@ -5,9 +5,9 @@ export interface Props {
   image?:      string;
 }
 
-const { title, description = 'Starflight Dynamics — placeholder tagline. Update via /wm-update-hero.', image } = Astro.props;
+const { title, description = 'Crestworks — Boutique consulting specialized in new & future technologies.', image } = Astro.props;
 const canonicalURL = Astro.url;
-const siteName = 'Starflight Dynamics';
+const siteName = 'Crestworks';
 ---
 
 <!doctype html>
@@ -25,28 +25,28 @@ const siteName = 'Starflight Dynamics';
   <meta property="og:type"        content="website" />
   {image && <meta property="og:image" content={image} />}
 
-  <!-- Google Fonts: DM Sans — closest free equivalent to Avenir LT (used on live Wix site) -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <title>{title} — {siteName}</title>
 
   <style is:global>
     /* ── Design tokens ──────────────────────────────────────── */
     :root {
-      --bg:          #07080f;
-      --bg-card:     #0d0f1c;
-      --bg-nav:      rgba(7,8,15,0.85);
-      --border:      #1a1f35;
-      --text:        #e8ecff;
-      --text-muted:  #6b7496;
-      --accent:      #3dffa0;
-      --accent-dark: #29e088;
-      --accent-dim:  rgba(61,255,160,0.12);
-      --radius:      8px;
-      --font-head:   'DM Sans', system-ui, sans-serif;
-      --font-body:   'DM Sans', system-ui, sans-serif;
+      --bg:          #0a0c10;
+      --bg-card:     #111318;
+      --bg-nav:      rgba(10,12,16,0.90);
+      --border:      #1e2230;
+      --text:        #f0f2fa;
+      --text-muted:  #7a8099;
+      --accent:      #f5a623;
+      --accent-dark: #e09410;
+      --accent-dim:  rgba(245,166,35,0.12);
+      --radius:      4px;
+      --font-head:   'Space Grotesk', system-ui, sans-serif;
+      --font-body:   'Inter', system-ui, sans-serif;
     }
 
     /* ── Reset ──────────────────────────────────────────────── */
