@@ -16,16 +16,27 @@ const sitesDir = join(root, 'sites');
 const distDir  = join(root, 'dist');
 const only     = process.argv[2] || null; // optional: build one site
 
-function run(cmd, cwd) {
+// Add node_modules/.bin to PATH so `astro` resolves even when called directly
+const env = {
+  ...process.env,
+  PATH: `${join(root, 'node_modules', '.bin')}:${process.env.PATH}`,
+};
+
+function run(cmd, cwd, extraEnv = {}) {
   console.log(`\n▶ ${cmd}  [${cwd}]`);
-  execSync(cmd, { stdio: 'inherit', cwd });
+  execSync(cmd, {
+    stdio: 'inherit',
+    cwd,
+    env: { ...env, ...extraEnv },
+  });
 }
 
 // ── 1. Dashboard ──────────────────────────────────────────────
 console.log('\n═══════════════════════════════════');
 console.log(' Building dashboard…');
 console.log('═══════════════════════════════════');
-run('astro build', root);
+// Use npm run script so npm adds node_modules/.bin to PATH automatically
+run('npm run build:dashboard', root);
 
 // ── 2. Sites ──────────────────────────────────────────────────
 const sites = existsSync(sitesDir)
@@ -44,11 +55,13 @@ for (const site of sites) {
   console.log(` Building site: ${site}…`);
   console.log('═══════════════════════════════════');
 
-  // Install if needed (CI or fresh clone)
-  if (!existsSync(join(siteDir, 'node_modules'))) {
-    run('npm install', siteDir);
-  }
-  run('npm run build', siteDir);
+  // In workspace setup, node_modules are hoisted to root.
+  // Pass root bin path so astro resolves correctly in site builds.
+  const siteBin = join(siteDir, 'node_modules', '.bin');
+  const siteEnv = {
+    PATH: `${siteBin}:${join(root, 'node_modules', '.bin')}:${process.env.PATH}`,
+  };
+  run('npm run build', siteDir, siteEnv);
 
   // Copy site dist → root dist/site-name/
   mkdirSync(outDir, { recursive: true });
