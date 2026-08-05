@@ -1,18 +1,17 @@
 ---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const navLinks = [
-  { label: 'Investors', href: '/investors' },
-  { label: 'Careers',   href: '/careers' },
-  { label: 'News',      href: '/news' },
+  { label: 'Investors', href: `${b}/investors` },
+  { label: 'Careers',   href: `${b}/careers` },
+  { label: 'News',      href: `${b}/news` },
 ];
-
-const logoSrc = '/images/logo-white.png';
 const logoAlt = 'Starflight Dynamics';
 ---
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/" class="nav-logo" aria-label=`${logoAlt} home`>
-      <img src={logoSrc} alt={logoAlt} height="32" />
+    <a href={`${b}/`} class="nav-logo" aria-label=`${logoAlt} home`>
+      <img src={`${b}/images/logo-white.png`} alt={logoAlt} height="32" />
     </a>
     <ul class="nav-links">
       {navLinks.map(link => (

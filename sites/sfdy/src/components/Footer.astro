@@ -1,4 +1,5 @@
 ---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const year = new Date().getFullYear();
 ---
 
@@ -7,17 +8,17 @@ const year = new Date().getFullYear();
     <div class="footer-inner">
       <!-- Brand -->
       <div class="footer-brand">
-        <a href="/" class="footer-logo-link">
-          <img src="/images/logo-white.png" alt="Starflight Dynamics" class="footer-logo" />
+        <a href={`${b}/`} class="footer-logo-link">
+          <img src={`${b}/images/logo-white.png`} alt="Starflight Dynamics" class="footer-logo" />
         </a>
         <p class="footer-tagline">Orbital propulsion for the next generation of space missions.</p>
       </div>
 
       <!-- Nav -->
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="/">Home</a>
-        <a href="/privacy-policy">Privacy Policy</a>
-        <a href="/imprint">Imprint</a>
+        <a href={`${b}/`}>Home</a>
+        <a href={`${b}/privacy-policy`}>Privacy Policy</a>
+        <a href={`${b}/imprint`}>Imprint</a>
       </nav>
 
       <!-- Socials -->
