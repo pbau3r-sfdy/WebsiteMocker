@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { getCollection } from 'astro:content';
+
+const allNews = await getCollection('news');
+const sorted = allNews.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Layout title="News" description="Latest news and updates from Orbint GmbH.">
+  <Nav />
+
+  <main class="main">
+    <div class="container">
+      <header class="page-header">
+        <p class="page-label">News & Updates</p>
+        <h1 class="page-title">What we're up to</h1>
+      </header>
+      <div class="news-grid">
+        {sorted.map(post => (
+          <NewsCard
+            title={post.data.title}
+            date={post.data.date}
+            summary={post.data.summary}
+            slug={post.slug}
+            image={post.data.image}
+          />
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .main {
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    min-height: 80vh;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .page-header {
+    margin-bottom: 3rem;
+  }
+
+  .page-label {
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .news-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 580px) {
+    .news-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Impressum" description="Impressum der Orbint GmbH gemäß § 5 TMG.">
+  <Nav />
+
+  <main class="main">
+    <div class="container">
+      <h1>Impressum</h1>
+      <p class="subtitle">Angaben gemäß § 5 TMG</p>
+
+      <section>
+        <h2>Unternehmensangaben</h2>
+        <p>
+          Orbint GmbH<br />
+          Lilienthalstraße 9<br />
+          85579 Neubiberg<br />
+          Deutschland
+        </p>
+      </section>
+
+      <section>
+        <h2>Kontakt</h2>
+        <p>E-Mail: <a href="mailto:info@orbint.de">info@orbint.de</a></p>
+      </section>
+
+      <section>
+        <h2>Vertreten durch</h2>
+        <p>Geschäftsführer: Alexander Eckert, Simon Heine, Daniel Weinzierl, Winfried Stock</p>
+      </section>
+
+      <section>
+        <h2>Handelsregister</h2>
+        <p>
+          Registergericht: Amtsgericht München<br />
+          Registernummer: (wird nach Eintragung ergänzt)
+        </p>
+      </section>
+
+      <section>
+        <h2>Umsatzsteuer-ID</h2>
+        <p>
+          Umsatzsteuer-Identifikationsnummer gemäß §27a Umsatzsteuergesetz:<br />
+          (wird nach Zuteilung ergänzt)
+        </p>
+      </section>
+
+      <section>
+        <h2>Haftungsausschluss</h2>
+        <h3>Haftung für Inhalte</h3>
+        <p>
+          Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit,
+          Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+          Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten
+          nach den allgemeinen Gesetzen verantwortlich.
+        </p>
+        <h3>Haftung für Links</h3>
+        <p>
+          Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen
+          Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen.
+          Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der
+          Seiten verantwortlich.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .main {
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    min-height: 80vh;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    font-size: 0.9375rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 1rem 0 0.4rem;
+  }
+
+  p {
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 0.75rem;
+  }
+
+  a {
+    color: var(--accent);
+  }
+
+  a:hover {
+    color: var(--text);
+  }
+</style>

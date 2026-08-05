@@ -1,0 +1,186 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('news');
+  return entries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const formatted = entry.data.date.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<Layout title={entry.data.title} description={entry.data.summary}>
+  <Nav />
+
+  <main class="main">
+    <div class="container">
+      <a href="/news" class="back-link">← All news</a>
+
+      <article class="article">
+        {entry.data.image && (
+          <div class="article-image">
+            <img src={entry.data.image} alt="" />
+            {entry.data.imageCredit && (
+              <p class="image-credit">{entry.data.imageCredit}</p>
+            )}
+          </div>
+        )}
+
+        <header class="article-header">
+          <time class="article-date" datetime={entry.data.date.toISOString()}>
+            {formatted}
+          </time>
+          <h1 class="article-title">{entry.data.title}</h1>
+          <p class="article-summary">{entry.data.summary}</p>
+        </header>
+
+        <div class="article-body">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .main {
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    min-height: 80vh;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .article-image {
+    margin-bottom: 2.5rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .article-image img {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+  }
+
+  .image-credit {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 0.5rem 0;
+    text-align: right;
+  }
+
+  .article-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .article-date {
+    display: block;
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .article-title {
+    font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .article-summary {
+    font-size: 1.0625rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* markdown body */
+  .article-body :global(p) {
+    margin-bottom: 1.25rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .article-body :global(h2) {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 2.5rem 0 1rem;
+  }
+
+  .article-body :global(h3) {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 2rem 0 0.75rem;
+  }
+
+  .article-body :global(ul),
+  .article-body :global(ol) {
+    margin: 1rem 0 1.25rem 1.5rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .article-body :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .article-body :global(em) {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .article-body :global(strong) {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .article-body :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s;
+  }
+
+  .article-body :global(a:hover) {
+    text-decoration-color: var(--accent);
+  }
+</style>

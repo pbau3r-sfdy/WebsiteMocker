@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy Policy" description="Privacy policy of Orbint GmbH.">
+  <Nav />
+
+  <main class="main">
+    <div class="container">
+      <h1>Privacy Policy</h1>
+      <p class="subtitle">Last updated: January 2026</p>
+
+      <section>
+        <h2>1. Controller</h2>
+        <p>
+          The controller responsible for data processing on this website is:<br /><br />
+          Orbint GmbH<br />
+          Lilienthalstraße 9<br />
+          85579 Neubiberg, Germany<br />
+          E-Mail: <a href="mailto:info@orbint.de">info@orbint.de</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Data collected when visiting this website</h2>
+        <p>
+          When you visit this website, our server automatically collects certain technical data
+          transmitted by your browser: IP address, date and time of access, pages visited, browser
+          type and version, operating system, and referrer URL. This data is processed on the basis
+          of Art. 6 para. 1 lit. f GDPR (legitimate interest) to ensure the security and stability
+          of our web infrastructure. Log files are deleted after 30 days.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Contact form</h2>
+        <p>
+          If you contact us via the contact form, the data you submit (name, email address,
+          organization, message) will be stored and used solely to process your inquiry and for any
+          follow-up questions. The legal basis is Art. 6 para. 1 lit. b GDPR (contract performance
+          or pre-contractual measures) or, where applicable, Art. 6 para. 1 lit. f GDPR (legitimate
+          interest). Data is not passed on to third parties without your consent. We delete inquiries
+          once they are no longer needed and no statutory retention obligations require their storage.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Google Fonts</h2>
+        <p>
+          This website uses Google Fonts, provided by Google LLC, 1600 Amphitheatre Parkway,
+          Mountain View, CA 94043, USA. When a page loads, your browser connects to Google's servers
+          to retrieve the font files, which may transfer your IP address to Google. Google Fonts is
+          used on the basis of Art. 6 para. 1 lit. f GDPR (legitimate interest in consistent
+          typography). For more information, see Google's Privacy Policy at
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Your rights</h2>
+        <p>You have the right to:</p>
+        <ul>
+          <li>Request access to your personal data (Art. 15 GDPR)</li>
+          <li>Request rectification of inaccurate data (Art. 16 GDPR)</li>
+          <li>Request erasure of your data (Art. 17 GDPR)</li>
+          <li>Request restriction of processing (Art. 18 GDPR)</li>
+          <li>Object to processing (Art. 21 GDPR)</li>
+          <li>Request data portability (Art. 20 GDPR)</li>
+          <li>Lodge a complaint with a supervisory authority</li>
+        </ul>
+        <p>To exercise any of these rights, please contact us at <a href="mailto:info@orbint.de">info@orbint.de</a>.</p>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .main {
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    min-height: 80vh;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    font-size: 0.9375rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  p {
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 0.75rem;
+  }
+
+  ul {
+    color: var(--text-muted);
+    margin: 0.5rem 0 1rem 1.5rem;
+    line-height: 1.75;
+  }
+
+  li { margin-bottom: 0.35rem; }
+
+  a {
+    color: var(--accent);
+  }
+
+  a:hover {
+    color: var(--text);
+  }
+</style>

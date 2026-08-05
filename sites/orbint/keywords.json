@@ -1,0 +1,23 @@
+{
+  "site":    "orbint",
+  "updated": "2026-08-06",
+  "brand": {
+    "names":   ["Orbint", "Orbint GmbH"],
+    "handles": { "twitter": null, "instagram": null, "linkedin": "orbint" },
+    "avoid":   ["spy", "surveillance", "espionage"]
+  },
+  "primary":   ["satellite operations", "space situational awareness", "orbital intelligence"],
+  "secondary": ["NewSpace", "defense technology", "space domain awareness", "Munich", "German startup"],
+  "hashtags": {
+    "twitter":   ["#NewSpace", "#SpaceTech", "#SatelliteOps", "#Orbint"],
+    "linkedin":  ["#SpaceTechnology", "#NewSpace", "#SatelliteOperations", "#DefenseTech"],
+    "instagram": ["#space", "#newspace", "#satellite", "#spacetech", "#orbint"]
+  },
+  "seo": {
+    "meta_description": "Orbint — satellite operations and space situational awareness for sovereign applications.",
+    "keywords": ["satellite operations", "space situational awareness", "orbital intelligence", "NewSpace Germany", "defense space technology"]
+  },
+  "people":    [],
+  "partners":  ["UniBw", "MCSC", "dtec.bw", "Rohde & Schwarz", "ESA", "Palladion", "BDI"],
+  "locations": ["Munich", "Neubiberg", "Germany", "Europe"]
+}

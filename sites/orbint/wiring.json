@@ -1,0 +1,20 @@
+{
+  "site":         "orbint",
+  "stage":        2,
+  "domain":       "orbint.de",
+  "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/orbint",
+  "last_deploy":  null,
+  "newsletter":   { "service": null, "endpoint": null, "status": null },
+  "socials":      { "twitter": null, "linkedin": "orbint", "instagram": null, "status": null },
+  "forms": {
+    "contact":           { "service": null, "id": null, "status": null },
+    "newsletter_signup": { "service": null, "status": null }
+  },
+  "analytics":    { "status": "skipped" },
+  "legal": {
+    "impressum": "complete",
+    "privacy":   "complete"
+  },
+  "robots": "disallow",
+  "notes":  "Instantiated from live orbint.de capture. Real domain: orbint.de. Stage 2 — content filled, wiring pending."
+}
