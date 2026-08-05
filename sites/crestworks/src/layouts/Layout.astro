@@ -8,6 +8,7 @@ export interface Props {
 const { title, description = 'Crestworks — Boutique consulting specialized in new & future technologies.', image } = Astro.props;
 const canonicalURL = Astro.url;
 const siteName = 'Crestworks';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -25,28 +26,30 @@ const siteName = 'Crestworks';
   <meta property="og:type"        content="website" />
   {image && <meta property="og:image" content={image} />}
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Inter for body copy -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Avenir Next Bold (self-hosted) -->
+  <Fragment set:html={`<style>@font-face{font-family:'Avenir Next';src:url('${b}/fonts/avenir-next-bold.otf') format('opentype');font-weight:700 800;font-style:normal;font-display:swap;}</style>`} />
 
   <title>{title} — {siteName}</title>
 
   <style is:global>
     /* ── Design tokens ──────────────────────────────────────── */
     :root {
-      --bg:          #0a0c10;
-      --bg-card:     #111318;
-      --bg-nav:      rgba(10,12,16,0.90);
-      --border:      #1e2230;
-      --text:        #f0f2fa;
-      --text-muted:  #7a8099;
-      --accent:      #f5a623;
-      --accent-dark: #e09410;
-      --accent-dim:  rgba(245,166,35,0.12);
-      --radius:      4px;
-      --font-head:   'Space Grotesk', system-ui, sans-serif;
-      --font-body:   'Inter', system-ui, sans-serif;
+      --bg:           #ffffff;
+      --bg-dark:      #000000;
+      --bg-nav:       rgba(255,255,255,0.95);
+      --text:         #0a0a0a;
+      --text-on-dark: #ffffff;
+      --text-muted:   #555555;
+      --accent:       #f5e400;
+      --border:       #e0e0e0;
+      --radius:       0px;
+      --font-head:    'Space Grotesk', system-ui, sans-serif;
+      --font-body:    'Inter', system-ui, sans-serif;
     }
 
     /* ── Reset ──────────────────────────────────────────────── */

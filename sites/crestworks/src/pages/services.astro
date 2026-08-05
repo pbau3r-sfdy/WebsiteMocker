@@ -80,14 +80,15 @@ const services = [
   /* ── Header ── */
   .services-header {
     padding: 5rem 0 3rem;
+    background: #ffffff;
     border-bottom: 1px solid var(--border);
   }
   .page-heading {
-    font-family: var(--font-head);
+    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
     font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 800;
     letter-spacing: .06em;
-    color: var(--text);
+    color: #0a0a0a;
     margin-bottom: .75rem;
   }
   .page-tagline {
@@ -98,20 +99,21 @@ const services = [
   .page-tagline em { font-style: normal; }
 
   /* ── Grid ── */
-  .services-grid-section { padding: 4rem 0 5rem; }
+  .services-grid-section { padding: 4rem 0 5rem; background: #ffffff; }
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
   .service-card {
-    background: var(--bg-card);
+    background: #ffffff;
     border: 1px solid var(--border);
+    border-left: 4px solid transparent;
     border-radius: var(--radius);
     padding: 2rem;
-    transition: border-color .2s;
+    transition: border-left-color .2s;
   }
-  .service-card:hover { border-color: var(--accent); }
+  .service-card:hover { border-left-color: var(--accent); }
 
   .service-num {
     display: block;
@@ -126,7 +128,7 @@ const services = [
     font-size: 1.125rem; font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .04em;
-    color: var(--text);
+    color: #0a0a0a;
     margin-bottom: .75rem;
   }
   .service-body {
@@ -138,26 +140,26 @@ const services = [
   /* ── CTA ── */
   .services-cta {
     padding: 5rem 0;
-    background: var(--bg-card);
-    border-top: 1px solid var(--border);
+    background: #0a0a0a;
+    border-top: 1px solid #1a1a1a;
     text-align: center;
   }
   .cta-text {
     font-family: var(--font-head);
     font-size: 1.25rem; font-weight: 600;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.65);
     margin-bottom: 1.75rem;
   }
   .btn-primary {
     display: inline-flex; align-items: center;
     padding: .9rem 2.25rem;
-    background: var(--accent); color: #000;
+    background: var(--accent); color: #0a0a0a;
     font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
     letter-spacing: .06em; text-transform: uppercase;
     border-radius: var(--radius);
-    transition: background .2s;
+    transition: opacity .2s;
   }
-  .btn-primary:hover { background: var(--accent-dark); }
+  .btn-primary:hover { opacity: .85; }
 
   @media (max-width: 900px) {
     .services-grid { grid-template-columns: repeat(2, 1fr); }
