@@ -1,0 +1,27 @@
+{
+  "name": "websitemocker",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "sites/*"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node _scripts/build-all.js",
+    "build:dashboard": "astro build",
+    "preview": "astro preview",
+    "new-site": "bash _scripts/new-site.sh"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "allowScripts": {
+    "esbuild@0.27.7": true,
+    "esbuild@0.25.12": true,
+    "sharp@0.34.5": true,
+    "fsevents@2.3.3": true
+  }
+}

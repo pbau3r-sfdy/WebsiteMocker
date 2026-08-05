@@ -1,0 +1,23 @@
+{
+  "site":    "{{SITE_SLUG}}",
+  "updated": "{{TODAY}}",
+  "brand": {
+    "names":   ["{{SITE_NAME}}"],
+    "handles": { "twitter": null, "instagram": null, "linkedin": null },
+    "avoid":   []
+  },
+  "primary":   [],
+  "secondary": [],
+  "hashtags": {
+    "twitter":   [],
+    "linkedin":  [],
+    "instagram": []
+  },
+  "seo": {
+    "meta_description": "{{SITE_TAGLINE}}",
+    "keywords":         []
+  },
+  "people":    [],
+  "partners":  [],
+  "locations": []
+}

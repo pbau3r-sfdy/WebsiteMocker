@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import NewsCard from '../../components/NewsCard.astro';
+
+const allPosts = await getCollection('news');
+const posts = allPosts.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<Layout title="News" description="Latest news and updates.">
+  <Nav />
+  <main class="main">
+    <div class="container">
+      <header class="page-header">
+        <h1>News</h1>
+        <p>Latest updates, announcements, and events.</p>
+      </header>
+      {posts.length === 0 ? (
+        <p class="empty">No posts yet.</p>
+      ) : (
+        <div class="news-grid">
+          {posts.map(post => (
+            <NewsCard
+              title={post.data.title}
+              date={post.data.date}
+              summary={post.data.summary}
+              slug={post.slug}
+              image={post.data.image}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .main { padding-top: 6rem; padding-bottom: 6rem; min-height: 70vh; }
+  .page-header { margin-bottom: 3rem; }
+  .page-header h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; margin-bottom: .5rem;
+  }
+  .page-header p { font-size: 1.125rem; color: var(--text-muted); }
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  .empty { color: var(--text-muted); }
+</style>
