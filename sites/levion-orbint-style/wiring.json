@@ -16,5 +16,6 @@
     "privacy":   "incomplete"
   },
   "robots": "disallow",
-  "notes":  ""
+  "notes":  "Style experiment — not a deployable site.",
+  "skip_ci": true
 }

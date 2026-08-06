@@ -6,5 +6,6 @@
   "contact": "hello@crestworks.co",
   "stage": 1,
   "capture": "crestworks",
-  "notes": "Boutique consulting. Bold all-caps headings. Dr. Philipp Bauer founding partner. Built from capture 2026-08-06."
+  "notes": "Boutique consulting. Bold all-caps headings. Dr. Philipp Bauer founding partner. Built from capture 2026-08-06. Alt style variant — use crestworks for CI.",
+  "skip_ci": true
 }

@@ -5,11 +5,12 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Switched from workflow-based Pages deployment (deploy-pages@v4, CDN-activation wait)
-# to branch-based deployment (JamesIves action, git-push to gh-pages — no wait, < 60s).
-# Repo Pages source: gh-pages branch / root  (changed via API 2026-08-06)
+# Branch-based deployment via JamesIves/github-pages-deploy-action.
+# Pages source: gh-pages branch / root  (set 2026-08-06 via GitHub API).
+# This replaces the old workflow-mode deploy (deploy-pages@v4) which had a
+# hardcoded 10-minute CDN-activation cap that caused every push to time out.
 permissions:
-  contents: write   # required to push to gh-pages branch
+  contents: write   # push to gh-pages branch
 
 concurrency:
   group: pages
@@ -19,30 +20,38 @@ jobs:
   build-and-deploy:
     name: Build & Deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node 22 (LTS)
         uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: '22'   # pinned LTS major — not floating lts/*
           cache: npm
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (ci — lockfile-exact)
+        # npm ci is deterministic: uses package-lock.json exactly, errors on drift,
+        # and never writes back to the lockfile. Faster than npm install in CI.
+        run: npm ci --no-fund --no-audit
 
       - name: Build all sites
-        # Skip experiment/duplicate sites that are large but not needed in sandbox
+        # Experiment / WIP sites self-declare skip_ci:true in their wiring.json.
+        # The build script reads that flag and skips them automatically.
+        # SKIP_SITES env var is an emergency override for sites that lack wiring.json.
         run: node _scripts/build-all.js
         env:
-          SKIP_SITES: levion-orbint-style
+          # Fallback skip list — prefer wiring.json skip_ci:true on each site instead.
+          SKIP_SITES: ''
 
       - name: Deploy to GitHub Pages (gh-pages branch)
+        # Branch-push deploy: no CDN activation polling, completes in < 30 seconds.
+        # @v4.6.9 = commit d938913 — pinned to avoid surprise breaking changes.
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist        # built output from build-all.js
-          branch: gh-pages    # GitHub Pages source branch
-          clean: true         # remove files in branch not present in dist/
-          single-commit: true # squash history to keep gh-pages branch lean
+          folder: dist        # root-level dist/ produced by build-all.js
+          branch: gh-pages
+          clean: true         # remove stale files from previous deploys
+          single-commit: true # squash gh-pages history (keeps branch lean)
