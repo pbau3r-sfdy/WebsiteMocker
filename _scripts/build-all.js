@@ -15,6 +15,8 @@ const root     = resolve('.');
 const sitesDir = join(root, 'sites');
 const distDir  = join(root, 'dist');
 const only     = process.argv[2] || null; // optional: build one site
+// CI can set SKIP_SITES=comma,separated,slugs to exclude heavy experiment sites
+const skipSet  = new Set((process.env.SKIP_SITES || '').split(',').map(s => s.trim()).filter(Boolean));
 
 // Add node_modules/.bin to PATH so `astro` resolves even when called directly
 const env = {
@@ -44,6 +46,7 @@ const sites = existsSync(sitesDir)
       .filter(d => d.isDirectory())
       .map(d => d.name)
       .filter(name => !only || name === only)
+      .filter(name => !skipSet.has(name))
   : [];
 
 for (const site of sites) {

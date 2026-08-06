@@ -33,7 +33,10 @@ jobs:
         run: npm install
 
       - name: Build all sites
+        # Skip experiment/duplicate sites that are large but not needed in sandbox
         run: node _scripts/build-all.js
+        env:
+          SKIP_SITES: levion-orbint-style
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -52,3 +55,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Default internal timeout is 600000ms (10 min) — increase to 20 min
+          timeout: 1200000
