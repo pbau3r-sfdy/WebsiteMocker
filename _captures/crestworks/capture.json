@@ -1,0 +1,383 @@
+{
+  "slug": "crestworks",
+  "source": "https://www.crestworks.co",
+  "capturedAt": "2026-08-06",
+  "nav": [
+    {
+      "text": "SERVICES",
+      "href": "https://www.crestworks.co/services"
+    },
+    {
+      "text": "CONTACT",
+      "href": "mailto:hello@crestworks.co?subject=Request | Crestworks Website "
+    },
+    {
+      "text": "START",
+      "href": "https://www.crestworks.co"
+    },
+    {
+      "text": "IMPRINT",
+      "href": "https://www.crestworks.co/imprint"
+    },
+    {
+      "text": "PRIVACY POLICY",
+      "href": "https://www.crestworks.co/privacy-policy"
+    }
+  ],
+  "tokens": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "text": "rgb(0, 0, 0)",
+    "accent": "rgb(255, 255, 255)",
+    "radius": "24px",
+    "bg-nav": "rgba(0, 0, 0, 0)",
+    "fontHead": "avenir-lt-w01_35-light1475496, sans-serif",
+    "fontBody": "Arial, Helvetica, sans-serif"
+  },
+  "assets": {
+    "images": [
+      "shapes_11062b_271ad2dc0f0941e48f31052ef5c28bed.svg",
+      "shapes_11062b_70f49f0d77b7494cbd60d60b7e8f0064.svg",
+      "w_1440_h_713_al_c_q_85_usm_0.33_1.00_0.00_enc_avif_quality_auto_11062b_33128e917",
+      "w_1440_h_713_al_r_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_ff65f7_447ae9965",
+      "w_1440_h_900_al_c_q_85_usm_0.33_1.00_0.00_enc_avif_quality_auto_11062b_fc39bc30d",
+      "w_1440_h_900_al_l_q_85_usm_0.33_1.00_0.00_enc_avif_quality_auto_11062b_37c43a917",
+      "w_157_h_157_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_ff65f7_d5e380b42b",
+      "w_169_h_107_al_c_q_80_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_ff65f7_447",
+      "w_177_h_100_al_c_q_80_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_11062b_331",
+      "w_177_h_100_al_c_q_80_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_11062b_37c",
+      "w_177_h_100_al_c_q_80_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_11062b_fc3",
+      "w_24_h_24_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_01c3aff52f2a4dffa52",
+      "w_24_h_24_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_0fdef751204647a3bbd",
+      "w_24_h_24_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_11062b_283a2164806c",
+      "w_24_h_24_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_11062b_30de4e7217e6",
+      "w_24_h_24_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_11062b_b08fccde70ca",
+      "w_24_h_24_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_6ea5b4a88f0b4f91945",
+      "w_291_h_69_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_ff65f7_b92020c191d",
+      "w_296_h_70_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_ff65f7_b92020c191d",
+      "w_489_h_900_al_c_q_85_usm_0.33_1.00_0.00_enc_avif_quality_auto_11062b_2d0218bd0b",
+      "w_489_h_900_al_c_q_85_usm_0.33_1.00_0.00_enc_avif_quality_auto_11062b_50f6f6470c",
+      "w_83_h_47_al_c_q_80_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_11062b_2d021",
+      "w_83_h_47_al_c_q_80_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_11062b_50f6f"
+    ],
+    "videos": [
+      "mp4_file.mp4"
+    ],
+    "fonts": [
+      "v1_avenir-lt-w01_35-light1475496.woff2",
+      "v1_avenir-lt-w01_85-heavy1475544.woff2"
+    ]
+  },
+  "pages": {
+    "/": {
+      "sections": [
+        {
+          "heading": "",
+          "text": "SERVICES CONTACT CONTACT CONTACT CONTACT",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "TOMORROWING\nTODAY.",
+          "text": "TOMORROWING TODAY. ABOUT Crestworks is a Boutique Consulting Company specialized in new & future technologies based in Munich, Germany. OUR MISSION IS: To deliver what has never been built before! #TomorrowingToday WE ARE SPECIALIZED IN: Building the Future: We explore use-cases, design products and deliver projects with a strong focus on new and disruptive technologies. More than just Tech: We also cover all managerial, commercial, and organizational aspects of your project. WHERE WE COME FROM: From Labs to Assembly Lines. From Ground to Space. And everything in between. With our roots in aer",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": true
+        },
+        {
+          "heading": "ABOUT",
+          "text": "ABOUT Crestworks is a Boutique Consulting Company specialized in new & future technologies based in Munich, Germany.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "OUR MISSION IS:",
+          "text": "OUR MISSION IS: To deliver what has never been built before! #TomorrowingToday",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "WE ARE SPECIALIZED IN:",
+          "text": "WE ARE SPECIALIZED IN: Building the Future: We explore use-cases, design products and deliver projects with a strong focus on new and disruptive technologies. More than just Tech: We also cover all managerial, commercial, and organizational aspects of your project. WHERE WE COME FROM: From Labs to Assembly Lines. From Ground to Space. And everything in between. With our roots in aerospace and defense, life sciences and process industries, we cover a wide range of technology sectors. And with our long-standing experience and a strong network of selected partners ... We shoot for nothing less th",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": true
+        },
+        {
+          "heading": "WHERE WE COME FROM:",
+          "text": "WHERE WE COME FROM: From Labs to Assembly Lines. From Ground to Space. And everything in between. With our roots in aerospace and defense, life sciences and process industries, we cover a wide range of technology sectors. And with our long-standing experience and a strong network of selected partners ... We shoot for nothing less than exceptional results! FOR MORE INFORMATION",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "OUR OFFERING:",
+          "text": "OUR OFFERING: Innovation is born from: Stardust + Sweat More precisely: Our sweat turns your stardust into real assets, products, and services - on the streets, in the air, or where no man has gone before. ​ How can we help you today?",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": true
+        },
+        {
+          "heading": "HOW WE ROLL:",
+          "text": "HOW WE ROLL: Whether you are an aspiring Startup or an established Enterprise, we have you covered! We support, guide and assist you at all stages of your projects, from the ground up to its final delivery.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "LET'S GO!",
+          "text": "LET'S GO! GET IN TOUCH The future can't wait. Let's build it together NOW!",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "Crestworks Consulting GmbH PHONE MAIL: HQ +49 (0) 170 4797 183 hello@crestworks.co Crestworks Consulting GmbH Claude-Dornier-Str. 401 82234 Weßling, Germany START IMPRINT PRIVACY POLICY",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "START IMPRINT PRIVACY POLICY",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/services": {
+      "sections": [
+        {
+          "heading": "",
+          "text": "SERVICES CONTACT CONTACT CONTACT CONTACT",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "CRESTWORKS\nSERVICES",
+          "text": "CRESTWORKS SERVICES OUR ASPIRATION At Crestworks, we fast-track your innovation journey. As an entrepreneurial do-tank, Crestworks is focused on giving our clients a head start with their new ideas. We work iteratively to help you bridge the gap between initial ideas, prototype and execution in the shortest possible time. ​ Originating in aerospace and defense, as well as life sciences and process industries, our expertise spans a diverse array of technology sectors. Leveraging our extensive experience and robust network of carefully chosen partners, we aim for nothing short of extraordinary o",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": true
+        },
+        {
+          "heading": "OUR ASPIRATION",
+          "text": "OUR ASPIRATION At Crestworks, we fast-track your innovation journey. As an entrepreneurial do-tank, Crestworks is focused on giving our clients a head start with their new ideas. We work iteratively to help you bridge the gap between initial ideas, prototype and execution in the shortest possible time. ​ Originating in aerospace and defense, as well as life sciences and process industries, our expertise spans a diverse array of technology sectors. Leveraging our extensive experience and robust network of carefully chosen partners, we aim for nothing short of extraordinary outcomes.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Our Seven Services:\n#TomorrowingToday",
+          "text": "Our Seven Services: #TomorrowingToday",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "OUR RANGE OF SERVICES",
+          "text": "OUR RANGE OF SERVICES From Idea to Implementation. From Concept to Customer. ​ Feel free to get in touch for more details!",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": true
+        },
+        {
+          "heading": "At a Glance: Our current\nCrestworksService Portfolio",
+          "text": "At a Glance: Our current CrestworksService Portfolio 1 / Idea Assessment We evaluate and plan the feasibility of your concepts. 2 / Concept to Prototype Transform initial ideas into actionable prototypes. 3 / User-Centric Design Discover user needs, refine use cases, and define key characteristics. 4 / Strategic Roadmaps Design the path to success for complex projects. 5 / Business Setup Navigate legal, financial, and technical aspects seamlessly. 6 / Expert Support We bridge knowledge gaps and provide solutions. 7 / Hands-On Management We lead your projects to successful execution.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "1 / Idea Assessment",
+          "text": "1 / Idea Assessment We evaluate and plan the feasibility of your concepts.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "2 / Concept to Prototype",
+          "text": "2 / Concept to Prototype Transform initial ideas into actionable prototypes.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "3 / User-Centric Design",
+          "text": "3 / User-Centric Design Discover user needs, refine use cases, and define key characteristics.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "4 / Strategic Roadmaps",
+          "text": "4 / Strategic Roadmaps Design the path to success for complex projects.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "5 / Business Setup",
+          "text": "5 / Business Setup Navigate legal, financial, and technical aspects seamlessly.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "6 / Expert Support",
+          "text": "6 / Expert Support We bridge knowledge gaps and provide solutions.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "7 / Hands-On Management",
+          "text": "7 / Hands-On Management We lead your projects to successful execution.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "HOW WE ACCOMPLISH THE IMPOSSIBLE",
+          "text": "HOW WE ACCOMPLISH THE IMPOSSIBLE A Network of diverse Experts, united by mindset. Together with our network of experts, we seamlessly cover a wide range of technical and non-technical skills. And no matter how diverse their expertise, all our partners are united by the same appreciation of our core values: Optimism and Practicality.",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": true
+        },
+        {
+          "heading": "OUR DNA",
+          "text": "OUR DNA Excellent execution is the result of expertise and ACTN. You can't have one without the other though: expertise comes from experience - and both arise from action. Well-considered, carefully thought-out but rigorously executed action - which happens to be our speciality!",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "LET'S GO!",
+          "text": "LET'S GO! The future can't wait. Let's build it together NOW! GET IN TOUCH",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "Crestworks Consulting GmbH PHONE MAIL: HQ +49 (0) 170 4797 183 hello@crestworks.co Crestworks Consulting GmbH Claude-Dornier-Str. 401 82234 Weßling, Germany START IMPRINT PRIVACY POLICY",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "START IMPRINT PRIVACY POLICY",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/imprint": {
+      "sections": [
+        {
+          "heading": "",
+          "text": "SERVICES CONTACT CONTACT CONTACT CONTACT",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Imprint / \nLegal Notice",
+          "text": "Imprint / Legal Notice Information in accordance with § 5 TMG: Crestworks Consulting GmbH ​ Legal representative: Dr. Philipp Bauer, Founding Partner General contact: hello(at)crestworks.co Crestworks Consulting GmbH is a company incorporated and registered under the laws of Germany.​ Register number: HRB282252 Court of registry: Munich ​ VAT number, pursuant to Section 27a, German VAT Act: DE359230731 ​​ Registered Office: Crestworks Consulting GmbH Claude-Dornier-Str. 401 82234 Weßling, Germany ​​ Responsible for content according to § 55 para. 2 RStV: Dr. Philipp Bauer, Founding Partner ​​ ",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Imprint / \nLegal Notice",
+          "text": "Imprint / Legal Notice",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "Information in accordance with § 5 TMG: Crestworks Consulting GmbH ​ Legal representative: Dr. Philipp Bauer, Founding Partner General contact: hello(at)crestworks.co Crestworks Consulting GmbH is a company incorporated and registered under the laws of Germany.​ Register number: HRB282252 Court of registry: Munich ​ VAT number, pursuant to Section 27a, German VAT Act: DE359230731 ​​ Registered Office: Crestworks Consulting GmbH Claude-Dornier-Str. 401 82234 Weßling, Germany ​​ Responsible for content according to § 55 para. 2 RStV: Dr. Philipp Bauer, Founding Partner ​​ Image and animations co",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "Crestworks Consulting GmbH PHONE MAIL: HQ +49 (0) 170 4797 183 hello@crestworks.co Crestworks Consulting GmbH Claude-Dornier-Str. 401 82234 Weßling, Germany START IMPRINT PRIVACY POLICY",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "START IMPRINT PRIVACY POLICY",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/privacy-policy": {
+      "sections": [
+        {
+          "heading": "",
+          "text": "SERVICES CONTACT CONTACT CONTACT CONTACT",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Privacy Policy & \nData Protection",
+          "text": "Privacy Policy & Data Protection ​At Crestworks Consulting (Crestworks), we are committed to protecting your privacy and personal information. The protection of your privacy when processing personal data is an important concern for us. Therefore, we collect, store, and use your personal data strictly in accordance with applicable data protection regulations, including, without limitation, the European General Data Protection Regulation (GDPR). We do not publish or share your information with third parties without your permission. ​​​ ​ Responsible party: The entity responsible for processing p",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Privacy Policy & \nData Protection",
+          "text": "Privacy Policy & Data Protection",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "​At Crestworks Consulting (Crestworks), we are committed to protecting your privacy and personal information. The protection of your privacy when processing personal data is an important concern for us. Therefore, we collect, store, and use your personal data strictly in accordance with applicable data protection regulations, including, without limitation, the European General Data Protection Regulation (GDPR). We do not publish or share your information with third parties without your permission. ​​​ ​ Responsible party: The entity responsible for processing personal data of any users of this",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "Crestworks Consulting GmbH PHONE MAIL: HQ +49 (0) 170 4797 183 hello@crestworks.co Crestworks Consulting GmbH Claude-Dornier-Str. 401 82234 Weßling, Germany START IMPRINT PRIVACY POLICY",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "START IMPRINT PRIVACY POLICY",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    }
+  }
+}
