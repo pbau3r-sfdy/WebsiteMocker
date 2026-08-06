@@ -1,0 +1,42 @@
+---
+interface Props { title?: string; description?: string; }
+const { title = 'Levion Materials', description = 'Crystal growth in orbital microgravity — producing materials with properties impossible to achieve on Earth.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <title>{title === 'Levion Materials' ? title : `${title} · Levion Materials`}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body><slot /></body>
+</html>
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:          #0f0e0d;
+    --bg-card:     #1a1815;
+    --bg-card2:    #222019;
+    --bg-nav:      rgba(15,14,13,0.97);
+    --border:      #2e2b25;
+    --text:        #e8e5e0;
+    --text-muted:  #9a9188;
+    --text-dim:    #5a5248;
+    --accent:      #c86010;
+    --accent-dark: #a04e0c;
+    --accent-dim:  rgba(200,96,16,0.12);
+    --teal:        #1b4565;
+    --radius:      8px;
+    --font-head:   'IBM Plex Sans', sans-serif;
+    --font-body:   'Inter', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; letter-spacing: -0.02em; }
+</style>
