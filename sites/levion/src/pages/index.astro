@@ -4,26 +4,11 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
 const useCases = [
-  {
-    title: 'High Power Electronics',
-    desc:  'Ultra-pure crystals for next-generation power semiconductors with dramatically higher switching efficiency.',
-  },
-  {
-    title: 'Optics & Lasers',
-    desc:  'Defect-free optical crystals enabling more powerful and precise laser systems and photonic devices.',
-  },
-  {
-    title: 'Sensors',
-    desc:  'High-purity sensor crystals with superior sensitivity for scientific, industrial, and aerospace applications.',
-  },
-  {
-    title: 'Radiation Detectors',
-    desc:  'Space-grown scintillator crystals with homogeneous composition for medical imaging and nuclear detection.',
-  },
-  {
-    title: 'Energy & Quantum Technologies',
-    desc:  'Materials with the uniformity and purity required for quantum computing and next-generation energy systems.',
-  },
+  { icon: '⚡', title: 'High Power Electronics',      desc: 'Ultra-pure crystals for next-generation power semiconductors.' },
+  { icon: '🔭', title: 'Optics & Lasers',             desc: 'Defect-free optical crystals for more powerful laser systems.' },
+  { icon: '📡', title: 'Sensors',                     desc: 'High-purity sensor crystals with superior sensitivity.' },
+  { icon: '☢',  title: 'Radiation Detectors',         desc: 'Space-grown scintillator crystals for medical imaging and nuclear detection.' },
+  { icon: '⚙',  title: 'Energy & Quantum Technologies',desc: 'Materials for quantum computing and next-generation energy.' },
 ];
 
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -42,46 +27,44 @@ const partners = [
 >
   <Nav />
 
-  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <!-- ── Hero — silver metallic bg, crystal ingot, centered brand ── -->
   <section class="hero">
     <div class="hero-bg">
-      <img src={`${b}/images/hero.png`} alt="Crystal growth in space" class="hero-img" />
-      <div class="hero-overlay"></div>
+      <img src={`${b}/images/hero-crystal.jpg`} alt="Crystal ingot in microgravity" class="hero-img" />
     </div>
     <div class="hero-content container">
-      <p class="hero-eyebrow">CRYSTAL GROWTH IN TRUE MICROGRAVITY</p>
-      <h1 class="hero-headline">Advanced Materials Made in Space</h1>
-      <p class="hero-sub">Levion Materials grows crystals in orbital microgravity — producing materials with properties impossible to achieve on Earth.</p>
-      <div class="hero-actions">
-        <a href={`${b}/contact`} class="btn-primary">Get in Touch</a>
-        <a href={`${b}/#vision`} class="btn-ghost">Our Story</a>
-      </div>
+      <img src={`${b}/images/logo-color.png`} alt="Levion Materials" class="hero-logo" />
+      <p class="hero-tagline">ADVANCED MATERIALS MADE IN SPACE</p>
+      <a href={`${b}/contact`} class="btn-primary">Get in Touch</a>
     </div>
   </section>
 
-  <!-- ── THE VISION ────────────────────────────────────────── -->
-  <section class="section" id="vision">
+  <!-- ── THE VISION — rust orange bg ── -->
+  <section class="section section-rust" id="vision">
     <div class="container">
-      <p class="section-label">THE VISION</p>
-      <h2 class="section-title">Materials Beyond Gravity</h2>
-      <p class="section-body">
-        Crystal growth in true microgravity is only achievable in space. Levion Materials was established to make this accessible for high-value industrial applications — from semiconductors to quantum devices.
+      <p class="section-label-light">THE VISION</p>
+      <h2 class="section-title-light">Materials Beyond Gravity</h2>
+      <p class="section-body-light">
+        Growing perfect crystals requires an environment Earth cannot provide. Levion Materials is being
+        established as an independent company dedicated to crystal growth in true microgravity —
+        achievable only in space.
       </p>
     </div>
   </section>
 
-  <!-- ── THE MISSION ───────────────────────────────────────── -->
-  <section class="section section-dark" id="mission">
+  <!-- ── THE MISSION — white bg, orange icons ── -->
+  <section class="section" id="mission">
     <div class="container">
       <p class="section-label">THE MISSION</p>
       <h2 class="section-title">Why Crystals Matter</h2>
       <p class="section-body" style="margin-bottom: 3rem;">
-        Crystals form the foundation of modern technology. In orbital microgravity, we can grow them with fewer defects, greater purity, and properties that Earth-based manufacturing cannot match.
+        Many modern technologies rely on crystals — from electronics to lasers to sensors to energy
+        systems. The performance of these technologies depends on how perfect the crystal is.
       </p>
       <div class="use-cases-grid">
         {useCases.map(uc => (
           <div class="use-case-tile">
-            <span class="use-case-icon">✦</span>
+            <span class="use-case-icon">{uc.icon}</span>
             <h3 class="use-case-title">{uc.title}</h3>
             <p class="use-case-desc">{uc.desc}</p>
           </div>
@@ -90,36 +73,46 @@ const partners = [
     </div>
   </section>
 
-  <!-- ── THE PROBLEM ───────────────────────────────────────── -->
-  <section class="section" id="problem">
+  <!-- ── THE PROBLEM — light gray bg, crystal apparatus image ── -->
+  <section class="section section-alt" id="problem">
     <div class="container alternating-layout">
+      <div class="alt-visual">
+        <img src={`${b}/images/hero-silver.jpg`} alt="Crystal growth apparatus" class="problem-img" />
+      </div>
       <div class="alt-text">
         <p class="section-label">THE PROBLEM</p>
         <h2 class="section-title">The Problem with Gravity</h2>
+        <p class="section-body" style="margin-bottom:1.5rem;">
+          On Earth, gravity constantly acts on molten materials during crystal growth.
+        </p>
         <ul class="problem-list">
           <li>Uneven composition during solidification</li>
           <li>Internal mechanical stress</li>
           <li>Crystallographic defects from convective forces</li>
+          <li>Inability to reach macroscopically level atomic alignment</li>
         </ul>
-      </div>
-      <div class="alt-visual">
-        <div class="visual-card">
-          <span class="visual-icon">⚡</span>
-          <p class="visual-caption">Gravity-induced convection disrupts the crystal lattice during formation, creating defects that degrade performance.</p>
-        </div>
+        <p class="problem-footer">
+          Even in the best laboratories, gravity cannot be switched off.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- ── THE SOLUTION ──────────────────────────────────────── -->
-  <section class="section section-dark" id="solution">
+  <!-- ── THE SOLUTION — dark teal bg ── -->
+  <section class="section section-teal" id="solution">
     <div class="container alternating-layout alternating-layout--reverse">
       <div class="alt-text">
-        <p class="section-label">THE SOLUTION</p>
-        <h2 class="section-title">The Change with Microgravity</h2>
-        <p class="section-body">
-          Think of it like cooking soup on Earth: heat creates convection currents that stir the liquid. In space, those forces disappear. Crystal growth becomes stable, homogeneous, and defect-free.
+        <p class="section-label-light">THE SOLUTION</p>
+        <h2 class="section-title-light">The Change with Microgravity</h2>
+        <p class="section-body-light">
+          In microgravity, materials behave differently — no sedimentation, no buoyancy-driven
+          convection, more uniform growth. Crystals can form in a way that is impossible on Earth.
         </p>
+        <ul class="solution-list">
+          <li>Stable composition</li>
+          <li>Fewer structural defects</li>
+          <li>More uniform growth</li>
+        </ul>
       </div>
       <div class="alt-visual">
         <img src={`${b}/images/groove-mission.jpg`} alt="GROOVE mission orbital setup" class="solution-img" />
@@ -127,46 +120,27 @@ const partners = [
     </div>
   </section>
 
-  <!-- ── GROOVE ────────────────────────────────────────────── -->
+  <!-- ── GROOVE — white bg ── -->
   <section class="section groove-section" id="groove">
-    <div class="container">
-      <p class="section-label">FIRST MISSION</p>
-      <h2 class="section-title groove-title">GROOVE</h2>
-      <p class="groove-sub">Growth Parameter Observation &amp; Validation Experiment</p>
-      <p class="section-body groove-body">
-        Our first mission, conducted within the ESA Business in Space Growth Network (BSGN) accelerator. GROOVE is validating the core parameters of our crystal growth process in real orbital conditions.
-      </p>
-    </div>
-  </section>
-
-  <!-- ── TRUE MICROGRAVITY ─────────────────────────────────── -->
-  <section class="section" id="why-space">
-    <div class="container">
-      <p class="section-label">TRUE MICROGRAVITY</p>
-      <h2 class="section-title">True Microgravity Only Exists in Space</h2>
-      <p class="section-label-sub">Why Space is Essential</p>
-      <p class="section-body">
-        Drop towers give seconds. Parabolic flights give minutes. Orbital microgravity gives uninterrupted weeks — the only environment where long-duration crystal growth experiments are possible at scale.
-      </p>
-      <div class="comparison-grid">
-        <div class="comparison-item">
-          <span class="comparison-duration">~10 s</span>
-          <span class="comparison-method">Drop Towers</span>
-        </div>
-        <div class="comparison-item">
-          <span class="comparison-duration">~20 min</span>
-          <span class="comparison-method">Parabolic Flights</span>
-        </div>
-        <div class="comparison-item comparison-item--accent">
-          <span class="comparison-duration">Weeks</span>
-          <span class="comparison-method">Orbital Microgravity</span>
-        </div>
+    <div class="container groove-layout">
+      <div class="groove-badge-wrap">
+        <img src={`${b}/images/design-mark.png`} alt="Levion design mark" class="groove-mark" />
+      </div>
+      <div class="groove-text">
+        <p class="section-label">TRACTION</p>
+        <h2 class="section-title groove-title">GROOVE</h2>
+        <p class="groove-sub">Growth Parameter Observation &amp; Validation Experiment</p>
+        <p class="section-body">
+          Levion's first in-space materials mission, developed in the ESA Business in Space Growth
+          Network (BSGN) Advanced Materials and In-orbit Manufacturing Industry Accelerator. Flight
+          hardware is in preparation. Right for Launch: microgravity crystal growth proven.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- ── PARTNERS ──────────────────────────────────────────── -->
-  <section class="section section-dark partners-section" id="partners">
+  <!-- ── PARTNERS — white bg ── -->
+  <section class="section partners-section" id="partners">
     <div class="container" style="text-align: center;">
       <p class="section-label">THANKS TO OUR</p>
       <h2 class="section-title">Partners &amp; Supporters</h2>
@@ -180,14 +154,14 @@ const partners = [
     </div>
   </section>
 
-  <!-- ── NEWSLETTER ────────────────────────────────────────── -->
+  <!-- ── NEWSLETTER ── -->
   <section class="newsletter-section">
     <div class="container">
-      <h2>Stay Updated</h2>
-      <p>Follow Levion's progress from lab to orbit.</p>
+      <h2>NEWSLETTER</h2>
+      <p>Subscribe for the Levion newsletter.</p>
       <form class="newsletter-form" action="https://formspree.io/f/placeholder" method="POST">
-        <input type="email" name="email" placeholder="your@email.com" required />
-        <button type="submit">Sign Up</button>
+        <input type="email" name="email" placeholder="E-Mail address" required />
+        <button type="submit">Subscribe</button>
       </form>
     </div>
   </section>
@@ -202,6 +176,7 @@ const partners = [
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
   }
   .hero-bg {
@@ -211,112 +186,118 @@ const partners = [
     width: 100%; height: 100%;
     object-fit: cover; object-position: center;
   }
-  .hero-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(10,13,26,0.85) 0%,
-      rgba(10,13,26,0.50) 60%,
-      rgba(10,13,26,0.75) 100%
-    );
-  }
   .hero-content {
     position: relative; z-index: 1;
-    padding-top: 8rem; padding-bottom: 6rem;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding-top: 5rem; padding-bottom: 5rem;
+    gap: 1.5rem;
   }
-  .hero-eyebrow {
+  .hero-logo {
+    width: min(380px, 60vw);
+    height: auto;
+    object-fit: contain;
+  }
+  .hero-tagline {
     font-family: var(--font-head);
-    font-size: .75rem; font-weight: 600;
-    letter-spacing: .16em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1.25rem;
-  }
-  .hero-headline {
-    font-family: var(--font-head);
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 800; line-height: 1.05;
-    letter-spacing: -.03em;
-    color: var(--text);
-    max-width: 14ch;
-    margin-bottom: 1.5rem;
-    text-wrap: balance;
-  }
-  .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: clamp(.75rem, 1.5vw, .875rem);
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
     color: var(--text-muted);
-    max-width: 52ch;
-    margin-bottom: 2.5rem;
-    line-height: 1.65;
   }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-  /* ── Buttons ── */
   .btn-primary {
     display: inline-flex; align-items: center;
-    padding: .85rem 2rem;
-    background: var(--accent); color: #000;
+    padding: .8rem 2rem;
+    background: var(--orange); color: #ffffff;
     font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
-    border-radius: var(--radius);
+    border-radius: 4px;
+    margin-top: .5rem;
     transition: opacity .2s;
   }
   .btn-primary:hover { opacity: .85; }
-  .btn-ghost {
-    display: inline-flex; align-items: center;
-    padding: .85rem 2rem;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 600;
-    border-radius: var(--radius);
-    transition: color .2s, border-color .2s;
-  }
-  .btn-ghost:hover { color: var(--text); border-color: var(--text-muted); }
 
-  /* ── Sections ── */
-  .section { padding: 6rem 0; }
-  .section-dark { background: var(--bg-card); }
+  /* ── Generic sections ── */
+  .section { padding: 6rem 0; background: var(--bg); }
+  .section-alt { background: var(--bg-alt); }
+
+  /* ── Rust (THE VISION) ── */
+  .section-rust {
+    background: var(--rust);
+    position: relative; overflow: hidden;
+  }
+  /* Big decorative V in background */
+  .section-rust::after {
+    content: '';
+    position: absolute; right: -80px; top: -40px;
+    width: 520px; height: 600px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 460'%3E%3Cpath d='M0 0 L200 460 L400 0' fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='60'/%3E%3C/svg%3E") center/contain no-repeat;
+    pointer-events: none;
+  }
+
+  /* ── Teal (THE SOLUTION) ── */
+  .section-teal {
+    background: var(--teal);
+    position: relative; overflow: hidden;
+  }
+  .section-teal::after {
+    content: '';
+    position: absolute; right: -60px; bottom: -40px;
+    width: 480px; height: 560px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 460'%3E%3Cpath d='M0 0 L200 460 L400 0' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='60'/%3E%3C/svg%3E") center/contain no-repeat;
+    pointer-events: none;
+  }
+
+  /* ── Section labels & titles ── */
   .section-label {
     font-family: var(--font-head);
     font-size: .6875rem; font-weight: 600;
     letter-spacing: .18em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: .75rem;
+    color: var(--orange); margin-bottom: .75rem;
   }
-  .section-label-sub {
+  .section-label-light {
     font-family: var(--font-head);
-    font-size: .875rem; font-weight: 500;
-    color: var(--text-muted); margin-bottom: 1.5rem;
-    letter-spacing: .04em;
+    font-size: .6875rem; font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.65); margin-bottom: .75rem;
   }
   .section-title {
     font-family: var(--font-head);
     font-size: clamp(1.75rem, 3vw, 2.75rem);
     font-weight: 700; margin-bottom: 1.5rem;
-    line-height: 1.1;
+    line-height: 1.1; color: var(--text);
   }
-  .section-body {
-    font-size: 1.125rem; color: var(--text-muted);
-    max-width: 65ch; line-height: 1.75;
+  .section-title-light {
+    font-family: var(--font-head);
+    font-size: clamp(1.75rem, 3vw, 2.75rem);
+    font-weight: 700; margin-bottom: 1.5rem;
+    line-height: 1.1; color: #ffffff;
   }
+  .section-body { font-size: 1.125rem; color: var(--text-muted); max-width: 65ch; line-height: 1.75; }
+  .section-body-light { font-size: 1.125rem; color: rgba(255,255,255,0.80); max-width: 65ch; line-height: 1.75; }
 
   /* ── Use cases grid ── */
   .use-cases-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.5rem;
   }
   .use-case-tile {
-    background: var(--bg);
+    background: var(--bg-alt);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: 4px;
     padding: 1.75rem 1.5rem;
     transition: border-color .2s;
   }
-  .use-case-tile:hover { border-color: var(--accent); }
+  .use-case-tile:hover { border-color: var(--orange); }
   .use-case-icon {
-    display: block; font-size: 1.25rem;
-    color: var(--accent); margin-bottom: 1rem;
+    display: block; font-size: 1.5rem;
+    color: var(--orange); margin-bottom: 1rem;
   }
   .use-case-title {
-    font-family: var(--font-head); font-size: 1rem;
-    font-weight: 600; margin-bottom: .5rem;
+    font-family: var(--font-head); font-size: .9375rem;
+    font-weight: 600; margin-bottom: .5rem; color: var(--text);
   }
   .use-case-desc { font-size: .875rem; color: var(--text-muted); line-height: 1.6; }
 
@@ -324,117 +305,139 @@ const partners = [
   .alternating-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 5rem;
     align-items: center;
   }
   .alternating-layout--reverse { direction: rtl; }
   .alternating-layout--reverse > * { direction: ltr; }
+
+  /* ── Problem ── */
+  .problem-img {
+    width: 100%;
+    border-radius: 4px;
+    object-fit: cover;
+    max-height: 520px;
+  }
   .problem-list {
-    list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;
+    list-style: none; display: flex; flex-direction: column; gap: .85rem;
+    margin-bottom: 1.25rem;
   }
   .problem-list li {
     display: flex; align-items: flex-start; gap: .75rem;
-    font-size: 1.0625rem; color: var(--text-muted); line-height: 1.5;
+    font-size: 1rem; color: var(--text-muted); line-height: 1.5;
   }
   .problem-list li::before {
-    content: '—'; color: var(--accent);
+    content: '—'; color: var(--orange);
     font-weight: 700; flex-shrink: 0; margin-top: .05em;
   }
-  .visual-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) * 2);
-    padding: 3rem 2rem;
-    text-align: center;
+  .problem-footer {
+    font-size: .9375rem; color: var(--text-muted);
+    font-style: italic; margin-top: .5rem;
   }
-  .visual-icon { display: block; font-size: 3rem; margin-bottom: 1.5rem; }
-  .visual-caption { font-size: .9375rem; color: var(--text-muted); line-height: 1.65; }
+
+  /* ── Solution ── */
   .solution-img {
-    width: 100%; border-radius: calc(var(--radius) * 2);
+    width: 100%; border-radius: 4px;
     object-fit: cover; aspect-ratio: 4/3;
+  }
+  .solution-list {
+    list-style: none; display: flex; flex-direction: column; gap: .75rem;
+    margin-top: 1.5rem;
+  }
+  .solution-list li {
+    display: flex; align-items: flex-start; gap: .75rem;
+    font-size: 1rem; color: rgba(255,255,255,0.80); line-height: 1.5;
+  }
+  .solution-list li::before {
+    content: '—'; color: rgba(255,255,255,0.50);
+    font-weight: 700; flex-shrink: 0; margin-top: .05em;
   }
 
   /* ── GROOVE ── */
-  .groove-section { text-align: center; }
+  .groove-section { background: var(--bg); }
+  .groove-layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .groove-badge-wrap { display: flex; align-items: center; justify-content: center; }
+  .groove-mark {
+    width: 140px; height: auto;
+    object-fit: contain;
+    opacity: .9;
+  }
   .groove-title {
-    font-size: clamp(3rem, 8vw, 6rem);
-    letter-spacing: .06em; color: var(--accent);
+    color: var(--orange); letter-spacing: .04em;
   }
   .groove-sub {
-    font-family: var(--font-head); font-size: 1.125rem;
-    color: var(--text-muted); margin-bottom: 2rem;
+    font-family: var(--font-head); font-size: 1rem;
+    color: var(--text-muted); margin-bottom: 1.25rem; font-weight: 500;
   }
-  .groove-body { margin: 0 auto; }
-
-  /* ── Comparison grid ── */
-  .comparison-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-top: 3rem;
-    max-width: 700px;
-  }
-  .comparison-item {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    display: flex; flex-direction: column; gap: .5rem;
-  }
-  .comparison-item--accent { border-color: var(--accent); }
-  .comparison-duration {
-    font-family: var(--font-head); font-size: 1.75rem; font-weight: 700;
-    color: var(--text);
-  }
-  .comparison-item--accent .comparison-duration { color: var(--accent); }
-  .comparison-method { font-size: .875rem; color: var(--text-muted); }
 
   /* ── Partners ── */
   .partners-section .section-title { margin-bottom: 3rem; }
   .partners-row {
     display: flex; align-items: center; justify-content: center;
-    flex-wrap: wrap; gap: 3rem;
+    flex-wrap: wrap; gap: 3rem; margin-top: 2rem;
   }
   .partner-logo-wrap {
     display: flex; align-items: center; justify-content: center;
-    height: 48px;
+    height: 52px;
   }
+  /* Natural colors — no filter inversion */
   .partner-logo {
-    height: 100%; max-width: 140px; object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: .7; transition: opacity .2s;
+    height: 100%; max-width: 150px; object-fit: contain;
+    opacity: .85; transition: opacity .2s;
   }
   .partner-logo:hover { opacity: 1; }
 
   /* ── Newsletter ── */
   .newsletter-section {
-    background: #ffffff; color: #0a0a0a;
-    padding: 5rem 0; text-align: center;
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    padding: 4rem 0; text-align: center;
   }
-  .newsletter-section h2 { font-size: 2rem; font-weight: 700; margin-bottom: .75rem; }
-  .newsletter-section p { font-size: 1.125rem; color: #555; margin-bottom: 2rem; }
+  .newsletter-section h2 {
+    font-family: var(--font-head);
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: .75rem;
+  }
+  .newsletter-section p { font-size: 1.0625rem; color: var(--text-muted); margin-bottom: 1.75rem; }
   .newsletter-form { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
   .newsletter-form input {
-    padding: .75rem 1.25rem; border: 1px solid #ccc; border-radius: var(--radius);
-    font-size: 1rem; width: 280px;
+    padding: .75rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: .9375rem; width: 260px;
+    background: var(--bg); color: var(--text);
   }
+  .newsletter-form input:focus { outline: 2px solid var(--orange); border-color: var(--orange); }
   .newsletter-form button {
     padding: .75rem 1.75rem;
-    background: #384AD3; color: #fff;
-    border: none; border-radius: var(--radius);
-    font-size: 1rem; font-weight: 600; cursor: pointer;
-    transition: opacity .2s;
+    background: var(--teal); color: #fff;
+    border: none; border-radius: 4px;
+    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
+    cursor: pointer; transition: opacity .2s;
   }
   .newsletter-form button:hover { opacity: .85; }
 
   /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .groove-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .groove-badge-wrap { justify-content: flex-start; }
+  }
   @media (max-width: 768px) {
     .alternating-layout {
       grid-template-columns: 1fr;
       gap: 2.5rem;
     }
     .alternating-layout--reverse { direction: ltr; }
-    .comparison-grid { grid-template-columns: 1fr; max-width: 320px; }
+    .use-cases-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
     .use-cases-grid { grid-template-columns: 1fr; }
+    .hero-logo { width: min(280px, 80vw); }
   }
 </style>

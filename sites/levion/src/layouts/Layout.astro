@@ -35,16 +35,27 @@ const siteName = 'Levion Materials';
   <style is:global>
     /* ── Design tokens ──────────────────────────────────────── */
     :root {
-      --bg:          #0a0d1a;
-      --bg-card:     #10152a;
-      --bg-nav:      rgba(10,13,26,0.90);
-      --border:      #1c2340;
-      --text:        #e6eaf7;
-      --text-muted:  #6a7aaa;
-      --accent:      #4f8fff;
-      --accent-dark: #3a7aff;
-      --accent-dim:  rgba(79,143,255,0.12);
+      /* Palette */
+      --bg:          #ffffff;
+      --bg-alt:      #f5f5f7;
+      --bg-card:     #eeeff3;
+      --bg-nav:      rgba(255,255,255,0.95);
+
+      /* Levion brand — from the official 4-color logo */
+      --teal:        #1b4565;   /* "LE" letterforms */
+      --orange:      #c86010;   /* V-mark + "ION" letterforms */
+
+      /* Section backgrounds */
+      --rust:        #b84a0c;   /* THE VISION section — darker rust orange */
+
+      /* UI tokens */
+      --border:      #e0e2ea;
+      --text:        #1a1a1a;
+      --text-muted:  #666677;
+      --accent:      #c86010;           /* primary CTA = brand orange */
+      --accent-dim:  rgba(200,96,16,0.10);
       --radius:      8px;
+
       --font-head:   'Space Grotesk', system-ui, sans-serif;
       --font-body:   'Inter', system-ui, sans-serif;
     }

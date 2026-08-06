@@ -51,7 +51,7 @@ const members = [
     font-family: var(--font-head);
     font-size: .6875rem; font-weight: 600;
     letter-spacing: .18em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: .75rem;
+    color: var(--orange); margin-bottom: .75rem;
   }
   .page-title {
     font-family: var(--font-head);
@@ -67,20 +67,20 @@ const members = [
     gap: 2rem;
   }
   .team-card {
-    background: var(--bg-card);
+    background: var(--bg-alt);
     border: 1px solid var(--border);
-    border-radius: calc(var(--radius) * 2);
+    border-radius: 4px;
     overflow: hidden;
     transition: border-color .2s, transform .2s;
   }
   .team-card:hover {
-    border-color: var(--accent-dim);
+    border-color: var(--orange);
     transform: translateY(-3px);
   }
   .team-photo-wrap {
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: var(--bg);
+    background: var(--bg-card);
   }
   .team-photo {
     width: 100%; height: 100%;
@@ -93,5 +93,5 @@ const members = [
     font-family: var(--font-head); font-size: 1rem; font-weight: 600;
     margin-bottom: .25rem;
   }
-  .team-role { font-size: .875rem; color: var(--accent); }
+  .team-role { font-size: .875rem; color: var(--orange); }
 </style>

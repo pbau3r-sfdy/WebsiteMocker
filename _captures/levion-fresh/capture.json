@@ -1,0 +1,298 @@
+{
+  "slug": "levion-fresh",
+  "source": "https://www.levion-materials.com",
+  "capturedAt": "2026-08-06",
+  "nav": [
+    {
+      "text": "HOME",
+      "href": "https://www.levion-materials.com"
+    },
+    {
+      "text": "TEAM",
+      "href": "https://www.levion-materials.com/team"
+    },
+    {
+      "text": "NEWS",
+      "href": "https://www.levion-materials.com/news"
+    },
+    {
+      "text": "CONTACT",
+      "href": "https://www.levion-materials.com/contact"
+    }
+  ],
+  "tokens": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "text": "rgb(0, 0, 0)",
+    "accent": "rgb(255, 255, 255)",
+    "radius": "24px",
+    "bg-nav": "rgba(0, 0, 0, 0)",
+    "fontHead": "wfont_f941ec_7b8b892c305e412dbd37a4fcbf1ee3f4, wf_7b8b892c305e412dbd37a4fcb, orig_utendo_bold",
+    "fontBody": "Arial, Helvetica, sans-serif"
+  },
+  "assets": {
+    "images": [
+      "media_b50084_9d2b4380c6e74b5aa9744e6111cf8d3b_mv2.png",
+      "session_1px.png",
+      "shapes_11062b_1b86d267092042aeb9d008fa45134826.svg",
+      "shapes_11062b_f8fdd37fbe774acb94ee94d8bdfaa10f.svg",
+      "shapes_200a4078fef14e4bae124c4960c87299.svg",
+      "shapes_2bcf57dc5bcf4a86a10ae46bed3a8d7c.svg",
+      "shapes_d8c69bb8b7f54ea5a197a235f8853f65.svg",
+      "w_1029_h_920_al_c_q_90_usm_0.66_1.00_0.01_enc_avif_quality_auto_Levion_Design_20",
+      "w_1440_h_896_al_c_q_90_usm_0.66_1.00_0.01_enc_avif_quality_auto_b50084_735a6e079",
+      "w_1440_h_900_al_c_q_85_usm_0.33_1.00_0.00_enc_avif_quality_auto_b50084_9f8fa4a86",
+      "w_1440_h_917_al_c_q_90_usm_0.66_1.00_0.01_enc_avif_quality_auto_b50084_f87aaa267",
+      "w_147_h_83_al_c_q_80_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_b50084_9f8f",
+      "w_159_h_67_al_c_q_80_usm_0.66_1.00_0.01_enc_avif_quality_auto_BSGN-Visual-March-",
+      "w_173_h_97_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_b50084_9cee14e01b1",
+      "w_188_h_68_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_ESA_logo_2020_Deep",
+      "w_235_h_67_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_320px-DLR-Logo_svg",
+      "w_24_h_24_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_11062b_60c5fc4a3ecd",
+      "w_24_h_24_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_11062b_6e9638ad803e",
+      "w_256_h_47_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_b50084_bfcfa9b2949",
+      "w_292_h_219_fp_0.50_0.50_q_95_enc_avif_quality_auto_b50084_5120eb06e5c34b28ab07b",
+      "w_292_h_219_fp_0.50_0.50_q_95_enc_avif_quality_auto_b50084_7681e8844dc1404586a86",
+      "w_333_h_250_fp_0.50_0.50_q_35_blur_30_enc_avif_quality_auto_b50084_5120eb06e5c34",
+      "w_333_h_250_fp_0.50_0.50_q_35_blur_30_enc_avif_quality_auto_b50084_7681e8844dc14",
+      "w_354_h_496_al_c_q_80_enc_avif_quality_auto_26_2004_2028_20Levion_20GROOVE.jpg",
+      "w_359_h_359_al_c_q_80_usm_0.66_1.00_0.01_enc_avif_quality_auto_Levion_Color_3.jp",
+      "w_359_h_359_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_hf_20260504_10063",
+      "w_359_h_359_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_hf_20260504_10112",
+      "w_359_h_359_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_hf_20260504_10150",
+      "w_359_h_359_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_hf_20260504_10182",
+      "w_359_h_359_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_hf_20260504_10304",
+      "w_359_h_359_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_hf_20260504_10391",
+      "w_422_h_236_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_Levion_Logo_4c_fa",
+      "w_49_h_25_al_c_q_85_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_b50084_735a6",
+      "w_49_h_37_al_c_q_85_usm_0.66_1.00_0.01_blur_2_enc_avif_quality_auto_b50084_f87aa",
+      "w_665_h_325_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_Levion_Design_20M",
+      "w_82_h_79_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_002-radiation.png",
+      "w_82_h_79_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_003-quantum.png",
+      "w_82_h_79_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_b50084_be8494e0204a",
+      "w_845_h_755_al_c_q_90_usm_0.66_1.00_0.01_enc_avif_quality_auto_b50084_ceed29298d",
+      "w_97_h_53_al_c_q_85_usm_0.66_1.00_0.01_enc_avif_quality_auto_Levion_Logo_4c_fade"
+    ],
+    "videos": [
+      "mp4_file.mp4"
+    ],
+    "fonts": [
+      "v1_avenir-lt-w01_35-light1475496.woff2",
+      "woff2_file.woff2"
+    ]
+  },
+  "pages": {
+    "/": {
+      "sections": [
+        {
+          "heading": "",
+          "text": "HOME TEAM NEWS CONTACT",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "THE VISION",
+          "text": "ADVANCED MATERIALS MADE IN SPACE THE VISION Materials Beyond Gravity Growing perfect crystals requires an environment Earth cannot provide. ​ Levion Materials (currently under incorporation) is being established as an independent company dedicated to crystal growth in true microgravity — achievable only in space. THE MISSION Why Crystals Matter Many modern technologies rely on crystals – from electronics to lasers to sensors to energy systems. The performance of these technologies depends on how perfect the crystal is. HIGH POWER ELECTRONICS OPTICS & LASERS SENSORS RADIATION DETECTORS ENERGY &",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": true
+        },
+        {
+          "heading": "",
+          "text": "ADVANCED MATERIALS MADE IN SPACE",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "THE VISION",
+          "text": "THE VISION Materials Beyond Gravity Growing perfect crystals requires an environment Earth cannot provide. ​ Levion Materials (currently under incorporation) is being established as an independent company dedicated to crystal growth in true microgravity — achievable only in space.",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "THE MISSION",
+          "text": "THE MISSION Why Crystals Matter Many modern technologies rely on crystals – from electronics to lasers to sensors to energy systems. The performance of these technologies depends on how perfect the crystal is. HIGH POWER ELECTRONICS OPTICS & LASERS SENSORS RADIATION DETECTORS ENERGY & QUANTUM TECHNOLOGIES THE PROBLEM The Problem with Gravity On Earth, gravity constantly acts on molten materials during crystal growth. This leads to: uneven composition internal stress defects & imperfections on atomic up to macroscopic level some material compositions with technological potential are impossible ",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "HIGH POWER ELECTRONICS",
+          "text": "HIGH POWER ELECTRONICS",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "ENERGY & QUANTUM TECHNOLOGIES",
+          "text": "ENERGY & QUANTUM TECHNOLOGIES",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "THE PROBLEM",
+          "text": "THE PROBLEM The Problem with Gravity On Earth, gravity constantly acts on molten materials during crystal growth. This leads to: uneven composition internal stress defects & imperfections on atomic up to macroscopic level some material compositions with technological potential are impossible to create ​ Even in the best laboratories, gravity cannot be switched off.",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "THE SOLUTION",
+          "text": "THE SOLUTION The Change with Microgravity In microgravity, materials behave differently: no sedimentation no buoyancy-driven convection more uniform growth​ Crystals can form in a way that is impossible on Earth. ​ Imagine cooking soup in a pot. On Earth, hot liquid rises, cool liquid sinks, ingredients drift, and every change in temperature restirs the pot. The same forces shape molten material during crystal growth — and they cannot be switched off in a lab. In orbit, those forces vanish. The soup stays still. Heat moves through it without convection. Crystals can form without the turbulence",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "TRACTION",
+          "text": "TRACTION Growth Parameter Observation & Validation Experiment GROOVE Levion’s first in-space materials mission, developed in the ESA Business Space Generation Network (BSGN) accelerator. Mission #01 prepares the validation flight for Levion’s microgravity crystal growth process.",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "TRUE MICROGRAVITY ONLY EXISTS IN SPACE",
+          "text": "TRUE MICROGRAVITY ONLY EXISTS IN SPACE Why Space is essential Drop towers, parabolic flights, sounding rockets, or simulations can reduce gravity — but only for seconds. ​ Only in orbit can microgravity be sustained for days, weeks, or longer. ​ Space is not a shortcut. It is a requirement.",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": true
+        },
+        {
+          "heading": "THANKS TO OUR",
+          "text": "THANKS TO OUR Partners & Supporters",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "NEWSLETTER",
+          "text": "IMPRINT CONTACT PRIVACY POLICY NEWSLETTER Subscribe for the Levion newsletter. E-Mail address Subscribe",
+          "hasImage": true,
+          "hasForm": true,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "E-Mail address Subscribe",
+          "hasImage": false,
+          "hasForm": true,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/team": {
+      "sections": [
+        {
+          "heading": "",
+          "text": "HOME TEAM NEWS CONTACT",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "The Team",
+          "text": "The Team Experts on Earth and in Space",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "NEWSLETTER",
+          "text": "IMPRINT CONTACT PRIVACY POLICY NEWSLETTER Subscribe for the Levion newsletter. E-Mail address Subscribe",
+          "hasImage": true,
+          "hasForm": true,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "E-Mail address Subscribe",
+          "hasImage": false,
+          "hasForm": true,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/news": {
+      "sections": [
+        {
+          "heading": "",
+          "text": "HOME TEAM NEWS CONTACT",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "GROOVE: From Microgravity Research to Commercial Application",
+          "text": "All Posts GROOVE: From Microgravity Research to Commercial Application We are pleased to introduce “GROOVE” – our current project within the ESA BSGN Business in Space Growth Network Advanced Materials and In-orbit Manufacturing Industry Accelerator. With GROOVE (short for “Growth Parameter Observation & Validation Experiment”), we take a first, focused step toward a new approach to advanced materials production: transferring key manufacturing processes from Earth into space. From Concept to Application For decades, crystal growth under microgr Levion Materials 24. Apr. 2 Min. Lesezeit 1 „Gefä",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "NEWSLETTER",
+          "text": "IMPRINT CONTACT PRIVACY POLICY NEWSLETTER Subscribe for the Levion newsletter. E-Mail address Subscribe",
+          "hasImage": true,
+          "hasForm": true,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "E-Mail address Subscribe",
+          "hasImage": false,
+          "hasForm": true,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/contact": {
+      "sections": [
+        {
+          "heading": "",
+          "text": "HOME TEAM NEWS CONTACT",
+          "hasImage": true,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Contact",
+          "text": "Contact Levion Materials c/o Starflight Dynamics UAB Gyneju str. 4-333, 01110 Vilnius, Lithuania lab@levion-materials.com First Name Last Name Email Message Send",
+          "hasImage": true,
+          "hasForm": true,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "First Name Last Name Email Message Send",
+          "hasImage": false,
+          "hasForm": true,
+          "hasVideo": false
+        },
+        {
+          "heading": "NEWSLETTER",
+          "text": "IMPRINT CONTACT PRIVACY POLICY NEWSLETTER Subscribe for the Levion newsletter. E-Mail address Subscribe",
+          "hasImage": true,
+          "hasForm": true,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "E-Mail address Subscribe",
+          "hasImage": false,
+          "hasForm": true,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    }
+  }
+}

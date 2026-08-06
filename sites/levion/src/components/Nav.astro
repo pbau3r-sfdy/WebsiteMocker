@@ -11,7 +11,7 @@ const logoAlt = 'Levion Materials';
 <nav class="nav">
   <div class="nav-inner">
     <a href={`${b}/`} class="nav-logo" aria-label=`${logoAlt} home`>
-      <img src={`${b}/images/logo-white.png`} alt={logoAlt} height="32" />
+      <img src={`${b}/images/logo-color.png`} alt={logoAlt} height="28" />
     </a>
     <ul class="nav-links">
       {navLinks.map(link => (
@@ -58,11 +58,11 @@ const logoAlt = 'Levion Materials';
   }
   .nav-links a {
     font-family: var(--font-head);
-    font-size: .875rem; font-weight: 500;
-    letter-spacing: .04em; text-transform: uppercase;
+    font-size: .875rem; font-weight: 600;
+    letter-spacing: .06em; text-transform: uppercase;
     color: var(--text-muted); transition: color .2s;
   }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover { color: var(--orange); }
   .nav-toggle {
     display: none; flex-direction: column; gap: 5px;
     background: none; border: none; cursor: pointer; padding: 4px;
@@ -75,13 +75,15 @@ const logoAlt = 'Levion Materials';
     display: none; list-style: none; flex-direction: column;
     padding: 1rem 2rem 1.5rem; gap: 1rem;
     border-top: 1px solid var(--border);
+    background: var(--bg);
   }
   .nav-mobile.open { display: flex; }
   .nav-mobile a {
-    font-family: var(--font-head); font-size: 1rem; font-weight: 500;
+    font-family: var(--font-head); font-size: 1rem; font-weight: 600;
     color: var(--text-muted); transition: color .2s;
+    text-transform: uppercase; letter-spacing: .06em;
   }
-  .nav-mobile a:hover { color: var(--text); }
+  .nav-mobile a:hover { color: var(--orange); }
   @media (max-width: 640px) {
     .nav-links { display: none; }
     .nav-toggle { display: flex; }
