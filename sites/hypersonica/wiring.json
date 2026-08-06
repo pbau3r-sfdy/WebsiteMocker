@@ -1,19 +1,19 @@
 {
-  "slug": "levion",
-  "name": "Levion Materials",
-  "domain": "www.levion-materials.com",
-  "accent": "#4f8fff",
-  "contact": "lab@levion-materials.com",
+  "slug": "hypersonica",
+  "name": "Hypersonica",
+  "domain": "hypersonica.space",
+  "accent": "#3341c2",
+  "contact": "contact@hypersonica.space",
   "stage": 2,
-  "site": "levion",
-  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/levion",
+  "site": "hypersonica",
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/hypersonica",
   "last_deploy": null,
   "newsletter": { "service": "formspree", "endpoint": "placeholder", "status": "pending" },
   "socials": {
     "twitter": null,
-    "linkedin": "levion-materials",
-    "instagram": "levion_materials",
-    "status": "set"
+    "linkedin": "hypersonica",
+    "instagram": null,
+    "status": "pending"
   },
   "forms": {
     "contact":           { "service": "formspree", "id": "placeholder", "status": "pending" },
@@ -22,9 +22,9 @@
   "analytics": { "status": "skipped" },
   "legal": {
     "impressum": "complete",
-    "privacy":   "complete"
+    "privacy":   "pending"
   },
   "robots": "disallow",
-  "capture": "levion",
-  "notes": "Crystal growth in space. Spin-out from Starflight Dynamics. Built from capture 2026-08-06."
+  "capture": "hypersonica",
+  "notes": "European hypersonic defence company. Raises €23.3M Series A, Feb 2026. Domain: hypersonica.space."
 }
