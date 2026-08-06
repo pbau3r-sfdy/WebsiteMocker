@@ -10,7 +10,7 @@ const navLinks = [
 <nav class="nav">
   <div class="nav-inner">
     <a href={`${b}/`} class="nav-logo" aria-label="Levion Materials home">
-      <img src={`${b}/images/logo-color.png`} alt="Levion Materials" height="30" />
+      <img src={`${b}/images/logo-color-sm.png`} alt="Levion Materials" height="34" />
     </a>
     <ul class="nav-links">
       {navLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
@@ -31,7 +31,7 @@ const navLinks = [
 <style>
   .nav { position: fixed; top:0; left:0; right:0; z-index:100; background:var(--bg-nav); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
   .nav-inner { max-width:1200px; margin:0 auto; padding:0 2rem; height:64px; display:flex; align-items:center; justify-content:space-between; }
-  .nav-logo img { height:30px; width:auto; object-fit:contain; }
+  .nav-logo img { height:34px; width:auto; object-fit:contain; }
   .nav-links { display:flex; list-style:none; gap:2.5rem; }
   .nav-links a { font-family:var(--font-head); font-size:.875rem; font-weight:500; letter-spacing:.04em; text-transform:uppercase; color:var(--text-muted); transition:color .2s; }
   .nav-links a:hover { color:var(--accent); }
