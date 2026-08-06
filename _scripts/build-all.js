@@ -108,7 +108,7 @@ const succeeded = [];
 for (const site of toBuild) {
   const siteDir  = join(sitesDir, site);
   const siteDist = join(siteDir, 'dist');
-  const outDir   = join(distDir, 'WebsiteMocker', site);
+  const outDir   = join(distDir, site);
 
   header(`Building site: ${site}`);
 
@@ -129,7 +129,7 @@ for (const site of toBuild) {
 
     mkdirSync(outDir, { recursive: true });
     cpSync(siteDist, outDir, { recursive: true });
-    console.log(`✓ Copied ${site}/dist → dist/WebsiteMocker/${site}/`);
+    console.log(`✓ Copied ${site}/dist → dist/${site}/`);
     succeeded.push(site);
 
   } catch (err) {
@@ -144,8 +144,8 @@ for (const site of toBuild) {
 console.log(`\n${'═'.repeat(50)}`);
 console.log(' Build summary');
 console.log('═'.repeat(50));
-console.log(`  Dashboard : dist/WebsiteMocker/`);
-succeeded.forEach(s  => console.log(`  ✓ ${s.padEnd(18)} dist/WebsiteMocker/${s}/`));
+console.log(`  Dashboard : dist/`);
+succeeded.forEach(s  => console.log(`  ✓ ${s.padEnd(18)} dist/${s}/`));
 toSkip.forEach(({ name }) => console.log(`  ⊘ ${name.padEnd(18)} skipped`));
 failed.forEach(s    => console.log(`  ✖ ${s.padEnd(18)} FAILED`));
 
