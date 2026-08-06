@@ -1,0 +1,430 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="TnT Ventures"
+  description="Independent angel investor backing exceptional early-stage founders building technology for supply chains."
+>
+  <Nav />
+
+  <!-- ══════════════════════════════════════════════════ HERO -->
+  <section class="hero">
+    <div class="hero-inner container">
+      <div class="hero-left">
+        <p class="hero-eyebrow">Independent angel investor · Munich</p>
+        <h1 class="hero-headline">
+          Backing the systems behind tomorrow's supply chains.
+        </h1>
+        <p class="hero-body">
+          TnT Ventures invests in exceptional early-stage founders building
+          technology for supply chains—and selected opportunities where our
+          operating experience creates an edge.
+        </p>
+        <div class="hero-tags">
+          <span>Supply Chain Technology</span>
+          <span class="divider">|</span>
+          <span>Early Stage</span>
+          <span class="divider">|</span>
+          <span>Operator Perspective</span>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <!-- Constellation / network graph SVG -->
+        <svg class="constellation" viewBox="0 0 520 480" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+          <!-- edges -->
+          <line x1="260" y1="120" x2="380" y2="60"  stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="260" y1="120" x2="420" y2="160" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="260" y1="120" x2="160" y2="80"  stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="260" y1="120" x2="140" y2="220" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="260" y1="120" x2="340" y2="240" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="380" y1="60"  x2="480" y2="100" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="380" y1="60"  x2="420" y2="160" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="420" y1="160" x2="460" y2="280" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="420" y1="160" x2="340" y2="240" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="340" y1="240" x2="460" y2="280" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="340" y1="240" x2="280" y2="360" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="140" y1="220" x2="200" y2="340" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="140" y1="220" x2="60"  y2="300" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="200" y1="340" x2="280" y2="360" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="460" y1="280" x2="400" y2="380" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="280" y1="360" x2="400" y2="380" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="160" y1="80"  x2="80"  y2="40"  stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="480" y1="100" x2="500" y2="200" stroke="#b8b3a8" stroke-width="1"/>
+          <line x1="500" y1="200" x2="460" y2="280" stroke="#b8b3a8" stroke-width="1"/>
+          <!-- nodes -->
+          <circle cx="260" cy="120" r="4" fill="#a09a90"/>
+          <circle cx="380" cy="60"  r="3" fill="#a09a90"/>
+          <circle cx="420" cy="160" r="3" fill="#a09a90"/>
+          <circle cx="160" cy="80"  r="3" fill="#a09a90"/>
+          <circle cx="140" cy="220" r="3" fill="#a09a90"/>
+          <circle cx="340" cy="240" r="4" fill="#a09a90"/>
+          <circle cx="480" cy="100" r="2.5" fill="#a09a90"/>
+          <circle cx="460" cy="280" r="3" fill="#a09a90"/>
+          <circle cx="200" cy="340" r="2.5" fill="#a09a90"/>
+          <circle cx="280" cy="360" r="3" fill="#a09a90"/>
+          <circle cx="80"  cy="40"  r="2.5" fill="#a09a90"/>
+          <circle cx="60"  cy="300" r="2.5" fill="#a09a90"/>
+          <circle cx="400" cy="380" r="3" fill="#a09a90"/>
+          <circle cx="500" cy="200" r="2.5" fill="#a09a90"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ PORTFOLIO -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <p class="section-label">Selected portfolio</p>
+      <div class="portfolio-grid">
+        <a href="https://barkawi.com" target="_blank" rel="noopener" class="portfolio-item">
+          Barkawi Technologies <span class="arrow">→</span>
+        </a>
+        <div class="portfolio-divider"></div>
+        <a href="https://starflight-dynamics.com" target="_blank" rel="noopener" class="portfolio-item">
+          Starflight Dynamics <span class="arrow">→</span>
+        </a>
+        <div class="portfolio-divider"></div>
+        <span class="portfolio-item portfolio-tba">To be announced</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ FOCUS -->
+  <section class="focus" id="focus">
+    <div class="focus-inner container">
+      <div class="focus-left">
+        <p class="section-label">What we look for</p>
+        <h2 class="focus-headline">
+          Technology that makes complex systems work better.
+        </h2>
+      </div>
+      <div class="focus-right">
+        <p class="focus-intro">
+          We back ambitious founders at the beginning of their journey—when
+          conviction, speed and relevant operating experience matter most.
+        </p>
+        <div class="focus-items">
+          <div class="focus-item">
+            <span class="focus-num">01</span>
+            <h3>Supply-chain technology</h3>
+            <p>Software, data and automation that improve the flow of goods, information and decisions.</p>
+          </div>
+          <div class="focus-item">
+            <span class="focus-num">02</span>
+            <h3>Selected adjacencies</h3>
+            <p>Industrial, deep-tech and infrastructure opportunities where our experience creates a genuine advantage.</p>
+          </div>
+          <div class="focus-item">
+            <span class="focus-num">03</span>
+            <h3>Early partnership</h3>
+            <p>Primarily pre-seed and seed, with a long-term view and direct access to entrepreneurial support.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner container">
+      <div class="about-left">
+        <p class="section-label">Behind TnT Ventures</p>
+        <h2 class="about-name">Robert Kunze</h2>
+      </div>
+      <div class="about-right">
+        <p class="about-lead">
+          Investor and company builder with more than 15 years of experience
+          at the intersection of supply chains, technology and entrepreneurship.
+        </p>
+        <p class="about-body">
+          Robert works with founders on strategy, business models, partnerships,
+          financing and the practical challenges of building enduring companies.
+          TnT Ventures is his independent angel investment vehicle.
+        </p>
+        <div class="about-links">
+          <a href="mailto:rk@tnt-ventures.de">rk@tnt-ventures.de →</a>
+          <a href="https://linkedin.com/in/robertkunze" target="_blank" rel="noopener">LinkedIn →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ CTA -->
+  <section class="cta">
+    <div class="container">
+      <p class="cta-label">Start a conversation</p>
+      <h2 class="cta-headline">
+        Building the next layer of supply-chain technology?
+      </h2>
+      <a href="mailto:rk@tnt-ventures.de" class="cta-link">Let's talk →</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Shared ── */
+  .section-label {
+    font-size: .8125rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    letter-spacing: .01em;
+  }
+
+  /* ══ HERO ══ */
+  .hero {
+    background: var(--bg);
+    padding-top: 60px; /* nav height */
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .hero-eyebrow {
+    font-size: .8125rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .hero-headline {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 14ch;
+  }
+  .hero-body {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 46ch;
+    margin-bottom: 2rem;
+  }
+  .hero-tags {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    font-size: .8125rem;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+  }
+  .hero-tags .divider { color: var(--border); }
+
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .constellation {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    opacity: .9;
+  }
+
+  /* ══ PORTFOLIO ══ */
+  .portfolio {
+    border-bottom: 1px solid var(--border);
+    padding: 3.5rem 0;
+    background: var(--bg);
+  }
+  .portfolio-grid {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: .25rem;
+  }
+  .portfolio-item {
+    flex: 1;
+    font-family: var(--font-head);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    color: var(--text);
+    padding: 1rem 0;
+    transition: color .15s;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  a.portfolio-item:hover { color: var(--accent); }
+  .portfolio-tba { color: var(--text-muted); font-style: italic; }
+  .arrow { font-size: 1em; color: var(--accent); }
+  .portfolio-divider {
+    width: 1px;
+    height: 3rem;
+    background: var(--border);
+    flex-shrink: 0;
+    margin: 0 2.5rem;
+  }
+
+  /* ══ FOCUS ══ */
+  .focus {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 7rem 0;
+  }
+  .focus-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .focus-headline {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    color: var(--text);
+    margin-bottom: 0;
+  }
+  .focus-intro {
+    font-size: 1.125rem;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+    max-width: 50ch;
+  }
+  .focus-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 1.5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+  }
+  .focus-item {
+    padding-right: 1rem;
+  }
+  .focus-num {
+    display: block;
+    font-size: .75rem;
+    color: var(--accent);
+    margin-bottom: .75rem;
+    font-weight: 600;
+  }
+  .focus-item h3 {
+    font-family: var(--font-head);
+    font-size: .9375rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: .5rem;
+    line-height: 1.3;
+  }
+  .focus-item p {
+    font-size: .8125rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ══ ABOUT ══ */
+  .about {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 7rem 0;
+  }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .about-name {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    color: var(--text);
+  }
+  .about-lead {
+    font-size: 1.25rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 50ch;
+  }
+  .about-body {
+    font-size: .9375rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 54ch;
+    margin-bottom: 2rem;
+  }
+  .about-links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .about-links a {
+    font-family: var(--font-head);
+    font-size: .9375rem;
+    font-weight: 700;
+    color: var(--text);
+    transition: color .15s;
+  }
+  .about-links a:hover { color: var(--accent); }
+
+  /* ══ CTA ══ */
+  .cta {
+    background: var(--accent);
+    padding: 7rem 0;
+  }
+  .cta-label {
+    font-size: .8125rem;
+    color: rgba(255,255,255,.7);
+    margin-bottom: 2rem;
+  }
+  .cta-headline {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -.025em;
+    color: #fff;
+    max-width: 14ch;
+    margin-bottom: 2.5rem;
+  }
+  .cta-link {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-size: .9375rem;
+    font-weight: 700;
+    color: #fff;
+    border-bottom: 1.5px solid rgba(255,255,255,.5);
+    padding-bottom: .2rem;
+    transition: border-color .15s;
+  }
+  .cta-link:hover { border-color: #fff; }
+
+  /* ══ RESPONSIVE ══ */
+  @media (max-width: 900px) {
+    .hero-inner   { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-right   { display: none; }
+    .focus-inner  { grid-template-columns: 1fr; gap: 3rem; }
+    .about-inner  { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  @media (max-width: 640px) {
+    .portfolio-grid { flex-direction: column; align-items: flex-start; gap: .5rem; }
+    .portfolio-divider { width: 100%; height: 1px; margin: .5rem 0; }
+    .focus-items  { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>

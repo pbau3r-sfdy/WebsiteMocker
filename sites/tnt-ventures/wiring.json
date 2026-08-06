@@ -1,0 +1,21 @@
+{
+  "site":         "tnt-ventures",
+  "stage":        1,
+  "capture":      "tnt-ventures",
+  "domain":       "tnt-ventures.de",
+  "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/tnt-ventures",
+  "last_deploy":  null,
+  "newsletter":   { "service": null, "endpoint": null, "status": null },
+  "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": null },
+  "forms": {
+    "contact":           { "service": null, "id": null, "status": null },
+    "newsletter_signup": { "service": null, "status": null }
+  },
+  "analytics":    { "status": "skipped" },
+  "legal": {
+    "impressum": "incomplete",
+    "privacy":   "incomplete"
+  },
+  "robots": "disallow",
+  "notes":  "Single-page design. Cream bg #f4f0e8, blue accent #2457ff, sharp corners. Sections: hero, portfolio strip, focus (3 pillars), about (Robert Kunze), CTA. Constellation SVG in hero. /portfolio /team /about /contact /news all scroll to anchors on index."
+}

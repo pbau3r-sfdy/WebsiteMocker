@@ -1,0 +1,13 @@
+{
+  "name": "@websitemocker/tnt-ventures",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port 4362",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  }
+}

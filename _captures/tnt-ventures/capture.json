@@ -1,0 +1,109 @@
+{
+  "slug": "tnt-ventures",
+  "source": "https://tnt-ventures.de",
+  "capturedAt": "2026-08-06",
+  "nav": [
+    {
+      "text": "TnT Ventures",
+      "href": "#top"
+    },
+    {
+      "text": "Focus",
+      "href": "#focus"
+    },
+    {
+      "text": "Portfolio",
+      "href": "#portfolio"
+    },
+    {
+      "text": "About",
+      "href": "#about"
+    },
+    {
+      "text": "Start a conversation",
+      "href": "mailto:rk@tnt-ventures.de"
+    }
+  ],
+  "tokens": {
+    "bg": "rgb(244, 240, 232)",
+    "text": "rgb(20, 20, 20)",
+    "accent": "#2457ff",
+    "radius": "0px",
+    "bg-nav": "rgba(0, 0, 0, 0)",
+    "fontHead": "Arial, Helvetica, sans-serif",
+    "fontBody": "Arial, Helvetica, sans-serif"
+  },
+  "assets": {
+    "images": [],
+    "videos": [],
+    "fonts": []
+  },
+  "pages": {
+    "/": {
+      "sections": [
+        {
+          "heading": "Backing the systems behind tomorrow's supply chains.",
+          "text": "Independent angel investor · Munich Backing the systems behind tomorrow's supply chains. TnT Ventures invests in exceptional early-stage founders building technology for supply chains—and selected opportunities where our operating experience creates an edge. Supply Chain Technology Early Stage Operator Perspective",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "",
+          "text": "Selected portfolio Barkawi Technologies → Starflight Dynamics → To be announced",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Technology that makes complex systems work better.",
+          "text": "What we look for Technology that makes complex systems work better. We back ambitious founders at the beginning of their journey—when conviction, speed and relevant operating experience matter most. 01 Supply-chain technology Software, data and automation that improve the flow of goods, information and decisions. 02 Selected adjacencies Industrial, deep-tech and infrastructure opportunities where our experience creates a genuine advantage. 03 Early partnership Primarily pre-seed and seed, with a long-term view and direct access to entrepreneurial support.",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Robert Kunze",
+          "text": "Behind TnT Ventures Robert Kunze Investor and company builder with more than 15 years of experience at the intersection of supply chains, technology and entrepreneurship. Robert works with founders on strategy, business models, partnerships, financing and the practical challenges of building enduring companies. TnT Ventures is his independent angel investment vehicle. rk@tnt-ventures.de → LinkedIn →",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        },
+        {
+          "heading": "Building the next layer of supply-chain technology?",
+          "text": "Start a conversation Building the next layer of supply-chain technology? Let's talk →",
+          "hasImage": false,
+          "hasForm": false,
+          "hasVideo": false
+        }
+      ],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/portfolio": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/team": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/about": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/contact": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/news": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    }
+  }
+}

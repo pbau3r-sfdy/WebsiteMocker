@@ -1,0 +1,77 @@
+---
+export interface Props {
+  title:        string;
+  description?: string;
+  image?:       string;
+}
+
+const {
+  title,
+  description = 'TnT Ventures — Independent angel investor backing supply-chain technology founders.',
+  image,
+} = Astro.props;
+const canonicalURL = Astro.url;
+const siteName = 'TnT Ventures';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+
+  <meta property="og:title"       content={`${title} — ${siteName}`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url"         content={canonicalURL} />
+  <meta property="og:type"        content="website" />
+  {image && <meta property="og:image" content={image} />}
+
+  <title>{title} — {siteName}</title>
+
+  <style is:global>
+    /* ── Design tokens ── */
+    :root {
+      --bg:          #f4f0e8;
+      --bg-alt:      #ede9e0;
+      --bg-nav:      transparent;
+      --text:        #141414;
+      --text-muted:  #6b6b6b;
+      --text-light:  #999;
+      --accent:      #2457ff;
+      --border:      #d8d4cb;
+      --radius:      0px;
+      --font-head:   Arial, Helvetica, sans-serif;
+      --font-body:   Arial, Helvetica, sans-serif;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <slot />
+</body>
+</html>
