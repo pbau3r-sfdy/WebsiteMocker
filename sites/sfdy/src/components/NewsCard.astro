@@ -1,51 +1,111 @@
 ---
-export interface Props {
-  title:   string;
-  date:    Date;
+interface Props {
+  title: string;
+  date: Date;
   summary: string;
-  slug:    string;
-  image?:  string;
+  slug: string;
+  image?: string;
 }
 
 const { title, date, summary, slug, image } = Astro.props;
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
-const formatted = date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+
+const formatted = date.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
 ---
 
-<article class="news-card">
-  {image && (
-    <a href={`${b}/news/${slug}`} class="card-image-link" tabindex="-1" aria-hidden="true">
-      <img src={`${b}${image}`} alt="" class="card-image" loading="lazy" />
-    </a>
-  )}
-  <div class="card-body">
-    <time class="card-date" datetime={date.toISOString().slice(0, 10)}>{formatted}</time>
-    <h3 class="card-title"><a href={`${b}/news/${slug}`}>{title}</a></h3>
-    <p class="card-summary">{summary}</p>
-    <a href={`${b}/news/${slug}`} class="card-read-more">Read more →</a>
+<a href={`${b}/news/${slug}`} class="card">
+  <div class="card-image">
+    {image
+      ? <img src={`${b}${image}`} alt={title} loading="lazy" />
+      : <div class="card-placeholder"><span>✦</span></div>
+    }
   </div>
-</article>
+  <div class="card-body">
+    <time class="card-date" datetime={date.toISOString()}>{formatted}</time>
+    <h3 class="card-title">{title}</h3>
+    <p class="card-summary">{summary}</p>
+    <span class="card-read">Read more →</span>
+  </div>
+</a>
 
 <style>
-  .news-card {
+  .card {
+    display: flex;
+    flex-direction: column;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .card-image {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #0a0c1a;
+  }
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .card:hover .card-image img { transform: scale(1.04); }
+
+  .card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--border);
+  }
+
+  .card-body {
     display: flex;
     flex-direction: column;
-    transition: border-color .2s;
+    gap: 0.5rem;
+    padding: 1.25rem 1.5rem 1.5rem;
+    flex: 1;
   }
-  .news-card:hover { border-color: var(--accent); }
-  .card-image-link { display: block; aspect-ratio: 16/9; overflow: hidden; }
-  .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
-  .news-card:hover .card-image { transform: scale(1.03); }
-  .card-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
-  .card-date { font-size: .75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
-  .card-title { font-family: var(--font-head); font-size: 1.125rem; font-weight: 700; margin: .5rem 0 .75rem; line-height: 1.3; }
-  .card-title a { color: var(--text); transition: color .2s; }
-  .card-title a:hover { color: var(--accent); }
-  .card-summary { font-size: .875rem; color: var(--text-muted); line-height: 1.6; flex: 1; }
-  .card-read-more { display: inline-block; margin-top: 1.25rem; font-size: .875rem; font-weight: 600; color: var(--accent); transition: opacity .2s; }
-  .card-read-more:hover { opacity: .75; }
+
+  .card-date {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    font-family: var(--font-head);
+  }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .card-summary {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-read {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    font-family: var(--font-head);
+    letter-spacing: 0.04em;
+  }
 </style>

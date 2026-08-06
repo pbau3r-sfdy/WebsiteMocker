@@ -4,77 +4,94 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Imprint" description="Legal notice (Impressum) for Starflight Dynamics GmbH.">
+<Layout title="Imprint" description="Legal information for Starflight Dynamics GmbH.">
   <Nav />
-  <main class="main">
-    <div class="container">
-      <h1>Imprint</h1>
-      <p class="subtitle">Legal notice pursuant to § 5 TMG</p>
 
-      <section>
-        <h2>Service provider</h2>
-        <p>
-          Starflight Dynamics GmbH<br />
-          Tal 44<br />
-          80331 Munich, Germany
-        </p>
-      </section>
+  <main class="page-main">
+    <h1>Imprint &amp; Legal Notice</h1>
 
-      <section>
-        <h2>Legal representative</h2>
-        <p>
-          Dr. Philipp Bauer<br />
-          Co-Founder &amp; CEO
-        </p>
-      </section>
+    <div class="content">
+      <p>Published by / Information in accordance with § 5 TMG:</p>
+      <p><strong>Starflight Dynamics GmbH</strong></p>
 
-      <section>
-        <h2>Contact</h2>
-        <p>
-          E-Mail: <a href="mailto:mission-control@starflight-dynamics.com">mission-control@starflight-dynamics.com</a>
-        </p>
-      </section>
+      <h2>Legal representatives</h2>
+      <p>Dr. Philipp Bauer, Co-Founder &amp; CEO</p>
 
-      <section>
-        <h2>Register entry</h2>
-        <p>
-          Register court: Amtsgericht München<br />
-          Registration number: HRB282254
-        </p>
-      </section>
+      <h2>General contact</h2>
+      <p><a href="mailto:mission-control@starflight-dynamics.com">mission-control@starflight-dynamics.com</a></p>
+      <p>Press inquiries: <a href="mailto:press@starflight-dynamics.com">press@starflight-dynamics.com</a></p>
 
-      <section>
-        <h2>VAT identification number</h2>
-        <p>DE360871568</p>
-      </section>
+      <h2>Register entry</h2>
+      <p>Starflight Dynamics GmbH is a company incorporated and registered under the laws of Germany.</p>
+      <p>Register number: HRB282254<br />Court of registry: Munich<br />VAT number: DE360871568</p>
 
-      <section>
-        <h2>Responsible for content (§ 55 para. 2 RStV)</h2>
-        <p>
-          Dr. Philipp Bauer<br />
-          Tal 44, 80331 Munich, Germany
-        </p>
-      </section>
+      <h2>Registered office</h2>
+      <p>Starflight Dynamics GmbH<br />Tal 44<br />80331 Munich, Germany</p>
+
+      <h2>Supervisory authority</h2>
+      <p>District Court Munich</p>
+      <p>We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board.</p>
+
+      <h2>Responsible for content according to § 55 para. 2 RStV</h2>
+      <p>Dr. Philipp Bauer<br /><a href="mailto:mission-control@starflight-dynamics.com">mission-control@starflight-dynamics.com</a></p>
+
+      <h2>Image and animation copyright</h2>
+      <p>Starflight Dynamics GmbH / Unsplash.com / Wix</p>
+
+      <h2>Social media and other online presences</h2>
+      <p>This imprint also applies to the following social media presences and online profiles:</p>
+      <p>
+        <a href="https://www.linkedin.com/company/starflight-dynamics/" target="_blank" rel="noreferrer">LinkedIn</a> ·
+        <a href="https://x.com/sfdy_space" target="_blank" rel="noreferrer">X</a> ·
+        <a href="https://www.instagram.com/starflightdynamics/" target="_blank" rel="noreferrer">Instagram</a>
+      </p>
+
+      <h2>Disclaimer</h2>
+      <p>The contents of our pages were created with due care. The information contained in this website is for general information purposes only. While we endeavor to keep the information up to date and correct, we assume no liability and make no warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability or availability with respect to the website or the information, products, services, or related graphics contained on the website for any purpose, as well as for third-party content and linked pages included on our website.</p>
+      <p>As a service provider, we are responsible for our own content in accordance with § 7 (1) of the German Telemedia Act (TMG). According to §§ 8 to 10 TMG, as a service provider, we are not obliged to monitor transmitted or stored third-party information or to research circumstances that indicate illegal activity.</p>
+      <p>Every effort is made to keep the website up and running smoothly. However, Starflight Dynamics takes no responsibility for, and will not be liable for, the website being temporarily unavailable due to technical issues beyond our control.</p>
+      <p>Our web pages and their contents are subject to German copyright law and may only be reproduced with the prior consent of Starflight Dynamics or of the owner of the respective rights.</p>
+      <p>© Starflight Dynamics GmbH</p>
     </div>
   </main>
+
   <Footer />
 </Layout>
 
 <style>
-  .main { padding-top: 8rem; padding-bottom: 6rem; min-height: 80vh; }
-  .container { max-width: 720px; margin: 0 auto; }
+  .page-main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 9rem 2rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
   h1 {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    font-weight: 700; margin-bottom: .5rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
   }
-  .subtitle { color: var(--text-muted); margin-bottom: 3rem; }
-  section { margin-bottom: 2.5rem; }
-  h2 {
-    font-size: 1.125rem; font-weight: 600; color: var(--accent);
-    margin-bottom: .75rem; padding-bottom: .5rem;
-    border-bottom: 1px solid var(--border);
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.75;
   }
-  p { color: var(--text-muted); line-height: 1.75; margin-bottom: .75rem; }
-  a { color: var(--accent); }
-  a:hover { opacity: .75; }
+
+  .content h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-top: 1.5rem;
+  }
+
+  .content p { color: var(--text-muted); font-size: 0.95rem; }
+
+  .content a { color: var(--accent); }
+  .content a:hover { text-decoration: underline; }
+
+  .content strong { color: var(--text); }
 </style>

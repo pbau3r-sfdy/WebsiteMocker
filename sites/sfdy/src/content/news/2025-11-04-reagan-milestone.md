@@ -1,12 +1,16 @@
 ---
-title: "First ReaGAn Milestone Cleared"
+title: "COMPANY ANNOUNCEMENT: First ReaGAn milestone cleared!"
 date: 2025-11-04
-summary: "Our engineering teams have passed the first technical milestone of the ReaGAn programme, validating key design choices and test results."
+summary: "Our engineering teams have successfully passed the first technical milestone of the ReaGAn programme, validating key design choices and test results."
 image: "/images/news/reagan-milestone.jpg"
 ---
 
-We are pleased to report that our engineering teams have successfully cleared the first technical milestone of the ReaGAn programme.
+Last week, the engineering teams at STARFLIGHT DYNAMICS successfully passed the first technical milestone of the ReaGAn program.
 
-This milestone required validating a set of design choices and corresponding test results under the programme's technical review framework. Passing it on schedule is a strong confirmation that our approach is sound and our team is executing.
+The review confirmed our performance targets, validated key design choices, and endorsed the first test results now coming in.
 
-ReaGAn remains a central pillar of our near-term roadmap. We look forward to sharing more milestones as we progress through the programme.
+This marks a solid step forward – and opens the path toward rapid maturation and in-orbit demonstration on the HighFrontier.
+
+**See you up there!**
+
+Your SFDY team

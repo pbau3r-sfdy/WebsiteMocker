@@ -23,5 +23,8 @@
     "esbuild@0.25.12": true,
     "sharp@0.34.5": true,
     "fsevents@2.3.3": true
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
   }
 }

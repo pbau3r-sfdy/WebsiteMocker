@@ -1,242 +1,426 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const latestPosts = (await getCollection('news'))
+  .sort((a, z) => z.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
 ---
 
-<Layout
-  title="Home"
-  description="Starflight Dynamics develops high-mobility orbital propulsion systems that bring productive industries to space."
->
+<Layout title="Starflight Dynamics" description="High-mobility orbital systems and sovereign applications.">
   <Nav />
 
-  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <!-- HERO: video background with static poster fallback -->
   <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-content container">
-      <p class="hero-eyebrow">New Space Propulsion</p>
-      <h1 class="hero-headline">Orbital propulsion for the next generation of space missions</h1>
-      <p class="hero-sub">Starflight Dynamics develops high-mobility orbital propulsion systems that bring productive industries to space.</p>
-      <div class="hero-actions">
-        <a href="mailto:mission-control@starflight-dynamics.com" class="btn-primary">Reach Out</a>
-        <a href={`${b}/news`} class="btn-ghost">Latest News</a>
-      </div>
+    <div class="hero-bg">
+      <video
+        class="hero-video"
+        autoplay
+        loop
+        muted
+        playsinline
+        poster={`${b}/images/hero-space-bg.jpg`}
+      >
+        <source src={`${b}/videos/hero-video.mp4`} type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <img src={`${b}/images/astronaut.svg`} alt="" class="hero-astronaut" aria-hidden="true" />
+      <p class="hero-label">CURRENTLY UNDER</p>
+      <p class="hero-label green">CONSTRUCTION</p>
     </div>
   </section>
 
-  <!-- ── Newsletter ────────────────────────────────────────── -->
-  <section class="newsletter-section">
-    <div class="container newsletter-inner">
-      <div class="newsletter-left">
-        <p class="newsletter-eyebrow">#SFDY-UPDATES</p>
-        <h2 class="newsletter-heading">Stay in the loop.</h2>
-        <p class="newsletter-sub">Subscribe to our newsletter for mission updates, company news, and insights from the frontier.</p>
-      </div>
-      <div class="newsletter-right">
-        <form class="newsletter-form" action="https://formspree.io/f/placeholder" method="POST">
-          <input type="email" name="email" placeholder="your@email.com" required />
-          <button type="submit">SIGN UP</button>
-        </form>
-      </div>
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section" id="updates">
+    <div class="newsletter-left">
+      <div class="section-label">#SFDY-UPDATES</div>
+      <p class="newsletter-tagline">Stay in the loop.</p>
+    </div>
+    <div class="newsletter-right">
+      <p class="newsletter-desc">For our Newsletter, please subscribe here:</p>
+      <form
+        class="newsletter-form"
+        action="https://formspree.io/f/placeholder"
+        method="POST"
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+          aria-label="Email address"
+        />
+        <button type="submit">SIGN UP</button>
+      </form>
     </div>
   </section>
 
-  <!-- ── Ecosystem Partners ────────────────────────────────── -->
+  <!-- ECOSYSTEM PARTNERS -->
   <section class="partners-section">
-    <div class="container">
-      <p class="partners-heading">ECOSYSTEM PARTNERS</p>
-      <div class="partners-row">
-        <img src={`${b}/images/partners/bavairia.png`} alt="bavAIRia" class="partner-logo" />
-        <img src={`${b}/images/partners/bdli.png`}     alt="BDLI"     class="partner-logo" />
-        <img src={`${b}/images/partners/newspace.png`} alt="BDI NewSpace" class="partner-logo" />
-      </div>
+    <p class="partners-heading">ECOSYSTEM <strong>PARTNERS</strong></p>
+    <div class="partners-logos">
+      <img src={`${b}/images/partners/bavairia.png`} alt="bavAIRia" />
+      <img src={`${b}/images/partners/bdli.png`} alt="BDLI" />
+      <img src={`${b}/images/partners/newspace.png`} alt="NewSpace BDI Initiative" />
     </div>
   </section>
 
-  <!-- ── Earth Section ─────────────────────────────────────── -->
-  <section class="earth-section">
-    <div class="earth-overlay"></div>
-    <div class="earth-content">
-      <p class="earth-tagline">SEE YOU UP THERE!</p>
+  <!-- LATEST NEWS -->
+  <section class="news-section">
+    <div class="news-header">
+      <div class="news-label">LATEST NEWS</div>
+      <a href={`${b}/news`} class="news-all">View all →</a>
+    </div>
+    <div class="news-grid">
+      {latestPosts.map(post => {
+        const formatted = post.data.date.toLocaleDateString('en-GB', {
+          day: 'numeric', month: 'long', year: 'numeric',
+        });
+        return (
+          <a href={`${b}/news/${post.slug}`} class="news-card">
+            <div class="news-thumb">
+              {post.data.image
+                ? <img src={`${b}${post.data.image}`} alt={post.data.title} loading="lazy" />
+                : <div class="news-thumb-placeholder">✦</div>
+              }
+            </div>
+            <div class="news-card-body">
+              <time class="news-date" datetime={post.data.date.toISOString()}>{formatted}</time>
+              <h3 class="news-title">{post.data.title}</h3>
+              <p class="news-summary">{post.data.summary}</p>
+            </div>
+          </a>
+        );
+      })}
     </div>
   </section>
+
+  <!-- EARTH FROM ORBIT -->
+  <div class="earth-section" style={`background-image: url('${b}/images/earth-bg.jpg')`}>
+    <p class="earth-tagline">SEE YOU <strong>UP THERE!</strong></p>
+  </div>
 
   <Footer />
 </Layout>
 
 <style>
-  /* ── Hero ── */
+  /* HERO */
   .hero {
     position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
   }
+
   .hero-bg {
-    position: absolute; inset: 0;
-    background-image: url('/images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
   }
-  .hero-bg::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(to bottom, rgba(7,8,15,0.55) 0%, rgba(7,8,15,0.85) 70%, var(--bg) 100%);
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
   }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+  }
+
   .hero-content {
-    position: relative; z-index: 1;
-    padding-top: 8rem; padding-bottom: 6rem;
-  }
-  .hero-eyebrow {
-    font-family: var(--font-head);
-    font-size: .75rem; font-weight: 600;
-    letter-spacing: .16em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1.25rem;
-  }
-  .hero-headline {
-    font-family: var(--font-head);
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800; line-height: 1.05;
-    letter-spacing: -.03em;
-    color: var(--text);
-    max-width: 16ch;
-    margin-bottom: 1.5rem;
-    text-wrap: balance;
-  }
-  .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    color: var(--text-muted);
-    max-width: 52ch;
-    margin-bottom: 2.5rem;
-    line-height: 1.65;
-  }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-  /* ── Buttons ── */
-  .btn-primary {
-    display: inline-flex; align-items: center;
-    padding: .875rem 2rem;
-    background: var(--accent); color: #000;
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
-    border-radius: var(--radius);
-    transition: opacity .2s;
-  }
-  .btn-primary:hover { opacity: .85; }
-  .btn-ghost {
-    display: inline-flex; align-items: center;
-    padding: .875rem 2rem;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 600;
-    border-radius: var(--radius);
-    transition: color .2s, border-color .2s;
-  }
-  .btn-ghost:hover { color: var(--text); border-color: var(--text-muted); }
-
-  /* ── Newsletter ── */
-  .newsletter-section {
-    background: #ffffff;
-    padding: 5rem 0;
-  }
-  .newsletter-inner {
+    position: relative;
+    z-index: 1;
     display: flex;
-    gap: 4rem;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 0;
+    padding: 5rem 2rem 3rem;
+  }
+
+  .hero-astronaut {
+    width: clamp(200px, 35vw, 380px);
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-label {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  .hero-label.green { color: var(--accent); }
+
+  /* NEWSLETTER */
+  .newsletter-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+    padding: 5rem clamp(2rem, 8vw, 8rem);
+    background: #ffffff;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .newsletter-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .section-label {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: #111;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .newsletter-tagline { display: none; }
+
+  .newsletter-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .newsletter-desc {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0.5rem;
     flex-wrap: wrap;
   }
-  .newsletter-left { flex: 1; min-width: 260px; }
-  .newsletter-right { flex: 1; min-width: 260px; }
-  .newsletter-eyebrow {
-    font-family: var(--font-head);
-    font-size: .75rem; font-weight: 700;
-    letter-spacing: .12em; text-transform: uppercase;
-    color: #384AD3; margin-bottom: .75rem;
-  }
-  .newsletter-heading {
-    font-family: var(--font-head);
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    font-weight: 800; color: #0a0a0a;
-    margin-bottom: .75rem; line-height: 1.1;
-  }
-  .newsletter-sub {
-    font-size: 1.0625rem; color: #555;
-    line-height: 1.7;
-  }
-  .newsletter-form { display: flex; gap: .75rem; flex-wrap: wrap; }
-  .newsletter-form input {
-    flex: 1; min-width: 200px;
-    padding: .8125rem 1.25rem;
-    border: 1px solid #ccc; border-radius: var(--radius);
-    font-size: 1rem; color: #0a0a0a;
-    outline: none;
-  }
-  .newsletter-form input:focus { border-color: #384AD3; }
-  .newsletter-form button {
-    padding: .8125rem 1.75rem;
-    background: #384AD3; color: #fff;
-    border: none; border-radius: var(--radius);
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
-    letter-spacing: .04em; cursor: pointer;
-    transition: opacity .2s;
-    white-space: nowrap;
-  }
-  .newsletter-form button:hover { opacity: .85; }
 
-  /* ── Partners ── */
-  .partners-section {
-    padding: 5rem 0;
-    text-align: center;
+  .newsletter-form input {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+    color: #111;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    padding: 0.65rem 1rem;
+    width: 220px;
+    outline: none;
+    transition: border-color 0.2s;
   }
+  .newsletter-form input::placeholder { color: #999; }
+  .newsletter-form input:focus { border-color: #384AD3; }
+
+  .newsletter-form button {
+    background: #384AD3;
+    border: none;
+    border-radius: var(--radius);
+    color: #fff;
+    cursor: pointer;
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.65rem 1.5rem;
+    transition: opacity 0.2s;
+  }
+  .newsletter-form button:hover { opacity: 0.85; }
+
+  @media (max-width: 700px) {
+    .newsletter-section { flex-direction: column; gap: 2rem; }
+  }
+
+  /* PARTNERS */
+  .partners-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 5rem 2rem;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
   .partners-heading {
     font-family: var(--font-head);
-    font-size: .75rem; font-weight: 700;
-    letter-spacing: .18em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 3rem;
-  }
-  .partners-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
-    flex-wrap: wrap;
-  }
-  .partner-logo {
-    height: 48px; width: auto;
-    filter: brightness(0) invert(1);
-    opacity: .7;
-    transition: opacity .2s;
-  }
-  .partner-logo:hover { opacity: 1; }
-
-  /* ── Earth Section ── */
-  .earth-section {
-    position: relative;
-    min-height: 480px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-image: url('/images/earth-bg.jpg');
-    background-size: cover;
-    background-position: center;
-  }
-  .earth-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to bottom, rgba(7,8,15,0.4), rgba(7,8,15,0.6));
-  }
-  .earth-content {
-    position: relative; z-index: 1;
+    font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--text);
+    text-transform: uppercase;
     text-align: center;
   }
+  .partners-heading strong { font-weight: 700; }
+
+  .partners-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem 4rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .partners-logos img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+  .partners-logos img:hover { opacity: 1; }
+
+  /* LATEST NEWS */
+  .news-section {
+    padding: 5rem clamp(2rem, 8vw, 8rem);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  .news-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+  }
+
+  .news-label {
+    font-family: var(--font-head);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+  }
+
+  .news-all {
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    transition: opacity 0.2s;
+  }
+  .news-all:hover { opacity: 0.7; }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .news-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .news-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .news-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--bg);
+    flex-shrink: 0;
+  }
+  .news-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .news-card:hover .news-thumb img { transform: scale(1.04); }
+  .news-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    color: var(--border);
+  }
+
+  .news-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .news-date {
+    font-family: var(--font-head);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+
+  .news-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+  }
+
+  .news-summary {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 860px) {
+    .news-grid { grid-template-columns: 1fr; }
+  }
+
+  /* EARTH FROM ORBIT */
+  .earth-section {
+    width: 100%;
+    height: 600px;
+    background-size: cover;
+    background-position: center top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .earth-tagline {
     font-family: var(--font-head);
-    font-size: clamp(2rem, 6vw, 4.5rem);
-    font-weight: 800;
-    letter-spacing: .08em;
-    color: var(--text);
-    text-shadow: 0 2px 24px rgba(0,0,0,.5);
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
   }
+  .earth-tagline strong { font-weight: 700; }
 </style>
