@@ -2,7 +2,7 @@
 title: "SFDY Selected for Startup Lithuania Accelerator"
 date: 2025-09-29
 summary: "Starflight Dynamics has been selected for the Startup Lithuania Accelerator and has established a new Lithuanian entity to advance our advanced materials work."
-image: "/images/news/startup-lithuania.jpg"
+image: "/images/news/startup-lithuania.png"
 ---
 
 We are delighted to share that Starflight Dynamics has been selected for the Startup Lithuania Accelerator programme.

@@ -2,7 +2,7 @@
 title: "First ReaGAn Milestone Cleared"
 date: 2025-11-04
 summary: "Our engineering teams have passed the first technical milestone of the ReaGAn programme, validating key design choices and test results."
-image: "/images/news/reagan-milestone.jpeg"
+image: "/images/news/reagan-milestone.jpg"
 ---
 
 We are pleased to report that our engineering teams have successfully cleared the first technical milestone of the ReaGAn programme.

@@ -2,7 +2,7 @@
 title: "A Year in Review: Looking Back and Forward"
 date: 2024-12-31
 summary: "As the year closes, we reflect on what we have built, the milestones we have hit, and what lies ahead for Starflight Dynamics."
-image: "/images/news/year-end.jpg"
+image: "/images/news/year-end.png"
 ---
 
 As 2024 draws to a close, we want to take a moment to reflect on the year and what it has meant for Starflight Dynamics.
