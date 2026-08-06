@@ -113,21 +113,21 @@ const partners = [
   </section>
 
   <!-- ── GROOVE TRACTION ── -->
-  <section class="section section-teal" id="groove">
-    <div class="container careers-layout">
-      <div class="careers-text">
-        <p class="section-label-light">Traction</p>
-        <h2 class="section-title-light">GROOVE</h2>
+  <section class="section groove-section" id="groove">
+    <div class="container groove-layout">
+      <div class="groove-badge-wrap">
+        <img src={`${b}/images/design-mark.png`} alt="Levion design mark" class="groove-mark" />
+      </div>
+      <div class="groove-text">
+        <p class="section-label">Traction</p>
+        <h2 class="section-title groove-title">GROOVE</h2>
         <p class="groove-sub">Growth Parameter Observation &amp; Validation Experiment</p>
-        <p class="section-sub-light" style="margin-top:1rem;">
+        <p class="section-sub" style="margin-top:1rem;">
           Levion's first in-space materials mission, developed within the ESA Business in Space Growth
           Network (BSGN) Advanced Materials and In-orbit Manufacturing Industry Accelerator.
           Flight hardware in preparation. Microgravity crystal growth proven.
         </p>
-        <a href={`${b}/news`} class="btn-outline-light" style="margin-top:1.5rem; display:inline-block;">Read the news →</a>
-      </div>
-      <div class="groove-visual">
-        <img src={`${b}/images/groove-mission.jpg`} alt="GROOVE mission orbital setup" class="groove-img" />
+        <a href={`${b}/news`} class="btn-outline" style="margin-top:1.5rem; display:inline-block;">Read the news →</a>
       </div>
     </div>
   </section>
@@ -217,9 +217,9 @@ const partners = [
   .hero-bg { position:absolute; inset:0; background-size:cover; background-position:center 30%; }
   .hero-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(15,14,13,.6) 40%, var(--bg) 100%); }
   .hero-content { position:relative; z-index:1; padding-top:6rem; padding-bottom:4rem; }
-  .hero-label { font-family:var(--font-head); font-size:.75rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:1.5rem; }
-  .hero-headline { font-size:clamp(2.25rem,5.5vw,4.25rem); font-weight:700; line-height:1.1; letter-spacing:-.03em; color:var(--text); margin-bottom:2.5rem; max-width:700px; }
-  .hero-scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); color:var(--text-muted); font-size:1.25rem; animation:bounce 2s infinite; }
+  .hero-label { font-family:var(--font-head); font-size:.75rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.75); margin-bottom:1.5rem; }
+  .hero-headline { font-size:clamp(2.25rem,5.5vw,4.25rem); font-weight:700; line-height:1.1; letter-spacing:-.03em; color:#ffffff; margin-bottom:2.5rem; max-width:700px; }
+  .hero-scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); color:rgba(255,255,255,.5); font-size:1.25rem; animation:bounce 2s infinite; }
   @keyframes bounce { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(8px); } }
 
   /* Teal section (Vision + Groove) */
@@ -248,14 +248,21 @@ const partners = [
   .value-item p { font-size:.875rem; color:var(--text-muted); line-height:1.6; }
 
   /* Groove */
-  .groove-sub { font-family:var(--font-head); font-size:1rem; color:rgba(255,255,255,.65); font-weight:500; }
-  .groove-img { width:100%; border-radius:var(--radius); object-fit:cover; aspect-ratio:4/3; }
+  .groove-section { background:var(--bg-alt); }
+  .groove-layout { display:grid; grid-template-columns:auto 1fr; gap:4rem; align-items:center; }
+  .groove-badge-wrap { display:flex; align-items:center; justify-content:center; }
+  .groove-mark { width:140px; height:auto; object-fit:contain; opacity:.9; }
+  .groove-title { color:var(--accent); letter-spacing:.04em; }
+  .groove-sub { font-family:var(--font-head); font-size:1rem; color:var(--text-muted); font-weight:500; margin-bottom:.25rem; }
+  .btn-outline { color:var(--accent); font-family:var(--font-head); font-weight:600; font-size:.9375rem; padding:.7rem 1.75rem; border-radius:var(--radius); border:1.5px solid var(--accent); transition:all .2s; }
+  .btn-outline:hover { background:var(--accent); color:#fff; }
+  @media (max-width:900px) { .groove-layout { grid-template-columns:1fr; gap:2rem; } .groove-badge-wrap { justify-content:flex-start; } }
 
   /* Partners */
   .partners-section { padding:4rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
   .partners-grid { display:flex; flex-wrap:wrap; align-items:center; gap:2.5rem 3.5rem; margin-top:2rem; }
-  .partner-logo img { height:36px; width:auto; object-fit:contain; filter:brightness(0) invert(1); opacity:.5; transition:opacity .2s; }
-  .partner-logo:hover img { opacity:.9; }
+  .partner-logo img { height:36px; width:auto; object-fit:contain; opacity:.85; transition:opacity .2s; }
+  .partner-logo:hover img { opacity:1; }
 
   /* News */
   .news-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:2.5rem; }
