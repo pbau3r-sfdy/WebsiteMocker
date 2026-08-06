@@ -17,14 +17,32 @@ const members = [
 <Layout title="Team" description="Meet the Levion Materials team — experts in space manufacturing, crystal growth, and orbital systems.">
   <Nav />
 
-  <main class="main">
-    <div class="container">
-      <header class="page-header">
-        <p class="section-label">THE TEAM</p>
-        <h1 class="page-title">The Team</h1>
-        <p class="page-sub">Experts on Earth and in Space</p>
-      </header>
+  <!-- ── Team header with decorative V ── -->
+  <header class="team-header">
+    <div class="container team-header-inner">
+      <div class="team-title-block">
+        <p class="team-label">The Team</p>
+        <h1 class="team-heading">Experts on Earth<br />and in Space</h1>
+      </div>
+    </div>
+    <!-- Decorative gradient V -->
+    <div class="team-v-wrap" aria-hidden="true">
+      <svg class="team-v" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="vg" x1="0" y1="0" x2="160" y2="280" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#1b4565" />
+            <stop offset="100%" stop-color="#c86010" />
+          </linearGradient>
+        </defs>
+        <path d="M10 10 L160 270 L310 10" stroke="url(#vg)" stroke-width="52"
+              fill="none" stroke-linecap="butt" stroke-linejoin="miter" />
+      </svg>
+    </div>
+  </header>
 
+  <!-- ── Team grid ── -->
+  <main class="team-main">
+    <div class="container">
       <div class="team-grid">
         {members.map(m => (
           <article class="team-card">
@@ -45,53 +63,80 @@ const members = [
 </Layout>
 
 <style>
-  .main { padding-top: 7rem; padding-bottom: 6rem; min-height: 70vh; }
-  .page-header { margin-bottom: 4rem; }
-  .section-label {
-    font-family: var(--font-head);
-    font-size: .6875rem; font-weight: 600;
-    letter-spacing: .18em; text-transform: uppercase;
-    color: var(--orange); margin-bottom: .75rem;
+  /* ── Header ── */
+  .team-header {
+    position: relative;
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+    overflow: hidden;
+    background: var(--bg);
   }
-  .page-title {
+  .team-header-inner {
+    position: relative; z-index: 1;
+  }
+  .team-title-block {
+    border-left: 4px solid var(--orange);
+    padding-left: 1.5rem;
+    max-width: 520px;
+  }
+  .team-label {
     font-family: var(--font-head);
-    font-size: clamp(2.25rem, 4vw, 3.5rem);
-    font-weight: 700; line-height: 1.1;
+    font-size: .875rem; font-weight: 500;
+    color: var(--orange);
     margin-bottom: .5rem;
   }
-  .page-sub { font-size: 1.125rem; color: var(--text-muted); }
+  .team-heading {
+    font-family: var(--font-head);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 800; line-height: 1.1;
+    color: var(--orange);
+  }
 
+  /* ── Decorative V ── */
+  .team-v-wrap {
+    position: absolute; top: 0; right: -2rem;
+    width: min(420px, 55vw);
+    pointer-events: none;
+    opacity: .9;
+  }
+  .team-v { width: 100%; height: auto; }
+
+  /* ── Grid ── */
+  .team-main { padding-bottom: 6rem; background: var(--bg); }
   .team-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 3rem;
+    max-width: 680px;
   }
-  .team-card {
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    transition: border-color .2s, transform .2s;
-  }
-  .team-card:hover {
-    border-color: var(--orange);
-    transform: translateY(-3px);
-  }
+  .team-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+  /* Circular photo */
   .team-photo-wrap {
+    width: clamp(160px, 22vw, 220px);
     aspect-ratio: 1 / 1;
+    border-radius: 50%;
     overflow: hidden;
     background: var(--bg-card);
+    margin-bottom: 1.25rem;
   }
   .team-photo {
     width: 100%; height: 100%;
     object-fit: cover; object-position: center top;
-    transition: transform .3s;
   }
-  .team-card:hover .team-photo { transform: scale(1.04); }
-  .team-info { padding: 1.25rem 1.5rem; }
+
+  .team-info {}
   .team-name {
     font-family: var(--font-head); font-size: 1rem; font-weight: 600;
-    margin-bottom: .25rem;
+    margin-bottom: .25rem; color: var(--text);
   }
   .team-role { font-size: .875rem; color: var(--orange); }
+
+  @media (max-width: 520px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+      max-width: 300px;
+    }
+    .team-v-wrap { right: -4rem; width: 70vw; }
+  }
 </style>

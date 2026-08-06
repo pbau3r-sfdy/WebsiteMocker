@@ -9,22 +9,20 @@ import Footer from '../components/Footer.astro';
 
   <main class="main">
     <div class="container">
-      <header class="page-header">
-        <p class="section-label">GET IN TOUCH</p>
-        <h1 class="page-title">Contact</h1>
-        <p class="page-sub">We'd love to hear from you.</p>
-      </header>
+      <h1 class="page-title">Contact</h1>
 
       <div class="contact-layout">
 
         <!-- Contact Info -->
         <aside class="contact-info">
           <div class="info-block">
-            <h2 class="info-heading">Email</h2>
-            <a href="mailto:lab@levion-materials.com" class="info-link">lab@levion-materials.com</a>
-          </div>
-          <div class="info-block">
-            <h2 class="info-heading">Address</h2>
+            <span class="info-icon" aria-hidden="true">
+              <!-- Pin -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </span>
             <address class="info-address">
               Levion Materials<br />
               c/o Starflight Dynamics UAB<br />
@@ -33,11 +31,28 @@ import Footer from '../components/Footer.astro';
             </address>
           </div>
           <div class="info-block">
-            <h2 class="info-heading">Follow Us</h2>
-            <div class="social-links">
-              <a href="https://www.linkedin.com/company/levion-materials/" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
-              <a href="https://www.instagram.com/levion_materials/" target="_blank" rel="noopener" class="social-link">Instagram</a>
-            </div>
+            <span class="info-icon" aria-hidden="true">
+              <!-- Envelope -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M2 7l10 7 10-7"/>
+              </svg>
+            </span>
+            <a href="mailto:lab@levion-materials.com" class="info-link">lab@levion-materials.com</a>
+          </div>
+          <div class="info-block info-socials">
+            <a href="https://www.linkedin.com/company/levion-materials/" target="_blank" rel="noopener" class="social-icon-btn" aria-label="LinkedIn">
+              <!-- LinkedIn -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.25h4V24h-4V8.25zm6.5 0h3.84v2.16h.05c.54-1.01 1.84-2.08 3.79-2.08 4.05 0 4.8 2.66 4.8 6.12V24h-4v-8.75c0-2.09-.04-4.77-2.91-4.77-2.91 0-3.36 2.27-3.36 4.62V24H7V8.25z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/levion_materials/" target="_blank" rel="noopener" class="social-icon-btn" aria-label="Instagram">
+              <!-- Instagram -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.242 1.308 3.608.058 1.265.07 1.645.07 4.851s-.012 3.585-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.974-2.242 1.246-3.608 1.308-1.265.058-1.645.07-4.85.07s-3.585-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.975-1.246-2.242-1.308-3.608C2.175 15.585 2.163 15.205 2.163 12s.012-3.585.07-4.85c.062-1.366.334-2.633 1.308-3.608C4.516 2.497 5.783 2.225 7.15 2.163 8.415 2.105 8.795 2.163 12 2.163zm0-2.163C8.741 0 8.333.015 7.053.072 5.773.129 4.548.392 3.465 1.465 2.392 2.548 2.129 3.773 2.072 5.053.015 8.333 0 8.741 0 12c0 3.259.015 3.667.072 4.947.057 1.28.32 2.505 1.393 3.588 1.083 1.073 2.308 1.336 3.588 1.393C8.333 23.985 8.741 24 12 24s3.667-.015 4.947-.072c1.28-.057 2.505-.32 3.588-1.393 1.073-1.083 1.336-2.308 1.393-3.588C23.985 15.667 24 15.259 24 12s-.015-3.667-.072-4.947c-.057-1.28-.32-2.505-1.393-3.588C21.452.392 20.227.129 18.947.072 17.667.015 17.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
           </div>
         </aside>
 
@@ -47,22 +62,24 @@ import Footer from '../components/Footer.astro';
             <div class="form-row">
               <div class="form-group">
                 <label for="first-name">First Name</label>
-                <input type="text" id="first-name" name="first_name" placeholder="Jane" required />
+                <input type="text" id="first-name" name="first_name" required />
               </div>
               <div class="form-group">
                 <label for="last-name">Last Name</label>
-                <input type="text" id="last-name" name="last_name" placeholder="Smith" required />
+                <input type="text" id="last-name" name="last_name" required />
               </div>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+              <input type="email" id="email" name="email" required />
             </div>
             <div class="form-group">
               <label for="message">Message</label>
-              <textarea id="message" name="message" rows="6" placeholder="Tell us about your project or inquiry..." required></textarea>
+              <textarea id="message" name="message" rows="6" required></textarea>
             </div>
-            <button type="submit" class="btn-submit">Send</button>
+            <div class="form-submit-row">
+              <button type="submit" class="btn-submit">Send</button>
+            </div>
           </form>
         </div>
 
@@ -70,37 +87,18 @@ import Footer from '../components/Footer.astro';
     </div>
   </main>
 
-  <!-- Newsletter -->
-  <section class="newsletter-section">
-    <div class="container">
-      <h2>Subscribe for the Levion newsletter</h2>
-      <p>Follow our progress from lab to orbit. No spam — only what matters.</p>
-      <form class="newsletter-form" action="https://formspree.io/f/placeholder" method="POST">
-        <input type="email" name="email" placeholder="your@email.com" required />
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  </section>
-
   <Footer />
 </Layout>
 
 <style>
   .main { padding-top: 7rem; padding-bottom: 6rem; min-height: 70vh; }
-  .page-header { margin-bottom: 3.5rem; }
-  .section-label {
-    font-family: var(--font-head);
-    font-size: .6875rem; font-weight: 600;
-    letter-spacing: .18em; text-transform: uppercase;
-    color: var(--orange); margin-bottom: .75rem;
-  }
+
   .page-title {
     font-family: var(--font-head);
-    font-size: clamp(2.25rem, 4vw, 3.5rem);
-    font-weight: 700; line-height: 1.1;
-    margin-bottom: .5rem;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 800; line-height: 1.1;
+    margin-bottom: 3rem;
   }
-  .page-sub { font-size: 1.125rem; color: var(--text-muted); }
 
   /* ── Layout ── */
   .contact-layout {
@@ -111,104 +109,68 @@ import Footer from '../components/Footer.astro';
   }
 
   /* ── Info sidebar ── */
-  .contact-info { display: flex; flex-direction: column; gap: 2rem; }
-  .info-block {}
-  .info-heading {
-    font-family: var(--font-head); font-size: .75rem; font-weight: 600;
-    letter-spacing: .12em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: .5rem;
+  .contact-info { display: flex; flex-direction: column; gap: 1.75rem; }
+  .info-block { display: flex; align-items: flex-start; gap: .75rem; }
+  .info-icon {
+    flex-shrink: 0; margin-top: .15em;
+    color: var(--text-muted);
   }
-  .info-link {
-    color: var(--orange); font-size: .9375rem;
-    transition: opacity .2s;
-  }
-  .info-link:hover { opacity: .75; }
   .info-address {
     font-style: normal; font-size: .9375rem;
     color: var(--text-muted); line-height: 1.8;
   }
-  .social-links { display: flex; flex-direction: column; gap: .5rem; }
-  .social-link {
+  .info-link {
     font-size: .9375rem; color: var(--text-muted);
     transition: color .2s;
   }
-  .social-link:hover { color: var(--orange); }
+  .info-link:hover { color: var(--orange); }
+
+  .info-socials {
+    align-items: center;
+    gap: .65rem;
+    padding-left: calc(20px + .75rem); /* align with text above */
+  }
+  .social-icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--bg-card); color: var(--text);
+    transition: background .2s, color .2s;
+  }
+  .social-icon-btn:hover { background: var(--teal); color: #fff; }
 
   /* ── Form ── */
-  .contact-form {
-    display: flex; flex-direction: column; gap: 1.25rem;
-  }
-  .form-row {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
-  }
-  .form-group { display: flex; flex-direction: column; gap: .4rem; }
+  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .form-group { display: flex; flex-direction: column; gap: .35rem; }
   .form-group label {
-    font-family: var(--font-head); font-size: .8125rem; font-weight: 500;
-    color: var(--text-muted); letter-spacing: .02em;
+    font-size: .8125rem; color: var(--text-muted);
   }
   .form-group input,
   .form-group textarea {
     background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    border: 1px solid var(--border); border-radius: 4px;
     color: var(--text);
     font-family: var(--font-body); font-size: .9375rem;
-    padding: .75rem 1rem;
+    padding: .7rem 1rem;
     transition: border-color .2s;
-    resize: vertical;
-    width: 100%;
+    resize: vertical; width: 100%;
   }
-  .form-group input::placeholder,
-  .form-group textarea::placeholder { color: var(--text-muted); }
   .form-group input:focus,
-  .form-group textarea:focus {
-    outline: 2px solid var(--orange);
-    border-color: var(--orange);
-  }
+  .form-group textarea:focus { outline: 2px solid var(--teal); border-color: var(--teal); }
+  .form-submit-row { display: flex; justify-content: flex-end; }
   .btn-submit {
-    align-self: flex-start;
     padding: .85rem 2.5rem;
     background: var(--teal); color: #fff;
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
+    font-family: var(--font-head); font-size: .9375rem; font-weight: 600;
     border: none; border-radius: 4px;
     cursor: pointer; transition: opacity .2s;
   }
   .btn-submit:hover { opacity: .85; }
 
-  /* ── Newsletter ── */
-  .newsletter-section {
-    background: var(--bg-alt);
-    border-top: 1px solid var(--border);
-    padding: 4rem 0; text-align: center;
-  }
-  .newsletter-section h2 {
-    font-family: var(--font-head);
-    font-size: 1rem; font-weight: 700;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: .75rem;
-  }
-  .newsletter-section p { font-size: 1rem; color: var(--text-muted); margin-bottom: 1.75rem; }
-  .newsletter-form { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
-  .newsletter-form input {
-    padding: .75rem 1.25rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-size: .9375rem; width: 260px;
-    background: var(--bg); color: var(--text);
-  }
-  .newsletter-form input:focus { outline: 2px solid var(--orange); border-color: var(--orange); }
-  .newsletter-form button {
-    padding: .75rem 1.75rem;
-    background: var(--teal); color: #fff;
-    border: none; border-radius: 4px;
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
-    cursor: pointer; transition: opacity .2s;
-  }
-  .newsletter-form button:hover { opacity: .85; }
-
   /* ── Responsive ── */
   @media (max-width: 768px) {
     .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
     .form-row { grid-template-columns: 1fr; }
+    .info-socials { padding-left: 0; }
   }
 </style>

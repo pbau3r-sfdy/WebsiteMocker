@@ -139,6 +139,11 @@ const partners = [
     </div>
   </section>
 
+  <!-- ── EARTH IMAGE ── -->
+  <section class="earth-section" aria-hidden="true">
+    <img src={`${b}/images/hero-bg.jpg`} alt="" class="earth-img" />
+  </section>
+
   <!-- ── PARTNERS — white bg ── -->
   <section class="section partners-section" id="partners">
     <div class="container" style="text-align: center;">
@@ -151,18 +156,6 @@ const partners = [
           </div>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- ── NEWSLETTER ── -->
-  <section class="newsletter-section">
-    <div class="container">
-      <h2>NEWSLETTER</h2>
-      <p>Subscribe for the Levion newsletter.</p>
-      <form class="newsletter-form" action="https://formspree.io/f/placeholder" method="POST">
-        <input type="email" name="email" placeholder="E-Mail address" required />
-        <button type="submit">Subscribe</button>
-      </form>
     </div>
   </section>
 
@@ -392,36 +385,18 @@ const partners = [
   }
   .partner-logo:hover { opacity: 1; }
 
-  /* ── Newsletter ── */
-  .newsletter-section {
-    background: var(--bg-alt);
-    border-top: 1px solid var(--border);
-    padding: 4rem 0; text-align: center;
+  /* ── Earth image ── */
+  .earth-section {
+    line-height: 0;
+    overflow: hidden;
   }
-  .newsletter-section h2 {
-    font-family: var(--font-head);
-    font-size: 1rem; font-weight: 700;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: .75rem;
+  .earth-img {
+    width: 100%;
+    height: clamp(280px, 35vw, 480px);
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
   }
-  .newsletter-section p { font-size: 1.0625rem; color: var(--text-muted); margin-bottom: 1.75rem; }
-  .newsletter-form { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
-  .newsletter-form input {
-    padding: .75rem 1.25rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-size: .9375rem; width: 260px;
-    background: var(--bg); color: var(--text);
-  }
-  .newsletter-form input:focus { outline: 2px solid var(--orange); border-color: var(--orange); }
-  .newsletter-form button {
-    padding: .75rem 1.75rem;
-    background: var(--teal); color: #fff;
-    border: none; border-radius: 4px;
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
-    cursor: pointer; transition: opacity .2s;
-  }
-  .newsletter-form button:hover { opacity: .85; }
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
