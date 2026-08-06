@@ -42,8 +42,9 @@ Dashboard: `https://pbau3r-sfdy.github.io/WebsiteMocker/`
 ```bash
 npm run dev             # Dashboard dev server → localhost:4321
 npm run build           # Build all sites → dist/
-node _scripts/build-all.js orbint  # Build one site + dashboard
-cd sites/orbint && npm run dev     # Site-specific dev server
+node _scripts/build-all.js sfdy    # Build one site + dashboard
+cd sites/sfdy && npm run dev       # SFDY dev server → localhost:4409
+cd sites/orbint && npm run dev     # Orbint dev server
 ```
 
 ## Adding a site
@@ -52,14 +53,26 @@ bash _scripts/new-site.sh <slug> "<Site Name>" "<#accent>" "<email>"
 npm install   # picks up new workspace
 ```
 
+## Sites
+
+| Slug | Stage | Domain | Notes |
+|---|---|---|---|
+| `sfdy` | 2 — Content Ready | starflight-dynamics.com | **Canonical working copy** — see `sites/sfdy/CLAUDE.md` |
+| `orbint` | 2 — Content Ready | orbint.de | |
+
+> ⚠️ The standalone `pbau3r-sfdy/sfdy-website` repo is **archived**. All SFDY work lives here in `sites/sfdy/`.
+
 ## Repository layout
 ```
 WebsiteMocker/
-├── _captures/           ← design DNA library
+├── _captures/           ← design DNA library (capture.json + screenshots + assets)
 ├── _core/               ← base template (all sites inherit)
-├── _scripts/            ← build-all.js, new-site.sh
+├── _scripts/
+│   ├── build-all.js     ← builds dashboard + all sites
+│   └── capture-site.mjs ← Playwright capture (Wix/SPA-safe)
 ├── sites/
-│   └── orbint/          ← first site (stage 2)
+│   ├── sfdy/            ← Starflight Dynamics (stage 2, canonical copy)
+│   └── orbint/          ← Orbint (stage 2)
 ├── .claude/skills/      ← framework-level skills
 ├── .github/workflows/   ← GitHub Pages deploy
 ├── src/pages/index.astro   ← dashboard
