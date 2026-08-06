@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/PageHeader.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const team = [
+  { name: 'Dr. Philipp Kerth', role: 'Co-founder and Chief Executive Officer', img: 'https://hs-website-images.s3.fr-par.scw.cloud/Philipp_38cc9d99a5.webp' },
+  { name: 'Dr. Marc Ewenz', role: 'Co-founder and Chief Technology Officer', img: 'https://hs-website-images.s3.fr-par.scw.cloud/marc_50d04b76a8.webp' },
+  { name: 'Jonathan Adams', role: 'UK Managing Director', img: 'https://hs-website-images.s3.fr-par.scw.cloud/Jonathan_Adams_55a6d23ec0.png' },
+  { name: 'Dr. Dustin Büttner', role: 'Vice President of Programmes', img: 'https://hs-website-images.s3.fr-par.scw.cloud/Dustin_a5105aef4d.webp' },
+  { name: 'Franz Kreutzer', role: 'Vice President of Business Development', img: 'https://hs-website-images.s3.fr-par.scw.cloud/Franz_46d4002671.webp' },
+  { name: 'Monica Allen', role: 'Director of Communications', img: 'https://hs-website-images.s3.fr-par.scw.cloud/monica_982d333fce.webp' },
+  { name: 'Dominika Jedrzejczyk Roberts', role: 'Business Associate', img: 'https://hs-website-images.s3.fr-par.scw.cloud/Dominica_v2_c2f64bf97f.jpg' },
+];
+const backers = [
+  { quote: 'Plural is proud to support Hypersonica, a disruptive defence company led by ambitious founders, committed like us to the defence of peace and prosperity in Europe. With offices spanning Munich and the UK, Hypersonica is strongly rooted in the centres of hypersonic excellence in Europe.', name: 'Ian Hogarth', title: 'Partner at Plural' },
+  { quote: "Our decision to invest in Hypersonica reflects our confidence in the exceptionally strong team and the steady progress they are making on the demanding physics of hypersonic flight – a capability that will contribute to Europe's defence autonomy while also laying the groundwork for future autonomous space-access.", name: 'Rafael Laguna de la Vera', title: 'Director, SPRIND' },
+  { quote: "Europe's defense industrial base needs founders who can deliver advanced capability at the speed this moment demands. Marc and Philipp are building sovereign maneuverable hypersonic systems that strengthen deterrence and preserve peace. The time to act is now.", name: 'Jeannette zu Fürstenberg', title: 'President and Managing Director, General Catalyst' },
+];
+---
+<Layout title="Company">
+  <Nav theme="light" />
+  <div class="page-light">
+    <PageHeader theme="light" title="Company" subtitle="We aim to equip European allies with a first-of-kind, sovereign, cost effective hypersonic strike capability" />
+
+    <!-- Who we are -->
+    <section class="section">
+      <div class="container two-col">
+        <div>
+          <p class="eyebrow">Who we are</p>
+          <p class="body-text">We believe strongly in European values and our way of life. We also believe that the only response to threats to our democracies is strength. Hypersonica is committed to strengthening Europe's independent defence capabilities while advancing technologies that drive prosperity and innovation. As Europeans, we pursue this work with a clear sense of responsibility for the safe and principled development of this cutting-edge technology.</p>
+        </div>
+        <div>
+          <img src="https://hs-website-images.s3.fr-par.scw.cloud/hypersonica_companypage_0388f06167.webp" alt="Hypersonica engineering team" class="section-img" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Backers -->
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Our backers</p>
+        <p class="section-sub">We're supported by leading European investors in defence and deep tech</p>
+        <div class="backers-grid">
+          {backers.map(bk => (
+            <div class="backer-card">
+              <p class="backer-quote">"{bk.quote}"</p>
+              <p class="backer-name">— {bk.name}</p>
+              <p class="backer-title">{bk.title}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Partners row -->
+    <section class="section">
+      <div class="container">
+        <div class="meta-row">
+          <div class="meta-col"><p class="eyebrow">Our partners</p><p class="body-text">We collaborate with world-renowned research and testing facilities.</p></div>
+          <div class="meta-col"><p class="eyebrow">Our suppliers</p><p class="body-text">We use military-grade components from experienced suppliers.</p></div>
+          <div class="meta-col"><p class="eyebrow">Our advisors</p><p class="body-text">We are advised by leading industry experts.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Meet some of our team</p>
+        <p class="section-sub">Our engineering and business teams are spread across our Munich area HQ and our wholly owned subsidiary in London.</p>
+        <div class="team-grid">
+          {team.map(p => (
+            <div class="team-card">
+              <img src={p.img} alt={p.name} class="team-img" />
+              <p class="team-name">{p.name}</p>
+              <p class="team-role">{p.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Office photo -->
+    <div class="office-wrap">
+      <img src="https://hs-website-images.s3.fr-par.scw.cloud/Hypersonica0546_6a1ae330d0.webp" alt="Hypersonica Munich facility" class="office-img" />
+    </div>
+
+    <Footer theme="light" />
+  </div>
+</Layout>
+
+<style>
+  .page-light { background: var(--light); color: var(--text-dark); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 5rem 0; border-top: 1px solid var(--border-dark); }
+  .eyebrow { font-size: .75rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted-dark); margin-bottom: 1.25rem; }
+  .section-sub { font-size: 1rem; color: var(--text-muted-dark); margin-bottom: 2.5rem; }
+  .body-text { font-size: 1rem; color: var(--text-muted-dark); line-height: 1.75; max-width: 55ch; }
+  .section-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; gap: 2rem; } }
+
+  .backers-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(24,24,24,0.1); border: 1px solid rgba(24,24,24,0.1); }
+  .backer-card { background: var(--blue); padding: 2.5rem 2rem; }
+  .backer-quote { font-size: .9rem; color: rgba(255,255,255,.9); line-height: 1.65; margin-bottom: 1.5rem; font-weight: 300; }
+  .backer-name { font-size: .8125rem; font-weight: 500; color: #fff; }
+  .backer-title { font-size: .75rem; color: rgba(255,255,255,.6); margin-top: .2rem; }
+  @media (max-width: 900px) { .backers-grid { grid-template-columns: 1fr; } }
+
+  .meta-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--border-dark); }
+  .meta-col { padding: 2rem 2rem 2rem 0; border-right: 1px solid var(--border-dark); }
+  .meta-col:last-child { border-right: none; padding-left: 2rem; }
+  .meta-col:nth-child(2) { padding-left: 2rem; }
+  @media (max-width: 768px) { .meta-row { grid-template-columns: 1fr; } .meta-col { border-right: none !important; border-bottom: 1px solid var(--border-dark); padding: 2rem 0 !important; } }
+
+  .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2.5rem; margin-top: 1rem; }
+  @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 480px) { .team-grid { grid-template-columns: 1fr; } }
+  .team-img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; margin-bottom: .875rem; filter: grayscale(10%); }
+  .team-name { font-size: .9375rem; font-weight: 500; color: var(--text-dark); }
+  .team-role { font-size: .8125rem; color: var(--text-muted-dark); margin-top: .2rem; }
+
+  .office-wrap { line-height: 0; }
+  .office-img { width: 100%; height: clamp(250px, 35vw, 520px); object-fit: cover; object-position: center 60%; display: block; }
+</style>

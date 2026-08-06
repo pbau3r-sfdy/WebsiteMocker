@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Layout title="Hypersonica raises €23.3 million Series A">
+  <Nav theme="dark" />
+  <div class="page-dark">
+    <main class="article-main">
+      <div class="container">
+        <a href={`${b}/news`} class="back">← Back to News</a>
+        <article>
+          <header class="article-header">
+            <p class="article-meta">10th February 2026 · Munich – London</p>
+            <h1>Hypersonica raises €23.3 million Series A to deliver Europe's first sovereign hypersonic strike capability</h1>
+          </header>
+          <figure class="article-figure">
+            <img src="https://hs-website-images.s3.fr-par.scw.cloud/DSCF_3364_e510623db3.jpg" alt="Hypersonica Series A fundraising announcement" />
+          </figure>
+          <div class="article-body">
+            <p>Hypersonica has closed a €23.3 million Series A funding round, led by leading European defence and deep tech investors. The round will fund accelerated development and testing of Hypersonica's sovereign hypersonic strike capability.</p>
+            <p>The raise brings Hypersonica's total funding to date to over €28 million, with backing from Plural, SPRIND and General Catalyst, among others.</p>
+            <h2>Europe's sovereign strike capability</h2>
+            <p>"This funding will allow us to accelerate our flight test programme and scale our engineering team," said Dr. Marc Ewenz, Co-founder and CTO. "We are on track to deliver Europe's first sovereign hypersonic strike capability."</p>
+            <p>The company currently employs a team of engineers in its Munich headquarters and London subsidiary, with plans to double headcount within the next 12 months.</p>
+            <h2>Investor perspectives</h2>
+            <p>"Hypersonica is building exactly the kind of sovereign capability Europe needs right now," said Ian Hogarth, Partner at Plural. "We are proud to lead this round."</p>
+            <p>For investor enquiries, contact <a href="mailto:contact@hypersonica.space">contact@hypersonica.space</a>.</p>
+          </div>
+        </article>
+      </div>
+    </main>
+    <Footer theme="dark" />
+  </div>
+</Layout>
+<style>
+  .page-dark { background: var(--dark); }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+  .article-main { padding-top: calc(var(--nav-h) + 3rem); padding-bottom: 6rem; min-height: 80vh; }
+  .back { display: inline-block; font-size: .875rem; color: var(--text-muted); margin-bottom: 2.5rem; transition: color .2s; }
+  .back:hover { color: var(--text); }
+  .article-meta { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+  h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 300; color: var(--text); line-height: 1.15; }
+  .article-figure { margin: 2.5rem 0; }
+  .article-figure img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .article-body { font-size: 1.0625rem; color: var(--text-muted); line-height: 1.8; }
+  .article-body p { margin-bottom: 1.25rem; }
+  .article-body h2 { font-size: 1.25rem; font-weight: 500; color: var(--text); margin: 2.5rem 0 1rem; }
+  .article-body a { color: var(--text); text-decoration: underline; }
+</style>

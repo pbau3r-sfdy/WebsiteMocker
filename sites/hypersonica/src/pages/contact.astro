@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+<Layout title="Contact">
+  <Nav theme="blue" />
+  <div class="page-blue">
+    <PageHeader theme="blue" title="Contact us" />
+    <section class="section">
+      <div class="container grid-3">
+        <div class="info-col">
+          <p class="col-label">About us</p>
+          <div class="divider"></div>
+          <p class="col-body">Founded in December 2023 by University of Oxford PhDs and German nationals Dr. Marc Ewenz and Dr. Philipp Kerth, the company is headquartered in the Munich area with a wholly-owned subsidiary in London.</p>
+        </div>
+        <div class="info-col">
+          <p class="col-label">Email</p>
+          <div class="divider"></div>
+          <p class="col-body"><strong>General enquiries:</strong><br /><a href="mailto:contact@hypersonica.space">contact@hypersonica.space</a></p>
+          <p class="col-body" style="margin-top:1rem;"><strong>Press enquiries:</strong><br /><a href="mailto:media@hypersonica.space">media@hypersonica.space</a></p>
+        </div>
+        <div class="info-col">
+          <p class="col-label">Follow us</p>
+          <div class="divider"></div>
+          <a href="https://www.linkedin.com/company/hypersonica" class="social-link" target="_blank" rel="noopener">LinkedIn →</a>
+        </div>
+      </div>
+    </section>
+    <Footer theme="blue" />
+  </div>
+</Layout>
+<style>
+  .page-blue { background: var(--blue); color: #fff; min-height: 100vh; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 4rem 0 8rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.2); }
+  .info-col { background: var(--blue); padding: 2.5rem 2rem; }
+  .col-label { font-size: .75rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 1rem; }
+  .divider { border-top: 1px solid rgba(255,255,255,.25); margin-bottom: 1.5rem; }
+  .col-body { font-size: .9375rem; color: rgba(255,255,255,.85); line-height: 1.65; }
+  .col-body strong { color: #fff; font-weight: 500; }
+  .col-body a { color: #fff; text-decoration: underline; }
+  .social-link { font-size: .9375rem; color: rgba(255,255,255,.85); transition: color .2s; }
+  .social-link:hover { color: #fff; }
+  @media (max-width: 768px) { .grid-3 { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PageHeader from '../../components/PageHeader.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const articles = [
+  { slug: 'hypersonica-successful-test', title: "Hypersonica successfully tests Europe's sovereign hypersonic missile prototype", date: '10th February 2026', location: 'Andøya, Norway', img: 'https://hs-website-images.s3.fr-par.scw.cloud/mountains_expanded_218897e3ec.webp', featured: true },
+  { slug: 'series-a', title: 'Hypersonica raises €23.3 million Series A to deliver Europe\'s first sovereign hypersonic strike capability', date: '10th February 2026', location: 'Munich – London', img: 'https://hs-website-images.s3.fr-par.scw.cloud/DSCF_3364_e510623db3.jpg', featured: false },
+];
+---
+<Layout title="News">
+  <Nav theme="dark" />
+  <div class="page-dark">
+    <PageHeader theme="dark" title="News" />
+    <section class="section">
+      <div class="container">
+        <div class="news-grid">
+          {articles.map(a => (
+            <a href={`${b}/news/${a.slug}`} class={`card ${a.featured ? 'card--featured' : ''}`}>
+              <div class="card-text">
+                <h3 class="card-title">{a.title}</h3>
+                <p class="card-meta">{a.date}<br />{a.location}</p>
+              </div>
+              <div class="card-img-wrap">
+                <img src={a.img} alt={a.title} class="card-img" />
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+    <Footer theme="dark" />
+  </div>
+</Layout>
+<style>
+  .page-dark { background: var(--dark); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 2rem 0 6rem; }
+  .news-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .card { display: flex; flex-direction: column; justify-content: space-between; background: var(--mid); overflow: hidden; transition: background .2s; }
+  .card:hover { background: #333; }
+  .card-text { padding: 2rem; }
+  .card-title { font-size: 1rem; font-weight: 400; color: var(--text); line-height: 1.4; margin-bottom: 1rem; }
+  .card--featured .card-title { font-size: 1.125rem; }
+  .card-meta { font-size: .75rem; color: var(--text-muted); line-height: 1.6; letter-spacing: .02em; }
+  .card-img-wrap { overflow: hidden; }
+  .card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; transition: transform .4s; }
+  .card:hover .card-img { transform: scale(1.03); }
+  @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
+</style>

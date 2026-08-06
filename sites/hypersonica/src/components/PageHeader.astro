@@ -1,0 +1,46 @@
+---
+interface Props { title: string; subtitle?: string; theme?: 'dark'|'light'|'blue'; }
+const { title, subtitle, theme = 'dark' } = Astro.props;
+---
+<header class={`page-header page-header--${theme}`}>
+  <div class="ph-inner">
+    <div class="ph-divider"></div>
+    <div class="ph-text">
+      <h1 class="ph-title">{title}</h1>
+      {subtitle && <p class="ph-sub">{subtitle}</p>}
+    </div>
+  </div>
+</header>
+<style>
+  .page-header { padding-top: var(--nav-h); }
+  .ph-inner {
+    display: grid; grid-template-columns: 1fr 2fr;
+    max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 4rem;
+    gap: 3rem;
+  }
+  .ph-divider { border-right: 1px solid; }
+  .page-header--dark  .ph-divider { border-color: var(--border); }
+  .page-header--light .ph-divider { border-color: var(--border-dark); }
+  .page-header--blue  .ph-divider { border-color: rgba(255,255,255,.25); }
+
+  .ph-title {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 300; letter-spacing: -.01em;
+  }
+  .page-header--dark  .ph-title { color: var(--text); }
+  .page-header--light .ph-title { color: var(--text-dark); }
+  .page-header--blue  .ph-title { color: #fff; }
+
+  .ph-sub {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 300; line-height: 1.35; margin-top: .5rem;
+  }
+  .page-header--dark  .ph-sub { color: var(--text-muted); }
+  .page-header--light .ph-sub { color: var(--text-muted-dark); }
+  .page-header--blue  .ph-sub { color: rgba(255,255,255,.8); }
+
+  @media (max-width: 640px) {
+    .ph-inner { grid-template-columns: 1fr; gap: 1rem; }
+    .ph-divider { border-right: none; border-bottom: 1px solid; height: 0; }
+  }
+</style>

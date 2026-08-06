@@ -1,0 +1,90 @@
+---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+interface Props { theme?: 'dark' | 'light' | 'blue'; }
+const { theme = 'dark' } = Astro.props;
+const navLinks = [
+  { label: 'Company',    href: `${b}/company` },
+  { label: 'Technology', href: `${b}/technology` },
+  { label: 'News',       href: `${b}/news` },
+  { label: 'Careers',    href: `${b}/careers` },
+  { label: 'Contact',    href: `${b}/contact` },
+];
+---
+<nav class={`nav nav--${theme}`}>
+  <div class="nav-inner">
+    <a href={`${b}/`} class="nav-logo" aria-label="Hypersonica">
+      <span class="logo-text">HYPERSONICA</span><span class="logo-mark">⟋</span>
+    </a>
+    <ul class="nav-links">
+      {navLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <ul class="nav-mobile" id="nav-mobile">
+    {navLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+  </ul>
+</nav>
+<script>
+  const t = document.getElementById('nav-toggle'), m = document.getElementById('nav-mobile');
+  t?.addEventListener('click', () => m?.classList.toggle('open'));
+  m?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => m?.classList.remove('open')));
+</script>
+<style>
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; flex-direction: column;
+  }
+  .nav--dark  { background: rgba(24,24,24,0.97); }
+  .nav--light { background: rgba(229,229,229,0.97); }
+  .nav--blue  { background: rgba(51,65,194,0.97); }
+  .nav-inner {
+    max-width: 1440px; margin: 0 auto; padding: 0 2rem;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%;
+  }
+  .nav-logo {
+    display: flex; align-items: baseline; gap: 1px;
+    font-family: var(--font); font-size: 1rem; font-weight: 500;
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+  .nav--light .nav-logo { color: var(--text-dark); }
+  .nav--dark .nav-logo,
+  .nav--blue .nav-logo { color: var(--text); }
+  .logo-text { letter-spacing: .06em; }
+  .logo-mark { font-style: normal; color: var(--blue); font-size: 1.1em; font-weight: 300; }
+  .nav--blue .logo-mark { color: rgba(255,255,255,0.7); }
+
+  .nav-links { display: flex; list-style: none; gap: 2rem; }
+  .nav-links a {
+    font-size: .8125rem; font-weight: 400; letter-spacing: .04em;
+    opacity: .7; transition: opacity .2s;
+  }
+  .nav--light .nav-links a { color: var(--text-dark); }
+  .nav--dark .nav-links a,
+  .nav--blue .nav-links a { color: var(--text); }
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: currentColor; }
+  .nav--light .nav-toggle { color: var(--text-dark); }
+  .nav--dark .nav-toggle, .nav--blue .nav-toggle { color: var(--text); }
+
+  .nav-mobile { display: none; list-style: none; flex-direction: column; gap: .75rem; padding: 1rem 2rem 1.5rem; }
+  .nav-mobile.open { display: flex; }
+  .nav--dark .nav-mobile { background: var(--dark); }
+  .nav--light .nav-mobile { background: var(--light); }
+  .nav--blue .nav-mobile { background: var(--blue); }
+  .nav-mobile a { font-size: .9375rem; font-weight: 400; opacity: .8; }
+  .nav--light .nav-mobile a { color: var(--text-dark); }
+  .nav--dark .nav-mobile a,
+  .nav--blue .nav-mobile a { color: var(--text); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+  }
+</style>

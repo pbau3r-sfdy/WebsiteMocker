@@ -1,0 +1,38 @@
+---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+interface Props { theme?: 'dark' | 'light' | 'blue'; }
+const { theme = 'dark' } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class={`footer footer--${theme}`}>
+  <div class="footer-cert">
+    <img src="https://www.hypersonica.com/certs/cyber-cert.png" alt="Cyber Essentials Certified Plus" height="48" />
+    <img src="https://www.hypersonica.com/certs/joscar-cert.png" alt="JOSCAR" height="48" />
+  </div>
+  <div class="footer-bar">
+    <span class="footer-tag">Made in Europe. For Europe.</span>
+    <a href={`${b}/imprint`}>Imprint &amp; Privacy Policy</a>
+    <span>© {year} Hypersonica GmbH</span>
+  </div>
+</footer>
+<style>
+  .footer { padding: 2rem; border-top: 1px solid var(--border); }
+  .footer--light { border-color: var(--border-dark); }
+  .footer--blue { border-color: rgba(255,255,255,0.2); }
+
+  .footer-cert { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+  .footer-cert img { height: 48px; width: auto; object-fit: contain; opacity: .8; }
+
+  .footer-bar {
+    display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
+    font-size: .75rem; letter-spacing: .03em;
+  }
+  .footer--dark .footer-bar { color: var(--text-muted); }
+  .footer--light .footer-bar { color: var(--text-muted-dark); }
+  .footer--blue .footer-bar { color: rgba(255,255,255,0.55); }
+  .footer-bar a { transition: opacity .2s; }
+  .footer-bar a:hover { opacity: 1; }
+  .footer-tag { opacity: .9; }
+
+  @media (max-width: 640px) { .footer-bar { flex-direction: column; align-items: flex-start; gap: .75rem; } }
+</style>

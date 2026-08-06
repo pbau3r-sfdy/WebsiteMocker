@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/PageHeader.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const jobs = [
+  { title: '(Senior) Factory Planning & Design Engineer', location: 'Munich', team: 'Manufacturing' },
+  { title: '(Senior) Manager Accounting and Finance Operations', location: 'Munich', team: 'Finance' },
+  { title: '(Senior) Manufacturing Engineer – Assembly', location: 'Munich', team: 'Manufacturing' },
+  { title: '(Senior) Programme Associate', location: 'Munich or Berlin', team: 'Business Development' },
+  { title: 'AIT Engineer, Electrical', location: 'London', team: 'AIT & Launch' },
+  { title: 'AIT Engineer, Mechanical', location: 'London', team: 'AIT & Launch' },
+  { title: 'Avionics AIT Manager', location: 'Munich', team: 'AIT & Launch' },
+  { title: 'Avionics EWIS Engineer', location: 'Munich', team: 'System Engineering' },
+  { title: 'Avionics Technician', location: 'Munich', team: 'Avionics' },
+  { title: 'Compliance Manager', location: 'Munich', team: 'Commercial, IP & Regulatory' },
+  { title: 'Embedded Software Engineer', location: 'Munich', team: 'Software' },
+  { title: 'EU Sales and Business Development Manager', location: 'Munich', team: 'Business Development' },
+  { title: 'Flight Dynamics & Control Engineer', location: 'Munich', team: 'GNC' },
+  { title: 'GNC Lead', location: 'Munich', team: 'GNC' },
+  { title: 'Head of Compliance', location: 'London', team: 'Operations' },
+  { title: 'Head of Health and Safety', location: 'Munich or London', team: 'Operations' },
+  { title: 'Head of Quality', location: 'Munich or London', team: 'Operations' },
+  { title: 'Head of Supply Chain', location: 'Munich or London', team: 'Supply Chain' },
+  { title: 'Lead Counsel', location: 'Munich or London', team: 'Commercial, IP & Regulatory' },
+  { title: 'Programme Manager', location: 'Munich or Remote', team: 'Business Development' },
+  { title: 'RAMS Engineer', location: 'London', team: 'Engineering' },
+  { title: 'Reliability and Safety Engineer', location: 'Munich', team: 'System Engineering' },
+  { title: 'Senior Communications & Marketing Manager', location: 'Munich', team: 'Business Operations' },
+  { title: 'Senior Ground Software Engineer', location: 'Munich', team: 'Software' },
+  { title: 'Senior Manufacturing Engineer – DFM', location: 'Munich', team: 'Manufacturing' },
+  { title: 'Senior Technical Recruiter', location: 'Munich', team: 'Talent Acquisition' },
+  { title: 'UK Business Development Manager', location: 'London', team: 'UK Business Development' },
+];
+---
+<Layout title="Careers">
+  <Nav theme="dark" />
+  <div class="page-dark">
+    <PageHeader theme="dark" title="Careers" subtitle="At Hypersonica, we're redefining what's possible in European defence technology." />
+
+    <section class="section">
+      <div class="container two-col">
+        <div>
+          <p class="eyebrow">Join us in building Europe's hypersonic capability</p>
+          <p class="body-text">Our mission is to equip Europe with the technological edge it needs to face today's complex and evolving threats and protect our peace and prosperity. We are building the only hypersonics A-Team in Europe.</p>
+        </div>
+        <div>
+          <img src="https://hs-website-images.s3.fr-par.scw.cloud/HS_man_crop_b5a3182772.png" alt="Hypersonica team member" class="section-img" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Open Positions</p>
+        <div class="jobs-list">
+          {jobs.map(j => (
+            <a href={`${b}/contact`} class="job-row">
+              <span class="job-title">{j.title}</span>
+              <span class="job-meta">{j.team}</span>
+              <span class="job-meta">{j.location}</span>
+              <span class="job-meta">Full-time</span>
+              <span class="job-arrow">→</span>
+            </a>
+          ))}
+        </div>
+        <div class="cta-row">
+          <a href="https://boards.greenhouse.io/hypersonica" class="btn-blue" target="_blank" rel="noopener">See all open positions →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-cta">
+      <div class="container">
+        <p class="cta-headline">We are constantly looking for talent.</p>
+        <p class="body-text" style="margin-top:.75rem;">If your specialty isn't advertised but you're equipped to contribute, we want to hear from you.</p>
+        <a href={`${b}/contact`} class="btn-blue" style="margin-top:2rem; display:inline-block;">Contact Us →</a>
+      </div>
+    </section>
+
+    <Footer theme="dark" />
+  </div>
+</Layout>
+<style>
+  .page-dark { background: var(--dark); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 5rem 0; border-top: 1px solid var(--border); }
+  .eyebrow { font-size: .75rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .body-text { font-size: 1rem; color: var(--text-muted); line-height: 1.75; max-width: 55ch; }
+  .section-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+  .jobs-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+  .job-row {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 1rem; align-items: center;
+    padding: 1rem 0; border-bottom: 1px solid var(--border);
+    color: var(--text); transition: background .15s; cursor: pointer;
+  }
+  .job-row:hover { background: rgba(229,229,229,0.04); padding-left: .5rem; }
+  .job-title { font-size: .9375rem; font-weight: 400; }
+  .job-meta { font-size: .8125rem; color: var(--text-muted); }
+  .job-arrow { color: var(--text-muted); font-size: .875rem; }
+  @media (max-width: 768px) { .job-row { grid-template-columns: 1fr auto; } .job-meta:not(:first-of-type) { display: none; } }
+
+  .cta-row { margin-top: 2rem; }
+  .btn-blue { display: inline-block; background: var(--blue); color: #fff; padding: .75rem 1.5rem; border-radius: var(--radius); font-size: .875rem; transition: opacity .2s; }
+  .btn-blue:hover { opacity: .85; }
+  .cta-headline { font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 300; color: var(--text); }
+</style>

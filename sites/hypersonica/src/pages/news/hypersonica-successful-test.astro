@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Layout title="Hypersonica successfully tests Europe's sovereign hypersonic missile prototype">
+  <Nav theme="dark" />
+  <div class="page-dark">
+    <main class="article-main">
+      <div class="container">
+        <a href={`${b}/news`} class="back">← Back to News</a>
+        <article>
+          <header class="article-header">
+            <p class="article-meta">10th February 2026 · Andøya, Norway</p>
+            <h1>Hypersonica successfully tests Europe's sovereign hypersonic missile prototype</h1>
+          </header>
+          <figure class="article-figure">
+            <img src="https://hs-website-images.s3.fr-par.scw.cloud/mountains_expanded_218897e3ec.webp" alt="Hypersonica test launch at Andøya" />
+          </figure>
+          <div class="article-body">
+            <p>Hypersonica has successfully conducted the first flight test of its sovereign European hypersonic missile prototype at the Andøya Space launch facility in Norway.</p>
+            <p>The test marks a critical milestone for European defence autonomy, demonstrating that a European company can develop, build and fly a hypersonic vehicle entirely within European borders using European talent and technology.</p>
+            <h2>A sovereign European capability</h2>
+            <p>The vehicle achieved hypersonic speeds during a controlled flight test, validating key aerodynamic, propulsion and guidance systems. The test was conducted within Norwegian airspace in close coordination with national authorities.</p>
+            <p>"This is not just a technical achievement — it is proof that Europe can develop the sovereign strike capability it needs to deter aggression," said Dr. Philipp Kerth, Co-founder and CEO of Hypersonica.</p>
+            <h2>What comes next</h2>
+            <p>Hypersonica will now proceed to an accelerated programme of follow-on tests, refining vehicle performance across a wider envelope of conditions. The company continues to expand its engineering team and manufacturing capabilities in Munich and London.</p>
+            <p>For press enquiries, contact <a href="mailto:media@hypersonica.space">media@hypersonica.space</a>.</p>
+          </div>
+        </article>
+      </div>
+    </main>
+    <Footer theme="dark" />
+  </div>
+</Layout>
+<style>
+  .page-dark { background: var(--dark); }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+  .article-main { padding-top: calc(var(--nav-h) + 3rem); padding-bottom: 6rem; min-height: 80vh; }
+  .back { display: inline-block; font-size: .875rem; color: var(--text-muted); margin-bottom: 2.5rem; transition: color .2s; }
+  .back:hover { color: var(--text); }
+  .article-header { margin-bottom: 2.5rem; }
+  .article-meta { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+  h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 300; color: var(--text); line-height: 1.15; }
+  .article-figure { margin: 2.5rem 0; }
+  .article-figure img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .article-body { font-size: 1.0625rem; color: var(--text-muted); line-height: 1.8; }
+  .article-body p { margin-bottom: 1.25rem; }
+  .article-body h2 { font-size: 1.25rem; font-weight: 500; color: var(--text); margin: 2.5rem 0 1rem; }
+  .article-body a { color: var(--text); text-decoration: underline; }
+</style>

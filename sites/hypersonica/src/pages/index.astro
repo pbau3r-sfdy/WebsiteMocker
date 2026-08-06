@@ -1,0 +1,300 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const advantages = [
+  { label: 'Flight-ready in months', body: 'We test and field capabilities faster, shortening timelines from years to months. Rapid iteration from design to flight-ready hardware, combining simulation, prototyping and flight testing.' },
+  { label: 'Cost reduction by 80%', body: 'Our approach dramatically reduces the cost of development, making the technology accessible for more democracies.' },
+  { label: 'Modular architecture', body: 'Our custom modular design creates a system that can evolve in real time, and sustain long-term operational superiority.' },
+];
+
+const backers = [
+  { quote: 'Plural is proud to support Hypersonica, a disruptive defence company led by ambitious founders, committed like us to the defence of peace and prosperity in Europe.', name: 'Ian Hogarth', title: 'Partner at Plural' },
+  { quote: 'Our decision to invest in Hypersonica reflects our confidence in the exceptionally strong team and the steady progress they are making on the demanding physics of hypersonic flight.', name: 'Rafael Laguna de la Vera', title: 'Director, SPRIND' },
+  { quote: "Europe's defense industrial base needs founders who can deliver advanced capability at the speed this moment demands. Marc and Philipp are building sovereign maneuverable hypersonic systems.", name: 'Jeannette zu Fürstenberg', title: 'President, General Catalyst Europe' },
+];
+---
+
+<Layout title="Hypersonica" description="Redefining European resilience. Next-generation sovereign hypersonic systems.">
+  <Nav theme="dark" />
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://hs-website-images.s3.fr-par.scw.cloud/mountains_expanded_218897e3ec.webp" alt="" class="hero-img" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-headline">Redefining European<br />resilience</h1>
+    </div>
+    <!-- News ticker card -->
+    <a href={`${b}/news/hypersonica-successful-test`} class="news-ticker">
+      <span class="news-ticker-label">Latest</span>
+      <span class="news-ticker-text">Hypersonica successfully tests Europe's sovereign hypersonic missile prototype</span>
+      <span class="news-ticker-arrow">→</span>
+    </a>
+  </section>
+
+  <!-- ── MISSION / BLUE ── -->
+  <section class="section section-blue" id="mission">
+    <div class="container">
+      <p class="eyebrow-light">Defending democracies</p>
+      <p class="mission-text">
+        European allies face complex and evolving threats and a growing defence gap.
+        To protect our peace and prosperity, Europe needs fast, cost-efficient innovation — now.
+      </p>
+      <a href={`${b}/company`} class="btn-outline-light">Read more about our mission →</a>
+    </div>
+  </section>
+
+  <!-- ── COMPANY INTRO ── -->
+  <section class="section section-dark" id="company">
+    <div class="container two-col">
+      <div class="col-text">
+        <p class="eyebrow">Company</p>
+        <p class="body-lg">
+          Hypersonica is a mission-driven European defence and aerospace company developing
+          next-generation hypersonic systems for military and civilian applications.
+        </p>
+        <p class="body-md" style="margin-top:1.25rem;">
+          We aim to equip Europe with the sovereign, technological edge it needs to deter
+          military aggression and uphold freedom and independence in a more dangerous world.
+        </p>
+        <a href={`${b}/company`} class="link-arrow" style="margin-top:2rem; display:inline-block;">Read more about our company →</a>
+      </div>
+      <div class="col-img">
+        <img src="https://hs-website-images.s3.fr-par.scw.cloud/Hypersonica0546_6a1ae330d0.webp" alt="Hypersonica team" class="section-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIME TO ACT ── -->
+  <section class="section section-dark">
+    <div class="container two-col two-col--reverse">
+      <div class="col-text">
+        <p class="eyebrow">The time to act</p>
+        <p class="body-md">
+          Our mission coincides with a decisive shift in European defence priorities. These include
+          the UK-German Trinity House Agreement strengthening cooperation in advanced defence
+          technologies, and an increasing number of European governments expressing interest in
+          deep strike capabilities.
+        </p>
+        <a href={`${b}/company`} class="link-arrow" style="margin-top:2rem; display:inline-block;">Read more about our mission →</a>
+      </div>
+      <div class="col-img">
+        <img src="https://hs-website-images.s3.fr-par.scw.cloud/Hypersonica0600_1cfbb58866.webp" alt="Hypersonica operations" class="section-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ADVANTAGES ── -->
+  <section class="section section-dark advantages-section">
+    <div class="container">
+      <p class="eyebrow">Our strategic advantages</p>
+      <div class="advantages-grid">
+        {advantages.map(a => (
+          <div class="advantage-item">
+            <h3 class="advantage-title">{a.label}</h3>
+            <p class="advantage-body">{a.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BACKERS ── -->
+  <section class="section section-dark backers-section">
+    <div class="container">
+      <p class="eyebrow">Our backers</p>
+      <p class="section-sub">We're supported by leading European investors in defence and deep tech</p>
+      <div class="backers-grid">
+        {backers.map(b => (
+          <div class="backer-card">
+            <p class="backer-quote">"{b.quote}"</p>
+            <p class="backer-name">— {b.name}</p>
+            <p class="backer-title">{b.title}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NEWS ── -->
+  <section class="section section-dark news-section">
+    <div class="container">
+      <p class="eyebrow">News</p>
+      <p class="section-sub">We are making progress, fast.</p>
+      <div class="news-grid">
+        <a href={`${b}/news/hypersonica-successful-test`} class="news-card news-card--featured">
+          <div class="news-card-text">
+            <h3>Hypersonica successfully tests Europe's sovereign hypersonic missile prototype</h3>
+            <p class="news-meta">10th February 2026 · Andøya, Norway</p>
+            <span class="news-read">Read more →</span>
+          </div>
+          <div class="news-card-img">
+            <img src="https://hs-website-images.s3.fr-par.scw.cloud/mountains_expanded_218897e3ec.webp" alt="Hypersonica test launch" />
+          </div>
+        </a>
+        <a href={`${b}/news/series-a`} class="news-card">
+          <div class="news-card-text">
+            <h3>Hypersonica raises €23.3 million Series A to deliver Europe's first sovereign hypersonic strike capability</h3>
+            <p class="news-meta">10th February 2026 · Munich – London</p>
+            <span class="news-read">Read more →</span>
+          </div>
+          <div class="news-card-img">
+            <img src="https://hs-website-images.s3.fr-par.scw.cloud/DSCF_3364_e510623db3.jpg" alt="Hypersonica Series A" />
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer theme="dark" />
+</Layout>
+
+<style>
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    overflow: hidden;
+  }
+  .hero-bg { position: absolute; inset: 0; }
+  .hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(24,24,24,0.3) 0%, rgba(24,24,24,0.5) 50%, rgba(24,24,24,0.85) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    padding: 0 2rem 5rem;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+  }
+  .hero-headline {
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    font-weight: 300; letter-spacing: -.02em;
+    color: var(--text); line-height: 1.05;
+  }
+  .news-ticker {
+    position: relative; z-index: 2;
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: rgba(229,229,229,0.08);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(229,229,229,0.15);
+    padding: 1rem 1.5rem;
+    margin: 0 2rem 2.5rem;
+    max-width: 520px; border-radius: var(--radius);
+    transition: background .2s;
+  }
+  .news-ticker:hover { background: rgba(229,229,229,0.12); }
+  .news-ticker-label {
+    font-size: .6875rem; font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--blue); white-space: nowrap;
+    background: rgba(51,65,194,0.2); padding: .2rem .5rem; border-radius: 2px;
+    flex-shrink: 0; margin-top: .1rem;
+  }
+  .news-ticker-text { font-size: .875rem; color: var(--text); line-height: 1.4; flex: 1; }
+  .news-ticker-arrow { color: var(--text-muted); font-size: .875rem; flex-shrink: 0; margin-top: .1rem; }
+
+  /* ── Sections ── */
+  .section { padding: 7rem 0; }
+  .section-dark { background: var(--dark); }
+  .section-blue { background: var(--blue); }
+
+  .eyebrow {
+    font-size: .75rem; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .eyebrow-light {
+    font-size: .75rem; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: rgba(255,255,255,.55);
+    margin-bottom: 1.5rem;
+  }
+  .section-sub { font-size: 1rem; color: var(--text-muted); margin-bottom: 3rem; }
+
+  /* ── Mission ── */
+  .mission-text {
+    font-size: clamp(1.375rem, 2.5vw, 2rem);
+    font-weight: 300; color: #fff; line-height: 1.4;
+    max-width: 700px; margin-bottom: 2.5rem;
+  }
+
+  /* ── Buttons ── */
+  .btn-outline-light {
+    display: inline-block; padding: .7rem 1.5rem;
+    border: 1px solid rgba(255,255,255,.5); color: #fff;
+    font-size: .875rem; font-weight: 400; border-radius: var(--radius);
+    transition: border-color .2s, background .2s;
+  }
+  .btn-outline-light:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+  .link-arrow { font-size: .875rem; color: var(--text-muted); transition: color .2s; }
+  .link-arrow:hover { color: var(--text); }
+
+  /* ── Two-col layout ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .two-col--reverse .col-text { order: 2; }
+  .two-col--reverse .col-img  { order: 1; }
+  .body-lg { font-size: 1.25rem; font-weight: 300; color: var(--text); line-height: 1.5; }
+  .body-md { font-size: 1rem; color: var(--text-muted); line-height: 1.7; }
+  .section-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius); }
+  @media (max-width: 900px) {
+    .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+    .two-col--reverse .col-text { order: 1; }
+    .two-col--reverse .col-img  { order: 2; }
+  }
+
+  /* ── Advantages ── */
+  .advantages-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border-top: 1px solid var(--border); margin-top: 2rem;
+  }
+  .advantage-item {
+    padding: 2.5rem 2rem 2.5rem 0;
+    border-right: 1px solid var(--border);
+  }
+  .advantage-item:first-child { padding-left: 0; }
+  .advantage-item:last-child { border-right: none; padding-right: 0; padding-left: 2rem; }
+  .advantage-item:nth-child(2) { padding-left: 2rem; }
+  .advantage-title { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: .75rem; }
+  .advantage-body { font-size: .875rem; color: var(--text-muted); line-height: 1.7; }
+  @media (max-width: 768px) {
+    .advantages-grid { grid-template-columns: 1fr; }
+    .advantage-item { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem 0 !important; }
+    .advantage-item:last-child { border-bottom: none; }
+  }
+
+  /* ── Backers ── */
+  .backers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .backer-card { background: var(--blue); padding: 2.5rem 2rem; }
+  .backer-quote { font-size: .9375rem; color: rgba(255,255,255,.9); line-height: 1.6; margin-bottom: 1.5rem; font-weight: 300; }
+  .backer-name { font-size: .8125rem; font-weight: 500; color: #fff; }
+  .backer-title { font-size: .75rem; color: rgba(255,255,255,.6); margin-top: .2rem; }
+  @media (max-width: 900px) {
+    .backers-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── News ── */
+  .news-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .news-card {
+    display: flex; flex-direction: column; justify-content: space-between;
+    background: var(--mid); overflow: hidden; transition: background .2s;
+  }
+  .news-card:hover { background: #333; }
+  .news-card-text { padding: 2rem; }
+  .news-card h3 { font-size: 1rem; font-weight: 400; color: var(--text); line-height: 1.4; margin-bottom: 1rem; }
+  .news-meta { font-size: .75rem; color: var(--text-muted); letter-spacing: .03em; margin-bottom: 1rem; }
+  .news-read { font-size: .8125rem; color: var(--text-muted); transition: color .2s; }
+  .news-card:hover .news-read { color: var(--text); }
+  .news-card-img { overflow: hidden; }
+  .news-card-img img { width: 100%; aspect-ratio: 16/9; object-fit: cover; transition: transform .4s; }
+  .news-card:hover .news-card-img img { transform: scale(1.03); }
+  .news-card--featured h3 { font-size: 1.125rem; }
+  @media (max-width: 768px) {
+    .news-grid { grid-template-columns: 1fr; }
+  }
+</style>
