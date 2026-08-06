@@ -1,0 +1,52 @@
+{
+  "slug": "parrot-capital",
+  "source": "https://www.parrot-capital.com",
+  "capturedAt": "2026-08-06",
+  "nav": [],
+  "tokens": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "text": "rgb(0, 0, 0)",
+    "accent": "",
+    "radius": "4px",
+    "bg-nav": "",
+    "fontHead": "Times",
+    "fontBody": "Times"
+  },
+  "assets": {
+    "images": [],
+    "videos": [],
+    "fonts": []
+  },
+  "pages": {
+    "/": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/investors": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/careers": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/news": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/imprint": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    },
+    "/privacy-policy": {
+      "sections": [],
+      "isPlaceholder": false,
+      "error": null
+    }
+  }
+}

@@ -1,0 +1,94 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark">▲</span>
+          <span class="logo-text">Parrot Capital</span>
+        </div>
+        <p class="footer-tagline">
+          Family Office &amp; Venture Fund.<br />München, Germany.
+        </p>
+      </div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <p class="col-label">Company</p>
+          <a href="/#approach">Our Approach</a>
+          <a href="/#focus">Investment Focus</a>
+          <a href="/#portfolio">Portfolio</a>
+          <a href="/#team">Team</a>
+        </div>
+        <div class="footer-col">
+          <p class="col-label">Legal</p>
+          <a href="/imprint">Impressum</a>
+          <a href="/privacy">Datenschutz</a>
+        </div>
+        <div class="footer-col">
+          <p class="col-label">Contact</p>
+          <a href="mailto:info@parrot-capital.com">info@parrot-capital.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {year} Parrot Capital GmbH. Alle Rechte vorbehalten.</p>
+      <p class="footer-disclaimer">
+        Diese Webseite dient ausschließlich Informationszwecken und stellt kein öffentliches Angebot
+        und keine Anlageberatung dar.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 5rem 0 2.5rem;
+    margin-top: 0;
+  }
+  .footer-top {
+    display: flex; gap: 5rem; flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-brand { flex: 0 0 220px; }
+  .footer-logo {
+    display: flex; align-items: center; gap: .5rem;
+    margin-bottom: 1rem;
+  }
+  .logo-mark { font-size: .7rem; color: var(--accent); }
+  .logo-text {
+    font-family: var(--font-head);
+    font-size: .9375rem; color: var(--text);
+  }
+  .footer-tagline { font-size: .875rem; color: var(--text-muted); line-height: 1.7; }
+  .footer-cols { display: flex; gap: 4rem; flex-wrap: wrap; flex: 1; }
+  .footer-col { display: flex; flex-direction: column; gap: .75rem; }
+  .col-label {
+    font-size: .6875rem; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: .25rem;
+  }
+  .footer-col a { font-size: .875rem; color: var(--text-dim); transition: color .2s; }
+  .footer-col a:hover { color: var(--text); }
+  .footer-bottom { }
+  .footer-bottom p { font-size: .8125rem; color: var(--text-muted); line-height: 1.6; }
+  .footer-disclaimer {
+    margin-top: .5rem;
+    font-size: .75rem !important;
+    color: var(--text-muted) !important;
+    max-width: 68ch;
+    opacity: .7;
+  }
+  @media (max-width: 640px) {
+    .footer-top { gap: 2.5rem; }
+    .footer-brand { flex: 0 0 100%; }
+    .footer-cols { gap: 2rem; }
+  }
+</style>
