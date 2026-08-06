@@ -56,7 +56,8 @@ const formatted = post.data.date.toLocaleDateString('en-GB', {
 
 <style>
   .main { padding-top: 6rem; padding-bottom: 6rem; min-height: 70vh; }
-  .container { max-width: 720px; }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 2rem; }
+  @media (max-width: 640px) { .container { padding: 0 1.25rem; } }
   .back {
     display: inline-block; margin-bottom: 2.5rem;
     font-size: .875rem; color: var(--text-muted); transition: color .2s;
