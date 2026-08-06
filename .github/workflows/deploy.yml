@@ -5,19 +5,21 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Switched from workflow-based Pages deployment (deploy-pages@v4, CDN-activation wait)
+# to branch-based deployment (JamesIves action, git-push to gh-pages — no wait, < 60s).
+# Repo Pages source: gh-pages branch / root  (changed via API 2026-08-06)
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write   # required to push to gh-pages branch
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build
+  build-and-deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +31,6 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        # --workspaces installs root + all sites/* in one pass
         run: npm install
 
       - name: Build all sites
@@ -38,23 +39,10 @@ jobs:
         env:
           SKIP_SITES: levion-orbint-style
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: dist/
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          # Default internal timeout is 600000ms (10 min) — increase to 20 min
-          timeout: 1200000
+          folder: dist        # built output from build-all.js
+          branch: gh-pages    # GitHub Pages source branch
+          clean: true         # remove files in branch not present in dist/
+          single-commit: true # squash history to keep gh-pages branch lean
