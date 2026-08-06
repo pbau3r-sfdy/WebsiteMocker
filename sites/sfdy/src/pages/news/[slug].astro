@@ -39,7 +39,7 @@ const formatted = post.data.date.toLocaleDateString('en-GB', {
         </header>
         {post.data.image && (
           <figure class="article-image">
-            <img src={post.data.image} alt={post.data.title} />
+            <img src={`${b}${post.data.image}`} alt={post.data.title} />
             {post.data.imageCredit && (
               <figcaption>{post.data.imageCredit}</figcaption>
             )}

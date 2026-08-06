@@ -15,7 +15,7 @@ const formatted = date.toLocaleDateString('en-GB', { year: 'numeric', month: 'sh
 <article class="news-card">
   {image && (
     <a href={`${b}/news/${slug}`} class="card-image-link" tabindex="-1" aria-hidden="true">
-      <img src={image} alt="" class="card-image" loading="lazy" />
+      <img src={`${b}${image}`} alt="" class="card-image" loading="lazy" />
     </a>
   )}
   <div class="card-body">
