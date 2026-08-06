@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout
@@ -19,7 +21,7 @@ import Footer from '../components/Footer.astro';
       <p class="hero-sub">Starflight Dynamics develops high-mobility orbital propulsion systems that bring productive industries to space.</p>
       <div class="hero-actions">
         <a href="mailto:mission-control@starflight-dynamics.com" class="btn-primary">Reach Out</a>
-        <a href="/news" class="btn-ghost">Latest News</a>
+        <a href={`${b}/news`} class="btn-ghost">Latest News</a>
       </div>
     </div>
   </section>
@@ -46,9 +48,9 @@ import Footer from '../components/Footer.astro';
     <div class="container">
       <p class="partners-heading">ECOSYSTEM PARTNERS</p>
       <div class="partners-row">
-        <img src="/images/partners/bavairia.png" alt="bavAIRia" class="partner-logo" />
-        <img src="/images/partners/bdli.png"     alt="BDLI"     class="partner-logo" />
-        <img src="/images/partners/newspace.png" alt="BDI NewSpace" class="partner-logo" />
+        <img src={`${b}/images/partners/bavairia.png`} alt="bavAIRia" class="partner-logo" />
+        <img src={`${b}/images/partners/bdli.png`}     alt="BDLI"     class="partner-logo" />
+        <img src={`${b}/images/partners/newspace.png`} alt="BDI NewSpace" class="partner-logo" />
       </div>
     </div>
   </section>
