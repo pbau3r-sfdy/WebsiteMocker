@@ -1,517 +1,126 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
-
-const focusAreas = [
-  {
-    icon: '◈',
-    title: 'Deep Technology',
-    body:  'Software-hardware convergence, AI infrastructure, advanced manufacturing, and semiconductor-adjacent applications. We back foundational technology with enduring competitive moats.',
-  },
-  {
-    icon: '◉',
-    title: 'Life Sciences',
-    body:  'Biotech platforms, computational biology, digital health, and next-generation diagnostics. Science-first teams with the rigour to navigate regulatory complexity.',
-  },
-  {
-    icon: '◌',
-    title: 'Climate & Infrastructure',
-    body:  'Clean energy systems, resource efficiency, circular materials, and the built environment. Long-term infrastructure bets aligned with the energy transition.',
-  },
-];
-
-const portfolio = [
-  { name: 'Lumivec',       sector: 'Life Sciences',    stage: 'Series A', location: 'Munich' },
-  { name: 'Fieldstone AI', sector: 'Deep Technology',  stage: 'Seed',     location: 'Berlin' },
-  { name: 'Kinara',        sector: 'Climate',          stage: 'Series B', location: 'Zurich' },
-  { name: 'Orbint',        sector: 'Deep Technology',  stage: 'Series A', location: 'Munich' },
-];
-
-const team = [
-  {
-    initials: 'PC',
-    name:     '[Vorname Nachname]',
-    role:     'Managing Partner',
-    bio:      'Experienced investor and operator with a background in technology and private equity.',
-  },
-  {
-    initials: 'PC',
-    name:     '[Vorname Nachname]',
-    role:     'Partner, Investments',
-    bio:      'Deep tech and life sciences investor. Previously at a leading European venture fund.',
-  },
-];
+// Parrot Capital — holding page
 ---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parrot Capital</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<Layout
-  title="Home"
-  description="Parrot Capital is an independent family office and venture fund based in Munich, investing in deep technology, life sciences, and climate infrastructure."
->
-  <Nav />
+    :root {
+      --bg:      #07090F;
+      --surface: #0E1220;
+      --accent:  #3DB87A;
+      --text:    #E8EAF0;
+      --muted:   #5A6070;
+      --border:  rgba(255,255,255,0.07);
+    }
 
-  <!-- ── Hero ─────────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="hero-content container">
-      <p class="eyebrow">Family Office · Venture Fund · München</p>
-      <h1 class="hero-headline">Investing in<br />what endures.</h1>
-      <p class="hero-sub">
-        Parrot Capital is an independent family office with a focused venture portfolio. We back
-        exceptional founders building in deep technology, life sciences, and climate infrastructure —
-        with patient capital and long-term conviction.
-      </p>
-      <div class="hero-actions">
-        <a href="/#approach" class="btn-primary">Our Approach</a>
-        <a href="/#contact" class="btn-ghost">Get in Touch</a>
-      </div>
-    </div>
-    <div class="hero-line" aria-hidden="true"></div>
-  </section>
+    html, body {
+      height: 100%;
+    }
 
-  <!-- ── Approach ──────────────────────────────────────────────── -->
-  <section class="section section-approach" id="approach">
-    <div class="container">
-      <div class="approach-layout">
-        <div class="approach-label">
-          <span class="section-eyebrow">Our Approach</span>
-        </div>
-        <div class="approach-content">
-          <h2 class="approach-title">Patient capital.<br />Principled conviction.</h2>
-          <p class="approach-body">
-            We manage a multigenerational portfolio with a simple philosophy: invest in extraordinary
-            teams solving problems that matter, hold for the long term, and compound value
-            responsibly.
-          </p>
-          <p class="approach-body">
-            As a family office, we are not constrained by fund cycles. We can be the first check and
-            the last one standing. We invest our own capital alongside founders who are building
-            for decades, not quarters.
-          </p>
-          <div class="approach-pillars">
-            <div class="pillar">
-              <span class="pillar-label">Langfristigkeit</span>
-              <p>No fund clock. We hold through cycles.</p>
-            </div>
-            <div class="pillar">
-              <span class="pillar-label">Substanz</span>
-              <p>Fundamental value creation, not momentum.</p>
-            </div>
-            <div class="pillar">
-              <span class="pillar-label">Vertrauen</span>
-              <p>We are partners in the truest sense.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100svh;
+      padding: 2rem;
+      text-align: center;
+    }
 
-  <!-- ── Focus ─────────────────────────────────────────────────── -->
-  <section class="section section-focus" id="focus">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-eyebrow">Investment Focus</span>
-        <h2 class="section-title">Three areas.<br />Decades of conviction.</h2>
-      </div>
-      <div class="focus-grid">
-        {focusAreas.map(area => (
-          <div class="focus-card">
-            <span class="focus-icon" aria-hidden="true">{area.icon}</span>
-            <h3 class="focus-name">{area.title}</h3>
-            <p class="focus-body">{area.body}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+    /* subtle radial glow */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 45%, rgba(61,184,122,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-  <!-- ── Portfolio ─────────────────────────────────────────────── -->
-  <section class="section section-portfolio" id="portfolio">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-eyebrow">Portfolio</span>
-        <h2 class="section-title">Selected investments.</h2>
-      </div>
-      <div class="portfolio-grid">
-        {portfolio.map(co => (
-          <div class="portfolio-card">
-            <div class="co-header">
-              <div class="co-monogram">{co.name.slice(0,2).toUpperCase()}</div>
-              <div>
-                <p class="co-name">{co.name}</p>
-                <p class="co-meta">{co.location}</p>
-              </div>
-            </div>
-            <div class="co-tags">
-              <span class="tag">{co.sector}</span>
-              <span class="tag tag-stage">{co.stage}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p class="portfolio-note">
-        Full portfolio available to qualified investors.
-        <a href="/#contact" class="link">Contact us →</a>
-      </p>
-    </div>
-  </section>
+    .card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: clamp(2.5rem, 8vw, 5rem) clamp(2rem, 8vw, 5rem);
+      max-width: 480px;
+      width: 100%;
+    }
 
-  <!-- ── Team ──────────────────────────────────────────────────── -->
-  <section class="section section-team" id="team">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-eyebrow">Team</span>
-        <h2 class="section-title">The people<br />behind the portfolio.</h2>
-      </div>
-      <div class="team-grid">
-        {team.map(member => (
-          <div class="team-card">
-            <div class="member-avatar">{member.initials}</div>
-            <div>
-              <p class="member-name">{member.name}</p>
-              <p class="member-role">{member.role}</p>
-              <p class="member-bio">{member.bio}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+    /* circle mark with triangle inside */
+    .mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      margin-bottom: 2rem;
+    }
+    .mark::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      margin-left: 2px; /* optical centre */
+      border-left:  0.55rem solid transparent;
+      border-right: 0.55rem solid transparent;
+      border-bottom: 0.95rem solid var(--accent);
+    }
 
-  <!-- ── Contact ───────────────────────────────────────────────── -->
-  <section class="section section-contact" id="contact">
-    <div class="container">
-      <div class="contact-inner">
-        <div class="contact-text">
-          <span class="section-eyebrow">Contact</span>
-          <h2 class="contact-title">Let's talk.</h2>
-          <p class="contact-body">
-            We are always interested in meeting exceptional founders and co-investors.
-            If you are building something worth a long conversation, reach out.
-          </p>
-          <a href="mailto:info@parrot-capital.com" class="contact-email">
-            info@parrot-capital.com
-          </a>
-          <p class="contact-address">
-            Parrot Capital GmbH<br />
-            München, Germany
-          </p>
-        </div>
-        <div class="contact-form-wrap">
-          <form class="contact-form" action="https://formspree.io/f/placeholder" method="POST">
-            <div class="field">
-              <label for="cf-name">Name</label>
-              <input type="text" id="cf-name" name="name" placeholder="Your name" required />
-            </div>
-            <div class="field">
-              <label for="cf-email">Email</label>
-              <input type="email" id="cf-email" name="email" placeholder="your@email.com" required />
-            </div>
-            <div class="field">
-              <label for="cf-message">Message</label>
-              <textarea id="cf-message" name="message" placeholder="Tell us about your company or how you'd like to connect." rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn-submit">Send Message</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
+    h1 {
+      font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0;
+    }
 
-  <Footer />
-</Layout>
+    .divider {
+      width: 1.75rem;
+      height: 1px;
+      background: var(--accent);
+      margin: 1.5rem auto;
+      opacity: 0.55;
+    }
 
-<style>
-  /* ── Hero ─────────────────────────────────────────── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex; align-items: center;
-    overflow: hidden;
-  }
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 80px 80px;
-    opacity: .35;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
-  }
-  .hero-content {
-    position: relative; z-index: 1;
-    padding-top: 9rem; padding-bottom: 7rem;
-  }
-  .hero-line {
-    position: absolute; left: 0; right: 0; bottom: 0;
-    height: 1px; background: var(--border);
-  }
-  .eyebrow, .section-eyebrow {
-    display: inline-block;
-    font-family: var(--font-body);
-    font-size: .6875rem; font-weight: 600;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1.5rem;
-  }
-  .hero-headline {
-    font-family: var(--font-head);
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: normal;
-    line-height: 1.08;
-    letter-spacing: -.02em;
-    color: var(--text);
-    max-width: 12ch;
-    margin-bottom: 1.75rem;
-  }
-  .hero-sub {
-    font-size: clamp(1rem, 1.8vw, 1.175rem);
-    color: var(--text-muted);
-    max-width: 52ch;
-    margin-bottom: 2.75rem;
-    line-height: 1.7;
-  }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .tagline {
+      font-size: clamp(0.82rem, 2.4vw, 0.92rem);
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 1.7;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
 
-  /* ── Buttons ──────────────────────────────────────── */
-  .btn-primary {
-    display: inline-flex; align-items: center;
-    padding: .8rem 1.875rem;
-    background: var(--accent); color: #000;
-    font-family: var(--font-body); font-size: .875rem; font-weight: 700;
-    letter-spacing: .04em; text-transform: uppercase;
-    border-radius: var(--radius);
-    transition: background .2s, opacity .2s;
-  }
-  .btn-primary:hover { background: var(--accent-dark); }
-  .btn-ghost {
-    display: inline-flex; align-items: center;
-    padding: .8rem 1.875rem;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-family: var(--font-body); font-size: .875rem; font-weight: 600;
-    letter-spacing: .04em; text-transform: uppercase;
-    border-radius: var(--radius);
-    transition: color .2s, border-color .2s;
-  }
-  .btn-ghost:hover { color: var(--text); border-color: var(--text-muted); }
+    footer {
+      margin-top: 2.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      font-family: system-ui, -apple-system, sans-serif;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="mark" aria-hidden="true"></div>
+    <h1>Parrot Capital</h1>
+    <div class="divider"></div>
+    <p class="tagline">Under construction &mdash; more soon.</p>
+  </div>
 
-  /* ── Sections shared ─────────────────────────────── */
-  .section { padding: 7rem 0; border-bottom: 1px solid var(--border); }
-  .section:last-of-type { border-bottom: none; }
-  .section-header { margin-bottom: 4rem; }
-  .section-title {
-    font-family: var(--font-head);
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: normal; line-height: 1.15;
-    margin-top: .75rem;
-  }
-
-  /* ── Approach ────────────────────────────────────── */
-  .approach-layout {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 5rem;
-    align-items: start;
-  }
-  .approach-title {
-    font-family: var(--font-head);
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: normal; line-height: 1.15;
-    margin-bottom: 1.75rem;
-  }
-  .approach-body {
-    font-size: 1.0625rem;
-    color: var(--text-muted);
-    max-width: 56ch;
-    line-height: 1.8;
-    margin-bottom: 1.25rem;
-  }
-  .approach-pillars {
-    display: flex; gap: 2rem; flex-wrap: wrap;
-    margin-top: 3rem; padding-top: 2.5rem;
-    border-top: 1px solid var(--border);
-  }
-  .pillar { flex: 1; min-width: 140px; }
-  .pillar-label {
-    display: block;
-    font-family: var(--font-head);
-    font-size: 1rem; font-weight: normal;
-    color: var(--text); margin-bottom: .5rem;
-  }
-  .pillar p { font-size: .875rem; color: var(--text-muted); line-height: 1.6; }
-
-  /* ── Focus ───────────────────────────────────────── */
-  .focus-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .focus-card {
-    background: var(--bg-card);
-    padding: 2.5rem;
-    transition: background .2s;
-  }
-  .focus-card:hover { background: #111B30; }
-  .focus-icon {
-    display: block;
-    font-size: 1.25rem; color: var(--accent);
-    margin-bottom: 1.25rem;
-  }
-  .focus-name {
-    font-family: var(--font-head);
-    font-size: 1.25rem; font-weight: normal;
-    color: var(--text); margin-bottom: 1rem;
-  }
-  .focus-body { font-size: .9375rem; color: var(--text-muted); line-height: 1.75; }
-
-  /* ── Portfolio ───────────────────────────────────── */
-  .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 2rem;
-  }
-  .portfolio-card {
-    background: var(--bg-card);
-    padding: 1.75rem;
-    display: flex; flex-direction: column; gap: 1rem;
-    transition: background .2s;
-  }
-  .portfolio-card:hover { background: #111B30; }
-  .co-header { display: flex; align-items: center; gap: 1rem; }
-  .co-monogram {
-    width: 40px; height: 40px;
-    border-radius: 8px;
-    background: var(--accent-dim);
-    border: 1px solid var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-head); font-size: .875rem;
-    color: var(--accent);
-    flex-shrink: 0;
-  }
-  .co-name { font-weight: 600; font-size: .9375rem; }
-  .co-meta { font-size: .8125rem; color: var(--text-muted); }
-  .co-tags { display: flex; gap: .5rem; flex-wrap: wrap; }
-  .tag {
-    font-size: .6875rem; font-weight: 600;
-    letter-spacing: .07em; text-transform: uppercase;
-    padding: .25rem .6rem;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    color: var(--text-muted);
-  }
-  .tag-stage { border-color: var(--accent-dim); color: var(--accent); }
-  .portfolio-note { font-size: .9375rem; color: var(--text-muted); }
-  .link { color: var(--accent); }
-  .link:hover { opacity: .75; }
-
-  /* ── Team ────────────────────────────────────────── */
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-  }
-  .team-card {
-    display: flex; gap: 1.25rem;
-    padding: 2rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg-card);
-  }
-  .member-avatar {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    background: var(--accent-dim);
-    border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-head); font-size: .75rem;
-    color: var(--text-muted);
-    flex-shrink: 0;
-  }
-  .member-name { font-weight: 600; font-size: 1rem; margin-bottom: .2rem; }
-  .member-role {
-    font-size: .8125rem; font-weight: 600;
-    letter-spacing: .06em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: .75rem;
-  }
-  .member-bio { font-size: .9rem; color: var(--text-muted); line-height: 1.65; }
-
-  /* ── Contact ─────────────────────────────────────── */
-  .contact-inner {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 6rem;
-    align-items: start;
-  }
-  .contact-title {
-    font-family: var(--font-head);
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: normal; margin-bottom: 1.25rem;
-  }
-  .contact-body {
-    font-size: 1.0625rem; color: var(--text-muted);
-    line-height: 1.75; margin-bottom: 2rem; max-width: 44ch;
-  }
-  .contact-email {
-    display: block;
-    font-family: var(--font-head);
-    font-size: 1.125rem; color: var(--accent);
-    margin-bottom: 2rem;
-    transition: opacity .2s;
-  }
-  .contact-email:hover { opacity: .75; }
-  .contact-address { font-size: .9375rem; color: var(--text-muted); line-height: 1.7; }
-  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
-  .field { display: flex; flex-direction: column; gap: .5rem; }
-  .field label {
-    font-size: .75rem; font-weight: 600;
-    letter-spacing: .08em; text-transform: uppercase;
-    color: var(--text-muted);
-  }
-  .field input, .field textarea {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: .8rem 1rem;
-    color: var(--text);
-    font-family: var(--font-body); font-size: .9375rem;
-    width: 100%;
-    transition: border-color .2s;
-    resize: vertical;
-  }
-  .field input:focus, .field textarea:focus {
-    outline: none; border-color: var(--accent);
-  }
-  .field input::placeholder, .field textarea::placeholder { color: var(--text-muted); }
-  .btn-submit {
-    align-self: flex-start;
-    padding: .85rem 2rem;
-    background: var(--accent); color: #000;
-    font-family: var(--font-body); font-size: .875rem; font-weight: 700;
-    letter-spacing: .04em; text-transform: uppercase;
-    border: none; border-radius: var(--radius);
-    cursor: pointer; transition: background .2s;
-  }
-  .btn-submit:hover { background: var(--accent-dark); }
-
-  /* ── Responsive ──────────────────────────────────── */
-  @media (max-width: 900px) {
-    .approach-layout { grid-template-columns: 1fr; gap: 2rem; }
-    .approach-label { display: none; }
-    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
-  }
-  @media (max-width: 640px) {
-    .section { padding: 5rem 0; }
-    .approach-pillars { flex-direction: column; gap: 1.5rem; }
-  }
-</style>
+  <footer>&copy; 2026&nbsp;Parrot Capital UG</footer>
+</body>
+</html>

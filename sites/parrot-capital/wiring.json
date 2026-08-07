@@ -1,20 +1,20 @@
 {
   "site":         "parrot-capital",
-  "stage":        2,
+  "stage":        1,
   "domain":       "parrot-capital.com",
   "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/parrot-capital",
   "last_deploy":  null,
-  "newsletter":   { "service": null, "endpoint": null, "status": "pending" },
-  "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": "pending" },
+  "newsletter":   { "service": null, "endpoint": null, "status": null },
+  "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": null },
   "forms": {
-    "contact":           { "service": "formspree", "id": "placeholder", "status": "pending" },
-    "newsletter_signup": { "service": null, "status": "pending" }
+    "contact":           { "service": null, "id": null, "status": null },
+    "newsletter_signup": { "service": null, "status": null }
   },
   "analytics":    { "status": "skipped" },
   "legal": {
-    "impressum": "complete",
-    "privacy":   "complete"
+    "impressum": "pending",
+    "privacy":   "pending"
   },
   "robots": "disallow",
-  "notes": "Family office / venture fund. Munich HRB. German Impressum + DSGVO Datenschutzerklärung generated. Placeholder values marked with [...] must be filled before going live. Contact form endpoint (Formspree) still pending."
+  "notes": "Holding page only — under construction. Full site to be built from scratch when ready."
 }
