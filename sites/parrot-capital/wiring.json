@@ -1,21 +1,39 @@
 {
-  "site":         "parrot-capital",
-  "stage":        6,
-  "domain":       "parrot-capital.com",
-  "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/parrot-capital",
-  "prod_repo":    "pbau3r-sfdy/parrot-capital",
-  "last_deploy":  "2026-08-07",
-  "newsletter":   { "service": null, "endpoint": null, "status": "skipped" },
-  "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": "skipped" },
-  "forms": {
-    "contact":           { "service": null, "id": null, "status": "skipped" },
-    "newsletter_signup": { "service": null, "status": "skipped" }
+  "site": "parrot-capital",
+  "stage": 6,
+  "domain": "parrot-capital.com",
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/parrot-capital",
+  "prod_repo": "pbau3r-sfdy/parrot-capital",
+  "last_deploy": "2026-08-07",
+  "newsletter": {
+    "service": null,
+    "endpoint": null,
+    "status": "skipped"
   },
-  "analytics":    { "status": "skipped" },
+  "socials": {
+    "twitter": null,
+    "linkedin": null,
+    "instagram": null,
+    "status": "skipped"
+  },
+  "forms": {
+    "contact": {
+      "service": null,
+      "id": null,
+      "status": "skipped"
+    },
+    "newsletter_signup": {
+      "service": null,
+      "status": "skipped"
+    }
+  },
+  "analytics": {
+    "status": "skipped"
+  },
   "legal": {
     "impressum": "complete",
-    "privacy":   "complete"
+    "privacy": "complete"
   },
   "robots": "disallow",
-  "notes": "Live at https://parrot-capital.com — TLS via Let's Encrypt, HTTPS enforced. Holding page. Prod repo: pbau3r-sfdy/parrot-capital."
+  "notes": "Live at https://parrot-capital.com \u2014 TLS via Let's Encrypt, HTTPS enforced. Holding page. Prod repo: pbau3r-sfdy/parrot-capital."
 }
