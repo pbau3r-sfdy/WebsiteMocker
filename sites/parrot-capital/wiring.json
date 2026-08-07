@@ -1,9 +1,10 @@
 {
   "site":         "parrot-capital",
-  "stage":        4,
+  "stage":        6,
   "domain":       "parrot-capital.com",
   "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/parrot-capital",
-  "last_deploy":  null,
+  "prod_repo":    "pbau3r-sfdy/parrot-capital",
+  "last_deploy":  "2026-08-07",
   "newsletter":   { "service": null, "endpoint": null, "status": "skipped" },
   "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": "skipped" },
   "forms": {
@@ -16,5 +17,5 @@
     "privacy":   "complete"
   },
   "robots": "disallow",
-  "notes": "Holding page. Legal complete (HRB 280822, Philipp Bauer, Tal 44 München). Stage 5 requires: astro.config.mjs site→parrot-capital.com base→/, public/CNAME, robots→allow, DNS A-records → GitHub Pages IPs."
+  "notes": "Live at https://parrot-capital.com — TLS via Let's Encrypt, HTTPS enforced. Holding page. Prod repo: pbau3r-sfdy/parrot-capital."
 }
