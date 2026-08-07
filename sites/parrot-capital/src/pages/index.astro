@@ -110,7 +110,16 @@
       letter-spacing: 0.06em;
       font-family: system-ui, -apple-system, sans-serif;
       opacity: 0.7;
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
     }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--text); }
   </style>
 </head>
 <body>
@@ -121,6 +130,10 @@
     <p class="tagline">Under construction &mdash; more soon.</p>
   </div>
 
-  <footer>&copy; 2026&nbsp;Parrot Capital UG</footer>
+  <footer>
+    <span>&copy; 2026&nbsp;Parrot Capital UG</span>
+    <a href="./imprint/">Impressum</a>
+    <a href="./privacy/">Datenschutz</a>
+  </footer>
 </body>
 </html>

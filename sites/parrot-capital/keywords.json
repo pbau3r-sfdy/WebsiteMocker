@@ -1,23 +1,23 @@
 {
   "site":    "parrot-capital",
-  "updated": "2026-08-06",
+  "updated": "2026-08-07",
   "brand": {
-    "names":   ["Parrot Capital"],
+    "names":   ["Parrot Capital", "Parrot Capital UG"],
     "handles": { "twitter": null, "instagram": null, "linkedin": null },
     "avoid":   []
   },
-  "primary":   [],
-  "secondary": [],
+  "primary":   ["family office", "venture capital", "Beteiligungsgesellschaft"],
+  "secondary": ["Investment München", "Holdinggesellschaft", "long-term investing"],
   "hashtags": {
     "twitter":   [],
     "linkedin":  [],
     "instagram": []
   },
   "seo": {
-    "meta_description": "Parrot Capital — placeholder tagline. Update via /wm-update-hero.",
-    "keywords":         []
+    "meta_description": "Parrot Capital UG — Erwerb, Halten und Verwalten von Beteiligungen. München.",
+    "keywords":         ["family office", "venture capital", "Beteiligungen", "München"]
   },
-  "people":    [],
+  "people":    ["Philipp Bauer"],
   "partners":  [],
-  "locations": []
+  "locations": ["München", "Bavaria", "Germany"]
 }

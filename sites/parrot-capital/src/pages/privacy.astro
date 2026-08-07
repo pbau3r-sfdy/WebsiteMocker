@@ -1,0 +1,218 @@
+---
+// Parrot Capital — Datenschutzerklärung (DSGVO)
+const lastUpdated = "August 2026";
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datenschutzerklärung — Parrot Capital</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #07090F;
+      --surface: #0E1220;
+      --accent:  #3DB87A;
+      --text:    #E8EAF0;
+      --muted:   #5A6070;
+      --border:  rgba(255,255,255,0.07);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100svh;
+      padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 2rem);
+    }
+
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    .back::before { content: '←'; }
+
+    h1 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 2.5rem;
+    }
+
+    .divider {
+      width: 1.75rem;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.5;
+      margin-bottom: 2.5rem;
+    }
+
+    section { margin-bottom: 2rem; }
+
+    h2 {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--text);
+      padding-left: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    li { margin-bottom: 0.25rem; }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="../" class="back">Zurück</a>
+
+    <h1>Datenschutzerklärung</h1>
+    <p class="subtitle">Stand: {lastUpdated}</p>
+    <div class="divider"></div>
+
+    <section>
+      <h2>1. Verantwortlicher</h2>
+      <p>
+        Parrot Capital UG (haftungsbeschränkt)<br />
+        Tal 44, c/o Starflight Dynamics, 80331 München<br />
+        Vertreten durch: Philipp Bauer<br />
+        E-Mail: <a href="mailto:philipp@starflight-dynamics.com">philipp@starflight-dynamics.com</a>
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Erhebung und Verarbeitung personenbezogener Daten</h2>
+      <p>
+        Diese Website befindet sich im Aufbau und enthält keinerlei Kontaktformulare,
+        Newsletter-Anmeldungen oder sonstige Eingabefelder. Es werden keine personenbezogenen
+        Daten aktiv durch uns erfasst.
+      </p>
+      <p>
+        Beim Abruf dieser Website werden durch den Hosting-Anbieter (GitHub Pages,
+        GitHub Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, USA)
+        automatisch Server-Logfiles gespeichert. Diese enthalten:
+      </p>
+      <ul>
+        <li>IP-Adresse des anfragenden Geräts</li>
+        <li>Datum und Uhrzeit der Anfrage</li>
+        <li>Aufgerufene URL</li>
+        <li>HTTP-Statuscode und übertragene Datenmenge</li>
+        <li>Referrer-URL und User-Agent (Browser/Betriebssystem)</li>
+      </ul>
+      <p>
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am
+        sicheren und stabilen Betrieb der Website). Die Logdaten werden nach ca. 30 Tagen
+        automatisch gelöscht und nicht mit anderen Datenquellen zusammengeführt.
+      </p>
+      <p>
+        Informationen zur Datenverarbeitung durch GitHub finden Sie in der
+        <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+           target="_blank" rel="noopener noreferrer">Datenschutzerklärung von GitHub</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Cookies und Tracking</h2>
+      <p>
+        Diese Website setzt keine Cookies und verwendet kein Web-Tracking,
+        keine Analytics-Dienste und keine sozialen Plugins.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. SSL/TLS-Verschlüsselung</h2>
+      <p>
+        Die Übertragung zwischen Ihrem Browser und dieser Website erfolgt verschlüsselt
+        über HTTPS/TLS. Dritte können die übertragenen Daten nicht mitlesen.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Ihre Rechte (Art. 15–21 DSGVO)</h2>
+      <p>Sie haben das Recht auf:</p>
+      <ul>
+        <li><strong>Auskunft</strong> über die zu Ihrer Person gespeicherten Daten (Art. 15)</li>
+        <li><strong>Berichtigung</strong> unrichtiger Daten (Art. 16)</li>
+        <li><strong>Löschung</strong> (Art. 17) und <strong>Einschränkung</strong> der Verarbeitung (Art. 18)</li>
+        <li><strong>Widerspruch</strong> gegen die Verarbeitung (Art. 21)</li>
+        <li><strong>Datenübertragbarkeit</strong> (Art. 20)</li>
+      </ul>
+      <p>
+        Wenden Sie sich dazu an:
+        <a href="mailto:philipp@starflight-dynamics.com">philipp@starflight-dynamics.com</a>
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Beschwerderecht</h2>
+      <p>
+        Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren.
+        Zuständig ist das Bayerische Landesamt für Datenschutzaufsicht (BayLDA),
+        Promenade 18, 91522 Ansbach —
+        <a href="https://www.lda.bayern.de" target="_blank" rel="noopener noreferrer">www.lda.bayern.de</a>.
+      </p>
+    </section>
+
+    <footer>
+      <span>© 2026 Parrot Capital UG</span>
+      <a href="./imprint/">Impressum</a>
+    </footer>
+  </div>
+</body>
+</html>
