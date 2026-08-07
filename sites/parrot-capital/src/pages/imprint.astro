@@ -12,12 +12,12 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:      #07090F;
-      --surface: #0E1220;
-      --accent:  #3DB87A;
-      --text:    #E8EAF0;
-      --muted:   #5A6070;
-      --border:  rgba(255,255,255,0.07);
+      --bg:      #F8EFE5;
+      --crimson: #8E1520;
+      --gold:    #A8831C;
+      --text:    #1E0810;
+      --muted:   #907060;
+      --border:  rgba(168,131,28,0.2);
     }
 
     body {
@@ -45,11 +45,11 @@
       margin-bottom: 2.5rem;
       transition: color 0.15s;
     }
-    .back:hover { color: var(--accent); }
+    .back:hover { color: var(--text); }
     .back::before { content: '←'; }
 
     h1 {
-      font-family: 'Georgia', serif;
+      font-family: 'Georgia', 'Times New Roman', serif;
       font-size: clamp(1.25rem, 3.5vw, 1.6rem);
       font-weight: 400;
       letter-spacing: 0.1em;
@@ -62,36 +62,50 @@
       font-size: 0.78rem;
       color: var(--muted);
       letter-spacing: 0.05em;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
     }
 
-    .divider {
-      width: 1.75rem;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.5;
+    /* Ornamental rule */
+    .rule {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       margin-bottom: 2.5rem;
+    }
+    .rule::after {
+      content: '';
+      flex: 0 0 2rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.65;
+    }
+    .rule-diamond {
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
     }
 
     section { margin-bottom: 2rem; }
 
     h2 {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--gold);
       margin-bottom: 0.75rem;
     }
 
     p, address {
       font-size: 0.88rem;
-      line-height: 1.75;
+      line-height: 1.8;
       color: var(--text);
       font-style: normal;
     }
 
-    a { color: var(--accent); text-decoration: none; }
+    a { color: var(--crimson); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     .muted { color: var(--muted); }
@@ -115,7 +129,7 @@
 
     <h1>Impressum</h1>
     <p class="subtitle">Angaben gemäß §5 TMG</p>
-    <div class="divider"></div>
+    <div class="rule"><div class="rule-diamond"></div></div>
 
     <section>
       <h2>Angaben zum Unternehmen</h2>
@@ -149,7 +163,7 @@
     <section>
       <h2>Kontakt</h2>
       <p>
-        E-Mail: <a href="mailto:philipp@starflight-dynamics.com">philipp@starflight-dynamics.com</a>
+        E-Mail: <a href="mailto:philipp@parrot-capital.com">philipp@parrot-capital.com</a>
       </p>
     </section>
 
@@ -192,7 +206,7 @@
 
     <footer>
       <span>© 2026 Parrot Capital UG</span>
-      <a href="./privacy/">Datenschutzerklärung</a>
+      <a href="../privacy/">Datenschutzerklärung</a>
     </footer>
   </div>
 </body>
