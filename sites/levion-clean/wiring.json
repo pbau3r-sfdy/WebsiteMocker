@@ -1,0 +1,24 @@
+{
+  "slug": "levion-clean",
+  "name": "Levion Materials (clean)",
+  "stage": 2,
+  "note": "Design template only. Rebuild of sites/levion on the Levion Materials design system.",
+  "domain": null,
+  "productionRepo": null,
+  "accent": "#D96502",
+  "contactEmail": "lab@levion-materials.com",
+  "forms": {
+    "provider": null,
+    "endpoint": null
+  },
+  "newsletter": {
+    "provider": null,
+    "listId": null
+  },
+  "analytics": {
+    "provider": null
+  },
+  "socials": {
+    "linkedin": null
+  }
+}

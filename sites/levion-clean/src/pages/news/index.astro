@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const posts = (await getCollection('news')).sort((a, z) => z.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d) => d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Layout title="News" description="Mission updates and company news from Levion Materials.">
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="News" title="All posts" level={1} />
+      <div class="posts">
+        {posts.map(post => (
+          <PostCard
+            title={post.data.title}
+            excerpt={post.data.summary}
+            image={post.data.image}
+            meta={fmt(post.data.date)}
+            href={`${b}/news/${post.slug}`}
+            contain={post.data.image?.includes('mission-patch')}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .posts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); margin-top: var(--space-7); }
+</style>

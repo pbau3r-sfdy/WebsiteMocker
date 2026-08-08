@@ -1,0 +1,102 @@
+/* @font-face blocks are injected by Layout.astro with the correct BASE_URL prefix */
+
+:root{
+  --levion-blue:#055F84;
+  --levion-blue-deep:#073B52;
+  --levion-blue-mid:#0C6E96;
+  --levion-orange:#D96502;
+  --levion-orange-deep:#B74101;
+  --levion-teal:#229799;
+
+  --grey-900:#2B2F33;
+  --grey-700:#545454;
+  --grey-500:#969DA5;
+  --grey-300:#C8CCCF;
+  --grey-200:#E2E5E8;
+  --grey-100:#F1F3F4;
+  --grey-050:#F8F9FA;
+  --white:#FFFFFF;
+
+  --gradient-levion:linear-gradient(105deg,var(--levion-blue-deep) 0%,var(--levion-blue) 34%,var(--levion-orange) 72%,var(--levion-orange-deep) 100%);
+  --gradient-rule:linear-gradient(90deg,var(--levion-blue),var(--levion-orange));
+
+  --text-heading:var(--levion-blue);
+  --text-body:var(--grey-700);
+  --text-muted:var(--grey-500);
+  --surface-subtle:var(--grey-050);
+  --surface-inverse:var(--levion-blue-deep);
+  --border-hairline:var(--grey-200);
+  --border-strong:var(--grey-300);
+
+  --font-core:"Avenir Next","Avenir Next LT Pro","Avenir","Helvetica Neue",sans-serif;
+  --font-condensed:"Avenir Next Condensed","Avenir Next",sans-serif;
+
+  --weight-demi:600;
+  --text-display:64px;
+  --text-h1:44px;
+  --text-h2:32px;
+  --text-h3:24px;
+  --text-h4:20px;
+  --text-body-lg:18px;
+  --text-body-md:16px;
+  --text-body-sm:14px;
+  --text-caption:12px;
+
+  --leading-tight:1.08;
+  --leading-snug:1.25;
+  --leading-normal:1.5;
+  --leading-loose:1.65;
+  --tracking-caps:0.08em;
+  --tracking-caps-wide:0.16em;
+
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;
+  --space-6:32px;--space-7:48px;--space-8:64px;--space-9:96px;--space-10:128px;
+
+  --radius-sm:2px;
+  --radius-md:4px;
+  --page-max:1200px;
+
+  --shadow-md:0 2px 8px rgba(7,59,82,0.08);
+  --shadow-focus:0 0 0 3px rgba(5,95,132,0.28);
+  --overlay-scrim:linear-gradient(180deg,rgba(7,59,82,0) 0%,rgba(7,59,82,0.72) 100%);
+  --blur-glass:saturate(140%) blur(14px);
+  --ease-standard:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --duration-fast:120ms;
+  --duration-base:200ms;
+  --duration-reveal:700ms;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--white);
+  color:var(--text-body);
+  font-family:var(--font-core);
+  font-size:var(--text-body-md);
+  line-height:var(--leading-normal);
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--levion-blue);text-decoration:none;transition:color var(--duration-fast) var(--ease-standard)}
+a:hover{color:var(--levion-orange)}
+:focus-visible{outline:none;box-shadow:var(--shadow-focus);border-radius:var(--radius-md)}
+
+.container{max-width:var(--page-max);margin:0 auto;padding:0 var(--space-7)}
+.section{padding:var(--space-9) 0}
+.section--subtle{background:var(--surface-subtle);border-top:1px solid var(--border-hairline);border-bottom:1px solid var(--border-hairline)}
+.section--inverse{background:var(--surface-inverse);position:relative;overflow:hidden}
+.grid{display:grid;gap:var(--space-6)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-9);align-items:center}
+.rule-top{border-top:3px solid var(--levion-orange);padding-top:var(--space-4)}
+
+@media (max-width:900px){
+  :root{--text-display:40px;--text-h1:32px;--text-h2:26px}
+  .container{padding:0 var(--space-5)}
+  .section{padding:var(--space-8) 0}
+  .split{grid-template-columns:1fr;gap:var(--space-7)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
