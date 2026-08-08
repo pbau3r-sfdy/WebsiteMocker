@@ -1,0 +1,116 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Callout from '../../components/Callout.astro';
+
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const facts = [
+  { label: 'Location',  value: 'Vilnius' },
+  { label: 'Contract',  value: 'Full time' },
+  { label: 'Level',     value: 'Senior' },
+  { label: 'Programme', value: 'CGF-XS / GROOVE' },
+];
+
+const duties = [
+  'Define and qualify the Bridgman growth recipes run by the CGF-XS at 1.300°C, from feedstock charge to controlled cooldown.',
+  'Own the furnace thermal profile with the mechanical and thermal team, and sign off the gradients that go into the ICD.',
+  'Run the EM1 and EM2 ground campaigns: build the test matrix, execute the runs, and close the gap between model and measurement.',
+  'Characterise returned material — composition uniformity, dislocation density, resistivity — and turn the results back into the next recipe.',
+  'Support GROOVE flight operations from the ground station, including the „human-in-the-loop" decision points during a growth run.',
+  'Write the process sections of the ECSS deliverables (ConOps, SyRS) and defend them at customer and agency reviews.',
+];
+
+const brings = [
+  'A degree in materials science, crystallography, physics or chemical engineering.',
+  'Five or more years growing bulk crystals — Bridgman, THM, Czochralski or float zone — with compound semiconductors preferred.',
+  'Hands-on furnace work: you have built the rig, not only specified it.',
+  'Comfort with thermal and melt-flow simulation, and with the limits of it.',
+  'Working English; German or Lithuanian is useful, neither is required.',
+];
+
+const useful = [
+  'CZT, CdTe, GaAs or SiC experience.',
+  'Flight hardware or ECSS experience.',
+  'Microgravity or parabolic-flight campaigns.',
+  'Production qualification for semiconductor customers.',
+];
+
+const offer = [
+  'Ownership of a process that flies, not a workstream inside one.',
+  'Equity in a company at incorporation stage.',
+  'A short line to the founders and to the hardware.',
+];
+---
+
+<Layout title="Crystal Growth Process Engineer" description="Senior process engineer for the Crystal Growth Facility, Vilnius.">
+  <section class="section">
+    <div class="measure">
+      <a href={`${b}/careers`} class="back">← All positions</a>
+
+      <div class="head">
+        <div class="eyebrow">Open position</div>
+        <h1 class="title">Crystal Growth Process Engineer</h1>
+        <div class="rule"></div>
+      </div>
+
+      <dl class="facts">
+        {facts.map(f => (
+          <div class="fact">
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <p class="lede">Levion grows single-crystal semiconductor material in orbit. The Crystal Growth Facility is the furnace that does it. This role owns the process that runs inside it — the thermal profile, the growth recipe and the evidence that the ingot which comes back is better than the one Earth can make.</p>
+
+      <section class="block">
+        <h2>What you will do</h2>
+        <ul>{duties.map(d => <li><span aria-hidden="true">—</span>{d}</li>)}</ul>
+      </section>
+
+      <div class="columns">
+        <section class="block">
+          <h2>What you bring</h2>
+          <ul>{brings.map(d => <li><span aria-hidden="true">—</span>{d}</li>)}</ul>
+        </section>
+        <section class="block">
+          <h2>Useful, not required</h2>
+          <ul>{useful.map(d => <li><span aria-hidden="true">—</span>{d}</li>)}</ul>
+          <h2 class="second">What we offer</h2>
+          <ul>{offer.map(d => <li><span aria-hidden="true">—</span>{d}</li>)}</ul>
+        </section>
+      </div>
+
+      <div class="apply">
+        <Callout tone="orange">
+          <strong>How to apply.</strong> Send a CV and a short note on one crystal you have grown and what went wrong with it, to <a href="mailto:lab@levion-materials.com">lab@levion-materials.com</a>. No cover letter required.
+        </Callout>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .measure { max-width: 900px; margin: 0 auto; padding: 0 var(--space-7); }
+  .back { font-size: var(--text-body-sm); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-caps); }
+  .head { margin-top: var(--space-6); }
+  .eyebrow { font-size: var(--text-caption); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-caps-wide); color: var(--levion-orange); }
+  .title { margin-top: var(--space-3); font-size: var(--text-h1); font-weight: 600; line-height: var(--leading-snug); color: var(--levion-blue); text-wrap: pretty; }
+  .rule { width: 96px; height: 3px; background: var(--gradient-levion); margin-top: var(--space-5); }
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); margin-top: var(--space-7); }
+  .fact { border-top: 1px solid var(--border-hairline); padding-top: var(--space-3); }
+  dt { font-size: var(--text-caption); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-muted); }
+  dd { margin-top: var(--space-2); font-size: var(--text-body-md); font-weight: 600; color: var(--levion-blue); }
+  .lede { margin-top: var(--space-8); font-size: var(--text-body-lg); line-height: var(--leading-normal); color: var(--text-body); max-width: 68ch; }
+  .block { margin-top: var(--space-8); }
+  .block h2 { margin-bottom: var(--space-4); font-size: var(--text-h3); font-weight: 600; color: var(--levion-blue); }
+  .block h2.second { margin-top: var(--space-7); }
+  .block ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-3); }
+  .block li { display: grid; grid-template-columns: 16px 1fr; gap: var(--space-3); font-size: var(--text-body-md); line-height: var(--leading-normal); }
+  .block li span { color: var(--levion-orange); font-weight: 700; }
+  .columns { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+  .apply { margin-top: var(--space-8); }
+  @media (max-width: 900px) { .facts { grid-template-columns: 1fr 1fr; } .columns { grid-template-columns: 1fr; gap: 0; } }
+</style>

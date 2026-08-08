@@ -1,0 +1,19 @@
+---
+import { partners } from '../lib/nav';
+export interface Props { heading?: string; }
+const { heading } = Astro.props;
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<div class="strip">
+  {heading && <div class="heading">{heading}</div>}
+  <div class="logos">
+    {partners.map(p => <img src={`${b}${p.src}`} alt={p.label} style={`height:${p.height}px`} />)}
+  </div>
+</div>
+
+<style>
+  .heading { font-size: var(--text-caption); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-caps-wide); color: var(--grey-500); margin-bottom: var(--space-5); text-align: center; }
+  .logos { display: flex; align-items: center; justify-content: center; gap: var(--space-8); flex-wrap: wrap; }
+  .logos img { width: auto; opacity: 0.8; transition: opacity var(--duration-fast) var(--ease-standard); }
+  .logos img:hover { opacity: 1; }
+</style>

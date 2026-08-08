@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news');
+  return posts.map(post => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const { post } = Astro.props;
+const { Content } = await post.render();
+const formatted = post.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+const src = post.data.image
+  ? (post.data.image.startsWith('http') ? post.data.image : `${b}${post.data.image}`)
+  : null;
+---
+
+<Layout title={post.data.title} description={post.data.summary} image={src ?? undefined}>
+  <section class="section">
+    <div class="measure">
+      <a href={`${b}/news`} class="back">← All posts</a>
+      <article>
+        <time class="date" datetime={post.data.date.toISOString().slice(0, 10)}>{formatted}</time>
+        <h1 class="title">{post.data.title}</h1>
+        <div class="rule"></div>
+        <p class="summary">{post.data.summary}</p>
+        {src && (
+          <figure class="hero">
+            <img src={src} alt={post.data.title} />
+            {post.data.imageCredit && <figcaption>{post.data.imageCredit}</figcaption>}
+          </figure>
+        )}
+        <div class="body"><Content /></div>
+      </article>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .measure { max-width: 760px; margin: 0 auto; padding: 0 var(--space-7); }
+  .back { font-size: var(--text-body-sm); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-caps); }
+  .date { display: block; margin-top: var(--space-7); font-size: var(--text-caption); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-muted); }
+  .title { margin-top: var(--space-3); font-size: var(--text-h1); font-weight: 600; line-height: var(--leading-snug); color: var(--levion-blue); text-wrap: pretty; }
+  .rule { width: 96px; height: 3px; background: var(--gradient-rule); margin: var(--space-5) 0; }
+  .summary { font-size: var(--text-body-lg); line-height: var(--leading-loose); color: var(--text-body); }
+  .hero { margin: var(--space-7) 0; border: 1px solid var(--border-hairline); border-radius: var(--radius-md); background: var(--surface-subtle); display: flex; flex-direction: column; align-items: center; }
+  .hero img { max-height: 420px; width: auto; object-fit: contain; padding: var(--space-5); }
+  .hero figcaption { font-size: var(--text-caption); color: var(--text-muted); padding: 0 var(--space-5) var(--space-4); }
+  .body { font-size: var(--text-body-md); line-height: var(--leading-loose); color: var(--text-body); }
+  .body :global(h2) { margin: var(--space-7) 0 var(--space-3); font-size: var(--text-h3); font-weight: 600; color: var(--levion-blue); }
+  .body :global(h3) { margin: var(--space-6) 0 var(--space-3); font-size: var(--text-h4); font-weight: 600; color: var(--levion-blue); }
+  .body :global(p) { margin-bottom: var(--space-5); }
+  .body :global(ul), .body :global(ol) { margin: 0 0 var(--space-5) var(--space-5); }
+  .body :global(li) { margin-bottom: var(--space-2); }
+  .body :global(strong) { color: var(--grey-900); font-weight: 600; }
+  .body :global(a) { text-decoration: underline; }
+</style>

@@ -1,0 +1,37 @@
+{
+  "brand": [
+    "Levion Materials",
+    "Levion",
+    "Starflight Dynamics"
+  ],
+  "product": [
+    "Crystal Growth Facility",
+    "CGF-XS",
+    "CGF-S",
+    "CGF-M",
+    "CGF-L",
+    "crystal growth as-a-service"
+  ],
+  "missions": [
+    "GROOVE",
+    "Growth Parameter Observation & Validation Experiment",
+    "ESA BSGN"
+  ],
+  "domain": [
+    "microgravity",
+    "single-crystal",
+    "compound semiconductor",
+    "CZT",
+    "substrate",
+    "ingot",
+    "Bridgman",
+    "in-orbit manufacturing"
+  ],
+  "applications": [
+    "high power electronics",
+    "optics & lasers",
+    "sensors",
+    "radiation detectors",
+    "energy & quantum"
+  ]
+}
