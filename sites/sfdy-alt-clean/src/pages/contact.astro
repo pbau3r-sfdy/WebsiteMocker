@@ -42,8 +42,9 @@ import Footer from '../components/Footer.astro';
         </div>
       </div>
 
-      <!-- Replace the action with a real Formspree endpoint before going live. -->
-      <form class="form" action="https://formspree.io/f/placeholder" method="POST">
+      <form class="form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="9989c0a0-65ba-45e5-aebf-c070acaaf430" />
+        <input type="hidden" name="subject" value="New contact message — Starflight Dynamics" />
         <div class="field">
           <label class="mono" for="name">Name</label>
           <input id="name" type="text" name="name" required />
