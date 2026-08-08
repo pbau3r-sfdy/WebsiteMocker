@@ -1,10 +1,36 @@
 {
   "slug": "sfdy-alt-clean",
-  "name": "Starflight Dynamics — Alternate Clean",
+  "name": "Starflight Dynamics",
   "domain": "www.starflight-dynamics.com",
   "accent": "#00FB92",
   "contact": "mission-control@starflight-dynamics.com",
-  "stage": 2,
+  "stage": 6,
+  "prod_repo": "pbau3r-sfdy/starflight-dynamics",
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/sfdy-alt-clean",
+  "last_deploy": "2026-08-08",
+  "newsletter": {
+    "service": "mailchimp",
+    "audience_id": "88bca13b57",
+    "server": "us17",
+    "status": "configured"
+  },
+  "forms": {
+    "contact": {
+      "service": "web3forms",
+      "status": "configured"
+    }
+  },
+  "socials": {
+    "linkedin": "https://www.linkedin.com/company/starflight-dynamics/",
+    "twitter": "https://x.com/sfdy_space",
+    "instagram": "https://www.instagram.com/starflight_dynamics/",
+    "facebook": "https://www.facebook.com/profile.php?id=100092226416926",
+    "status": "configured"
+  },
+  "legal": {
+    "impressum": "complete",
+    "privacy": "complete"
+  },
   "capture": "sfdy",
-  "notes": "Under-construction rebuild on the SFDY brand design system. Black canvas, Beam, Avenir Next, IBM Plex Mono figures. Newsletter = Mailchimp (endpoint placeholder)."
+  "notes": "Live at https://www.starflight-dynamics.com — redesign replacing sfdy. Prod repo: pbau3r-sfdy/starflight-dynamics."
 }
