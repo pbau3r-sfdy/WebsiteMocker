@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="Privacy Policy" description="Privacy policy and data protection information — Starflight Dynamics GmbH.">
+  <Nav />
+
+  <main>
+    <div class="doc">
+      <div class="eyebrow">LEGAL</div>
+      <h1>Privacy policy</h1>
+
+      <p>At Starflight Dynamics (SFDY), we are committed to protecting your privacy and personal information. The protection of your privacy when processing personal data is an important concern for us. Therefore, we collect, store, and use your personal data strictly in accordance with applicable data protection regulations, including, without limitation, the European General Data Protection Regulation (GDPR).</p>
+      <p>We do not publish or share your information with third parties without your permission.</p>
+
+      <h2>Responsible party</h2>
+      <p>Starflight Dynamics GmbH<br />Tal 44<br />80331 Munich, Germany</p>
+      <p>This privacy policy applies to this website only, and not to any linked pages on this website.</p>
+
+      <h2>Personal data</h2>
+      <p>Personal data are any information which are related to an identified or identifiable natural person, such as name, e-mail address, postal address (Art. 4 (1) GDPR). Any information that cannot be directly linked to your identity (e.g. statistical details) is not considered to be personal data.</p>
+      <p>You can use our website without disclosing your identity and without providing any personal data.</p>
+      <p>Whenever personal data is collected on our website, you will only be asked to provide the data that is absolutely necessary and on a voluntary basis. Insofar as we temporarily store or process your personal data, this shall be done on the basis of Art. 6 (1) GDPR and national data protection provisions (BDSG).</p>
+      <p>If you have any questions concerning our privacy policy, or the processing and collecting data through our website, please contact our data protection officer: Dr. Philipp Bauer, CEO, <a href="mailto:mission-control@starflight-dynamics.com">mission-control@starflight-dynamics.com</a></p>
+
+      <h2>Server log file</h2>
+      <p>When you visit this website, the browser used on your terminal device sends information to our website server automatically. This information is temporarily stored in a so-called "log file". The following information is collected without any action by you and is stored until its automatic deletion:</p>
+      <ul>
+        <li>The IP address of the inquiring PC</li>
+        <li>The access date and time</li>
+        <li>The name and the URL of the recalled file</li>
+        <li>The address of the loading page (referrer URL)</li>
+        <li>The browser in use and (if necessary) your PC operating system, as well as the name of your access provider</li>
+        <li>Access status (e.g., file transmitted, file not found, etc.)</li>
+        <li>Transferred amount of data</li>
+      </ul>
+      <p>Legal basis for data processing is Art. 6 Par. 1-1-f) of the GDPR.</p>
+
+      <h2>Third-party services</h2>
+      <p>This website uses the following third-party services that may process personal data:</p>
+      <ul>
+        <li><strong>Google Fonts (IBM Plex Mono)</strong> — loaded from Google servers at fonts.googleapis.com and fonts.gstatic.com. When a page is loaded, your browser establishes a connection to Google's servers, which may log your IP address. Legal basis: Art. 6 (1)(f) GDPR (legitimate interest in consistent typography). For more information, see <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Google's Privacy Policy</a>.</li>
+        <li><strong>Mailchimp (newsletter)</strong> — if you subscribe to our newsletter, your e-mail address is transmitted to and stored by The Rocket Science Group LLC d/b/a Mailchimp (Atlanta, USA). Mailchimp is certified under the EU–US Data Privacy Framework. Legal basis: Art. 6 (1)(a) GDPR (consent). You may withdraw your consent at any time by using the unsubscribe link in any newsletter e-mail.</li>
+      </ul>
+
+      <h2>Cookies policy</h2>
+      <p>Our website uses cookies. These are small text files that are stored on your device and are used to make websites work more efficiently by saving your preferences. Cookies cannot harm your terminal device and contain no virus, Trojan horse or other malware.</p>
+      <p>By changing the settings in your Internet browser, you can disable or restrict the transfer of cookies. Previously stored cookies can be deleted at any time. If cookies are disabled for our website, you might not be able to fully use all the website's functions.</p>
+      <p>The legal basis for collecting or processing personal data by means of cookies is Art. 6(1)(f) GDPR in conjunction with Section 3 of the BDSG and/or Article 6 (1) point (a) of the GDPR for cookies which require consent.</p>
+
+      <h2>Data transmission</h2>
+      <p>We do not transmit your personal data to any third party for purposes different from the ones listed below. We transmit your personal data to third parties only if:</p>
+      <ul>
+        <li>You have granted your specific consent according to Art. 6 Par. 1-1-a) of the GDPR</li>
+        <li>The transmission is necessary for asserting, exercising or safeguarding rights according to Art. 6 Par. 1-1-f) of the GDPR</li>
+        <li>The transmission is compulsory by law according to Art. 6 Par. 1-1-c) of the GDPR</li>
+        <li>This is permitted by law and necessary to contractual relationships with you according to Art. 6 Par. 1-1-b) of the GDPR</li>
+      </ul>
+
+      <h2>Rights of the person concerned</h2>
+      <p>Please contact us if you wish to know which kind of data of yours we store and/or if you want to have it amended or deleted. Moreover, you have the right of processing restriction (Art. 18 of the GDPR), opposition to processing (Art. 21 of the GDPR) and data portability (Art. 20 of the GDPR).</p>
+
+      <h2>Right of opposition</h2>
+      <p>If your personal data is processed for a legitimate interest according to Art. 6 Par. 1-1-f) of the GDPR, you have the right to oppose the processing of your personal data according to Art. 21 of the GDPR. Please send us an e-mail (see <a href={`${b}/imprint`}>Imprint</a>) in order to exercise your right of withdrawal or opposition.</p>
+
+      <h2>Data safety</h2>
+      <p>We have implemented all the appropriate technical and administrative safety measures to protect your personal data against loss, destruction, manipulation, and unauthorized access. All of our employees and suppliers are bound by data protection laws. Whenever we collect and process any pieces of personal data, we encrypt them before transmitting them.</p>
+
+      <h2>Changes to this privacy declaration</h2>
+      <p>We reserve the right to modify our privacy policy declarations as required by new technologies. Please ensure that you always have access to the latest version. In the event of substantial changes to fundamental sections of this Privacy Policy Declaration, we will inform you via our website.</p>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  main { min-height: 100vh; padding: 72px var(--gutter) 120px; }
+  .doc { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+  h1 { font-size: clamp(2rem, 4.4vw, 3.25rem); font-weight: 700; text-transform: uppercase; line-height: 1.06; margin-bottom: 6px; }
+  h2 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 14px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  p, li { font-size: .9375rem; font-weight: 300; line-height: 1.75; color: var(--text-secondary); }
+  ul { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 6px; }
+  a { color: var(--accent); }
+  strong { font-weight: 600; color: var(--text-primary); }
+</style>

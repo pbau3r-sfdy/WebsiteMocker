@@ -1,0 +1,18 @@
+---
+/** The SFDY Beam — vertical gradient rule, blue -> cyan -> green.
+    Black backgrounds only; always touching an edge; never horizontal. */
+interface Props { thickness?: number; }
+const { thickness = 9 } = Astro.props;
+---
+<div class="beam" style={`width:${thickness}px`} role="presentation"></div>
+
+<style>
+  .beam {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--beam);
+    pointer-events: none;
+  }
+</style>

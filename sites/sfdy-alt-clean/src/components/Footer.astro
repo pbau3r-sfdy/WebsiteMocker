@@ -1,0 +1,40 @@
+---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<footer>
+  <div class="wrap top">
+    <img src={`${b}/images/logo.png`} alt="Starflight Dynamics" class="logo" />
+    <nav>
+      <a href={`${b}/`}>HOME</a>
+      <a href={`${b}/news`}>NEWS</a>
+      <a href={`${b}/contact`}>CONTACT</a>
+      <a href={`${b}/imprint`}>IMPRINT</a>
+      <a href={`${b}/privacy-policy`}>PRIVACY</a>
+    </nav>
+  </div>
+  <div class="wrap bottom mono">
+    <span>© {new Date().getFullYear()} Starflight Dynamics GmbH</span>
+    <span class="claim">TECHNOLOGIES FOR THE HIGH FRONTIER</span>
+  </div>
+</footer>
+
+<style>
+  footer { border-top: 1px solid var(--border-subtle); background: var(--bg-base); padding: 64px var(--gutter) 48px; }
+  .top { display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between; }
+  .logo { height: 26px; width: auto; opacity: .8; }
+  nav { display: flex; flex-wrap: wrap; gap: 28px; }
+  nav a { font-size: 11px; font-weight: 600; letter-spacing: .22em; color: var(--text-muted); }
+  nav a:hover { color: var(--accent); }
+  .bottom {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    color: var(--text-muted);
+  }
+  .claim { color: var(--accent); font-weight: 500; letter-spacing: .24em; }
+</style>

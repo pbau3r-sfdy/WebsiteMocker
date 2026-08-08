@@ -1,0 +1,10 @@
+{
+  "slug": "sfdy-alt-clean",
+  "name": "Starflight Dynamics — Alternate Clean",
+  "domain": "www.starflight-dynamics.com",
+  "accent": "#00FB92",
+  "contact": "mission-control@starflight-dynamics.com",
+  "stage": 2,
+  "capture": "sfdy",
+  "notes": "Under-construction rebuild on the SFDY brand design system. Black canvas, Beam, Avenir Next, IBM Plex Mono figures. Newsletter = Mailchimp (endpoint placeholder)."
+}

@@ -289,7 +289,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
           <div class="site-card">
             <div class="card-main">
               <div>
-                <div class="site-name">{site.site || site._slug}</div>
+                <div class="site-name">{site.name || site.site || site._slug}</div>
                 <div class="site-url">{sandboxUrl}</div>
                 {site.domain && <div class="site-url" style="color:var(--muted)">{site.domain}</div>}
               </div>

@@ -1,0 +1,35 @@
+---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<nav class="nav">
+  <a href={`${b}/`} aria-label="Starflight Dynamics home" class="logo">
+    <img src={`${b}/images/logo.png`} alt="Starflight Dynamics" />
+  </a>
+  <a href={`${b}/contact`} class="link">CONTACT</a>
+</nav>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+    padding: 0 var(--gutter);
+    background: rgba(0,0,0,.86);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .logo img { height: 30px; width: auto; }
+  .link {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .28em;
+    color: var(--text-secondary);
+    transition: color .2s cubic-bezier(.2,.6,.2,1);
+  }
+  .link:hover { color: var(--accent); }
+</style>

@@ -1,0 +1,85 @@
+---
+/** Mailchimp signup band. Replace u= and id= with the real audience values. */
+interface Props { variant?: 'white' | 'dark'; }
+const { variant = 'white' } = Astro.props;
+const action = 'https://starflight-dynamics.us22.list-manage.com/subscribe/post?u=REPLACE&id=REPLACE';
+---
+
+<section class={`band ${variant}`}>
+  <div class="wrap grid">
+    <div class="copy">
+      <div class="eyebrow kicker">SFDY UPDATES</div>
+      <h2>Stay in the loop</h2>
+      <p>Programme milestones, contract awards and company announcements, sent as they happen.</p>
+    </div>
+    <form action={action} method="post" target="_blank">
+      <label class="mono" for="mce-EMAIL">Email address</label>
+      <div class="row">
+        <input id="mce-EMAIL" type="email" name="EMAIL" required placeholder="name@organisation.com" />
+        <button type="submit">Sign up</button>
+      </div>
+      <p class="fine">Mailchimp double opt-in. You can unsubscribe at any time.</p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .band { padding: 52px var(--gutter); }
+  .band.white { background: #FFFFFF; color: #000; }
+  .band.dark { background: var(--surface-1); border-top: 1px solid var(--border-subtle); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    align-items: center;
+  }
+  .copy { display: flex; flex-direction: column; gap: 10px; }
+  h2 {
+    font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.08;
+  }
+  .copy p { max-width: 42ch; font-size: .9375rem; font-weight: 300; line-height: 1.65; }
+
+  .band.white .kicker { color: #6A7280; }
+  .band.dark  .kicker { color: var(--accent); }
+  .band.white .copy p { color: #434A57; }
+  .band.dark  .copy p { color: var(--text-soft); }
+
+  form { display: flex; flex-direction: column; gap: 16px; max-width: 440px; }
+  label { display: block; }
+  .band.white label, .band.white .fine { color: #6A7280; }
+  .band.dark  label, .band.dark  .fine { color: var(--text-muted); }
+
+  .row { display: flex; flex-wrap: wrap; gap: 12px; }
+  input {
+    flex: 1;
+    min-width: 220px;
+    font-family: inherit;
+    font-size: .9375rem;
+    padding: 14px 16px;
+    outline: none;
+  }
+  .band.white input { background: #fff; border: 1px solid #C9CFD8; color: #000; }
+  .band.dark  input { background: #000; border: 1px solid var(--border-strong); color: #fff; }
+  input:focus { border-color: var(--accent); }
+
+  button {
+    background: var(--accent);
+    border: none;
+    color: #000;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: filter .2s cubic-bezier(.2,.6,.2,1);
+  }
+  button:hover { filter: brightness(1.08); }
+
+  .fine { font-size: .75rem; font-weight: 300; line-height: 1.6; }
+</style>
