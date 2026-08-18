@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 const SITE_URL = process.env.SITE_URL || 'https://pbau3r-sfdy.github.io';
-const SITE_BASE = process.env.SITE_BASE || '/WebsiteMocker/mogwai';
+const SITE_BASE = process.env.SITE_BASE || '/WebsiteMocker/mogwai-systems';
 
 export default defineConfig({
   site: SITE_URL,
