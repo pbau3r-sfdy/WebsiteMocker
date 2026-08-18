@@ -1,0 +1,23 @@
+{
+  "site":    "mogwai",
+  "updated": "2026-08-18",
+  "brand": {
+    "names":   ["MOGWAI Systems", "MOGWAI"],
+    "handles": { "twitter": null, "instagram": null, "linkedin": null },
+    "avoid":   []
+  },
+  "primary":   [],
+  "secondary": [],
+  "hashtags": {
+    "twitter":   [],
+    "linkedin":  [],
+    "instagram": []
+  },
+  "seo": {
+    "meta_description": "MOGWAI Systems — a Starflight Dynamics programme.",
+    "keywords":         []
+  },
+  "people":    [],
+  "partners":  [],
+  "locations": ["Munich"]
+}

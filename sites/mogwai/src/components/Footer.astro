@@ -1,0 +1,13 @@
+---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<footer class="site-footer">
+  <img src={`${b}/images/sfdy-logo.png`} alt="Starflight Dynamics" />
+  <nav>
+    <a href={`${b}/`}>HOME</a>
+    <a href={`${b}/imprint`}>IMPRINT</a>
+    <a href={`${b}/privacy-policy`}>PRIVACY POLICY</a>
+  </nav>
+  <p>© {new Date().getFullYear()}</p>
+</footer>

@@ -1,0 +1,96 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'MOGWAI Systems',
+  description = 'MOGWAI Systems — a Starflight Dynamics programme.',
+} = Astro.props;
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const fontFaceCSS = `
+  @font-face{font-family:'Avenir LT';src:url('${b}/fonts/avenir-lt-light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Avenir LT';src:url('${b}/fonts/avenir-lt-heavy.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title === 'MOGWAI Systems' ? title : `${title} · MOGWAI Systems`}</title>
+    <link rel="icon" type="image/png" href={`${b}/favicon.png`} />
+    <style set:html={fontFaceCSS}></style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #000000;
+    --border:      rgba(255,255,255,0.12);
+    --text:        #ffffff;
+    --text-muted:  rgba(255,255,255,0.55);
+    --text-faint:  rgba(255,255,255,0.35);
+    --accent:      #00FB92;
+    --beam:        linear-gradient(90deg,#0432FF 0%,#00FDFF 33%,#00FDFF 65%,#00FB92 100%);
+    --radius:      4px;
+    --font-head:   'Avenir LT', 'Avenir Next', 'Avenir', sans-serif;
+    --font-body:   'Avenir LT', 'Avenir Next', 'Avenir', sans-serif;
+    --font-mono:   'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--text); text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  img { max-width: 100%; display: block; }
+
+  h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
+
+  .beam {
+    position: absolute;
+    top: 0; left: 0;
+    width: min(40vw, 460px);
+    height: 3px;
+    background: var(--beam);
+  }
+
+  .site-footer {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding: 1.75rem clamp(1.5rem, 6vw, 5rem) 2.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .site-footer img { height: 22px; width: auto; filter: brightness(0) invert(1); opacity: 0.6; }
+  .site-footer nav { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  .site-footer nav a {
+    font-family: var(--font-head);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.45);
+  }
+  .site-footer p { font-size: 0.66rem; color: var(--text-faint); }
+</style>
