@@ -20,5 +20,9 @@
   },
   "socials": {
     "linkedin": null
-  }
+  },
+  "archived": true,
+  "archived_at": "2026-08-19",
+  "archive_reason": "intermediate rebuild, levion is canonical",
+  "skip_ci": true
 }

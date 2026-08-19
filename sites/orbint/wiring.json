@@ -16,5 +16,6 @@
     "privacy":   "complete"
   },
   "robots": "disallow",
-  "notes":  "Instantiated from live orbint.de capture. Real domain: orbint.de. Stage 2 — content filled, wiring pending."
+  "notes":  "Instantiated from live orbint.de capture. Real domain: orbint.de. Stage 2 — content filled, wiring pending.",
+  "template": true
 }

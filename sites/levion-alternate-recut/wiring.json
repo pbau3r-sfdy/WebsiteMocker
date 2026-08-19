@@ -20,5 +20,9 @@
   },
   "socials": {
     "linkedin": null
-  }
+  },
+  "archived": true,
+  "archived_at": "2026-08-19",
+  "archive_reason": "side-by-side comparison done",
+  "skip_ci": true
 }

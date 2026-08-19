@@ -12,19 +12,67 @@ Dashboard: `https://pbau3r-sfdy.github.io/WebsiteMocker/`
 - When a site reaches Stage 5, publish it to its own production repo in the `[websites-org]` GitHub organisation
 - Template sites (Orbint, Hypersonica, Levion, etc.) are **design references only** — they have no production destination
 
+## Site categories
+
+Every site declares its role in `wiring.json`. Three categories exist:
+
+| Category | `wiring.json` flag | Dashboard section | Perf tracked |
+|---|---|---|---|
+| **Active** | *(no flag)* | Main list | ✓ |
+| **Template** | `"template": true` | Templates drawer (collapsed) | ✗ |
+| **Archived** | `"archived": true` | Archive drawer (collapsed) | ✗ |
+
+- **Active** — real sites with owners, domains, and a production path.
+- **Template** — design captures kept as remix references. No production path. Not tracked for performance. Do not advance past Stage 2.
+- **Archived** — retired experiments. Excluded from CI builds (`skip_ci: true` set automatically). Can be deleted permanently with `node _scripts/delete-site.mjs <slug> --confirm`.
+
+## Site lifecycle — keeping wiring.json accurate
+
+**When a site goes live** (production domain active, GitHub Pages deployed), immediately update `wiring.json`:
+
+```json
+{
+  "stage": 6,
+  "domain": "example.com",
+  "prod_repo": "pbau3r-sfdy/example",
+  "last_deploy": "YYYY-MM-DD"
+}
+```
+
+Then commit:
+```bash
+git add sites/<slug>/wiring.json
+git commit -m "chore(<slug>): mark stage 6, live"
+git push
+```
+
+Stale `wiring.json` = wrong dashboard = wrong perf fetch URL. Update it the moment you deploy.
+
+**Archiving a site** (triage in dashboard, then make permanent):
+```bash
+node _scripts/archive-site.mjs <slug> "reason"
+git add sites/<slug>/wiring.json && git commit -m "chore: archive <slug>"
+```
+
+**Deleting a site** (dry-run first, then confirm):
+```bash
+node _scripts/delete-site.mjs <slug>             # dry-run
+node _scripts/delete-site.mjs <slug> --confirm   # actually delete
+git add -A && git commit -m "chore: delete <slug>"
+```
+
 ## Site ownership
 
 | Slug | Owner | Production repo | Domain |
 |---|---|---|---|
-| `sfdy` | Starflight Dynamics GmbH | `[websites-org]/starflight-dynamics` | starflight-dynamics.com |
-| `parrot-capital` | Parrot Capital UG | `[websites-org]/parrot-capital` | parrot-capital.com |
-| `orbint` | — | template only | — |
-| `hypersonica` | — | template only | — |
-| `levion` | — | template only | — |
-| `crestworks` | — | template only | — |
-| `tnt-ventures` | — | template only | — |
-
-> **Templates** are style experiments and design captures. Do not advance them past Stage 2, do not create production repos for them, and do not treat their content as real.
+| `sfdy-alt-clean` | Starflight Dynamics GmbH | `pbau3r-sfdy/starflight-dynamics` | starflight-dynamics.com |
+| `mogwai-systems` | MOGWAI / Starflight Dynamics GmbH | `pbau3r-sfdy/mogwai-systems` | mogwai-systems.com |
+| `parrot-capital` | Parrot Capital UG | `pbau3r-sfdy/parrot-capital` | parrot-capital.com |
+| `crestworks` | — | active template | — |
+| `levion` | — | active template | — |
+| `orbint` | — | remix reference | — |
+| `hypersonica` | — | remix reference | — |
+| `tnt-ventures` | — | remix reference | — |
 
 ## Production deployment model
 

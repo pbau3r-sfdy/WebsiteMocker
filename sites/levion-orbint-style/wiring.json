@@ -1,21 +1,42 @@
 {
-  "site":         "levion-orbint-style",
-  "stage":        1,
-  "domain":       null,
-  "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/levion-orbint-style",
-  "last_deploy":  null,
-  "newsletter":   { "service": null, "endpoint": null, "status": null },
-  "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": null },
-  "forms": {
-    "contact":           { "service": null, "id": null, "status": null },
-    "newsletter_signup": { "service": null, "status": null }
+  "site": "levion-orbint-style",
+  "stage": 1,
+  "domain": null,
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/levion-orbint-style",
+  "last_deploy": null,
+  "newsletter": {
+    "service": null,
+    "endpoint": null,
+    "status": null
   },
-  "analytics":    { "status": "skipped" },
+  "socials": {
+    "twitter": null,
+    "linkedin": null,
+    "instagram": null,
+    "status": null
+  },
+  "forms": {
+    "contact": {
+      "service": null,
+      "id": null,
+      "status": null
+    },
+    "newsletter_signup": {
+      "service": null,
+      "status": null
+    }
+  },
+  "analytics": {
+    "status": "skipped"
+  },
   "legal": {
     "impressum": "incomplete",
-    "privacy":   "incomplete"
+    "privacy": "incomplete"
   },
   "robots": "disallow",
-  "notes":  "Style experiment — not a deployable site.",
-  "skip_ci": true
+  "notes": "Style experiment — not a deployable site.",
+  "skip_ci": true,
+  "archived": true,
+  "archived_at": "2026-08-19",
+  "archive_reason": "style experiment, not deployable"
 }

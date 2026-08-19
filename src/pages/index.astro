@@ -23,9 +23,9 @@ function scoreColor(n) {
 }
 
 function cwvColor(status) {
-  if (status === 'good')             return '#22c55e';
+  if (status === 'good')              return '#22c55e';
   if (status === 'needs-improvement') return '#e8a030';
-  if (status === 'poor')             return '#ef4444';
+  if (status === 'poor')              return '#ef4444';
   return 'var(--dim)';
 }
 
@@ -37,7 +37,7 @@ function trendLabel(curr, prev) {
   return { text: '→', color: 'var(--dim)' };
 }
 
-// ── Read all sites from sites/*/wiring.json ──────────────────────────
+// ── Read all sites from sites/*/wiring.json ───────────────────────
 const sitesDir = resolve('sites');
 let sites = [];
 
@@ -53,10 +53,10 @@ if (existsSync(sitesDir)) {
         const data = JSON.parse(readFileSync(wiringPath, 'utf-8'));
         sites.push({ ...data, _slug: name });
       } catch {
-        sites.push({ _slug: name, site: name, stage: 0, domain: null, sandbox_url: null, last_deploy: null });
+        sites.push({ _slug: name, site: name, stage: 0 });
       }
     } else {
-      sites.push({ _slug: name, site: name, stage: 0, domain: null, sandbox_url: null, last_deploy: null });
+      sites.push({ _slug: name, site: name, stage: 0 });
     }
   }
 }
@@ -67,7 +67,23 @@ sites.sort((a, b) => (b.stage ?? 0) - (a.stage ?? 0) || a._slug.localeCompare(b.
 // Attach perf data
 sites = sites.map(s => ({ ...s, _perf: loadPerf(s._slug) }));
 
-// ── Stage metadata ───────────────────────────────────────────────────
+// ── Split into three sections ─────────────────────────────────────
+// active   — normal working sites (no flags)
+// template — design captures / remix bases (template: true in wiring.json)
+// archived — retired (archived: true in wiring.json)
+const activeSites   = sites.filter(s => !s.template && !s.archived);
+const templateSites = sites.filter(s =>  s.template === true && !s.archived);
+const archivedSites = sites.filter(s =>  s.archived === true);
+
+// All sites in one flat array with their section tag — rendered into
+// a hidden staging div and distributed to the right containers by JS.
+const allSitesStaged = [
+  ...activeSites.map(s  => ({ ...s, _section: 'active'   })),
+  ...templateSites.map(s => ({ ...s, _section: 'template' })),
+  ...archivedSites.map(s => ({ ...s, _section: 'archived' })),
+];
+
+// ── Stage metadata ────────────────────────────────────────────────
 const STAGES = [
   { n: 0, label: 'Captured',      color: '#4a4843', bg: 'rgba(74,72,67,.18)' },
   { n: 1, label: 'Instantiated',  color: '#e8a030', bg: 'rgba(232,160,48,.12)' },
@@ -82,7 +98,6 @@ function stageMeta(n) {
   return STAGES[Math.min(Math.max(n ?? 0, 0), 6)];
 }
 
-// ── Wiring summary ───────────────────────────────────────────────────
 function wiringSummary(site) {
   const items = [];
   const s = site.newsletter?.status;
@@ -176,12 +191,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
       cursor: default;
     }
     .ps-stage:last-child { border-right: none; }
-    .ps-num {
-      font-family: var(--mono);
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: .2rem;
-    }
+    .ps-num  { font-family: var(--mono); font-size: 16px; font-weight: 700; margin-bottom: .2rem; }
     .ps-label { font-size: 10px; color: var(--muted); }
     .ps-count { font-family: var(--mono); font-size: 11px; font-weight: 600; margin-top: .15rem; }
 
@@ -193,11 +203,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
       margin-bottom: 1rem;
     }
     .section-head h2 { font-size: 14px; font-weight: 600; color: var(--text); }
-    .section-head .count {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--dim);
-    }
+    .section-head .count { font-family: var(--mono); font-size: 11px; color: var(--dim); }
 
     /* site card */
     .site-card {
@@ -218,205 +224,98 @@ const buildDate = new Date().toISOString().slice(0, 10);
     .site-name { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); }
     .site-url  { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-top: .2rem; word-break: break-all; }
     .stage-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .35rem;
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 600;
-      padding: .25rem .65rem;
-      border-radius: 20px;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-family: var(--mono); font-size: 11px; font-weight: 600;
+      padding: .25rem .65rem; border-radius: 20px; white-space: nowrap;
     }
     .badge-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
     .wiring-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
     .chip {
-      font-size: 10px;
-      color: var(--dim);
-      padding: .15rem .45rem;
-      border: 1px solid var(--border);
-      border-radius: 3px;
+      font-size: 10px; color: var(--dim);
+      padding: .15rem .45rem; border: 1px solid var(--border); border-radius: 3px;
     }
     .chip.ok { color: var(--muted); border-color: var(--dim); }
-    .card-actions { display: flex; gap: .5rem; }
+    .chip.template-chip { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+    .card-actions { display: flex; gap: .5rem; align-items: center; }
     .btn {
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: .3rem .7rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--muted);
-      background: transparent;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: color .15s, border-color .15s;
+      font-family: var(--mono); font-size: 11px;
+      padding: .3rem .7rem; border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--muted);
+      background: transparent; cursor: pointer;
+      white-space: nowrap; transition: color .15s, border-color .15s;
     }
-    .btn:hover { color: var(--text); border-color: var(--dim); }
+    .btn:hover   { color: var(--text); border-color: var(--dim); }
     .btn.primary { color: var(--accent); border-color: var(--accent); }
     .btn.primary:hover { background: var(--adim); }
-    .btn.live { color: #22c55e; border-color: #22c55e; }
+    .btn.live    { color: #22c55e; border-color: #22c55e; }
     .btn.live:hover { background: rgba(34,197,94,.12); }
-    .btn.archive:hover { color: #ef4444; border-color: #ef4444; }
-    .btn.restore { color: var(--dim); }
     .btn.restore:hover { color: #22c55e; border-color: #22c55e; }
-
-    /* empty state */
-    .empty {
-      text-align: center;
-      padding: 4rem 2rem;
-      color: var(--dim);
-    }
-    .empty h3 { font-size: 14px; color: var(--muted); margin-bottom: .5rem; }
-    .empty p { font-size: 12px; }
-    .empty code {
-      font-family: var(--mono);
-      color: var(--accent);
-      background: var(--adim);
-      padding: .1em .4em;
-      border-radius: 3px;
-    }
+    .btn.delete-btn:hover { color: #ef4444; border-color: #ef4444; }
 
     /* perf row */
     .card-perf {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: .55rem 1.25rem;
-      border-top: 1px solid var(--border);
-      background: var(--s2);
-      border-radius: 0 0 var(--radius) var(--radius);
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: .55rem 1.25rem; border-top: 1px solid var(--border);
+      background: var(--s2); border-radius: 0 0 var(--radius) var(--radius);
       flex-wrap: wrap;
     }
-    .perf-scores {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-    .perf-score {
-      font-family: var(--mono);
-      font-size: 11px;
-    }
-    .perf-score-label {
-      color: var(--dim);
-      font-size: 10px;
-      margin-right: .25rem;
-    }
-    .perf-score-value {
-      font-weight: 700;
-    }
-    .perf-sep {
-      width: 1px;
-      height: 14px;
-      background: var(--border);
-      flex-shrink: 0;
-    }
-    .perf-cwv {
-      display: flex;
-      gap: .75rem;
-      font-family: var(--mono);
-      font-size: 11px;
-    }
-    .perf-cwv-item {
-      display: flex;
-      align-items: center;
-      gap: .25rem;
-    }
+    .perf-scores { display: flex; gap: 1rem; align-items: center; }
+    .perf-score  { font-family: var(--mono); font-size: 11px; }
+    .perf-score-label { color: var(--dim); font-size: 10px; margin-right: .25rem; }
+    .perf-score-value { font-weight: 700; }
+    .perf-sep { width: 1px; height: 14px; background: var(--border); flex-shrink: 0; }
+    .perf-cwv  { display: flex; gap: .75rem; font-family: var(--mono); font-size: 11px; }
+    .perf-cwv-item { display: flex; align-items: center; gap: .25rem; }
     .perf-cwv-label { color: var(--dim); font-size: 10px; }
-    .perf-meta {
-      margin-left: auto;
-      font-size: 10px;
-      color: var(--dim);
-      white-space: nowrap;
-    }
-    .perf-trend {
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 700;
-    }
+    .perf-meta  { margin-left: auto; font-size: 10px; color: var(--dim); white-space: nowrap; }
+    .perf-trend { font-family: var(--mono); font-size: 11px; font-weight: 700; }
     .perf-empty {
-      padding: .45rem 1.25rem;
-      border-top: 1px solid var(--border);
-      background: var(--s2);
-      border-radius: 0 0 var(--radius) var(--radius);
-      font-size: 10px;
-      color: var(--dim);
-      font-family: var(--mono);
+      padding: .45rem 1.25rem; border-top: 1px solid var(--border);
+      background: var(--s2); border-radius: 0 0 var(--radius) var(--radius);
+      font-size: 10px; color: var(--dim); font-family: var(--mono);
     }
 
-    /* archive drawer */
-    .archive-section {
-      margin-top: 2.5rem;
-      border-top: 1px solid var(--border);
+    /* ── Section drawers (templates + archive) ── */
+    .section-drawer { margin-top: 2.5rem; border-top: 1px solid var(--border); }
+    .section-toggle {
+      display: flex; align-items: center; gap: .6rem;
+      width: 100%; background: none; border: none;
+      padding: .9rem 0; cursor: pointer; text-align: left;
+      color: var(--dim); font-family: var(--mono);
+      font-size: 12px; font-weight: 600; letter-spacing: .03em;
     }
-    .archive-toggle {
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-      width: 100%;
-      background: none;
-      border: none;
-      padding: .9rem 0;
-      cursor: pointer;
-      text-align: left;
-      color: var(--dim);
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .03em;
+    .section-toggle:hover { color: var(--muted); }
+    .section-chevron { font-size: 9px; transition: transform .18s; display: inline-block; }
+    .section-drawer.open .section-chevron { transform: rotate(90deg); }
+    .section-badge {
+      font-family: var(--mono); font-size: 10px;
+      padding: .1rem .45rem; background: var(--s2);
+      border: 1px solid var(--border); border-radius: 20px; color: var(--dim);
     }
-    .archive-toggle:hover { color: var(--muted); }
-    .archive-chevron {
-      font-size: 9px;
-      transition: transform .18s;
-      display: inline-block;
+    .section-body { display: none; padding-bottom: 3rem; }
+    .section-drawer.open .section-body { display: block; }
+    .section-hint {
+      font-size: 11px; color: var(--dim);
+      margin-bottom: 1.25rem; line-height: 1.8;
     }
-    .archive-section.open .archive-chevron { transform: rotate(90deg); }
-    .archive-badge {
-      font-family: var(--mono);
-      font-size: 10px;
-      padding: .1rem .45rem;
-      background: var(--s2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      color: var(--dim);
+    .section-hint code {
+      font-family: var(--mono); font-size: 10px;
+      background: var(--s2); border: 1px solid var(--border);
+      padding: .1em .4em; border-radius: 3px;
     }
-    .archive-body { display: none; padding-bottom: 3rem; }
-    .archive-section.open .archive-body { display: block; }
-    .archive-hint {
-      font-size: 11px;
-      color: var(--dim);
-      margin-bottom: 1.25rem;
-      line-height: 1.7;
-    }
-    .archive-hint code {
-      font-family: var(--mono);
-      font-size: 10px;
-      background: var(--s2);
-      border: 1px solid var(--border);
-      padding: .1em .4em;
-      border-radius: 3px;
-    }
-    #archive-list .site-card { opacity: .6; transition: opacity .15s; }
+    /* archived cards look slightly dimmed */
+    #archive-list .site-card { opacity: .65; transition: opacity .15s; }
     #archive-list .site-card:hover { opacity: 1; }
 
     /* toast */
     .wm-toast {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
+      position: fixed; bottom: 2rem; left: 50%;
       transform: translateX(-50%) translateY(.5rem);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: .55rem 1.1rem;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      opacity: 0;
-      transition: opacity .18s, transform .18s;
-      pointer-events: none;
-      z-index: 200;
-      white-space: nowrap;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: .55rem 1.1rem;
+      font-family: var(--mono); font-size: 11px; color: var(--muted);
+      opacity: 0; transition: opacity .18s, transform .18s;
+      pointer-events: none; z-index: 200; white-space: nowrap;
     }
     .wm-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -434,14 +333,14 @@ const buildDate = new Date().toISOString().slice(0, 10);
 <header class="header">
   <span class="logo">WebsiteMocker</span>
   <span class="header-meta">
-    <span>{sites.length} site{sites.length !== 1 ? 's' : ''}</span>
+    <span id="active-count">{activeSites.length}</span> active
     &nbsp;·&nbsp; built {buildDate}
   </span>
 </header>
 
 <main class="main">
 
-  <!-- Stage pipeline summary -->
+  <!-- Pipeline strip (counts all sites) -->
   <div class="pipeline-strip">
     {STAGES.map(st => {
       const count = sites.filter(s => (s.stage ?? 0) === st.n).length;
@@ -455,132 +354,152 @@ const buildDate = new Date().toISOString().slice(0, 10);
     })}
   </div>
 
-  <!-- Site cards -->
-  {sites.length === 0 ? (
-    <div class="empty">
-      <h3>No sites yet</h3>
-      <p>Run <code>/wm-new-site</code> or <code>/wm-capture</code> to add your first site.</p>
-    </div>
-  ) : (
-    <div>
-      <div class="section-head">
-        <h2>Sites</h2>
-        <span class="count">{sites.length} total</span>
-      </div>
-      <div id="main-list">
-      {sites.map(site => {
-        const st = stageMeta(site.stage);
-        const chips = wiringSummary(site);
-        const sandboxUrl = site.sandbox_url
-          ? `https://pbau3r-sfdy.github.io/WebsiteMocker/${site._slug}`
-          : `https://pbau3r-sfdy.github.io/WebsiteMocker/${site._slug}`;
-        // ── Perf row data ────────────────────────────────────────────
-        const perf = site._perf;
-        const pm   = perf?.latest?.mobile;
-        const pp   = perf?.prev?.mobile;
-        const trend = pm && pp ? trendLabel(pm.performance, pp.performance) : null;
+  <!-- ── Staging: all cards rendered here, JS distributes them ─── -->
+  <!-- This is display:none — JS moves each card to its section    -->
+  <div id="card-staging" style="display:none" aria-hidden="true">
+    {allSitesStaged.map(site => {
+      const st         = stageMeta(site.stage);
+      const chips      = wiringSummary(site);
+      const sandboxUrl = `https://pbau3r-sfdy.github.io/WebsiteMocker/${site._slug}`;
+      const perf       = site._perf;
+      const pm         = perf?.latest?.mobile;
+      const pp         = perf?.prev?.mobile;
+      const trend      = pm && pp ? trendLabel(pm.performance, pp.performance) : null;
+      const isArchived = site._section === 'archived';
+      const isTemplate = site._section === 'template';
 
-        return (
-          <div class="site-card" data-slug={site._slug}>
-            <div class="card-main">
-              <div>
-                <div class="site-name">{site.name || site.site || site._slug}</div>
-                <div class="site-url">{sandboxUrl}</div>
-                {site.domain && <div class="site-url" style="color:var(--muted)">{site.domain}</div>}
-              </div>
-              <span class="stage-badge" style={`color:${st.color};background:${st.bg}`}>
-                <span class="badge-dot" style={`background:${st.color}`}></span>
-                {st.label}
-              </span>
-              <div class="wiring-chips">
-                {chips.map(c => (
-                  <span class={`chip ${c.endsWith('✓') ? 'ok' : ''}`}>{c}</span>
+      return (
+        <div class="site-card" data-slug={site._slug} data-section={site._section}>
+          <div class="card-main">
+            <div>
+              <div class="site-name">{site.name || site.site || site._slug}</div>
+              <div class="site-url">{sandboxUrl}</div>
+              {site.domain && <div class="site-url" style="color:var(--muted)">{site.domain}</div>}
+            </div>
+            <span class="stage-badge" style={`color:${st.color};background:${st.bg}`}>
+              <span class="badge-dot" style={`background:${st.color}`}></span>
+              {st.label}
+            </span>
+            <div class="wiring-chips">
+              {isTemplate && <span class="chip template-chip">template</span>}
+              {chips.map(c => (
+                <span class={`chip ${c.endsWith('✓') ? 'ok' : ''}`}>{c}</span>
+              ))}
+            </div>
+            <div class="card-actions">
+              <a href={sandboxUrl} target="_blank" rel="noopener" class="btn">Preview ↗</a>
+              {(site.stage ?? 0) === 6 && site.domain && (
+                <a href={`https://${site.domain}`} target="_blank" rel="noopener" class="btn live">Live ↗</a>
+              )}
+              {!isArchived && (site.stage ?? 0) < 6  && <span class="btn primary">Wire</span>}
+              {!isArchived && (site.stage ?? 0) >= 5 && (site.stage ?? 0) < 6 && <span class="btn primary">Deploy</span>}
+              <button class="btn"           data-archive-slug={site._slug} style={isArchived ? 'display:none' : ''}>Archive</button>
+              <button class="btn restore"   data-restore-slug={site._slug} style={isArchived ? '' : 'display:none'}>Restore</button>
+              <button class="btn delete-btn" data-delete-slug={site._slug} style={isArchived ? '' : 'display:none'}>Delete</button>
+            </div>
+          </div>
+
+          {/* Perf row — shown for active sites; templates skip the "run perf" nudge */}
+          {pm ? (
+            <div class="card-perf">
+              <div class="perf-scores">
+                {[
+                  { label: 'PERF', val: pm.performance },
+                  { label: 'A11Y', val: pm.accessibility },
+                  { label: 'SEO',  val: pm.seo },
+                  { label: 'BEST', val: pm.best_practices },
+                ].map(({ label, val }) => (
+                  <div class="perf-score">
+                    <span class="perf-score-label">{label}</span>
+                    <span class="perf-score-value" style={`color:${scoreColor(val)}`}>{val}</span>
+                  </div>
                 ))}
               </div>
-              <div class="card-actions">
-                <a href={sandboxUrl} target="_blank" rel="noopener" class="btn">Preview ↗</a>
-                {(site.stage ?? 0) === 6 && site.domain && (
-                  <a href={`https://${site.domain}`} target="_blank" rel="noopener" class="btn live">Live ↗</a>
+              <div class="perf-sep"></div>
+              <div class="perf-cwv">
+                {pm.lcp && (
+                  <div class="perf-cwv-item">
+                    <span class="perf-cwv-label">LCP</span>
+                    <span style={`color:${cwvColor(pm.lcp_status)}`}>{pm.lcp}</span>
+                  </div>
                 )}
-                {(site.stage ?? 0) < 6 && <span class="btn primary">Wire</span>}
-                {(site.stage ?? 0) >= 5 && (site.stage ?? 0) < 6 && <span class="btn primary">Deploy</span>}
-                <button class="btn archive" data-archive-slug={site._slug}>Archive</button>
+                {pm.cls && (
+                  <div class="perf-cwv-item">
+                    <span class="perf-cwv-label">CLS</span>
+                    <span style={`color:${cwvColor(pm.cls_status)}`}>{pm.cls}</span>
+                  </div>
+                )}
+                {pm.fcp && (
+                  <div class="perf-cwv-item">
+                    <span class="perf-cwv-label">FCP</span>
+                    <span style="color:var(--muted)">{pm.fcp}</span>
+                  </div>
+                )}
               </div>
+              {trend && (
+                <>
+                  <div class="perf-sep"></div>
+                  <span class="perf-trend" style={`color:${trend.color}`}>{trend.text}</span>
+                </>
+              )}
+              <div class="perf-meta">mobile · {perf.latest.date}</div>
             </div>
+          ) : !isTemplate && (
+            <div class="perf-empty">
+              no perf data — run <strong>npm run perf</strong>
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
 
-            {/* ── Perf row ──────────────────────────────────────────── */}
-            {pm ? (
-              <div class="card-perf">
-                <div class="perf-scores">
-                  {[
-                    { label: 'PERF', val: pm.performance },
-                    { label: 'A11Y', val: pm.accessibility },
-                    { label: 'SEO',  val: pm.seo },
-                    { label: 'BEST', val: pm.best_practices },
-                  ].map(({ label, val }) => (
-                    <div class="perf-score">
-                      <span class="perf-score-label">{label}</span>
-                      <span class="perf-score-value" style={`color:${scoreColor(val)}`}>{val}</span>
-                    </div>
-                  ))}
-                </div>
-                <div class="perf-sep"></div>
-                <div class="perf-cwv">
-                  {pm.lcp && (
-                    <div class="perf-cwv-item">
-                      <span class="perf-cwv-label">LCP</span>
-                      <span style={`color:${cwvColor(pm.lcp_status)}`}>{pm.lcp}</span>
-                    </div>
-                  )}
-                  {pm.cls && (
-                    <div class="perf-cwv-item">
-                      <span class="perf-cwv-label">CLS</span>
-                      <span style={`color:${cwvColor(pm.cls_status)}`}>{pm.cls}</span>
-                    </div>
-                  )}
-                  {pm.fcp && (
-                    <div class="perf-cwv-item">
-                      <span class="perf-cwv-label">FCP</span>
-                      <span style="color:var(--muted)">{pm.fcp}</span>
-                    </div>
-                  )}
-                </div>
-                {trend && (
-                  <>
-                    <div class="perf-sep"></div>
-                    <span class="perf-trend" style={`color:${trend.color}`}>{trend.text}</span>
-                  </>
-                )}
-                <div class="perf-meta">
-                  mobile · {perf.latest.date}
-                </div>
-              </div>
-            ) : (
-              <div class="perf-empty">
-                no perf data — run <strong>npm run perf</strong>
-              </div>
-            )}
-          </div>
-        );
-      })}
+  <!-- ── Active sites ─────────────────────────────────────────────── -->
+  <div>
+    <div class="section-head">
+      <h2>Sites</h2>
+      <span class="count" id="active-count-sub">{activeSites.length} active</span>
+    </div>
+    <div id="main-list">
+      {/* populated by JS from #card-staging */}
+    </div>
+  </div>
+
+  <!-- ── Templates ───────────────────────────────────────────────── -->
+  <div id="template-section" class="section-drawer" style="display:none">
+    <button class="section-toggle" id="template-toggle">
+      <span class="section-chevron">▶</span>
+      Templates
+      <span class="section-badge" id="template-count">{templateSites.length}</span>
+    </button>
+    <div class="section-body" id="template-body">
+      <p class="section-hint">
+        Design captures kept as remix references — not tracked for performance.<br/>
+        Use <code>Archive</code> to retire one, or <code>node _scripts/delete-site.mjs &lt;slug&gt;</code> to remove it entirely.
+      </p>
+      <div id="template-list">
+        {/* populated by JS */}
       </div>
     </div>
-  )}
+  </div>
 
-  <!-- Archive drawer (populated by JS from localStorage) -->
-  <div id="archive-section" class="archive-section" style="display:none">
-    <button class="archive-toggle" id="archive-toggle">
-      <span class="archive-chevron">▶</span>
+  <!-- ── Archive ──────────────────────────────────────────────────── -->
+  <div id="archive-section" class="section-drawer" style="display:none">
+    <button class="section-toggle" id="archive-toggle">
+      <span class="section-chevron">▶</span>
       Archive
-      <span class="archive-badge" id="archive-count">0</span>
+      <span class="section-badge" id="archive-count">0</span>
     </button>
-    <div class="archive-body" id="archive-body">
-      <p class="archive-hint">
-        Archived locally in your browser. To commit permanently:<br/>
-        <code>node _scripts/archive-site.mjs &lt;slug&gt; "reason"</code>
-        — then push to main.
+    <div class="section-body" id="archive-body">
+      <p class="section-hint">
+        Retired sites. Browser triage only until committed:<br/>
+        <code>node _scripts/archive-site.mjs &lt;slug&gt; "reason"</code><br/>
+        To permanently delete source files:
+        <code>node _scripts/delete-site.mjs &lt;slug&gt;</code>
       </p>
-      <div id="archive-list"></div>
+      <div id="archive-list">
+        {/* populated by JS */}
+      </div>
     </div>
   </div>
 
@@ -590,63 +509,143 @@ const buildDate = new Date().toISOString().slice(0, 10);
 
 <script>
 (function () {
-  const STORAGE_KEY = 'wm-archived-v1';
+  const ARCHIVED_KEY = 'wm-archived-v1';
+  const ORIGINS_KEY  = 'wm-origins-v1';
+  const DELETED_KEY  = 'wm-deleted-v1';
 
-  function getArchived() {
-    try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')); }
-    catch { return new Set(); }
-  }
-  function saveArchived(set) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...set]));
+  function getSet(key)   { try { return new Set(JSON.parse(localStorage.getItem(key) || '[]')); } catch { return new Set(); } }
+  function saveSet(k, s) { localStorage.setItem(k, JSON.stringify([...s])); }
+  function getObj(key)   { try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch { return {}; } }
+  function saveObj(k, o) { localStorage.setItem(k, JSON.stringify(o)); }
+
+  const archived = getSet(ARCHIVED_KEY);
+  const deleted  = getSet(DELETED_KEY);
+  const origins  = getObj(ORIGINS_KEY);
+
+  // ── 1. Distribute staged cards ─────────────────────────────────
+  document.querySelectorAll('#card-staging .site-card').forEach(card => {
+    const slug    = card.dataset.slug;
+    const section = card.dataset.section; // 'active' | 'template' | 'archived'
+
+    // Remove deleted cards from DOM entirely
+    if (deleted.has(slug)) { card.remove(); return; }
+
+    let targetId;
+    if (archived.has(slug) || section === 'archived') {
+      targetId = 'archive-list';
+      if (!archived.has(slug)) archived.add(slug);
+      if (!origins[slug]) origins[slug] = section === 'template' ? 'template-list' : 'main-list';
+      setCardButtons(card, 'archived');
+    } else if (section === 'template') {
+      targetId = 'template-list';
+    } else {
+      targetId = 'main-list';
+    }
+
+    document.getElementById(targetId)?.appendChild(card);
+  });
+
+  saveSet(ARCHIVED_KEY, archived);
+  saveObj(ORIGINS_KEY, origins);
+
+  // ── 2. Section visibility + counts ────────────────────────────
+  updateSections();
+
+  // Auto-open archive if it has content
+  if (document.querySelectorAll('#archive-list .site-card').length > 0) {
+    document.getElementById('archive-section')?.classList.add('open');
   }
 
-  function updateDrawer() {
-    const count   = document.querySelectorAll('#archive-list .site-card').length;
-    const section = document.getElementById('archive-section');
-    const badge   = document.getElementById('archive-count');
-    if (badge)   badge.textContent = count;
-    if (section) section.style.display = count > 0 ? '' : 'none';
-  }
+  // ── 3. Toggle buttons ─────────────────────────────────────────
+  ['template-toggle', 'archive-toggle'].forEach(id => {
+    document.getElementById(id)?.addEventListener('click', () => {
+      const secId = id.replace('-toggle', '-section');
+      document.getElementById(secId)?.classList.toggle('open');
+    });
+  });
 
-  function setCardState(card, isArchived) {
-    const btn = card.querySelector('[data-archive-slug]');
-    if (!btn) return;
-    btn.textContent  = isArchived ? 'Restore' : 'Archive';
-    btn.className    = isArchived ? 'btn restore' : 'btn archive';
-  }
+  // ── 4. Delegated action buttons ───────────────────────────────
+  document.addEventListener('click', e => {
+    const a = e.target.closest('[data-archive-slug]');
+    const r = e.target.closest('[data-restore-slug]');
+    const d = e.target.closest('[data-delete-slug]');
+    if (a) archiveSite(a.dataset.archiveSlug);
+    if (r) restoreSite(r.dataset.restoreSlug);
+    if (d) deleteSite(d.dataset.deleteSlug);
+  });
 
+  // ── Helpers ───────────────────────────────────────────────────
   function archiveSite(slug) {
-    const card        = document.querySelector(`.site-card[data-slug="${slug}"]`);
-    const archiveList = document.getElementById('archive-list');
-    const section     = document.getElementById('archive-section');
-    if (!card || !archiveList) return;
-
-    archiveList.appendChild(card);
-    setCardState(card, true);
-
-    const set = getArchived();
-    set.add(slug);
-    saveArchived(set);
-
-    if (section) { section.style.display = ''; section.classList.add('open'); }
-    updateDrawer();
+    const card = document.querySelector(`.site-card[data-slug="${slug}"]`);
+    if (!card) return;
+    const o = getObj(ORIGINS_KEY);
+    o[slug] = card.closest('#template-list') ? 'template-list' : 'main-list';
+    saveObj(ORIGINS_KEY, o);
+    document.getElementById('archive-list')?.appendChild(card);
+    setCardButtons(card, 'archived');
+    const a = getSet(ARCHIVED_KEY); a.add(slug); saveSet(ARCHIVED_KEY, a);
+    document.getElementById('archive-section')?.classList.add('open');
+    updateSections();
     toast(`${slug} archived`);
   }
 
   function restoreSite(slug) {
-    const card     = document.querySelector(`.site-card[data-slug="${slug}"]`);
-    const mainList = document.getElementById('main-list');
-    if (!card || !mainList) return;
-
-    mainList.appendChild(card);
-    setCardState(card, false);
-
-    const set = getArchived();
-    set.delete(slug);
-    saveArchived(set);
-
-    updateDrawer();
+    const card = document.querySelector(`.site-card[data-slug="${slug}"]`);
+    if (!card) return;
+    const o = getObj(ORIGINS_KEY);
+    const targetId = o[slug] || 'main-list';
+    document.getElementById(targetId)?.appendChild(card);
+    setCardButtons(card, 'active');
+    const a = getSet(ARCHIVED_KEY); a.delete(slug); saveSet(ARCHIVED_KEY, a);
+    delete o[slug]; saveObj(ORIGINS_KEY, o);
+    updateSections();
     toast(`${slug} restored`);
+  }
+
+  function deleteSite(slug) {
+    if (!confirm(
+      `Remove "${slug}" from the dashboard?\n\n` +
+      `To permanently delete source files:\n  node _scripts/delete-site.mjs ${slug}`
+    )) return;
+    const card = document.querySelector(`.site-card[data-slug="${slug}"]`);
+    if (card) card.remove();
+    const a = getSet(ARCHIVED_KEY); a.delete(slug); saveSet(ARCHIVED_KEY, a);
+    const d = getSet(DELETED_KEY);  d.add(slug);    saveSet(DELETED_KEY, d);
+    updateSections();
+    toast(`${slug} removed`);
+  }
+
+  function setCardButtons(card, state) {
+    const isArchived = state === 'archived';
+    card.querySelector('[data-archive-slug]')?.style.setProperty('display', isArchived ? 'none' : '');
+    card.querySelector('[data-restore-slug]')?.style.setProperty('display', isArchived ? '' : 'none');
+    card.querySelector('[data-delete-slug]')?.style.setProperty('display',  isArchived ? '' : 'none');
+  }
+
+  function updateSections() {
+    const counts = {
+      'main-list':     ['active-count', 'active-count-sub'],
+      'template-list': ['template-count'],
+      'archive-list':  ['archive-count'],
+    };
+    const sections = {
+      'template-list': 'template-section',
+      'archive-list':  'archive-section',
+    };
+
+    Object.entries(counts).forEach(([listId, countIds]) => {
+      const n = document.querySelectorAll(`#${listId} .site-card`).length;
+      countIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = id.includes('sub') ? `${n} active` : n;
+      });
+    });
+
+    Object.entries(sections).forEach(([listId, sectionId]) => {
+      const n = document.querySelectorAll(`#${listId} .site-card`).length;
+      const sec = document.getElementById(sectionId);
+      if (sec) sec.style.display = n > 0 ? '' : 'none';
+    });
   }
 
   function toast(msg) {
@@ -656,32 +655,6 @@ const buildDate = new Date().toISOString().slice(0, 10);
     el.classList.add('show');
     clearTimeout(el._t);
     el._t = setTimeout(() => el.classList.remove('show'), 2200);
-  }
-
-  // Archive toggle
-  document.getElementById('archive-toggle')?.addEventListener('click', () => {
-    document.getElementById('archive-section')?.classList.toggle('open');
-  });
-
-  // Bind all archive/restore buttons
-  document.querySelectorAll('[data-archive-slug]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const slug = btn.dataset.archiveSlug;
-      btn.classList.contains('restore') ? restoreSite(slug) : archiveSite(slug);
-    });
-  });
-
-  // Restore localStorage state on load
-  const archived = getArchived();
-  if (archived.size > 0) {
-    const archiveList = document.getElementById('archive-list');
-    const section     = document.getElementById('archive-section');
-    archived.forEach(slug => {
-      const card = document.querySelector(`.site-card[data-slug="${slug}"]`);
-      if (card && archiveList) { archiveList.appendChild(card); setCardState(card, true); }
-    });
-    if (section) { section.style.display = ''; section.classList.add('open'); }
-    updateDrawer();
   }
 })();
 </script>

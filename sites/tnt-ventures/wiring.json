@@ -17,5 +17,6 @@
     "privacy":   "incomplete"
   },
   "robots": "disallow",
-  "notes":  "Single-page design. Cream bg #f4f0e8, blue accent #2457ff, sharp corners. Sections: hero, portfolio strip, focus (3 pillars), about (Robert Kunze), CTA. Constellation SVG in hero. /portfolio /team /about /contact /news all scroll to anchors on index."
+  "notes":  "Single-page design. Cream bg #f4f0e8, blue accent #2457ff, sharp corners. Sections: hero, portfolio strip, focus (3 pillars), about (Robert Kunze), CTA. Constellation SVG in hero. /portfolio /team /about /contact /news all scroll to anchors on index.",
+  "template": true
 }

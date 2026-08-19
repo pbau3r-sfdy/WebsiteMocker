@@ -40,9 +40,14 @@ const only = process.argv[2] || null;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Resolve the URL to test for a given site. */
+/** Resolve the URL to test for a given site.
+ *  Returns null to skip the site entirely.
+ *  Priority: explicit psi_url > skip archived/template > live domain > sandbox.
+ */
 function resolveUrl(slug, wiring) {
-  if (wiring.psi_url)                         return wiring.psi_url;
+  if (wiring.psi_url)          return wiring.psi_url;   // explicit override always runs
+  if (wiring.archived === true) return null;              // skip archived
+  if (wiring.template === true) return null;              // skip template references
   if ((wiring.stage ?? 0) >= 6 && wiring.domain) return `https://${wiring.domain}`;
   return `${SANDBOX_BASE}/${slug}/`;
 }
@@ -141,6 +146,7 @@ for (const slug of slugs) {
   catch { console.error(` ✖  ${slug}: bad wiring.json`); skipped++; continue; }
 
   const url = resolveUrl(slug, wiring);
+  if (!url) { console.log(` ⊘  ${slug.padEnd(22)} skipped (archived or template)`); skipped++; continue; }
   console.log(` ⟳  ${slug.padEnd(22)} ${url}`);
 
   try {

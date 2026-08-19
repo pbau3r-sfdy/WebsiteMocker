@@ -26,5 +26,6 @@
   },
   "robots": "disallow",
   "capture": "hypersonica",
-  "notes": "European hypersonic defence company. Raises €23.3M Series A, Feb 2026. Domain: hypersonica.space."
+  "notes": "European hypersonic defence company. Raises €23.3M Series A, Feb 2026. Domain: hypersonica.space.",
+  "template": true
 }
