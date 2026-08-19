@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="Home" description="Crestworks Consulting GmbH — an independent consulting practice in Munich. The site is being rebuilt.">
+
+<div class="shell">
+  <img class="watermark" src={`${b}/assets/logo/crestworks-mark.svg`} alt="" aria-hidden="true" />
+
+  <header class="site-header">
+    <a href={`${b}/`}><img src={`${b}/assets/logo/crestworks-logo.svg`} alt="Crestworks" /></a>
+    <span class="status">[REBUILDING]</span>
+  </header>
+
+  <main>
+    <div class="titleblock">
+      <span class="eyebrow">MUNICH, GERMANY</span>
+      <h1>Site under<br />reconstruction</h1>
+      <p class="claim">
+        <img src={`${b}/assets/loops-lines/line-pink-17-thick-underline.png`} alt="" aria-hidden="true" />
+        <span>Back there soon.</span>
+      </p>
+    </div>
+
+    <p class="lede">Crestworks is an independent consulting practice. The company is currently being restructured, and this site is being rebuilt to reflect it. For anything in the meantime, please get in touch directly.</p>
+
+    <div class="actions">
+      <a class="btn" href="mailto:hello@crestworks.co">hello@crestworks.co</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <img class="edge" src={`${b}/assets/brand/brush-rule-white.png`} alt="" aria-hidden="true" />
+    <div class="bar">
+      <img class="logo" src={`${b}/assets/logo/crestworks-logo.svg`} alt="Crestworks Consulting GmbH" />
+      <nav>
+        <a href={`${b}/`}>HOME</a>
+        <a href={`${b}/imprint/`}>IMPRINT</a>
+        <a href={`${b}/privacy-policy/`}>PRIVACY POLICY</a>
+      </nav>
+      <p>Crestworks Consulting GmbH · Tal 44, 80331 Munich · © 2026</p>
+    </div>
+  </footer>
+</div>
+
+</Layout>
+
+<style>
+.shell {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.watermark {
+  position: absolute;
+  top: -96px; right: -104px;
+  width: min(46vw, 420px);
+  opacity: .05;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Header ── */
+.site-header {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  padding: 32px clamp(24px, 6vw, 80px);
+}
+.site-header img { height: 26px; width: auto; }
+.status {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .22em;
+  color: var(--cw-grey-500);
+}
+
+/* ── Main ── */
+main {
+  position: relative; z-index: 2;
+  flex: 1;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  gap: clamp(32px, 5vh, 52px);
+  width: 100%; max-width: 1160px;
+  padding: clamp(48px, 9vh, 104px) clamp(24px, 6vw, 80px) clamp(56px, 9vh, 104px);
+}
+.titleblock {
+  display: flex; flex-direction: column;
+  gap: clamp(20px, 3.5vh, 32px);
+}
+.eyebrow {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .2em;
+  color: var(--cw-grey-400);
+}
+h1 {
+  font-weight: 100;
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+.claim {
+  position: relative;
+  align-self: flex-start;
+  padding: 0 6px 15px 0;
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.claim img {
+  position: absolute;
+  left: -12px; bottom: 0;
+  width: calc(100% + 30px); height: 22px;
+  z-index: 0; pointer-events: none;
+}
+.claim span { position: relative; z-index: 1; }
+.lede {
+  font-size: clamp(1rem, 1.4vw, 1.19rem);
+  line-height: 1.55;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+/* ── Actions ── */
+.actions {
+  display: flex; flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 28px;
+}
+.btn {
+  display: inline-flex; align-items: center;
+  background: var(--cw-black); color: var(--cw-white);
+  border: 1px solid var(--cw-black);
+  padding: 15px 30px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  transition: background 120ms cubic-bezier(.2,0,.2,1), border-color 120ms cubic-bezier(.2,0,.2,1);
+}
+.btn:hover { background: var(--cw-magenta); border-color: var(--cw-magenta); color: var(--cw-white); }
+.tel {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .16em;
+  color: var(--cw-grey-600);
+}
+.tel:hover { color: var(--cw-magenta); }
+
+/* ── Footer ── */
+.site-footer {
+  position: relative; z-index: 2;
+  margin-top: auto;
+  background: var(--cw-black); color: var(--cw-white);
+}
+.site-footer .edge {
+  position: absolute; left: 0; right: 0;
+  top: 1px; width: 100%; height: 24px;
+  transform: translateY(-100%) scaleY(-1);
+  pointer-events: none;
+}
+.site-footer .bar {
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: space-between;
+  gap: 16px 32px;
+  padding: 34px clamp(24px, 6vw, 80px) 38px;
+}
+.site-footer img.logo {
+  height: 20px; width: auto;
+  filter: brightness(0) invert(1); opacity: .8;
+}
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 26px; }
+.site-footer nav a {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .16em;
+  color: rgba(255,255,255,.62);
+}
+.site-footer nav a:hover { color: var(--cw-yellow); }
+.site-footer p { font-size: 11px; letter-spacing: .06em; color: rgba(255,255,255,.4); }
+</style>

@@ -1,0 +1,27 @@
+{
+  "slug": "crestworks-rework",
+  "name": "Crestworks — Reworked Landing Page",
+  "source": "local-zip",
+  "captured": "2026-08-19",
+  "notes": "Redesigned holding page: Avenir Next font stack, black/white/magenta palette, big uppercase headline, brush-rule footer edge, SVG watermark.",
+  "typography": {
+    "primary": "Avenir Next",
+    "weights": [100, 400, 700]
+  },
+  "colors": {
+    "black": "#000000",
+    "white": "#ffffff",
+    "magenta": "#ff2f92",
+    "yellow": "#fffb00",
+    "grey600": "#595959",
+    "grey500": "#7f7f7f",
+    "grey400": "#a6a6a6"
+  },
+  "assets": {
+    "logo": "assets/logo/crestworks-logo.svg",
+    "mark": "assets/logo/crestworks-mark.svg",
+    "fonts": ["assets/fonts/AvenirNext-UltraLight.otf", "assets/fonts/AvenirNext-Regular.otf", "assets/fonts/AvenirNext-Bold.otf"],
+    "brush_rule": "assets/brand/brush-rule-white.png",
+    "underlines": ["assets/loops-lines/line-pink-17-thick-underline.png", "assets/loops-lines/line-yellow-17-thick-underline.png"]
+  }
+}

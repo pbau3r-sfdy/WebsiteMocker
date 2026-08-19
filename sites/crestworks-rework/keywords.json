@@ -1,0 +1,23 @@
+{
+  "site":    "crestworks-rework",
+  "updated": "2026-08-19",
+  "brand": {
+    "names":   ["Crestworks Rework"],
+    "handles": { "twitter": null, "instagram": null, "linkedin": null },
+    "avoid":   []
+  },
+  "primary":   [],
+  "secondary": [],
+  "hashtags": {
+    "twitter":   [],
+    "linkedin":  [],
+    "instagram": []
+  },
+  "seo": {
+    "meta_description": "Crestworks Rework — placeholder tagline. Update via /wm-update-hero.",
+    "keywords":         []
+  },
+  "people":    [],
+  "partners":  [],
+  "locations": []
+}

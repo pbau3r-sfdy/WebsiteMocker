@@ -1,0 +1,63 @@
+---
+const year = new Date().getFullYear();
+const siteName = 'Crestworks Rework';
+const socials = {
+  twitter:   '',
+  linkedin:  '',
+  instagram: '',
+};
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-name">{siteName}</span>
+        <p class="footer-tagline">Crestworks Rework — placeholder tagline. Update via /wm-update-hero.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/imprint">Imprint</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </nav>
+      <div class="footer-socials">
+        {socials.twitter  && socials.twitter !== ''  && <a href={`https://twitter.com/${socials.twitter.replace('@','')}`}  target="_blank" rel="noopener" aria-label="Twitter">𝕏</a>}
+        {socials.linkedin && socials.linkedin !== ''  && <a href={`https://linkedin.com/company/${socials.linkedin}`} target="_blank" rel="noopener" aria-label="LinkedIn">in</a>}
+      </div>
+    </div>
+    <div class="footer-copy">
+      &copy; {year} {siteName}. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 0 2rem;
+    margin-top: 6rem;
+  }
+  .footer-inner {
+    display: flex; align-items: flex-start; gap: 3rem;
+    flex-wrap: wrap; margin-bottom: 2rem;
+  }
+  .footer-brand { flex: 1; min-width: 160px; }
+  .footer-name {
+    font-family: var(--font-head); font-size: 1rem;
+    font-weight: 700; color: var(--text);
+  }
+  .footer-tagline { font-size: .875rem; color: var(--text-muted); margin-top: .35rem; }
+  .footer-nav {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    align-items: center;
+  }
+  .footer-nav a { font-size: .875rem; color: var(--text-muted); transition: color .2s; }
+  .footer-nav a:hover { color: var(--text); }
+  .footer-socials { display: flex; gap: 1rem; }
+  .footer-socials a {
+    font-size: 1rem; font-weight: 700; color: var(--text-muted);
+    transition: color .2s;
+  }
+  .footer-socials a:hover { color: var(--accent); }
+  .footer-copy { font-size: .8125rem; color: var(--text-muted); }
+</style>
