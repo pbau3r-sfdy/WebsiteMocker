@@ -323,8 +323,9 @@ const buildDate = new Date().toISOString().slice(0, 10);
     .apply-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,.5);
       z-index: 300; display: none; align-items: center; justify-content: center;
+      pointer-events: none;
     }
-    .apply-overlay.open { display: flex; }
+    .apply-overlay.open { display: flex; pointer-events: auto; }
     .apply-panel {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 1.75rem 2rem;
@@ -392,7 +393,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
 
   <!-- ── Staging: all cards rendered here, JS distributes them ─── -->
   <!-- This is display:none — JS moves each card to its section    -->
-  <div id="card-staging" style="display:none" aria-hidden="true">
+  <div id="card-staging" style="display:none">
     {allSitesStaged.map(site => {
       const st         = stageMeta(site.stage);
       const chips      = wiringSummary(site);
@@ -586,29 +587,36 @@ const buildDate = new Date().toISOString().slice(0, 10);
   const origins  = getObj(ORIGINS_KEY);
 
   // ── 1. Distribute staged cards ─────────────────────────────────
-  document.querySelectorAll('#card-staging .site-card').forEach(card => {
-    const slug    = card.dataset.slug;
-    const section = card.dataset.section; // 'active' | 'template' | 'archived'
+  try {
+    document.querySelectorAll('#card-staging .site-card').forEach(card => {
+      const slug    = card.dataset.slug;
+      const section = card.dataset.section; // 'active' | 'template' | 'archived'
 
-    if (deleted.has(slug)) { card.remove(); return; }
+      if (deleted.has(slug)) { card.remove(); return; }
 
-    let targetId;
-    if (archived.has(slug) || section === 'archived') {
-      targetId = 'archive-list';
-      if (!archived.has(slug)) archived.add(slug);
-      // Only track origin for browser-archived cards (not already committed)
-      if (!origins[slug] && section !== 'archived') {
-        origins[slug] = section === 'template' ? 'template-list' : 'main-list';
+      let targetId;
+      if (archived.has(slug) || section === 'archived') {
+        targetId = 'archive-list';
+        if (!archived.has(slug)) archived.add(slug);
+        // Only track origin for browser-archived cards (not already committed)
+        if (!origins[slug] && section !== 'archived') {
+          origins[slug] = section === 'template' ? 'template-list' : 'main-list';
+        }
+        setCardButtons(card, 'archived');
+      } else if (section === 'template') {
+        targetId = 'template-list';
+      } else {
+        targetId = 'main-list';
       }
-      setCardButtons(card, 'archived');
-    } else if (section === 'template') {
-      targetId = 'template-list';
-    } else {
-      targetId = 'main-list';
-    }
 
-    document.getElementById(targetId)?.appendChild(card);
-  });
+      document.getElementById(targetId)?.appendChild(card);
+    });
+  } catch (err) {
+    console.error('[WM] Card distribution error — falling back to main list:', err);
+    document.querySelectorAll('#card-staging .site-card').forEach(card => {
+      document.getElementById('main-list')?.appendChild(card);
+    });
+  }
 
   saveSet(ARCHIVED_KEY, archived);
   saveObj(ORIGINS_KEY, origins);
