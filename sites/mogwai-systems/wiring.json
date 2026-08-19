@@ -1,10 +1,12 @@
 {
-  "slug": "mogwai",
+  "slug": "mogwai-systems",
   "name": "MOGWAI Systems",
   "domain": "www.mogwai-systems.com",
   "accent": "#00FB92",
-  "contact": "mission-control@starflight-dynamics.com",
-  "stage": 2,
+  "contact": "hive@mogwai-systems.com",
+  "stage": 6,
+  "prod_repo": "pbau3r-sfdy/mogwai-systems",
+  "last_deploy": "2026-08-18",
   "capture": null,
-  "notes": "Holding page for the MOGWAI programme. Black canvas, starfield, emblem, standing-by state. Legal pages carry Starflight Dynamics GmbH as operator."
+  "notes": "Holding page for the MOGWAI programme. Black canvas, starfield, emblem, standing-by state. Legal pages carry Starflight Dynamics GmbH as operator. Live at https://www.mogwai-systems.com"
 }
