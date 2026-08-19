@@ -1,357 +1,184 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<Layout title="Home" description="Boutique consulting specialized in new & future technologies. Crestworks — Tomorrowing Today.">
-  <Nav />
+<Layout title="Home" description="Crestworks Consulting GmbH — an independent consulting practice in Munich. The site is being rebuilt.">
 
-  <!-- ── Hero ─────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-bg">
-      <img src={`${b}/images/hero.jpeg`} alt="" aria-hidden="true" />
-    </div>
-    <div class="hero-content container">
-      <h1 class="hero-headline">TOMORROWING TODAY.</h1>
-    </div>
-  </section>
+<div class="shell">
+  <img class="watermark" src={`${b}/assets/logo/crestworks-mark.svg`} alt="" aria-hidden="true" />
 
-  <!-- ── ABOUT ─────────────────────────────────────────── -->
-  <section class="section section-about">
-    <div class="container">
-      <div class="about-inner">
-        <span class="section-label">ABOUT</span>
-        <p class="about-body">
-          Crestworks is a Boutique Consulting Company <strong>specialized in new &amp; future technologies</strong> based in Munich, Germany.
-        </p>
-      </div>
-    </div>
-  </section>
+  <header class="site-header">
+    <a href={`${b}/`}><img src={`${b}/assets/logo/crestworks-logo.svg`} alt="Crestworks" /></a>
+    <span class="status">[REBUILDING]</span>
+  </header>
 
-  <!-- ── MISSION ───────────────────────────────────────── -->
-  <section class="section section-mission">
-    <div class="container">
-      <span class="section-label-light">OUR MISSION IS:</span>
-      <div class="mission-inner">
-        <div class="mission-icon-wrap">
-          <img src={`${b}/images/mission-icon.png`} alt="" aria-hidden="true" />
-        </div>
-        <h2 class="mission-headline">
-          To deliver what has never been built before! #TomorrowingToday
-        </h2>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SPECIALIZED ───────────────────────────────────── -->
-  <section class="section section-specialized">
-    <div class="container">
-      <span class="section-label">WE ARE SPECIALIZED IN:</span>
-      <div class="spec-grid">
-        <div class="spec-card">
-          <h3 class="spec-title">Building the Future</h3>
-          <p class="spec-body">
-            Use-case exploration, feasibility assessment, and turning visionary ideas into actionable roadmaps.
-          </p>
-        </div>
-        <div class="spec-card">
-          <h3 class="spec-title">More than just Tech</h3>
-          <p class="spec-body">
-            We address the managerial, organizational, and strategic dimensions that determine whether innovations succeed.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── WHERE WE COME FROM ────────────────────────────── -->
-  <section class="section section-origin">
-    <div class="section-bg-img">
-      <img src={`${b}/images/bg1.jpg`} alt="" aria-hidden="true" />
-    </div>
-    <div class="section-overlay"></div>
-    <div class="container section-content-overlay">
-      <span class="section-label-light">WHERE WE COME FROM:</span>
-      <h2 class="overlay-headline">From Labs to Assembly Lines.<br />From Ground to Space.</h2>
-      <p class="origin-industries">Aerospace · Defense · Life Sciences · Process Industries</p>
-      <a href="mailto:hello@crestworks.co" class="btn-outline-light">FOR MORE INFORMATION</a>
-    </div>
-  </section>
-
-  <!-- ── OUR OFFERING ──────────────────────────────────── -->
-  <section class="section section-offering">
-    <div class="section-bg-img">
-      <img src={`${b}/images/bg2.jpg`} alt="" aria-hidden="true" />
-    </div>
-    <div class="section-overlay"></div>
-    <div class="container section-content-overlay">
-      <span class="section-label-light">OUR OFFERING:</span>
-      <h2 class="overlay-headline">Innovation is born from:<br /><em>Stardust + Sweat</em></h2>
-      <a href={`${b}/services`} class="btn-yellow">VIEW SERVICES</a>
-    </div>
-  </section>
-
-  <!-- ── HOW WE ROLL ───────────────────────────────────── -->
-  <section class="section section-roll">
-    <div class="container">
-      <span class="section-label-light">HOW WE ROLL:</span>
-      <p class="roll-body">
-        We support startups and enterprises at every stage of the project lifecycle, combining
-        optimism and practicality with rigorously executed action.
+  <main>
+    <div class="titleblock">
+      <span class="eyebrow">MUNICH, GERMANY</span>
+      <h1>Site under<br />reconstruction</h1>
+      <p class="claim">
+        <img src={`${b}/assets/loops-lines/line-pink-17-thick-underline.png`} alt="" aria-hidden="true" />
+        <span>Back there soon.</span>
       </p>
     </div>
-  </section>
 
-  <!-- ── LET'S GO! ─────────────────────────────────────── -->
-  <section class="section-cta">
-    <div class="container">
-      <h2 class="cta-heading">LET'S GO!</h2>
-      <p class="cta-body">The future can't wait. Let's build it together NOW!</p>
-      <a href="mailto:hello@crestworks.co" class="btn-black">GET IN TOUCH</a>
+    <p class="lede">Crestworks is an independent consulting practice. The company is currently being restructured, and this site is being rebuilt to reflect it. For anything in the meantime, please get in touch directly.</p>
+
+    <div class="actions">
+      <a class="btn" href="mailto:hello@crestworks.co">hello@crestworks.co</a>
     </div>
-  </section>
+  </main>
 
-  <Footer />
+  <footer class="site-footer">
+    <img class="edge" src={`${b}/assets/brand/brush-rule-white.png`} alt="" aria-hidden="true" />
+    <div class="bar">
+      <img class="logo" src={`${b}/assets/logo/crestworks-logo.svg`} alt="Crestworks Consulting GmbH" />
+      <nav>
+        <a href={`${b}/`}>HOME</a>
+        <a href={`${b}/imprint/`}>IMPRINT</a>
+        <a href={`${b}/privacy-policy/`}>PRIVACY POLICY</a>
+      </nav>
+      <p>Crestworks Consulting GmbH · Tal 44, 80331 Munich · © 2026</p>
+    </div>
+  </footer>
+</div>
+
 </Layout>
 
 <style>
-  /* ── Hero ── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    overflow: hidden;
-  }
-  .hero-bg img {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
-  }
-  .hero-content {
-    position: relative; z-index: 1;
-    padding-top: 8rem; padding-bottom: 6rem;
-  }
-  .hero-headline {
-    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
-    font-size: clamp(3.5rem, 9vw, 8rem);
-    font-weight: 800; line-height: 1.0;
-    letter-spacing: .02em;
-    color: #0a0a0a;
-    text-decoration: underline;
-    text-decoration-color: #f5e400;
-    text-decoration-thickness: 8px;
-    text-underline-offset: 6px;
-    max-width: 14ch;
-  }
+.shell {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.watermark {
+  position: absolute;
+  top: -96px; right: -104px;
+  width: min(46vw, 420px);
+  opacity: .05;
+  pointer-events: none;
+  user-select: none;
+}
 
-  /* ── Section base ── */
-  .section { padding: 6rem 0; }
+/* ── Header ── */
+.site-header {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  padding: 32px clamp(24px, 6vw, 80px);
+}
+.site-header img { height: 26px; width: auto; }
+.status {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .22em;
+  color: var(--cw-grey-500);
+}
 
-  .section-label {
-    display: block;
-    font-family: var(--font-head);
-    font-size: .75rem; font-weight: 700;
-    letter-spacing: .15em; text-transform: uppercase;
-    color: #0a0a0a;
-    margin-bottom: 1.75rem;
-  }
-  .section-label-light {
-    display: block;
-    font-family: var(--font-head);
-    font-size: .75rem; font-weight: 700;
-    letter-spacing: .15em; text-transform: uppercase;
-    color: rgba(255,255,255,0.65);
-    margin-bottom: 1.75rem;
-  }
+/* ── Main ── */
+main {
+  position: relative; z-index: 2;
+  flex: 1;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  gap: clamp(32px, 5vh, 52px);
+  width: 100%; max-width: 1160px;
+  padding: clamp(48px, 9vh, 104px) clamp(24px, 6vw, 80px) clamp(56px, 9vh, 104px);
+}
+.titleblock {
+  display: flex; flex-direction: column;
+  gap: clamp(20px, 3.5vh, 32px);
+}
+.eyebrow {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .2em;
+  color: var(--cw-grey-400);
+}
+h1 {
+  font-weight: 100;
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+.claim {
+  position: relative;
+  align-self: flex-start;
+  padding: 0 6px 15px 0;
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.claim img {
+  position: absolute;
+  left: -12px; bottom: 0;
+  width: calc(100% + 30px); height: 22px;
+  z-index: 0; pointer-events: none;
+}
+.claim span { position: relative; z-index: 1; }
+.lede {
+  font-size: clamp(1rem, 1.4vw, 1.19rem);
+  line-height: 1.55;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
 
-  /* ── ABOUT ── */
-  .section-about { background: #ffffff; }
-  .about-inner {
-    border-left: 4px solid #0a0a0a;
-    padding-left: 2rem;
-    max-width: 720px;
-  }
-  .about-body {
-    font-family: var(--font-head);
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-    font-weight: 400;
-    line-height: 1.55;
-    color: #0a0a0a;
-  }
-  .about-body strong {
-    font-weight: 800;
-  }
+/* ── Actions ── */
+.actions {
+  display: flex; flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 28px;
+}
+.btn {
+  display: inline-flex; align-items: center;
+  background: var(--cw-black); color: var(--cw-white);
+  border: 1px solid var(--cw-black);
+  padding: 15px 30px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  transition: background 120ms cubic-bezier(.2,0,.2,1), border-color 120ms cubic-bezier(.2,0,.2,1);
+}
+.btn:hover { background: var(--cw-magenta); border-color: var(--cw-magenta); color: var(--cw-white); }
+.tel {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .16em;
+  color: var(--cw-grey-600);
+}
+.tel:hover { color: var(--cw-magenta); }
 
-  /* ── MISSION ── */
-  .section-mission { background: #0a0a0a; }
-  .mission-inner {
-    display: flex; align-items: flex-start; gap: 2.5rem;
-    margin-top: .5rem;
-  }
-  .mission-icon-wrap {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
-  }
-  .mission-icon-wrap img {
-    width: 48px; height: 48px;
-    object-fit: contain;
-  }
-  .mission-headline {
-    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
-    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.25;
-    letter-spacing: .02em;
-  }
-
-  /* ── SPECIALIZED ── */
-  .section-specialized { background: #ffffff; }
-  .spec-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: .5rem;
-  }
-  .spec-card {
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--accent);
-    padding: 2rem;
-  }
-  .spec-title {
-    font-family: var(--font-head);
-    font-size: 1.125rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .04em;
-    color: #0a0a0a;
-    margin-bottom: .75rem;
-  }
-  .spec-body {
-    font-size: .9375rem;
-    color: var(--text-muted);
-    line-height: 1.75;
-  }
-
-  /* ── Full-bleed bg image sections ── */
-  .section-origin,
-  .section-offering {
-    position: relative;
-    padding: 7rem 0;
-    overflow: hidden;
-  }
-  .section-bg-img {
-    position: absolute; inset: 0;
-    overflow: hidden;
-  }
-  .section-bg-img img {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
-  }
-  .section-overlay {
-    position: absolute; inset: 0;
-    background: rgba(10,10,10,0.70);
-  }
-  .section-content-overlay {
-    position: relative; z-index: 1;
-  }
-  .overlay-headline {
-    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
-    font-size: clamp(1.75rem, 4vw, 3rem);
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.2;
-    letter-spacing: .02em;
-    margin-bottom: 2rem;
-  }
-  .overlay-headline em { font-style: normal; }
-
-  .origin-industries {
-    font-family: var(--font-head);
-    font-size: .9375rem; font-weight: 600;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 2.5rem;
-  }
-
-  /* ── HOW WE ROLL ── */
-  .section-roll { background: #0a0a0a; }
-  .roll-body {
-    font-size: 1.125rem;
-    color: rgba(255,255,255,0.75);
-    max-width: 65ch;
-    line-height: 1.75;
-    margin-top: .5rem;
-  }
-
-  /* ── LET'S GO CTA ── */
-  .section-cta {
-    background: var(--accent);
-    padding: 6rem 0;
-    text-align: center;
-  }
-  .cta-heading {
-    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 800;
-    letter-spacing: .04em;
-    color: #0a0a0a;
-    margin-bottom: 1rem;
-  }
-  .cta-body {
-    font-size: 1.125rem;
-    color: rgba(0,0,0,0.65);
-    margin-bottom: 2.5rem;
-    max-width: 52ch;
-    margin-left: auto; margin-right: auto;
-    line-height: 1.65;
-  }
-
-  /* ── Buttons ── */
-  .btn-outline-light {
-    display: inline-flex; align-items: center;
-    padding: .9rem 2.25rem;
-    border: 2px solid rgba(255,255,255,0.55);
-    color: #ffffff;
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
-    letter-spacing: .08em; text-transform: uppercase;
-    border-radius: var(--radius);
-    transition: border-color .2s, color .2s;
-  }
-  .btn-outline-light:hover { border-color: var(--accent); color: var(--accent); }
-
-  .btn-yellow {
-    display: inline-flex; align-items: center;
-    padding: .9rem 2.25rem;
-    background: var(--accent); color: #0a0a0a;
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
-    letter-spacing: .08em; text-transform: uppercase;
-    border-radius: var(--radius);
-    transition: opacity .2s;
-  }
-  .btn-yellow:hover { opacity: .85; }
-
-  .btn-black {
-    display: inline-flex; align-items: center;
-    padding: .9rem 2.25rem;
-    background: #0a0a0a; color: #ffffff;
-    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
-    letter-spacing: .08em; text-transform: uppercase;
-    border-radius: var(--radius);
-    transition: opacity .2s;
-  }
-  .btn-black:hover { opacity: .75; }
-
-  @media (max-width: 640px) {
-    .mission-inner { flex-direction: column; gap: 1.5rem; }
-    .about-inner { padding-left: 1.25rem; }
-  }
+/* ── Footer ── */
+.site-footer {
+  position: relative; z-index: 2;
+  margin-top: auto;
+  background: var(--cw-black); color: var(--cw-white);
+}
+.site-footer .edge {
+  position: absolute; left: 0; right: 0;
+  top: 1px; width: 100%; height: 24px;
+  transform: translateY(-100%) scaleY(-1);
+  pointer-events: none;
+}
+.site-footer .bar {
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: space-between;
+  gap: 16px 32px;
+  padding: 34px clamp(24px, 6vw, 80px) 38px;
+}
+.site-footer img.logo {
+  height: 20px; width: auto;
+  filter: brightness(0) invert(1); opacity: .8;
+}
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 26px; }
+.site-footer nav a {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .16em;
+  color: rgba(255,255,255,.62);
+}
+.site-footer nav a:hover { color: var(--cw-yellow); }
+.site-footer p { font-size: 11px; letter-spacing: .06em; color: rgba(255,255,255,.4); }
 </style>

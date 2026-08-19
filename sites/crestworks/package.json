@@ -1,9 +1,9 @@
 {
-  "name": "@websitemocker/crestworks",
+  "name": "@websitemocker/crestworks-rework",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev --port 4419",
+    "dev": "astro dev --port 4370",
     "build": "astro build",
     "preview": "astro preview"
   },

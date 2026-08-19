@@ -1,0 +1,12 @@
+{
+  "slug":     "crestworks-legacy",
+  "site":     "crestworks-legacy",
+  "name":     "Crestworks Legacy",
+  "domain":   "www.crestworks.co",
+  "accent":   "#f5a623",
+  "contact":  "hello@crestworks.co",
+  "stage":    2,
+  "template": true,
+  "capture":  "crestworks",
+  "notes":    "Original capture-based template. Renamed from 'crestworks' 2026-08-19 when crestworks-rework became the live site."
+}

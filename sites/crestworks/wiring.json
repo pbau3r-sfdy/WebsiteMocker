@@ -1,10 +1,27 @@
 {
-  "slug": "crestworks",
-  "name": "Crestworks",
-  "domain": "www.crestworks.co",
-  "accent": "#f5a623",
-  "contact": "hello@crestworks.co",
-  "stage": 2,
-  "capture": "crestworks",
-  "notes": "Boutique consulting. Bold all-caps headings. Dr. Philipp Bauer founding partner. Built from capture 2026-08-06."
+  "site":         "crestworks",
+  "name":         "Crestworks",
+  "stage":        6,
+  "domain":       "crestworks.co",
+  "capture":      "crestworks-rework",
+  "accent":       "#ff2f92",
+  "contact":      "hello@crestworks.co",
+  "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/crestworks",
+  "prod_repo":    "pbau3r-sfdy/crestworks",
+  "last_deploy":  "2026-08-19T20:21:15Z",
+  "dns_verified":  "2026-08-19",
+  "dns_provider":  "squarespace",
+  "notes":        "Reworked holding page. Avenir Next, black/magenta palette, brush-rule footer. Live at crestworks.co since 2026-08-19. Renamed from crestworks-rework.",
+  "newsletter":   { "service": null, "endpoint": null, "status": null },
+  "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": null },
+  "forms": {
+    "contact":           { "service": null, "id": null, "status": null },
+    "newsletter_signup": { "service": null, "status": null }
+  },
+  "analytics":    { "status": "skipped" },
+  "legal": {
+    "impressum": "complete",
+    "privacy":   "complete"
+  },
+  "robots": "disallow"
 }

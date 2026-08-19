@@ -1,0 +1,84 @@
+---
+export interface Props {
+  title:       string;
+  description?: string;
+  image?:      string;
+}
+
+const { title, description = 'Crestworks — Boutique consulting specialized in new & future technologies.', image } = Astro.props;
+const canonicalURL = Astro.url;
+const siteName = 'Crestworks';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content={`${title} — ${siteName}`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url"         content={canonicalURL} />
+  <meta property="og:type"        content="website" />
+  {image && <meta property="og:image" content={image} />}
+
+  <!-- Google Fonts: Inter for body copy -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Avenir Next Bold (self-hosted) -->
+  <Fragment set:html={`<style>@font-face{font-family:'Avenir Next';src:url('${b}/fonts/avenir-next-bold.otf') format('opentype');font-weight:700 800;font-style:normal;font-display:swap;}</style>`} />
+
+  <title>{title} — {siteName}</title>
+
+  <style is:global>
+    /* ── Design tokens ──────────────────────────────────────── */
+    :root {
+      --bg:           #ffffff;
+      --bg-dark:      #000000;
+      --bg-nav:       rgba(255,255,255,0.95);
+      --text:         #0a0a0a;
+      --text-on-dark: #ffffff;
+      --text-muted:   #555555;
+      --accent:       #f5e400;
+      --border:       #e0e0e0;
+      --radius:       0px;
+      --font-head:    'Space Grotesk', system-ui, sans-serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+    }
+
+    /* ── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ── Utility ─────────────────────────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <slot />
+</body>
+</html>

@@ -1,0 +1,357 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="Home" description="Boutique consulting specialized in new & future technologies. Crestworks — Tomorrowing Today.">
+  <Nav />
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src={`${b}/images/hero.jpeg`} alt="" aria-hidden="true" />
+    </div>
+    <div class="hero-content container">
+      <h1 class="hero-headline">TOMORROWING TODAY.</h1>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ─────────────────────────────────────────── -->
+  <section class="section section-about">
+    <div class="container">
+      <div class="about-inner">
+        <span class="section-label">ABOUT</span>
+        <p class="about-body">
+          Crestworks is a Boutique Consulting Company <strong>specialized in new &amp; future technologies</strong> based in Munich, Germany.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MISSION ───────────────────────────────────────── -->
+  <section class="section section-mission">
+    <div class="container">
+      <span class="section-label-light">OUR MISSION IS:</span>
+      <div class="mission-inner">
+        <div class="mission-icon-wrap">
+          <img src={`${b}/images/mission-icon.png`} alt="" aria-hidden="true" />
+        </div>
+        <h2 class="mission-headline">
+          To deliver what has never been built before! #TomorrowingToday
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SPECIALIZED ───────────────────────────────────── -->
+  <section class="section section-specialized">
+    <div class="container">
+      <span class="section-label">WE ARE SPECIALIZED IN:</span>
+      <div class="spec-grid">
+        <div class="spec-card">
+          <h3 class="spec-title">Building the Future</h3>
+          <p class="spec-body">
+            Use-case exploration, feasibility assessment, and turning visionary ideas into actionable roadmaps.
+          </p>
+        </div>
+        <div class="spec-card">
+          <h3 class="spec-title">More than just Tech</h3>
+          <p class="spec-body">
+            We address the managerial, organizational, and strategic dimensions that determine whether innovations succeed.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHERE WE COME FROM ────────────────────────────── -->
+  <section class="section section-origin">
+    <div class="section-bg-img">
+      <img src={`${b}/images/bg1.jpg`} alt="" aria-hidden="true" />
+    </div>
+    <div class="section-overlay"></div>
+    <div class="container section-content-overlay">
+      <span class="section-label-light">WHERE WE COME FROM:</span>
+      <h2 class="overlay-headline">From Labs to Assembly Lines.<br />From Ground to Space.</h2>
+      <p class="origin-industries">Aerospace · Defense · Life Sciences · Process Industries</p>
+      <a href="mailto:hello@crestworks.co" class="btn-outline-light">FOR MORE INFORMATION</a>
+    </div>
+  </section>
+
+  <!-- ── OUR OFFERING ──────────────────────────────────── -->
+  <section class="section section-offering">
+    <div class="section-bg-img">
+      <img src={`${b}/images/bg2.jpg`} alt="" aria-hidden="true" />
+    </div>
+    <div class="section-overlay"></div>
+    <div class="container section-content-overlay">
+      <span class="section-label-light">OUR OFFERING:</span>
+      <h2 class="overlay-headline">Innovation is born from:<br /><em>Stardust + Sweat</em></h2>
+      <a href={`${b}/services`} class="btn-yellow">VIEW SERVICES</a>
+    </div>
+  </section>
+
+  <!-- ── HOW WE ROLL ───────────────────────────────────── -->
+  <section class="section section-roll">
+    <div class="container">
+      <span class="section-label-light">HOW WE ROLL:</span>
+      <p class="roll-body">
+        We support startups and enterprises at every stage of the project lifecycle, combining
+        optimism and practicality with rigorously executed action.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── LET'S GO! ─────────────────────────────────────── -->
+  <section class="section-cta">
+    <div class="container">
+      <h2 class="cta-heading">LET'S GO!</h2>
+      <p class="cta-body">The future can't wait. Let's build it together NOW!</p>
+      <a href="mailto:hello@crestworks.co" class="btn-black">GET IN TOUCH</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+  .hero-bg img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    padding-top: 8rem; padding-bottom: 6rem;
+  }
+  .hero-headline {
+    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 800; line-height: 1.0;
+    letter-spacing: .02em;
+    color: #0a0a0a;
+    text-decoration: underline;
+    text-decoration-color: #f5e400;
+    text-decoration-thickness: 8px;
+    text-underline-offset: 6px;
+    max-width: 14ch;
+  }
+
+  /* ── Section base ── */
+  .section { padding: 6rem 0; }
+
+  .section-label {
+    display: block;
+    font-family: var(--font-head);
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: #0a0a0a;
+    margin-bottom: 1.75rem;
+  }
+  .section-label-light {
+    display: block;
+    font-family: var(--font-head);
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 1.75rem;
+  }
+
+  /* ── ABOUT ── */
+  .section-about { background: #ffffff; }
+  .about-inner {
+    border-left: 4px solid #0a0a0a;
+    padding-left: 2rem;
+    max-width: 720px;
+  }
+  .about-body {
+    font-family: var(--font-head);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    line-height: 1.55;
+    color: #0a0a0a;
+  }
+  .about-body strong {
+    font-weight: 800;
+  }
+
+  /* ── MISSION ── */
+  .section-mission { background: #0a0a0a; }
+  .mission-inner {
+    display: flex; align-items: flex-start; gap: 2.5rem;
+    margin-top: .5rem;
+  }
+  .mission-icon-wrap {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .mission-icon-wrap img {
+    width: 48px; height: 48px;
+    object-fit: contain;
+  }
+  .mission-headline {
+    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.25;
+    letter-spacing: .02em;
+  }
+
+  /* ── SPECIALIZED ── */
+  .section-specialized { background: #ffffff; }
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: .5rem;
+  }
+  .spec-card {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 2rem;
+  }
+  .spec-title {
+    font-family: var(--font-head);
+    font-size: 1.125rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .04em;
+    color: #0a0a0a;
+    margin-bottom: .75rem;
+  }
+  .spec-body {
+    font-size: .9375rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  /* ── Full-bleed bg image sections ── */
+  .section-origin,
+  .section-offering {
+    position: relative;
+    padding: 7rem 0;
+    overflow: hidden;
+  }
+  .section-bg-img {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+  .section-bg-img img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+  }
+  .section-overlay {
+    position: absolute; inset: 0;
+    background: rgba(10,10,10,0.70);
+  }
+  .section-content-overlay {
+    position: relative; z-index: 1;
+  }
+  .overlay-headline {
+    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: .02em;
+    margin-bottom: 2rem;
+  }
+  .overlay-headline em { font-style: normal; }
+
+  .origin-industries {
+    font-family: var(--font-head);
+    font-size: .9375rem; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── HOW WE ROLL ── */
+  .section-roll { background: #0a0a0a; }
+  .roll-body {
+    font-size: 1.125rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 65ch;
+    line-height: 1.75;
+    margin-top: .5rem;
+  }
+
+  /* ── LET'S GO CTA ── */
+  .section-cta {
+    background: var(--accent);
+    padding: 6rem 0;
+    text-align: center;
+  }
+  .cta-heading {
+    font-family: 'Avenir Next', var(--font-head), system-ui, sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    letter-spacing: .04em;
+    color: #0a0a0a;
+    margin-bottom: 1rem;
+  }
+  .cta-body {
+    font-size: 1.125rem;
+    color: rgba(0,0,0,0.65);
+    margin-bottom: 2.5rem;
+    max-width: 52ch;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.65;
+  }
+
+  /* ── Buttons ── */
+  .btn-outline-light {
+    display: inline-flex; align-items: center;
+    padding: .9rem 2.25rem;
+    border: 2px solid rgba(255,255,255,0.55);
+    color: #ffffff;
+    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    border-radius: var(--radius);
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline-light:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-yellow {
+    display: inline-flex; align-items: center;
+    padding: .9rem 2.25rem;
+    background: var(--accent); color: #0a0a0a;
+    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    border-radius: var(--radius);
+    transition: opacity .2s;
+  }
+  .btn-yellow:hover { opacity: .85; }
+
+  .btn-black {
+    display: inline-flex; align-items: center;
+    padding: .9rem 2.25rem;
+    background: #0a0a0a; color: #ffffff;
+    font-family: var(--font-head); font-size: .9375rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    border-radius: var(--radius);
+    transition: opacity .2s;
+  }
+  .btn-black:hover { opacity: .75; }
+
+  @media (max-width: 640px) {
+    .mission-inner { flex-direction: column; gap: 1.5rem; }
+    .about-inner { padding-left: 1.25rem; }
+  }
+</style>

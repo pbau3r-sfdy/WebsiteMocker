@@ -1,0 +1,51 @@
+---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const navLinks = [
+  { label: 'Services', href: `${b}/services` },
+  { label: 'Contact',  href: 'mailto:hello@crestworks.co' },
+];
+---
+<nav class="nav">
+  <div class="nav-inner">
+    <a href={`${b}/`} class="nav-logo">
+      <img src={`${b}/images/logo-white.png`} alt="Crestworks" height="36" />
+    </a>
+    <ul class="nav-links">
+      {navLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg-nav);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 2rem; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo img { height: 36px; width: auto; object-fit: contain; }
+  .nav-links {
+    display: flex; list-style: none; gap: 1rem;
+  }
+  .nav-links a {
+    display: inline-block;
+    padding: .5rem 1.25rem;
+    background: #0a0a0a;
+    color: #ffffff;
+    font-family: var(--font-head);
+    font-size: .8125rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    border-radius: var(--radius);
+    transition: opacity .2s;
+  }
+  .nav-links a:hover { opacity: .75; }
+
+  @media (max-width: 640px) {
+    .nav-links { gap: .5rem; }
+    .nav-links a { padding: .45rem .9rem; font-size: .75rem; }
+  }
+</style>

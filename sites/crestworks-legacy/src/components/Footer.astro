@@ -1,0 +1,51 @@
+---
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<footer class="footer">
+  <div class="footer-inner">
+    <img src={`${b}/images/logo-white.png`} alt="Crestworks" height="32" />
+    <nav class="footer-nav">
+      <a href={`${b}/`}>START</a>
+      <a href={`${b}/imprint`}>IMPRINT</a>
+      <a href={`${b}/privacy-policy`}>PRIVACY POLICY</a>
+    </nav>
+    <div class="footer-socials">
+      <a href="https://www.linkedin.com/company/crestworksbd" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://www.instagram.com/crestworks_co" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://twitter.com/Crestworks_Co" target="_blank" rel="noopener noreferrer">X</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: #ffffff;
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-nav {
+    display: flex; gap: 1.75rem; flex-wrap: wrap; align-items: center;
+  }
+  .footer-nav a {
+    font-family: var(--font-head);
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: #0a0a0a; transition: opacity .2s;
+  }
+  .footer-nav a:hover { opacity: .55; }
+  .footer-socials {
+    display: flex; gap: 1.5rem; align-items: center;
+  }
+  .footer-socials a {
+    font-family: var(--font-head);
+    font-size: .75rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: #0a0a0a; transition: opacity .2s;
+  }
+  .footer-socials a:hover { opacity: .55; }
+</style>

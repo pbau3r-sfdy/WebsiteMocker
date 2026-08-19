@@ -1,25 +1,52 @@
 ---
-const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const navLinks = [
-  { label: 'Services', href: `${b}/services` },
-  { label: 'Contact',  href: 'mailto:hello@crestworks.co' },
+  { label: 'Mission',  href: '/#mission' },
+  { label: 'News',     href: '/news' },
+  { label: 'Careers',  href: '/careers' },
+  { label: 'Contact',  href: '/#contact' },
 ];
+
+const logoSrc = '/images/logo-white.png';
+const logoAlt = 'Crestworks Rework';
 ---
+
 <nav class="nav">
   <div class="nav-inner">
-    <a href={`${b}/`} class="nav-logo">
-      <img src={`${b}/images/logo-white.png`} alt="Crestworks" height="36" />
+    <a href="/" class="nav-logo" aria-label=`${logoAlt} home`>
+      <img src={logoSrc} alt={logoAlt} height="32" />
     </a>
     <ul class="nav-links">
-      {navLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+      {navLinks.map(link => (
+        <li><a href={link.href}>{link.label}</a></li>
+      ))}
     </ul>
+    <button class="nav-toggle" aria-label="Open menu" id="nav-toggle">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+  <ul class="nav-mobile" id="nav-mobile">
+    {navLinks.map(link => (
+      <li><a href={link.href}>{link.label}</a></li>
+    ))}
+  </ul>
 </nav>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const mobile = document.getElementById('nav-mobile');
+  toggle?.addEventListener('click', () => mobile?.classList.toggle('open'));
+  // Close mobile nav on link click
+  mobile?.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => mobile.classList.remove('open'))
+  );
+</script>
 
 <style>
   .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     background: var(--bg-nav);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
   .nav-inner {
@@ -27,25 +54,38 @@ const navLinks = [
     padding: 0 2rem; height: 64px;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .nav-logo img { height: 36px; width: auto; object-fit: contain; }
+  .nav-logo img { height: 32px; width: auto; object-fit: contain; }
   .nav-links {
-    display: flex; list-style: none; gap: 1rem;
+    display: flex; list-style: none; gap: 2.5rem;
   }
   .nav-links a {
-    display: inline-block;
-    padding: .5rem 1.25rem;
-    background: #0a0a0a;
-    color: #ffffff;
     font-family: var(--font-head);
-    font-size: .8125rem; font-weight: 700;
-    letter-spacing: .1em; text-transform: uppercase;
-    border-radius: var(--radius);
-    transition: opacity .2s;
+    font-size: .875rem; font-weight: 500;
+    letter-spacing: .04em; text-transform: uppercase;
+    color: var(--text-muted); transition: color .2s;
   }
-  .nav-links a:hover { opacity: .75; }
-
+  .nav-links a:hover { color: var(--accent); }
+  .nav-toggle {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .nav-toggle span {
+    display: block; width: 22px; height: 2px;
+    background: var(--text); border-radius: 2px;
+  }
+  .nav-mobile {
+    display: none; list-style: none; flex-direction: column;
+    padding: 1rem 2rem 1.5rem; gap: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    font-family: var(--font-head); font-size: 1rem; font-weight: 500;
+    color: var(--text-muted); transition: color .2s;
+  }
+  .nav-mobile a:hover { color: var(--text); }
   @media (max-width: 640px) {
-    .nav-links { gap: .5rem; }
-    .nav-links a { padding: .45rem .9rem; font-size: .75rem; }
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
   }
 </style>
