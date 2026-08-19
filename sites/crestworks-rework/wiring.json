@@ -1,13 +1,14 @@
 {
   "site":         "crestworks-rework",
   "name":         "Crestworks Rework",
-  "stage":        4,
+  "stage":        6,
   "domain":       "crestworks.co",
   "capture":      "crestworks-rework",
   "accent":       "#ff2f92",
   "contact":      "hello@crestworks.co",
   "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/crestworks-rework",
-  "last_deploy":  "2026-08-19T19:51:51Z",
+  "prod_repo":    "pbau3r-sfdy/crestworks",
+  "last_deploy":  "2026-08-19T20:21:15Z",
   "dns_verified":  "2026-08-19",
   "dns_provider":  "squarespace",
   "notes":        "Reworked holding page. Avenir Next, black/magenta palette, brush-rule footer. Imported from zip 2026-08-19. Domain verified on GitHub 2026-08-19; DNS migrated from Wix to Squarespace.",
@@ -19,8 +20,8 @@
   },
   "analytics":    { "status": "skipped" },
   "legal": {
-    "impressum": "incomplete",
-    "privacy":   "incomplete"
+    "impressum": "complete",
+    "privacy":   "complete"
   },
   "robots": "disallow",
   "notes":  ""
