@@ -7,7 +7,7 @@
   "accent":       "#ff2f92",
   "contact":      "hello@crestworks.co",
   "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/crestworks-rework",
-  "last_deploy":  null,
+  "last_deploy":  "2026-08-19T19:51:51Z",
   "notes":        "Reworked holding page. Avenir Next, black/magenta palette, brush-rule footer. Imported from zip 2026-08-19.",
   "newsletter":   { "service": null, "endpoint": null, "status": null },
   "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": null },
