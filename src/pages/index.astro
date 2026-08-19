@@ -250,7 +250,8 @@ const buildDate = new Date().toISOString().slice(0, 10);
     .btn.live    { color: #22c55e; border-color: #22c55e; }
     .btn.live:hover { background: rgba(34,197,94,.12); }
     .btn.restore:hover { color: #22c55e; border-color: #22c55e; }
-    .btn.delete-btn:hover { color: #ef4444; border-color: #ef4444; }
+    .btn.rename-btn:hover  { color: #a78bfa; border-color: #a78bfa; }
+    .btn.delete-btn:hover  { color: #ef4444; border-color: #ef4444; }
 
     /* perf row */
     .card-perf {
@@ -430,6 +431,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
               )}
               {!isArchived && (site.stage ?? 0) < 6  && <span class="btn primary">Wire</span>}
               {!isArchived && (site.stage ?? 0) >= 5 && (site.stage ?? 0) < 6 && <span class="btn primary">Deploy</span>}
+              <button class="btn rename-btn"  data-rename-slug={site._slug}>Rename</button>
               <button class="btn"           data-archive-slug={site._slug} style={isArchived ? 'display:none' : ''}>Archive</button>
               <button class="btn restore"   data-restore-slug={site._slug} style={isArchived ? '' : 'display:none'}>Restore</button>
               <button class="btn delete-btn" data-delete-slug={site._slug} style={isArchived ? '' : 'display:none'}>Delete</button>
@@ -543,6 +545,32 @@ const buildDate = new Date().toISOString().slice(0, 10);
 </main>
 
 <div class="wm-toast" id="wm-toast"></div>
+
+<!-- Rename overlay -->
+<div class="apply-overlay" id="rename-overlay">
+  <div class="apply-panel">
+    <h3>✏️ Rename site</h3>
+    <p style="margin:.25rem 0 .75rem;color:var(--dim);font-size:.85rem">
+      Enter a new slug for <strong id="rename-old-label"></strong>.<br/>
+      This renames the directory, updates wiring.json and astro.config.mjs, and commits.
+    </p>
+    <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.75rem">
+      <code style="white-space:nowrap">node _scripts/rename-site.mjs</code>
+      <code id="rename-old-slug" style="white-space:nowrap"></code>
+      <input id="rename-new-input" type="text" placeholder="new-slug"
+        style="flex:1;background:var(--surface);border:1px solid var(--dim);color:var(--text);
+               padding:.35rem .6rem;border-radius:4px;font-family:monospace;font-size:.9rem"/>
+    </div>
+    <code class="apply-cmd-block" id="rename-cmd" style="word-break:break-all"></code>
+    <p class="apply-hint" style="margin-top:.5rem">
+      Copy the command above and run it in your terminal, then push.
+    </p>
+    <div class="apply-actions">
+      <button class="btn" id="rename-close">Close</button>
+      <button class="btn primary" id="rename-copy">Copy command</button>
+    </div>
+  </div>
+</div>
 
 <!-- Apply-changes overlay -->
 <div class="apply-overlay" id="apply-overlay">
@@ -796,6 +824,43 @@ const buildDate = new Date().toISOString().slice(0, 10);
     clearTimeout(el._t);
     el._t = setTimeout(() => el.classList.remove('show'), 2800);
   }
+  // ── Rename ──────────────────────────────────────────────────────────────────
+  document.querySelectorAll('[data-rename-slug]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const slug = btn.dataset.renameSlug;
+      document.getElementById('rename-old-label').textContent = slug;
+      document.getElementById('rename-old-slug').textContent  = slug;
+      document.getElementById('rename-new-input').value       = slug;
+      updateRenameCmd();
+      document.getElementById('rename-overlay').classList.add('open');
+      setTimeout(() => document.getElementById('rename-new-input').select(), 50);
+    });
+  });
+
+  function updateRenameCmd() {
+    const oldSlug = document.getElementById('rename-old-slug').textContent.trim();
+    const newSlug = document.getElementById('rename-new-input').value.trim();
+    const cmd = newSlug
+      ? `node _scripts/rename-site.mjs ${oldSlug} ${newSlug}`
+      : '';
+    document.getElementById('rename-cmd').textContent = cmd;
+  }
+
+  document.getElementById('rename-new-input')?.addEventListener('input', updateRenameCmd);
+
+  document.getElementById('rename-close')?.addEventListener('click', () => {
+    document.getElementById('rename-overlay')?.classList.remove('open');
+  });
+  document.getElementById('rename-overlay')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget)
+      document.getElementById('rename-overlay').classList.remove('open');
+  });
+  document.getElementById('rename-copy')?.addEventListener('click', () => {
+    const cmd = document.getElementById('rename-cmd')?.textContent?.trim();
+    if (!cmd) return;
+    navigator.clipboard?.writeText(cmd).then(() => toast('Command copied'));
+  });
+
 })();
 </script>
 
