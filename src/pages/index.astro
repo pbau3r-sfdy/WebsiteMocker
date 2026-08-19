@@ -319,6 +319,39 @@ const buildDate = new Date().toISOString().slice(0, 10);
     }
     .wm-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+    /* apply-changes overlay */
+    .apply-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.5);
+      z-index: 300; display: none; align-items: center; justify-content: center;
+    }
+    .apply-overlay.open { display: flex; }
+    .apply-panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem 2rem;
+      max-width: 640px; width: 92%; max-height: 90vh; overflow-y: auto;
+    }
+    .apply-panel h3 { font-family: var(--mono); font-size: 13px; font-weight: 700; margin-bottom: 1rem; }
+    .apply-changes-list { font-size: 11px; color: var(--muted); margin-bottom: 1.25rem; line-height: 2; }
+    .apply-changes-list strong { color: var(--text); }
+    .apply-cmd-block {
+      font-family: var(--mono); font-size: 11px;
+      background: var(--s2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: .85rem 1rem;
+      white-space: pre; overflow-x: auto; display: block;
+      color: var(--text); margin-bottom: .75rem;
+    }
+    .apply-hint { font-size: 10px; color: var(--dim); margin-bottom: 1.5rem; line-height: 1.7; }
+    .apply-hint code { font-family: var(--mono); }
+    .apply-actions { display: flex; gap: .75rem; justify-content: flex-end; }
+    .btn.apply-trigger { gap: .4rem; }
+    #apply-count-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 10px; font-weight: 700;
+      min-width: 16px; height: 16px; padding: 0 4px;
+      background: var(--accent); color: #000; border-radius: 20px;
+      margin-left: .3rem;
+    }
+
     @media (max-width: 700px) {
       .card-main { grid-template-columns: 1fr auto; }
       .wiring-chips, .card-actions { display: none; }
@@ -332,6 +365,9 @@ const buildDate = new Date().toISOString().slice(0, 10);
 
 <header class="header">
   <span class="logo">WebsiteMocker</span>
+  <button id="apply-btn" class="btn apply-trigger" style="display:none" title="Pending triage — click to get the apply command">
+    Apply<span id="apply-count-badge">0</span>
+  </button>
   <span class="header-meta">
     <span id="active-count">{activeSites.length}</span> active
     &nbsp;·&nbsp; built {buildDate}
@@ -507,16 +543,43 @@ const buildDate = new Date().toISOString().slice(0, 10);
 
 <div class="wm-toast" id="wm-toast"></div>
 
+<!-- Apply-changes overlay -->
+<div class="apply-overlay" id="apply-overlay">
+  <div class="apply-panel">
+    <h3>↯ Pending triage changes</h3>
+    <div class="apply-changes-list" id="apply-changes-list"></div>
+    <code class="apply-cmd-block" id="apply-cmd"></code>
+    <p class="apply-hint">
+      Copy the command above, paste it into your terminal, then:<br/>
+      <code>git add -A &amp;&amp; git commit -m "chore: apply dashboard triage"</code><br/>
+      <code>git push</code> &nbsp;→&nbsp; sandbox rebuilds automatically.
+    </p>
+    <div class="apply-actions">
+      <button class="btn" id="apply-close">Close</button>
+      <button class="btn primary" id="apply-copy">Copy command</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function () {
   const ARCHIVED_KEY = 'wm-archived-v1';
   const ORIGINS_KEY  = 'wm-origins-v1';
   const DELETED_KEY  = 'wm-deleted-v1';
+  const REASONS_KEY  = 'wm-reasons-v1';
 
-  function getSet(key)   { try { return new Set(JSON.parse(localStorage.getItem(key) || '[]')); } catch { return new Set(); } }
-  function saveSet(k, s) { localStorage.setItem(k, JSON.stringify([...s])); }
-  function getObj(key)   { try { return JSON.parse(localStorage.getItem(key) || '{}'); } catch { return {}; } }
-  function saveObj(k, o) { localStorage.setItem(k, JSON.stringify(o)); }
+  // ── Storage: localStorage → sessionStorage fallback ───────────────────────
+  const _ls = (function () {
+    for (const s of [localStorage, sessionStorage]) {
+      try { s.setItem('_wm_chk', '1'); s.removeItem('_wm_chk'); return s; } catch {}
+    }
+    console.warn('[WM] No persistent storage — triage state resets on reload.');
+    return null;
+  })();
+  function getSet(k)     { try { return new Set(JSON.parse(_ls?.getItem(k) ?? '[]')); } catch { return new Set(); } }
+  function saveSet(k, s) { try { _ls?.setItem(k, JSON.stringify([...s])); } catch (e) { console.warn('[WM] saveSet:', e); } }
+  function getObj(k)     { try { return JSON.parse(_ls?.getItem(k) ?? '{}'); } catch { return {}; } }
+  function saveObj(k, o) { try { _ls?.setItem(k, JSON.stringify(o)); } catch (e) { console.warn('[WM] saveObj:', e); } }
 
   const archived = getSet(ARCHIVED_KEY);
   const deleted  = getSet(DELETED_KEY);
@@ -527,14 +590,16 @@ const buildDate = new Date().toISOString().slice(0, 10);
     const slug    = card.dataset.slug;
     const section = card.dataset.section; // 'active' | 'template' | 'archived'
 
-    // Remove deleted cards from DOM entirely
     if (deleted.has(slug)) { card.remove(); return; }
 
     let targetId;
     if (archived.has(slug) || section === 'archived') {
       targetId = 'archive-list';
       if (!archived.has(slug)) archived.add(slug);
-      if (!origins[slug]) origins[slug] = section === 'template' ? 'template-list' : 'main-list';
+      // Only track origin for browser-archived cards (not already committed)
+      if (!origins[slug] && section !== 'archived') {
+        origins[slug] = section === 'template' ? 'template-list' : 'main-list';
+      }
       setCardButtons(card, 'archived');
     } else if (section === 'template') {
       targetId = 'template-list';
@@ -548,23 +613,22 @@ const buildDate = new Date().toISOString().slice(0, 10);
   saveSet(ARCHIVED_KEY, archived);
   saveObj(ORIGINS_KEY, origins);
 
-  // ── 2. Section visibility + counts ────────────────────────────
+  // ── 2. Initial UI state ────────────────────────────────────────
   updateSections();
+  updateApplyBtn();
 
-  // Auto-open archive if it has content
   if (document.querySelectorAll('#archive-list .site-card').length > 0) {
     document.getElementById('archive-section')?.classList.add('open');
   }
 
-  // ── 3. Toggle buttons ─────────────────────────────────────────
+  // ── 3. Section toggles ─────────────────────────────────────────
   ['template-toggle', 'archive-toggle'].forEach(id => {
     document.getElementById(id)?.addEventListener('click', () => {
-      const secId = id.replace('-toggle', '-section');
-      document.getElementById(secId)?.classList.toggle('open');
+      document.getElementById(id.replace('-toggle', '-section'))?.classList.toggle('open');
     });
   });
 
-  // ── 4. Delegated action buttons ───────────────────────────────
+  // ── 4. Card action buttons ─────────────────────────────────────
   document.addEventListener('click', e => {
     const a = e.target.closest('[data-archive-slug]');
     const r = e.target.closest('[data-restore-slug]');
@@ -574,19 +638,43 @@ const buildDate = new Date().toISOString().slice(0, 10);
     if (d) deleteSite(d.dataset.deleteSlug);
   });
 
+  // ── 5. Apply-changes panel ─────────────────────────────────────
+  document.getElementById('apply-btn')?.addEventListener('click', () => {
+    updateApplyBtn(); // refresh before showing
+    document.getElementById('apply-overlay')?.classList.add('open');
+  });
+  document.getElementById('apply-close')?.addEventListener('click', () => {
+    document.getElementById('apply-overlay')?.classList.remove('open');
+  });
+  document.getElementById('apply-overlay')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+  });
+  document.getElementById('apply-copy')?.addEventListener('click', () => {
+    const cmd = document.getElementById('apply-cmd')?.textContent ?? '';
+    navigator.clipboard?.writeText(cmd)
+      .then(() => toast('Command copied to clipboard!'))
+      .catch(() => toast('Select and copy the command manually'));
+  });
+
   // ── Helpers ───────────────────────────────────────────────────
   function archiveSite(slug) {
     const card = document.querySelector(`.site-card[data-slug="${slug}"]`);
     if (!card) return;
+    // Record original section for restore
     const o = getObj(ORIGINS_KEY);
     o[slug] = card.closest('#template-list') ? 'template-list' : 'main-list';
     saveObj(ORIGINS_KEY, o);
+    // Ask for reason (feeds the apply command)
+    const reason = (prompt(`Archive "${slug}"\nReason (optional — press Enter to skip):`) ?? '').trim();
+    const rs = getObj(REASONS_KEY); rs[slug] = reason; saveObj(REASONS_KEY, rs);
+    // Move card
     document.getElementById('archive-list')?.appendChild(card);
     setCardButtons(card, 'archived');
     const a = getSet(ARCHIVED_KEY); a.add(slug); saveSet(ARCHIVED_KEY, a);
     document.getElementById('archive-section')?.classList.add('open');
     updateSections();
-    toast(`${slug} archived`);
+    updateApplyBtn();
+    toast(`${slug} archived — click Apply to commit`);
   }
 
   function restoreSite(slug) {
@@ -598,21 +686,27 @@ const buildDate = new Date().toISOString().slice(0, 10);
     setCardButtons(card, 'active');
     const a = getSet(ARCHIVED_KEY); a.delete(slug); saveSet(ARCHIVED_KEY, a);
     delete o[slug]; saveObj(ORIGINS_KEY, o);
+    const rs = getObj(REASONS_KEY); delete rs[slug]; saveObj(REASONS_KEY, rs);
     updateSections();
+    updateApplyBtn();
     toast(`${slug} restored`);
   }
 
   function deleteSite(slug) {
     if (!confirm(
-      `Remove "${slug}" from the dashboard?\n\n` +
-      `To permanently delete source files:\n  node _scripts/delete-site.mjs ${slug}`
+      `Mark "${slug}" for deletion?\n\n` +
+      `Click "Apply changes" in the header to get the terminal command\n` +
+      `that permanently removes the source files.`
     )) return;
     const card = document.querySelector(`.site-card[data-slug="${slug}"]`);
     if (card) card.remove();
     const a = getSet(ARCHIVED_KEY); a.delete(slug); saveSet(ARCHIVED_KEY, a);
     const d = getSet(DELETED_KEY);  d.add(slug);    saveSet(DELETED_KEY, d);
+    const o = getObj(ORIGINS_KEY);  delete o[slug]; saveObj(ORIGINS_KEY, o);
+    const rs = getObj(REASONS_KEY); delete rs[slug]; saveObj(REASONS_KEY, rs);
     updateSections();
-    toast(`${slug} removed`);
+    updateApplyBtn();
+    toast(`${slug} queued for deletion — click Apply`);
   }
 
   function setCardButtons(card, state) {
@@ -632,7 +726,6 @@ const buildDate = new Date().toISOString().slice(0, 10);
       'template-list': 'template-section',
       'archive-list':  'archive-section',
     };
-
     Object.entries(counts).forEach(([listId, countIds]) => {
       const n = document.querySelectorAll(`#${listId} .site-card`).length;
       countIds.forEach(id => {
@@ -640,12 +733,51 @@ const buildDate = new Date().toISOString().slice(0, 10);
         if (el) el.textContent = id.includes('sub') ? `${n} active` : n;
       });
     });
-
     Object.entries(sections).forEach(([listId, sectionId]) => {
       const n = document.querySelectorAll(`#${listId} .site-card`).length;
       const sec = document.getElementById(sectionId);
       if (sec) sec.style.display = n > 0 ? '' : 'none';
     });
+  }
+
+  function updateApplyBtn() {
+    // Pending archives: slugs in origins map (browser-archived, not yet committed)
+    const reasons = getObj(REASONS_KEY);
+    const pendingArchive = Object.keys(getObj(ORIGINS_KEY))
+      .map(slug => ({ slug, reason: reasons[slug] || '' }));
+    const pendingDelete = [...getSet(DELETED_KEY)];
+    const total = pendingArchive.length + pendingDelete.length;
+
+    // Header button
+    const btn = document.getElementById('apply-btn');
+    if (btn) btn.style.display = total > 0 ? '' : 'none';
+    const badge = document.getElementById('apply-count-badge');
+    if (badge) badge.textContent = total;
+
+    // Command
+    const parts = ['node _scripts/apply-triage.mjs'];
+    pendingArchive.forEach(({ slug, reason }) => {
+      parts.push(reason ? `--archive ${slug} "${reason}"` : `--archive ${slug}`);
+    });
+    pendingDelete.forEach(slug => parts.push(`--delete ${slug}`));
+    const cmd = parts.join(' \\\n  ');
+
+    const cmdEl = document.getElementById('apply-cmd');
+    if (cmdEl) cmdEl.textContent = cmd;
+
+    // Change list
+    const listEl = document.getElementById('apply-changes-list');
+    if (listEl) {
+      const lines = [
+        ...pendingArchive.map(({ slug, reason }) =>
+          `⊘ Archive <strong>${slug}</strong>${reason ? ` <span style="color:var(--dim)">— ${reason}</span>` : ''}`),
+        ...pendingDelete.map(slug =>
+          `✗ Delete&nbsp;&nbsp;<strong>${slug}</strong>`),
+      ];
+      listEl.innerHTML = lines.length
+        ? lines.map(l => `<div>${l}</div>`).join('')
+        : '<div style="color:var(--dim)">No pending changes.</div>';
+    }
   }
 
   function toast(msg) {
@@ -654,7 +786,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
     el.textContent = msg;
     el.classList.add('show');
     clearTimeout(el._t);
-    el._t = setTimeout(() => el.classList.remove('show'), 2200);
+    el._t = setTimeout(() => el.classList.remove('show'), 2800);
   }
 })();
 </script>
