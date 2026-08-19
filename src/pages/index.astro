@@ -2,6 +2,41 @@
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, resolve } from 'path';
 
+// ── Perf data helpers ─────────────────────────────────────────────
+function loadPerf(slug) {
+  const perfPath = join(resolve('_data'), slug, 'perf.json');
+  if (!existsSync(perfPath)) return null;
+  try {
+    const { history } = JSON.parse(readFileSync(perfPath, 'utf-8'));
+    if (!history?.length) return null;
+    return {
+      latest: history[history.length - 1],
+      prev:   history.length > 1 ? history[history.length - 2] : null,
+    };
+  } catch { return null; }
+}
+
+function scoreColor(n) {
+  if (n >= 90) return '#22c55e';
+  if (n >= 50) return '#e8a030';
+  return '#ef4444';
+}
+
+function cwvColor(status) {
+  if (status === 'good')             return '#22c55e';
+  if (status === 'needs-improvement') return '#e8a030';
+  if (status === 'poor')             return '#ef4444';
+  return 'var(--dim)';
+}
+
+function trendLabel(curr, prev) {
+  if (prev === null || prev === undefined) return null;
+  const d = curr - prev;
+  if (d > 0) return { text: `↑${d}`, color: '#22c55e' };
+  if (d < 0) return { text: `↓${Math.abs(d)}`, color: '#ef4444' };
+  return { text: '→', color: 'var(--dim)' };
+}
+
 // ── Read all sites from sites/*/wiring.json ──────────────────────────
 const sitesDir = resolve('sites');
 let sites = [];
@@ -28,6 +63,9 @@ if (existsSync(sitesDir)) {
 
 // Sort: highest stage first, then alphabetical
 sites.sort((a, b) => (b.stage ?? 0) - (a.stage ?? 0) || a._slug.localeCompare(b._slug));
+
+// Attach perf data
+sites = sites.map(s => ({ ...s, _perf: loadPerf(s._slug) }));
 
 // ── Stage metadata ───────────────────────────────────────────────────
 const STAGES = [
@@ -218,6 +256,9 @@ const buildDate = new Date().toISOString().slice(0, 10);
     .btn.primary:hover { background: var(--adim); }
     .btn.live { color: #22c55e; border-color: #22c55e; }
     .btn.live:hover { background: rgba(34,197,94,.12); }
+    .btn.archive:hover { color: #ef4444; border-color: #ef4444; }
+    .btn.restore { color: var(--dim); }
+    .btn.restore:hover { color: #22c55e; border-color: #22c55e; }
 
     /* empty state */
     .empty {
@@ -235,11 +276,156 @@ const buildDate = new Date().toISOString().slice(0, 10);
       border-radius: 3px;
     }
 
+    /* perf row */
+    .card-perf {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: .55rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--s2);
+      border-radius: 0 0 var(--radius) var(--radius);
+      flex-wrap: wrap;
+    }
+    .perf-scores {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .perf-score {
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .perf-score-label {
+      color: var(--dim);
+      font-size: 10px;
+      margin-right: .25rem;
+    }
+    .perf-score-value {
+      font-weight: 700;
+    }
+    .perf-sep {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .perf-cwv {
+      display: flex;
+      gap: .75rem;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .perf-cwv-item {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+    }
+    .perf-cwv-label { color: var(--dim); font-size: 10px; }
+    .perf-meta {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--dim);
+      white-space: nowrap;
+    }
+    .perf-trend {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .perf-empty {
+      padding: .45rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--s2);
+      border-radius: 0 0 var(--radius) var(--radius);
+      font-size: 10px;
+      color: var(--dim);
+      font-family: var(--mono);
+    }
+
+    /* archive drawer */
+    .archive-section {
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .archive-toggle {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: .9rem 0;
+      cursor: pointer;
+      text-align: left;
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .03em;
+    }
+    .archive-toggle:hover { color: var(--muted); }
+    .archive-chevron {
+      font-size: 9px;
+      transition: transform .18s;
+      display: inline-block;
+    }
+    .archive-section.open .archive-chevron { transform: rotate(90deg); }
+    .archive-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: .1rem .45rem;
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--dim);
+    }
+    .archive-body { display: none; padding-bottom: 3rem; }
+    .archive-section.open .archive-body { display: block; }
+    .archive-hint {
+      font-size: 11px;
+      color: var(--dim);
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
+    }
+    .archive-hint code {
+      font-family: var(--mono);
+      font-size: 10px;
+      background: var(--s2);
+      border: 1px solid var(--border);
+      padding: .1em .4em;
+      border-radius: 3px;
+    }
+    #archive-list .site-card { opacity: .6; transition: opacity .15s; }
+    #archive-list .site-card:hover { opacity: 1; }
+
+    /* toast */
+    .wm-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(.5rem);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: .55rem 1.1rem;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0;
+      transition: opacity .18s, transform .18s;
+      pointer-events: none;
+      z-index: 200;
+      white-space: nowrap;
+    }
+    .wm-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
     @media (max-width: 700px) {
       .card-main { grid-template-columns: 1fr auto; }
       .wiring-chips, .card-actions { display: none; }
       .pipeline-strip { overflow-x: auto; }
       .ps-stage { min-width: 80px; }
+      .perf-meta { display: none; }
     }
   </style>
 </head>
@@ -281,14 +467,21 @@ const buildDate = new Date().toISOString().slice(0, 10);
         <h2>Sites</h2>
         <span class="count">{sites.length} total</span>
       </div>
+      <div id="main-list">
       {sites.map(site => {
         const st = stageMeta(site.stage);
         const chips = wiringSummary(site);
         const sandboxUrl = site.sandbox_url
           ? `https://pbau3r-sfdy.github.io/WebsiteMocker/${site._slug}`
           : `https://pbau3r-sfdy.github.io/WebsiteMocker/${site._slug}`;
+        // ── Perf row data ────────────────────────────────────────────
+        const perf = site._perf;
+        const pm   = perf?.latest?.mobile;
+        const pp   = perf?.prev?.mobile;
+        const trend = pm && pp ? trendLabel(pm.performance, pp.performance) : null;
+
         return (
-          <div class="site-card">
+          <div class="site-card" data-slug={site._slug}>
             <div class="card-main">
               <div>
                 <div class="site-name">{site.name || site.site || site._slug}</div>
@@ -311,14 +504,187 @@ const buildDate = new Date().toISOString().slice(0, 10);
                 )}
                 {(site.stage ?? 0) < 6 && <span class="btn primary">Wire</span>}
                 {(site.stage ?? 0) >= 5 && (site.stage ?? 0) < 6 && <span class="btn primary">Deploy</span>}
+                <button class="btn archive" data-archive-slug={site._slug}>Archive</button>
               </div>
             </div>
+
+            {/* ── Perf row ──────────────────────────────────────────── */}
+            {pm ? (
+              <div class="card-perf">
+                <div class="perf-scores">
+                  {[
+                    { label: 'PERF', val: pm.performance },
+                    { label: 'A11Y', val: pm.accessibility },
+                    { label: 'SEO',  val: pm.seo },
+                    { label: 'BEST', val: pm.best_practices },
+                  ].map(({ label, val }) => (
+                    <div class="perf-score">
+                      <span class="perf-score-label">{label}</span>
+                      <span class="perf-score-value" style={`color:${scoreColor(val)}`}>{val}</span>
+                    </div>
+                  ))}
+                </div>
+                <div class="perf-sep"></div>
+                <div class="perf-cwv">
+                  {pm.lcp && (
+                    <div class="perf-cwv-item">
+                      <span class="perf-cwv-label">LCP</span>
+                      <span style={`color:${cwvColor(pm.lcp_status)}`}>{pm.lcp}</span>
+                    </div>
+                  )}
+                  {pm.cls && (
+                    <div class="perf-cwv-item">
+                      <span class="perf-cwv-label">CLS</span>
+                      <span style={`color:${cwvColor(pm.cls_status)}`}>{pm.cls}</span>
+                    </div>
+                  )}
+                  {pm.fcp && (
+                    <div class="perf-cwv-item">
+                      <span class="perf-cwv-label">FCP</span>
+                      <span style="color:var(--muted)">{pm.fcp}</span>
+                    </div>
+                  )}
+                </div>
+                {trend && (
+                  <>
+                    <div class="perf-sep"></div>
+                    <span class="perf-trend" style={`color:${trend.color}`}>{trend.text}</span>
+                  </>
+                )}
+                <div class="perf-meta">
+                  mobile · {perf.latest.date}
+                </div>
+              </div>
+            ) : (
+              <div class="perf-empty">
+                no perf data — run <strong>npm run perf</strong>
+              </div>
+            )}
           </div>
         );
       })}
+      </div>
     </div>
   )}
+
+  <!-- Archive drawer (populated by JS from localStorage) -->
+  <div id="archive-section" class="archive-section" style="display:none">
+    <button class="archive-toggle" id="archive-toggle">
+      <span class="archive-chevron">▶</span>
+      Archive
+      <span class="archive-badge" id="archive-count">0</span>
+    </button>
+    <div class="archive-body" id="archive-body">
+      <p class="archive-hint">
+        Archived locally in your browser. To commit permanently:<br/>
+        <code>node _scripts/archive-site.mjs &lt;slug&gt; "reason"</code>
+        — then push to main.
+      </p>
+      <div id="archive-list"></div>
+    </div>
+  </div>
+
 </main>
+
+<div class="wm-toast" id="wm-toast"></div>
+
+<script>
+(function () {
+  const STORAGE_KEY = 'wm-archived-v1';
+
+  function getArchived() {
+    try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')); }
+    catch { return new Set(); }
+  }
+  function saveArchived(set) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...set]));
+  }
+
+  function updateDrawer() {
+    const count   = document.querySelectorAll('#archive-list .site-card').length;
+    const section = document.getElementById('archive-section');
+    const badge   = document.getElementById('archive-count');
+    if (badge)   badge.textContent = count;
+    if (section) section.style.display = count > 0 ? '' : 'none';
+  }
+
+  function setCardState(card, isArchived) {
+    const btn = card.querySelector('[data-archive-slug]');
+    if (!btn) return;
+    btn.textContent  = isArchived ? 'Restore' : 'Archive';
+    btn.className    = isArchived ? 'btn restore' : 'btn archive';
+  }
+
+  function archiveSite(slug) {
+    const card        = document.querySelector(`.site-card[data-slug="${slug}"]`);
+    const archiveList = document.getElementById('archive-list');
+    const section     = document.getElementById('archive-section');
+    if (!card || !archiveList) return;
+
+    archiveList.appendChild(card);
+    setCardState(card, true);
+
+    const set = getArchived();
+    set.add(slug);
+    saveArchived(set);
+
+    if (section) { section.style.display = ''; section.classList.add('open'); }
+    updateDrawer();
+    toast(`${slug} archived`);
+  }
+
+  function restoreSite(slug) {
+    const card     = document.querySelector(`.site-card[data-slug="${slug}"]`);
+    const mainList = document.getElementById('main-list');
+    if (!card || !mainList) return;
+
+    mainList.appendChild(card);
+    setCardState(card, false);
+
+    const set = getArchived();
+    set.delete(slug);
+    saveArchived(set);
+
+    updateDrawer();
+    toast(`${slug} restored`);
+  }
+
+  function toast(msg) {
+    const el = document.getElementById('wm-toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('show'), 2200);
+  }
+
+  // Archive toggle
+  document.getElementById('archive-toggle')?.addEventListener('click', () => {
+    document.getElementById('archive-section')?.classList.toggle('open');
+  });
+
+  // Bind all archive/restore buttons
+  document.querySelectorAll('[data-archive-slug]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const slug = btn.dataset.archiveSlug;
+      btn.classList.contains('restore') ? restoreSite(slug) : archiveSite(slug);
+    });
+  });
+
+  // Restore localStorage state on load
+  const archived = getArchived();
+  if (archived.size > 0) {
+    const archiveList = document.getElementById('archive-list');
+    const section     = document.getElementById('archive-section');
+    archived.forEach(slug => {
+      const card = document.querySelector(`.site-card[data-slug="${slug}"]`);
+      if (card && archiveList) { archiveList.appendChild(card); setCardState(card, true); }
+    });
+    if (section) { section.style.display = ''; section.classList.add('open'); }
+    updateDrawer();
+  }
+})();
+</script>
 
 </body>
 </html>

@@ -10,7 +10,9 @@
     "build": "node _scripts/build-all.js",
     "build:dashboard": "astro build",
     "preview": "astro preview",
-    "new-site": "bash _scripts/new-site.sh"
+    "new-site": "bash _scripts/new-site.sh",
+    "perf": "node _scripts/fetch-perf-data.mjs",
+    "perf:build": "node _scripts/fetch-perf-data.mjs && npm run build"
   },
   "dependencies": {
     "astro": "^5.0.0"
