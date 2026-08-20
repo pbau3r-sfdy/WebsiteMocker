@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-08-20)
 ## Current Position
 
 Phase: 2 of 5 (Content System)
-Plan: 4 of 9 in current phase — COMPLETE
+Plan: 5 of 9 in current phase — COMPLETE
 Status: Phase 2 executing — 9 plans across 5 waves
-Last activity: 2026-08-20 — 02-04 complete (sfdy-alt-clean Astro 5 Content Layer migration)
+Last activity: 2026-08-20 — 02-05 complete (mogwai-systems + parrot-capital content system scaffold)
 
-Progress: [████░░░░░░] 44%
+Progress: [█████░░░░░] 56%
 
 ## Performance Metrics
 
@@ -28,10 +28,10 @@ Progress: [████░░░░░░] 44%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | Phase 1 | 2/2 | ~12 min | ~6 min |
-| Phase 2 | 4/9 | ~18 min | ~4.5 min |
+| Phase 2 | 5/9 | ~22 min | ~4.4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (~10 min inc. E2E verification), 02-01 (~6 min), 02-02 (~3 min), 02-03 (~4 min), 02-04 (~5 min)
+- Last 5 plans: 02-01 (~6 min), 02-02 (~3 min), 02-03 (~4 min), 02-04 (~5 min), 02-05 (~4 min)
 - Trend: accelerating
 
 *Updated after each plan completion*
@@ -62,6 +62,8 @@ Recent decisions affecting current work:
 - 02-04: entry.id for files named YYYY-MM-DD-slug.md equals YYYY-MM-DD-slug — identical to former post.slug, preserving all 6 live news URLs
 - 02-04: .gitkeep files created for jobs/announcements/blog dirs in same commit as content.config.ts to prevent glob() throw on missing base directory
 - 02-04: homepage index.astro slug prop updated to id alongside NewsCard interface change — required for TypeScript type safety
+- 02-05: parrot-capital Layout.astro maps old index.astro vars (--bg, --crimson, --gold, --text, --muted) to full UI-SPEC token set (--bg-base, --accent, --text-primary, etc.) for content page compatibility
+- 02-05: .gitkeep files ensure glob() loaders find valid base directories even when no content has been published yet
 
 ### Pending Todos
 
@@ -80,5 +82,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-08-20
-Stopped at: Phase 2 Plan 4 complete — sfdy-alt-clean Astro 5 Content Layer migration. Next: 02-05-PLAN.md
-Resume file: None — 02-04 complete. Next: .planning/phases/02-content-system/02-05-PLAN.md
+Stopped at: Phase 2 Plan 5 complete — mogwai-systems + parrot-capital content system scaffold. Next: 02-06-PLAN.md
+Resume file: None — 02-05 complete. Next: .planning/phases/02-content-system/02-06-PLAN.md
