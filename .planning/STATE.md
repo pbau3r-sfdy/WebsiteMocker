@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-08-20)
 
 **Core value:** A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching
-**Current focus:** Phase 1 — Production Deploy Pipeline
+**Current focus:** Phase 2 — Content System (next)
 
 ## Current Position
 
