@@ -86,49 +86,47 @@
 
 ## Traceability
 
-Populated by roadmapper. Updated after each phase.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DEPLOY-01 | — | Pending |
-| DEPLOY-02 | — | Pending |
-| DEPLOY-03 | — | Pending |
-| DEPLOY-04 | — | Pending |
-| DEPLOY-05 | — | Pending |
-| DEPLOY-06 | — | Pending |
-| DEPLOY-07 | — | Pending |
-| DEPLOY-08 | — | Pending |
-| CONTENT-01 | — | Pending |
-| CONTENT-02 | — | Pending |
-| CONTENT-03 | — | Pending |
-| CONTENT-04 | — | Pending |
-| CONTENT-05 | — | Pending |
-| CONTENT-06 | — | Pending |
-| CONTENT-07 | — | Pending |
-| CONTENT-08 | — | Pending |
-| CONTENT-09 | — | Pending |
-| CONTENT-10 | — | Pending |
-| BRAND-01 | — | Pending |
-| BRAND-02 | — | Pending |
-| BRAND-03 | — | Pending |
-| COLLAB-01 | — | Pending |
-| COLLAB-02 | — | Pending |
-| COLLAB-03 | — | Pending |
-| COLLAB-04 | — | Pending |
-| COLLAB-05 | — | Pending |
-| INGEST-01 | — | Pending |
-| INGEST-02 | — | Pending |
-| INGEST-03 | — | Pending |
-| INGEST-04 | — | Pending |
-| INGEST-05 | — | Pending |
-| INGEST-06 | — | Pending |
-| INGEST-07 | — | Pending |
+| DEPLOY-01 | Phase 1 | Pending |
+| DEPLOY-02 | Phase 1 | Pending |
+| DEPLOY-03 | Phase 1 | Pending |
+| DEPLOY-04 | Phase 1 | Pending |
+| DEPLOY-05 | Phase 1 | Pending |
+| DEPLOY-06 | Phase 1 | Pending |
+| DEPLOY-07 | Phase 1 | Pending |
+| DEPLOY-08 | Phase 1 | Pending |
+| CONTENT-01 | Phase 2 | Pending |
+| CONTENT-02 | Phase 2 | Pending |
+| CONTENT-03 | Phase 2 | Pending |
+| CONTENT-04 | Phase 2 | Pending |
+| CONTENT-05 | Phase 2 | Pending |
+| CONTENT-06 | Phase 2 | Pending |
+| CONTENT-07 | Phase 2 | Pending |
+| CONTENT-08 | Phase 2 | Pending |
+| CONTENT-09 | Phase 2 | Pending |
+| CONTENT-10 | Phase 2 | Pending |
+| BRAND-01 | Phase 3 | Pending |
+| BRAND-02 | Phase 3 | Pending |
+| BRAND-03 | Phase 3 | Pending |
+| COLLAB-01 | Phase 4 | Pending |
+| COLLAB-02 | Phase 4 | Pending |
+| COLLAB-03 | Phase 4 | Pending |
+| COLLAB-04 | Phase 4 | Pending |
+| COLLAB-05 | Phase 4 | Pending |
+| INGEST-01 | Phase 5 | Pending |
+| INGEST-02 | Phase 5 | Pending |
+| INGEST-03 | Phase 5 | Pending |
+| INGEST-04 | Phase 5 | Pending |
+| INGEST-05 | Phase 5 | Pending |
+| INGEST-06 | Phase 5 | Pending |
+| INGEST-07 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 33 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 33 ⚠️
+- Mapped to phases: 33 (Phase 1: 8, Phase 2: 10, Phase 3: 3, Phase 4: 5, Phase 5: 7)
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-08-20*
-*Last updated: 2026-08-20 after initial definition*
+*Last updated: 2026-08-20 after roadmap creation — traceability complete*
