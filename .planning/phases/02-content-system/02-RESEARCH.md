@@ -542,17 +542,19 @@ Add a job listing to this site.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should mogwai-systems and parrot-capital get all four collection page routes immediately, or just the `content.config.ts` scaffold?**
    - What we know: Both sites are holding pages with no existing page routes for content. CONTENT-04 says "scaffolded with `content.config.ts`". CONTENT-05/06/07/08 say collection types are "rendered at `/news/`..."
    - What's unclear: Whether CONTENT-05/08 applies to all three active sites or only to sites that actually need that content type now.
    - Recommendation: Scaffold ALL four collection types in ALL three active sites (config + dirs + pages) but leave content directories empty. This is the cleanest interpretation and avoids a follow-up migration step.
+   - **RESOLVED:** Scaffold all four collection types with full page routes immediately in all three active sites (Plans 07 and 08). Leaving content directories empty (`.gitkeep`) satisfies CONTENT-04 without content yet.
 
 2. **sfdy-alt-clean existing news articles: do any use the `short` field from the current schema?**
    - What we know: `sfdy-alt-clean/src/content/config.ts` has a `short?: string` field not in `_core`. After migration to the canonical schema, `short` is dropped.
    - What's unclear: Whether any of the 6 existing `.md` files in `sfdy-alt-clean/src/content/news/` use `short:` in frontmatter.
    - Recommendation: Read each `.md` file before migrating the schema. If `short:` is used, either (a) add it to the canonical schema as `short?: z.string().optional()` or (b) remove it from the articles.
+   - **RESOLVED:** 4 of 6 existing articles use `short:` in frontmatter. The canonical newsSchema in `_core/src/content.config.ts` will include `short: z.string().optional()` to preserve backward compatibility without touching the existing articles (Plan 01).
 
 ---
 
