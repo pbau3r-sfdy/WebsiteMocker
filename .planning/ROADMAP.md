@@ -13,7 +13,7 @@ WebsiteMocker already scaffolds and previews branded static sites in a sandbox. 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Production Deploy Pipeline** - One command takes a stage-5 site to a live GitHub Pages URL
-- [ ] **Phase 2: Content System** - All sites migrate to Astro 5 Content Layer API with four standardised collection types
+- [x] **Phase 2: Content System** - All sites migrate to Astro 5 Content Layer API with four standardised collection types
 - [ ] **Phase 3: Brand Consistency** - Structured `brand` block in `wiring.json`; content skills enforce it at write time
 - [ ] **Phase 4: Collaboration Infrastructure** - Production repos are contributor-ready with two-tier model and automated rebuilds
 - [ ] **Phase 5: Design Artifact Ingestion** - Claude Design HTML/CSS artifacts become functioning Astro components without manual stitching

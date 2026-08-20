@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-08-20)
 
 **Core value:** A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching
-**Current focus:** Phase 2 — Content System (next)
+**Current focus:** Phase 3 — Brand Consistency (next)
 
 ## Current Position
 
-Phase: 2 of 5 (Content System)
-Plan: 9 of 9 in current phase — COMPLETE
-Status: Phase 2 complete — all 9 plans executed
-Last activity: 2026-08-20 — 02-09 complete (content skills: wm-add-news updated + wm-add-job/announcement/blog created)
+Phase: 2 of 5 (Content System) — COMPLETE
+Plan: 9 of 9 — all executed and verified
+Status: Phase 2 complete — all 9 plans executed, verified, CR-01/CR-02 fixed, crestworks classified
+Last activity: 2026-08-20 — Phase 2 verified + gap fixes committed (BASE_URL card links, crestworks template flag)
 
-Progress: [██████████] 100%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
