@@ -96,6 +96,8 @@ jobs:
           "
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Reset origin back to WebsiteMocker — JamesIves rewrites it to the production repo
+          git remote set-url origin "https://x-access-token:${{ secrets.WM_PUBLISH_PAT }}@github.com/${{ github.repository }}.git"
           git add sites/${{ inputs.slug }}/wiring.json
           git commit -m "chore(${{ inputs.slug }}): mark stage 6, live" || echo "No changes to commit"
           git push origin main
