@@ -57,7 +57,7 @@ Plans:
 - [x] 02-05-PLAN.md — mogwai-systems + parrot-capital content.config + content dirs scaffold
 - [x] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
 - [x] 02-07-PLAN.md — mogwai-systems all 4 collection page templates
-- [ ] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
+- [x] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
 - [ ] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
 
 ### Phase 3: Brand Consistency
@@ -79,7 +79,7 @@ Plans:
 - [ ] 02-05-PLAN.md — mogwai-systems + parrot-capital content.config + content dirs scaffold
 - [x] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
 - [ ] 02-07-PLAN.md — mogwai-systems all 4 collection page templates
-- [ ] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
+- [x] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
 - [ ] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
 
 ### Phase 4: Collaboration Infrastructure
@@ -102,7 +102,7 @@ Plans:
 - [ ] 02-05-PLAN.md — mogwai-systems + parrot-capital content.config + content dirs scaffold
 - [x] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
 - [ ] 02-07-PLAN.md — mogwai-systems all 4 collection page templates
-- [ ] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
+- [x] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
 - [ ] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
 
 ### Phase 5: Design Artifact Ingestion
@@ -125,7 +125,7 @@ Plans:
 - [ ] 02-05-PLAN.md — mogwai-systems + parrot-capital content.config + content dirs scaffold
 - [x] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
 - [ ] 02-07-PLAN.md — mogwai-systems all 4 collection page templates
-- [ ] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
+- [x] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
 - [ ] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
 
 ## Progress
