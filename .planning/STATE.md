@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-08-20)
 ## Current Position
 
 Phase: 2 of 5 (Content System)
-Plan: 1 of 9 in current phase — IN PROGRESS
+Plan: 2 of 9 in current phase — COMPLETE
 Status: Phase 2 executing — 9 plans across 5 waves
-Last activity: 2026-08-20 — 02-01 complete (schema foundation + UI primitives)
+Last activity: 2026-08-20 — 02-02 complete (_core news migration + jobs pages)
 
-Progress: [███░░░░░░░] 22%
+Progress: [████░░░░░░] 26%
 
 ## Performance Metrics
 
@@ -28,10 +28,11 @@ Progress: [███░░░░░░░] 22%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | Phase 1 | 2/2 | ~12 min | ~6 min |
+| Phase 2 | 2/9 | ~9 min | ~4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (~10 min inc. E2E verification)
-- Trend: baseline established
+- Last 5 plans: 01-01 (2 min), 01-02 (~10 min inc. E2E verification), 02-01 (~6 min), 02-02 (~3 min)
+- Trend: accelerating
 
 *Updated after each plan completion*
 
@@ -53,6 +54,8 @@ Recent decisions affecting current work:
 - 02-01: Schema library pattern — _core/src/content.config.ts exports Zod objects only; each site wires defineCollection/glob itself
 - 02-01: newsSchema includes short? field for sfdy-alt-clean homepage compatibility (post.data.short ?? post.data.title)
 - 02-01: z.coerce.date() on all date fields — accepts ISO strings from GitHub web UI without breaking CI
+- 02-02: news/index.astro restructured from card-grid to row-list (UI-SPEC mandates row layout for news/jobs/announcements) — enables <time datetime> directly in template
+- 02-02: NewsCard.astro updated to id prop (backward compat); _core news index no longer uses NewsCard (uses inline rows instead)
 
 ### Pending Todos
 
@@ -71,5 +74,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-08-20
-Stopped at: Phase 2 Plan 1 complete — schema foundation + UI primitives committed. Next: 02-02-PLAN.md
-Resume file: None — 02-01 complete. Next: .planning/phases/02-content-system/02-02-PLAN.md
+Stopped at: Phase 2 Plan 2 complete — _core news migration + jobs pages committed. Next: 02-03-PLAN.md
+Resume file: None — 02-02 complete. Next: .planning/phases/02-content-system/02-03-PLAN.md
