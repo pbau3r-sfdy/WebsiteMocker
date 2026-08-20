@@ -94,9 +94,10 @@ Exceptions (inherited from existing news system — do not change):
 
 | Value | Where used | Rationale |
 |-------|-----------|-----------|
-| 72px | `main` top padding (list and detail pages) | Established sfdy-alt-clean convention; gives clearance below fixed Nav |
+| 12px | Announcement row internal gap (`flex-direction: column; gap: 12px`) | Tighter than md(16px) for visual density of multi-field rows |
 | 36px | Row padding-top/bottom in list pages; header padding-bottom in detail | Midpoint between xl and 2xl; established pattern |
 | 44px | `margin-bottom` on back navigation link in detail pages | Established pattern from news detail |
+| 72px | `main` top padding (list and detail pages) | Established sfdy-alt-clean convention; gives clearance below fixed Nav |
 | 120px | `main` bottom padding | Generous breathing room above footer; established pattern |
 
 Source: Measured from `sites/sfdy-alt-clean/src/pages/news/index.astro` and `[slug].astro`.
@@ -108,15 +109,15 @@ Source: Measured from `sites/sfdy-alt-clean/src/pages/news/index.astro` and `[sl
 All sizes are declared for `_core` template use. Sites may override via their CSS but must
 preserve the weight and line-height ratios for readability.
 
+Exactly 4 sizes, exactly 2 weights (300 and 700). The heading size doubles as card title and
+body long-form size — weight and line-height vary by context, size is shared.
+
 | Role | Size | Weight | Line Height | Font stack |
 |------|------|--------|-------------|-----------|
 | Display | `clamp(2.4rem, 6vw, 5rem)` | 700 | 1.1 | `var(--font-display)` |
-| Heading (list item) | `clamp(1.0625rem, 2vw, 1.5rem)` | 700 | 1.24 | `var(--font-display)` |
 | Subheading (article h1) | `clamp(1.75rem, 4vw, 2.75rem)` | 700 | 1.14 | `var(--font-display)` |
-| Body | 16px | 300 | 1.55 | `var(--font-body)` |
-| Body long-form | 17px (1.0625rem) | 300 | 1.75 | `var(--font-body)` |
-| Label / eyebrow | 11px | 600 | n/a | `var(--font-mono)`, uppercase, `letter-spacing: var(--ls-eyebrow)` |
-| Card title | 15px (0.9375rem) | 700 | 1.3 | `var(--font-display)` |
+| Heading / card title / body | `clamp(1.0625rem, 2vw, 1.5rem)` | 700 (headings, card titles) · 300 (body text) | 1.24 (headings) · 1.55 (body) | `var(--font-display)` (headings/card titles) · `var(--font-body)` (body) |
+| Label / eyebrow | `11px` | 300 | n/a | `var(--font-mono)`, uppercase, `letter-spacing: var(--ls-eyebrow)` — visual distinction is carried by uppercase + `.34em` letter-spacing, not weight |
 
 Source: Measured from existing `Layout.astro` global styles and news page templates.
 No new type sizes are introduced — all new templates reuse these declared sizes.
@@ -163,9 +164,9 @@ Anatomy:
 <span class="tag">{ tag }</span>
 ```
 - Display: `inline-block`
-- Padding: 4px 8px (xs md)
+- Padding: 4px 8px (xs sm)
 - Border: `1px solid var(--border-subtle)`
-- Font: 11px, weight 600, uppercase, `var(--font-mono)`, letter-spacing 0.12em
+- Font: 11px, weight 300, uppercase, `var(--font-mono)`, letter-spacing 0.12em
 - Text colour: `var(--accent)`
 - Background: transparent
 - Gap between pills: 8px (sm)
@@ -204,7 +205,7 @@ List row layout (matches existing news row pattern):
 - Row padding: 36px 0
 - Row border-bottom: `1px solid var(--border-subtle)`
 - Row hover: `background: rgba(255,255,255,.04)`
-- Department + location: 15px, weight 300, `var(--text-soft)`, single line
+- Department + location: `clamp(1.0625rem, 2vw, 1.5rem)`, weight 300, `var(--text-soft)`, single line
 
 Closed jobs: rendered only when filtering is disabled. Visual treatment: `opacity: 0.45` and
 `pointer-events: none` on the row. Not included in the default list (open-only per CONTENT-06).
@@ -225,7 +226,7 @@ List row layout (no image, tag pills):
 ```
 
 - Single full-width column (no thumbnail)
-- Row: `display: flex; flex-direction: column; gap: 12px`
+- Row: `display: flex; flex-direction: column; gap: 12px` (see Spacing exceptions — 12px)
 - Row padding: 36px 0
 - Row border-bottom: `1px solid var(--border-subtle)`
 - Row hover: `background: rgba(255,255,255,.04)` with 8px left padding transition
@@ -246,11 +247,14 @@ Card grid layout (matches existing NewsCard grid style):
 ```
 
 Identical visual treatment to `NewsCard` with addition of `author` line:
-- Author: 11px, weight 400, `var(--text-muted)`, `var(--font-mono)`, no uppercase
+- Author: 11px, weight 300, `var(--text-muted)`, `var(--font-mono)`, no uppercase
 
 ---
 
 ## Page Layouts
+
+**Primary focal point: h1 page title** — the largest text element on every list and detail page.
+All other elements (eyebrow, summary, cards) are visually subordinate to it.
 
 ### List pages — all four types
 
