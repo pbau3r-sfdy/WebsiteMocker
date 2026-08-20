@@ -23,35 +23,32 @@ Add a news post to this site.
    ```markdown
    ---
    title: "<title>"
-   date: YYYY-MM-DD
+   date: "YYYY-MM-DD"
    summary: "<one-sentence summary>"
    image: "/images/news/<filename>.jpg"
    imageCredit: "<credit>"
+   tags: ["tag1", "tag2"]
    ---
 
    <body text>
    ```
 
-5. **Verify** the build passes:
-   ```bash
-   npm run build
-   ```
-
-6. **Draft a social post** using the site's `keywords.json`:
+5. **Draft a social post** using the site's `keywords.json`:
    - Pull primary hashtags for the platform (Twitter: ≤3, LinkedIn: ≤4)
    - Keep it ≤280 chars for Twitter
    - Include the sandbox URL
 
-7. **Commit and push**:
+6. **Commit and push**:
    ```bash
    git add src/content/news/<slug>.md public/images/news/
    git commit -m "content(<slug>): add news — <title>"
    git push
    ```
 
-8. **Report**: live URL after deploy, social post draft.
+7. **Report**: file path, social post draft, and note that the site rebuilds on next deploy or `/wm-publish` run.
 
 ## Notes
-- Date format in frontmatter MUST be `YYYY-MM-DD` (no quotes unless using Zod date)
+- Date MUST be a quoted string: `date: "YYYY-MM-DD"` — both unquoted and quoted dates work at build time, but quoted dates work when contributors edit via GitHub web UI
 - Images are optional — the NewsCard handles missing images gracefully
+- Tags are optional — include as a list of strings or omit the field
 - Never copy-paste content that may be under copyright without the user's confirmation
