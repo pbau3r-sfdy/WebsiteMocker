@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import AnnouncementCard from '../../../../_core/src/components/AnnouncementCard.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const announcements = (await getCollection('announcements'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Announcements" description="Company announcements and updates from Starflight Dynamics.">
+  <Nav />
+
+  <main>
+    <header>
+      <div class="wrap head">
+        <div class="eyebrow">ANNOUNCEMENTS</div>
+        <h1>Announcements</h1>
+      </div>
+    </header>
+
+    <div class="list">
+      {announcements.length === 0 ? (
+        <p class="empty">No announcements yet.</p>
+      ) : (
+        announcements.map(entry => (
+          <AnnouncementCard
+            id={entry.id}
+            title={entry.data.title}
+            date={entry.data.date}
+            summary={entry.data.summary}
+            tags={entry.data.tags}
+          />
+        ))
+      )}
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  main { min-height: 100vh; }
+  header { padding: 72px var(--gutter) 48px; border-bottom: 1px solid var(--border-subtle); }
+  .head { display: flex; flex-direction: column; gap: 26px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow, .34em);
+    color: var(--text-muted);
+  }
+  h1 { font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 700; text-transform: uppercase; line-height: 1.02; }
+
+  .list { max-width: 1000px; margin: 0 auto; padding: 24px var(--gutter) 120px; }
+  .empty { color: var(--text-muted); font-size: 1.125rem; padding: 36px 0; }
+</style>
