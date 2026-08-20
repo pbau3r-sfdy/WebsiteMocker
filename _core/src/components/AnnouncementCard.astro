@@ -1,0 +1,78 @@
+---
+import TagPill from './TagPill.astro';
+
+export interface Props {
+  id:      string;
+  title:   string;
+  date:    Date;
+  summary: string;
+  tags?:   string[];
+}
+
+const { id, title, date, summary, tags } = Astro.props;
+const stamp = date.toLocaleDateString('en-GB', {
+  day: '2-digit', month: 'short', year: 'numeric',
+}).toUpperCase();
+---
+
+<a href={`/announcements/${id}`} class="row">
+  <div class="info">
+    <time class="mono date" datetime={date.toISOString().split('T')[0]}>{stamp}</time>
+    <h2>{title}</h2>
+    <p>{summary}</p>
+    {tags?.length && (
+      <div class="tags">
+        {tags.map(t => <TagPill tag={t} />)}
+      </div>
+    )}
+  </div>
+</a>
+
+<style>
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-bottom-color 200ms cubic-bezier(.2,.6,.2,1),
+      padding-left 200ms cubic-bezier(.2,.6,.2,1);
+  }
+  .row:hover {
+    border-bottom-color: var(--border-accent);
+    background: rgba(255,255,255,.04);
+    padding-left: 8px;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow, .34em);
+  }
+  .date { color: var(--accent); }
+
+  .info h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.0625rem, 2vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.24;
+    color: var(--text-primary);
+  }
+  .info p {
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--text-soft);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
