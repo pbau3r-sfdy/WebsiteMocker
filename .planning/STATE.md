@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-08-20)
 ## Current Position
 
 Phase: 2 of 5 (Content System)
-Plan: 3 of 9 in current phase — COMPLETE
+Plan: 4 of 9 in current phase — COMPLETE
 Status: Phase 2 executing — 9 plans across 5 waves
-Last activity: 2026-08-20 — 02-03 complete (AnnouncementCard + BlogCard + list/detail pages)
+Last activity: 2026-08-20 — 02-04 complete (sfdy-alt-clean Astro 5 Content Layer migration)
 
-Progress: [████░░░░░░] 33%
+Progress: [████░░░░░░] 44%
 
 ## Performance Metrics
 
@@ -28,10 +28,10 @@ Progress: [████░░░░░░] 33%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | Phase 1 | 2/2 | ~12 min | ~6 min |
-| Phase 2 | 3/9 | ~13 min | ~4.3 min |
+| Phase 2 | 4/9 | ~18 min | ~4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (~10 min inc. E2E verification), 02-01 (~6 min), 02-02 (~3 min), 02-03 (~4 min)
+- Last 5 plans: 01-02 (~10 min inc. E2E verification), 02-01 (~6 min), 02-02 (~3 min), 02-03 (~4 min), 02-04 (~5 min)
 - Trend: accelerating
 
 *Updated after each plan completion*
@@ -59,6 +59,9 @@ Recent decisions affecting current work:
 - 02-03: AnnouncementCard uses gap: 12px (UI-SPEC spacing exception — no left thumbnail column in announcement rows)
 - 02-03: BlogCard matches NewsCard grid card hover (border-color + translateY); author line in 11px var(--font-mono) var(--text-muted) — no text-transform
 - 02-03: blog/index.astro is the only list page using CSS grid (auto-fill minmax 280px 1fr) — all other list pages use row layout per UI-SPEC
+- 02-04: entry.id for files named YYYY-MM-DD-slug.md equals YYYY-MM-DD-slug — identical to former post.slug, preserving all 6 live news URLs
+- 02-04: .gitkeep files created for jobs/announcements/blog dirs in same commit as content.config.ts to prevent glob() throw on missing base directory
+- 02-04: homepage index.astro slug prop updated to id alongside NewsCard interface change — required for TypeScript type safety
 
 ### Pending Todos
 
@@ -77,5 +80,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-08-20
-Stopped at: Phase 2 Plan 3 complete — AnnouncementCard + BlogCard + list/detail pages committed. Next: 02-04-PLAN.md
-Resume file: None — 02-03 complete. Next: .planning/phases/02-content-system/02-04-PLAN.md
+Stopped at: Phase 2 Plan 4 complete — sfdy-alt-clean Astro 5 Content Layer migration. Next: 02-05-PLAN.md
+Resume file: None — 02-04 complete. Next: .planning/phases/02-content-system/02-05-PLAN.md
