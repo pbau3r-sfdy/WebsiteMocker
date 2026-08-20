@@ -70,7 +70,8 @@ jobs:
         run: echo "${{ steps.wiring.outputs.domain }}" > dist/${{ inputs.slug }}/CNAME
 
       - name: Swap robots.txt to Allow
-        run: printf 'User-agent: *\nAllow: /\n' > dist/${{ inputs.slug }}/robots.txt
+        run: |
+          printf 'User-agent: *\nAllow: /\n' > dist/${{ inputs.slug }}/robots.txt
 
       - name: Push to production gh-pages
         uses: JamesIves/github-pages-deploy-action@v4.8.0
