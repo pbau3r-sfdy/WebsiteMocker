@@ -12,7 +12,7 @@ WebsiteMocker already scaffolds and previews branded static sites in a sandbox. 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Production Deploy Pipeline** - One command takes a stage-5 site to a live GitHub Pages URL
+- [x] **Phase 1: Production Deploy Pipeline** - One command takes a stage-5 site to a live GitHub Pages URL
 - [ ] **Phase 2: Content System** - All sites migrate to Astro 5 Content Layer API with four standardised collection types
 - [ ] **Phase 3: Brand Consistency** - Structured `brand` block in `wiring.json`; content skills enforce it at write time
 - [ ] **Phase 4: Collaboration Infrastructure** - Production repos are contributor-ready with two-tier model and automated rebuilds
@@ -35,7 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — Build pipeline core: build-single.mjs + publish.yml + CLAUDE.md/AGENTS.md doc updates
-- [ ] 01-02-PLAN.md — Operator skill: wm-publish.md with inline DNS guide + E2E verification checkpoint
+- [x] 01-02-PLAN.md — Operator skill: wm-publish.md with inline DNS guide + E2E verification checkpoint
 
 ### Phase 2: Content System
 **Goal**: All active sites use the Astro 5 Content Layer API with four standardised content types, each editable by non-technical contributors via the GitHub web UI
@@ -91,7 +91,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Production Deploy Pipeline | 1/2 | In progress | - |
+| 1. Production Deploy Pipeline | 2/2 | Complete | 2026-08-20 |
 | 2. Content System | 0/TBD | Not started | - |
 | 3. Brand Consistency | 0/TBD | Not started | - |
 | 4. Collaboration Infrastructure | 0/TBD | Not started | - |

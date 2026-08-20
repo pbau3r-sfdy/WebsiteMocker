@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-08-20)
 ## Current Position
 
 Phase: 1 of 5 (Production Deploy Pipeline)
-Plan: 2 of 2 in current phase
-Status: Paused at checkpoint — Plan 01-02 Task 1 complete, awaiting human E2E verification (Task 2)
-Last activity: 2026-08-20 — Plan 01-02 Task 1 executed (wm-publish.md operator skill created)
+Plan: 2 of 2 in current phase — COMPLETE
+Status: Phase 1 complete — all 2 plans executed and E2E verified
+Last activity: 2026-08-20 — Plan 01-02 complete (wm-publish.md + E2E verification approved, 4 publish.yml bugs fixed)
 
-Progress: [█░░░░░░░░░] 10%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 2 minutes
-- Total execution time: 0.03 hours
+- Total plans completed: 2
+- Average duration: ~6 minutes
+- Total execution time: ~0.2 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| Phase 1 | 1/2 | 2 min | 2 min |
+| Phase 1 | 2/2 | ~12 min | ~6 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min)
+- Last 5 plans: 01-01 (2 min), 01-02 (~10 min inc. E2E verification)
 - Trend: baseline established
 
 *Updated after each plan completion*
@@ -45,6 +45,10 @@ Recent decisions affecting current work:
 - 01-01: build-single.mjs delegates to build-all.js via execSync subprocess (not module import) for correct stdio inheritance
 - 01-01: publish.yml checkout uses WM_PUBLISH_PAT so commit-back git push succeeds (GITHUB_TOKEN cannot push to WebsiteMocker main from within the workflow)
 - 01-01: robots.txt swap uses printf not sed — writes complete content rather than substitution that could break on formatting variations
+- 01-02: wm-publish validates wiring.json inline (not via a separate script) — keeps the skill self-contained and auditable
+- 01-02: DNS guide is inlined in Step 5 output — operator sees it immediately after success, no separate doc to maintain
+- 01-02: JamesIves action requires repository-name: (not repository:) — confirmed during E2E verification and fixed in publish.yml
+- 01-02: git remote set-url origin required before commit-back push — JamesIves overwrites origin to the prod repo during gh-pages push
 - Roadmap: Phase 4 (COLLAB) cross-workflow dispatch is untested in this codebase — plan a PAT scope verification spike before implementing `content-ci.yml`
 
 ### Pending Todos
@@ -64,5 +68,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-08-20
-Stopped at: Plan 01-02 checkpoint:human-verify — Task 1 committed (5264b0f), awaiting E2E verification approval
-Resume file: .planning/phases/01-production-deploy-pipeline/01-02-PLAN.md (Task 2 checkpoint)
+Stopped at: Phase 1 complete — both plans executed and E2E verified. Ready for Phase 2 (Content System).
+Resume file: None — Phase 1 complete. Next: .planning/phases/02-content-system/ (TBD)
