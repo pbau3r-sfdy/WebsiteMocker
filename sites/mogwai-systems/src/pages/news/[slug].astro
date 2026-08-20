@@ -1,0 +1,82 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news');
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const stamp = post.data.date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
+---
+
+<Layout title={post.data.title} description={post.data.summary}>
+  <main>
+    <article>
+      <a href={`${b}/news`} class="back mono">← All news</a>
+
+      <header>
+        <time class="mono date" datetime={post.data.date.toISOString().split('T')[0]}>{stamp}</time>
+        <h1>{post.data.title}</h1>
+        <p class="summary">{post.data.summary}</p>
+      </header>
+
+      {post.data.image && <img class="lead" src={`${b}${post.data.image}`} alt="" />}
+
+      <div class="body"><Content /></div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  main { padding: 72px var(--gutter, clamp(1.5rem, 6vw, 5rem)) 120px; }
+  article { max-width: 760px; margin: 0 auto; }
+  .back {
+    display: inline-block;
+    margin-bottom: 44px;
+    font-size: .875rem;
+    color: var(--text-muted);
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .back:hover { color: var(--accent); }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: .34em;
+  }
+  header { display: flex; flex-direction: column; gap: 18px; padding-bottom: 36px; border-bottom: 1px solid var(--border-subtle, var(--border)); }
+  .date { color: var(--accent); }
+  h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; line-height: 1.14; }
+  .summary { font-size: 1.0625rem; font-weight: 300; line-height: 1.65; color: var(--text-muted); }
+  .lead { width: 100%; margin: 36px 0 44px; border: 1px solid var(--border-subtle, var(--border)); }
+
+  .body { font-size: 1.0625rem; font-weight: 300; line-height: 1.75; color: var(--text-muted); }
+  .body :global(p) { margin-bottom: 24px; }
+  .body :global(h2) {
+    font-family: var(--font-head);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--text);
+    margin: 40px 0 16px;
+  }
+  .body :global(blockquote) {
+    margin: 32px 0;
+    padding-left: 20px;
+    border-left: 2px solid var(--accent);
+    color: var(--text);
+  }
+  .body :global(ul) { margin: 0 0 24px 20px; }
+  .body :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+</style>
