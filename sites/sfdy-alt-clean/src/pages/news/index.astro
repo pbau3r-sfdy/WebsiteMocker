@@ -23,12 +23,12 @@ const posts = (await getCollection('news')).sort((a, z) => z.data.date.valueOf()
       {posts.map(post => {
         const stamp = post.data.date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
         return (
-          <a href={`${b}/news/${post.slug}`} class="row">
+          <a href={`${b}/news/${post.id}`} class="row">
             <div class="thumb">
               {post.data.image && <img src={`${b}${post.data.image}`} alt="" loading="lazy" />}
             </div>
             <div class="info">
-              <span class="mono date">{stamp}</span>
+              <time class="mono date" datetime={post.data.date.toISOString().split('T')[0]}>{stamp}</time>
               <h2>{post.data.title}</h2>
               <p>{post.data.summary}</p>
             </div>

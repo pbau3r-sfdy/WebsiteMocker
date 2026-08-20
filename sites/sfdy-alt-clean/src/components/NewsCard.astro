@@ -1,11 +1,11 @@
 ---
-interface Props { title: string; date: Date; slug: string; image?: string; }
-const { title, date, slug, image } = Astro.props;
+interface Props { title: string; date: Date; id: string; image?: string; }
+const { title, date, id, image } = Astro.props;
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const stamp = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
 ---
 
-<a href={`${b}/news/${slug}`} class="card">
+<a href={`${b}/news/${id}`} class="card">
   <div class="thumb">
     {image
       ? <img src={`${b}${image}`} alt="" loading="lazy" />

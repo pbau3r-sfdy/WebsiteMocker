@@ -47,7 +47,7 @@ const posts = (await getCollection('news'))
           <NewsCard
             title={post.data.short ?? post.data.title}
             date={post.data.date}
-            slug={post.slug}
+            id={post.id}
             image={post.data.image}
           />
         ))}

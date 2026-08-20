@@ -1,16 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('news');
-  return posts.map(post => ({ params: { slug: post.slug }, props: { post } }));
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const stamp = post.data.date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
 ---
@@ -23,7 +23,7 @@ const stamp = post.data.date.toLocaleDateString('en-GB', { day: '2-digit', month
       <a href={`${b}/news`} class="back mono">← All news</a>
 
       <header>
-        <span class="mono date">{stamp}</span>
+        <time class="mono date" datetime={post.data.date.toISOString().split('T')[0]}>{stamp}</time>
         <h1>{post.data.title}</h1>
         <p class="summary">{post.data.summary}</p>
       </header>
