@@ -8,13 +8,13 @@
 ### Deploy Pipeline
 
 - [ ] **DEPLOY-01**: Operator can run `/wm-publish <slug>` to build a site with production env vars (`SITE_URL`, `SITE_BASE`) and push built output to the corresponding production repo's `gh-pages` branch
-- [ ] **DEPLOY-02**: `publish.yml` validates `stage ≥ 5`, `domain`, and `prod_repo` are set in `wiring.json` before building — exits with a clear error if not
-- [ ] **DEPLOY-03**: `publish.yml` writes `CNAME` file (containing the production domain) into built output before pushing — custom domain does not reset on each deploy
-- [ ] **DEPLOY-04**: `publish.yml` replaces `robots.txt Disallow: /` with `Allow: /` before pushing — production site is indexable
-- [ ] **DEPLOY-05**: `publish.yml` updates `wiring.json` (`stage: 6`, `last_deploy`, `prod_repo`) after a successful push
-- [ ] **DEPLOY-06**: `publish.yml` builds only the targeted site (not all sites) via a new `_scripts/build-single.mjs <slug>` wrapper
+- [x] **DEPLOY-02**: `publish.yml` validates `stage ≥ 5`, `domain`, and `prod_repo` are set in `wiring.json` before building — exits with a clear error if not
+- [x] **DEPLOY-03**: `publish.yml` writes `CNAME` file (containing the production domain) into built output before pushing — custom domain does not reset on each deploy
+- [x] **DEPLOY-04**: `publish.yml` replaces `robots.txt Disallow: /` with `Allow: /` before pushing — production site is indexable
+- [x] **DEPLOY-05**: `publish.yml` updates `wiring.json` (`stage: 6`, `last_deploy`, `prod_repo`) after a successful push
+- [x] **DEPLOY-06**: `publish.yml` builds only the targeted site (not all sites) via a new `_scripts/build-single.mjs <slug>` wrapper
 - [ ] **DEPLOY-07**: Operator can generate a Squarespace DNS handoff guide for a site — CNAME record, apex A records, CAA check, SSL provisioning wait instructions, default-record-deletion warning
-- [ ] **DEPLOY-08**: Production deploy is authenticated via a Classic PAT (`WM_PUBLISH_PAT`) stored as an org-level Actions secret — `GITHUB_TOKEN` is not used for cross-repo push
+- [x] **DEPLOY-08**: Production deploy is authenticated via a Classic PAT (`WM_PUBLISH_PAT`) stored as an org-level Actions secret — `GITHUB_TOKEN` is not used for cross-repo push
 
 ### Content System
 

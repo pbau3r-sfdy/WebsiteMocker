@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Build pipeline core: build-single.mjs + publish.yml + CLAUDE.md/AGENTS.md doc updates
+- [x] 01-01-PLAN.md — Build pipeline core: build-single.mjs + publish.yml + CLAUDE.md/AGENTS.md doc updates
 - [ ] 01-02-PLAN.md — Operator skill: wm-publish.md with inline DNS guide + E2E verification checkpoint
 
 ### Phase 2: Content System
@@ -91,7 +91,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Production Deploy Pipeline | 0/2 | In progress | - |
+| 1. Production Deploy Pipeline | 1/2 | In progress | - |
 | 2. Content System | 0/TBD | Not started | - |
 | 3. Brand Consistency | 0/TBD | Not started | - |
 | 4. Collaboration Infrastructure | 0/TBD | Not started | - |
