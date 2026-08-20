@@ -3,55 +3,143 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import NewsCard from '../../components/NewsCard.astro';
 
 const allPosts = await getCollection('news');
 const posts = allPosts.sort((a, b) =>
-  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  b.data.date.valueOf() - a.data.date.valueOf()
 );
 ---
 
-<Layout title="News" description="Latest news and updates.">
+<Layout title="News & announcements" description="Latest news and updates.">
   <Nav />
-  <main class="main">
-    <div class="container">
-      <header class="page-header">
-        <h1>News</h1>
-        <p>Latest updates, announcements, and events.</p>
-      </header>
+
+  <main>
+    <header>
+      <div class="wrap head">
+        <div class="eyebrow">NEWSROOM</div>
+        <h1>News <span class="accent">&amp; announcements</span></h1>
+      </div>
+    </header>
+
+    <div class="list">
       {posts.length === 0 ? (
-        <p class="empty">No posts yet.</p>
+        <p class="empty">No news articles yet.</p>
       ) : (
-        <div class="news-grid">
-          {posts.map(post => (
-            <NewsCard
-              title={post.data.title}
-              date={post.data.date}
-              summary={post.data.summary}
-              slug={post.slug}
-              image={post.data.image}
-            />
-          ))}
-        </div>
+        posts.map(post => {
+          const stamp = post.data.date.toLocaleDateString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric',
+          }).toUpperCase();
+          return (
+            <a href={`/news/${post.id}`} class="row">
+              {post.data.image && (
+                <div class="thumb">
+                  <img src={post.data.image} alt="" loading="lazy" />
+                </div>
+              )}
+              <div class="info">
+                <time class="mono date" datetime={post.data.date.toISOString().split('T')[0]}>{stamp}</time>
+                <h2>{post.data.title}</h2>
+                <p class="summary">{post.data.summary}</p>
+              </div>
+            </a>
+          );
+        })
       )}
     </div>
   </main>
+
   <Footer />
 </Layout>
 
 <style>
-  .main { padding-top: 6rem; padding-bottom: 6rem; min-height: 70vh; }
-  .page-header { margin-bottom: 3rem; }
-  .page-header h1 {
-    font-family: var(--font-head);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700; margin-bottom: .5rem;
+  main { min-height: 100vh; }
+
+  header {
+    padding: 72px var(--gutter) 48px;
+    border-bottom: 1px solid var(--border-subtle);
   }
-  .page-header p { font-size: 1.125rem; color: var(--text-muted); }
-  .news-grid {
+  .head { display: flex; flex-direction: column; gap: 26px; }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+  }
+  .accent { color: var(--accent); }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow, .34em);
+    color: var(--text-muted);
+  }
+
+  .list {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px var(--gutter) 120px;
+  }
+
+  .row {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+    transition: border-bottom-color 200ms cubic-bezier(.2,.6,.2,1);
   }
-  .empty { color: var(--text-muted); }
+  .row:hover {
+    border-bottom-color: var(--border-accent);
+    background: rgba(255,255,255,.04);
+  }
+
+  /* Row without image: single column */
+  .row:not(:has(.thumb)) {
+    grid-template-columns: 1fr;
+  }
+
+  .thumb { aspect-ratio: 16/9; overflow: hidden; border-radius: 4px; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow, .34em);
+  }
+  .date {
+    display: block;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .info h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.0625rem, 2vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.24;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .summary {
+    font-size: clamp(1.0625rem, 2vw, 1.5rem);
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.55;
+  }
+
+  .empty { color: var(--text-muted); padding: 36px 0; }
+
+  @media (max-width: 680px) {
+    .row { grid-template-columns: 1fr !important; gap: 16px; }
+    .thumb { max-height: 200px; }
+  }
 </style>
