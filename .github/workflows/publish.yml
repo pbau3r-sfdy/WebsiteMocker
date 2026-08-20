@@ -26,6 +26,10 @@ jobs:
           # PAT required so the commit-back git push in the final step succeeds.
           # GITHUB_TOKEN cannot push back to the WebsiteMocker repo's main branch.
           token: ${{ secrets.WM_PUBLISH_PAT }}
+          # CR-02: persist-credentials must be false so the PAT remote URL set later
+          # (git remote set-url origin https://x-access-token:PAT@...) is not silently
+          # overridden by credentials stored in the git config by actions/checkout.
+          persist-credentials: false
 
       - name: Setup Node 22
         uses: actions/setup-node@v7
@@ -53,7 +57,10 @@ jobs:
             if (w.stage < 5)   { console.error('Error: stage ' + w.stage + ' < 5 — site not production-ready'); process.exit(1); }
             if (!w.domain)     { console.error('Error: domain missing in wiring.json'); process.exit(1); }
             if (!w.prod_repo)  { console.error('Error: prod_repo missing in wiring.json'); process.exit(1); }
-            const out = 'domain=' + w.domain + '\nprod_repo=' + w.prod_repo;
+            // WR-04: strip any newlines from values before writing to GITHUB_OUTPUT
+            const domain = w.domain.replace(/[\r\n]/g, '');
+            const prod_repo = w.prod_repo.replace(/[\r\n]/g, '');
+            const out = 'domain=' + domain + '\nprod_repo=' + prod_repo;
             fs.appendFileSync(process.env.GITHUB_OUTPUT, out + '\n');
             console.log('Validated: stage=' + w.stage + ' domain=' + w.domain + ' prod_repo=' + w.prod_repo);
           "
@@ -61,24 +68,32 @@ jobs:
           SLUG: ${{ inputs.slug }}
 
       - name: Build site
-        run: node _scripts/build-single.mjs ${{ inputs.slug }}
+        # WR-01: slug is passed via env var, not interpolated into the shell string
+        run: node _scripts/build-single.mjs "$SLUG"
         env:
+          SLUG: ${{ inputs.slug }}
           SITE_URL: https://${{ steps.wiring.outputs.domain }}
           SITE_BASE: /
 
       - name: Inject CNAME
-        run: echo "${{ steps.wiring.outputs.domain }}" > dist/${{ inputs.slug }}/CNAME
+        # WR-01: use env vars, not raw expression interpolation in shell strings
+        run: echo "$DOMAIN" > "dist/$SLUG/CNAME"
+        env:
+          SLUG: ${{ inputs.slug }}
+          DOMAIN: ${{ steps.wiring.outputs.domain }}
 
       - name: Swap robots.txt to Allow
         run: |
-          printf 'User-agent: *\nAllow: /\n' > dist/${{ inputs.slug }}/robots.txt
+          printf 'User-agent: *\nAllow: /\n' > "dist/$SLUG/robots.txt"
+        env:
+          SLUG: ${{ inputs.slug }}
 
       - name: Push to production gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4.8.0
+        uses: JamesIves/github-pages-deploy-action@v4.9.0
         with:
           token: ${{ secrets.WM_PUBLISH_PAT }}
           repository-name: ${{ steps.wiring.outputs.prod_repo }}
-          folder: dist/${{ inputs.slug }}
+          folder: dist/${{ inputs.slug }}   # inputs.slug is safe — validated as ^[a-z0-9-]+$ above
           branch: gh-pages
           clean: true
           single-commit: true

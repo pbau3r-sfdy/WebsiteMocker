@@ -12,10 +12,10 @@
  *   SITE_BASE  — production base path, e.g. /
  */
 
-import { execSync }    from 'child_process';
+import { spawnSync }    from 'child_process';
 import { fileURLToPath } from 'url';
-import { join }        from 'path';
-import { existsSync }  from 'fs';
+import { join }         from 'path';
+import { existsSync }   from 'fs';
 
 // Always resolve paths relative to this script, not CWD
 const root = join(fileURLToPath(import.meta.url), '..', '..');
@@ -27,17 +27,27 @@ if (!slug) {
   process.exit(1);
 }
 
+// Validate slug before using it in any path or shell command (CR-01: prevent injection)
+if (!/^[a-z0-9-]+$/.test(slug)) {
+  console.error(`Error: slug "${slug}" must match ^[a-z0-9-]+$`);
+  process.exit(1);
+}
+
 const siteDir = join(root, 'sites', slug);
 if (!existsSync(siteDir)) {
   console.error(`Error: site "${slug}" not found in sites/`);
   process.exit(1);
 }
 
-// Delegate to build-all.js as a subprocess so stdio inheritance works correctly.
-// build-all.js already handles single-site mode via process.argv[2] and exits 1
-// if the site is not found — but we've already validated above for a cleaner error.
-execSync(`node ${join(root, '_scripts/build-all.js')} ${slug}`, {
+// Delegate to build-all.js via spawnSync with an argument array (not a shell string)
+// so the slug cannot be used for shell injection (CR-01).
+// stdio: inherit streams build output directly to the terminal.
+const result = spawnSync('node', [join(root, '_scripts/build-all.js'), slug], {
   stdio: 'inherit',
   env: { ...process.env },
   cwd: root,
 });
+
+if (result.status !== 0) {
+  process.exit(result.status ?? 1);
+}
