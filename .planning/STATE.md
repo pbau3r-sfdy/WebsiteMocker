@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-08-20)
 ## Current Position
 
 Phase: 2 of 5 (Content System)
-Plan: 8 of 9 in current phase — COMPLETE
-Status: Phase 2 executing — 9 plans across 5 waves
-Last activity: 2026-08-20 — 02-08 complete (parrot-capital all 8 content page templates)
+Plan: 9 of 9 in current phase — COMPLETE
+Status: Phase 2 complete — all 9 plans executed
+Last activity: 2026-08-20 — 02-09 complete (content skills: wm-add-news updated + wm-add-job/announcement/blog created)
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -28,10 +28,10 @@ Progress: [████████░░] 80%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | Phase 1 | 2/2 | ~12 min | ~6 min |
-| Phase 2 | 8/9 | ~36 min | ~4.5 min |
+| Phase 2 | 9/9 | ~40 min | ~4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-04 (~5 min), 02-05 (~4 min), 02-06 (~4 min), 02-07 (~5 min), 02-08 (~5 min)
+- Last 5 plans: 02-05 (~4 min), 02-06 (~4 min), 02-07 (~5 min), 02-08 (~5 min), 02-09 (~4 min)
 - Trend: stable ~4-5 min/plan
 
 *Updated after each plan completion*
@@ -70,6 +70,9 @@ Recent decisions affecting current work:
 - 02-07: CSS var fallbacks added (var(--border-subtle, var(--border)), var(--gutter, clamp(...))) so mogwai pages degrade gracefully until Phase 3 token alignment
 - 02-08: _core import path confirmed at 5 levels up (../../../../../_core/) for parrot-capital — same correction as Plans 06/07; plan spec showed 4 levels
 - 02-08: CSS hover on parrot news rows uses rgba(142,21,32,.04) (crimson tint) vs sfdy rgba(255,255,255,.04) — appropriate for light bg-base background
+- 02-09: All content skills use quoted date format ("YYYY-MM-DD") for GitHub web UI compatibility — unquoted also passes z.coerce.date() but breaks manual edits via web UI
+- 02-09: npm run build step removed from wm-add-news — skills that run full site build are slow; build runs automatically on next deploy
+- 02-09: wm-add-news tags field added to frontmatter template to match newsSchema (tags: z.array(z.string()).optional())
 
 ### Pending Todos
 
@@ -88,5 +91,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-08-20
-Stopped at: Phase 2 Plan 8 complete — parrot-capital all 8 content page templates. Next: 02-09-PLAN.md
-Resume file: None — 02-08 complete. Next: .planning/phases/02-content-system/02-09-PLAN.md
+Stopped at: Phase 2 complete — all 9 plans executed. Next: Phase 3 (Brand Consistency)
+Resume file: None — Phase 2 complete. Next: .planning/phases/03-brand-consistency/ (plans TBD)

@@ -58,7 +58,7 @@ Plans:
 - [x] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
 - [x] 02-07-PLAN.md — mogwai-systems all 4 collection page templates
 - [x] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
-- [ ] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
+- [x] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
 
 ### Phase 3: Brand Consistency
 **Goal**: Every active site has a structured `brand` block in `wiring.json` that content skills read and enforce at write time
@@ -136,7 +136,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Production Deploy Pipeline | 2/2 | Complete | 2026-08-20 |
-| 2. Content System | 7/9 | In progress | - |
+| 2. Content System | 9/9 | Complete | 2026-08-20 |
 | 3. Brand Consistency | 0/TBD | Not started | - |
 | 4. Collaboration Infrastructure | 0/TBD | Not started | - |
 | 5. Design Artifact Ingestion | 0/TBD | Not started | - |
