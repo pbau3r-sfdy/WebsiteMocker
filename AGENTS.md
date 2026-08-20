@@ -26,12 +26,6 @@ This project uses the GSD (Get Shit Done) planning system. Plans are in `.planni
 - Update `.planning/STATE.md` after each session
 - Mark requirements complete in REQUIREMENTS.md as phases finish
 
-### Current Phase Blockers (Phase 1)
-
-Before `publish.yml` can be written:
-1. Replace `[websites-org]` placeholder in this file and `CLAUDE.md` with the real GitHub org name (`pbau3r-sfdy`)
-2. Confirm `WM_PUBLISH_PAT` (Classic PAT, `repo` scope) exists as an org-level Actions secret
-
 ### Phase 1 Deliverables
 
 Requirements: DEPLOY-01 through DEPLOY-08
@@ -53,7 +47,7 @@ WebsiteMocker/
 ├── _core/               ← base template (all sites inherit)
 ├── _scripts/
 │   ├── build-all.js     ← builds dashboard + all sites (do NOT use in publish.yml)
-│   └── build-single.mjs ← [TODO Phase 1] single-site production build
+│   └── build-single.mjs ← single-site production build (Phase 1)
 ├── sites/
 │   ├── sfdy-alt-clean/  ← Stage 2, has content collections
 │   ├── sfdy/            ← Stage 2, has content collections
@@ -63,7 +57,7 @@ WebsiteMocker/
 │   └── levion/          ← Template, has content collections
 ├── .github/workflows/
 │   ├── deploy.yml       ← sandbox deploy (every push to main) ✓ working
-│   └── publish.yml      ← production publish [TODO Phase 1]
+│   └── publish.yml      ← production publish (created Phase 1)
 ├── src/pages/index.astro   ← dashboard
 └── .planning/
     ├── PROJECT.md       ← project context and requirements
@@ -91,7 +85,7 @@ WebsiteMocker/
 - `mogwai-systems` and `parrot-capital` have no `src/content/` at all — scaffold before adding any content
 
 ### Org name
-- `[websites-org]` in the original `CLAUDE.md` is a placeholder — the real org is `pbau3r-sfdy`
+- The production GitHub org is `pbau3r-sfdy`. Production repos live at `github.com/pbau3r-sfdy/`.
 
 ## Commands
 
@@ -99,6 +93,7 @@ WebsiteMocker/
 npm run dev             # Dashboard dev server → localhost:4321
 npm run build           # Build all sites → dist/
 node _scripts/build-all.js <slug>   # Build one site + dashboard
+node _scripts/build-single.mjs <slug>   # Production build for one site only
 cd sites/<slug> && npm run dev      # Site-specific dev server
 ```
 

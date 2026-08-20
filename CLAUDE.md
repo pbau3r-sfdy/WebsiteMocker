@@ -9,7 +9,7 @@ Dashboard: `https://pbau3r-sfdy.github.io/WebsiteMocker/`
 **WebsiteMocker is the sandbox.** It is never the live production system.
 
 - Design, iterate, and preview sites here before they go live
-- When a site reaches Stage 5, publish it to its own production repo in the `[websites-org]` GitHub organisation
+- When a site reaches Stage 5, publish it to its own production repo in the `pbau3r-sfdy` GitHub organisation
 - Template sites (Orbint, Hypersonica, Levion, etc.) are **design references only** — they have no production destination
 
 ## Site categories
@@ -83,14 +83,14 @@ WebsiteMocker (sandbox, pbau3r-sfdy/WebsiteMocker)
     │
     └── /wm-publish <slug>
             builds with SITE_URL + SITE_BASE env vars
-            pushes dist/<slug>/ → [websites-org]/<slug>  gh-pages branch
+            pushes dist/<slug>/ → pbau3r-sfdy/<slug>  gh-pages branch
                                           │
                                           └── GitHub Pages → custom domain ✓
 ```
 
-Each production repo in `[websites-org]` contains **built output only** (gh-pages branch). The source always lives here in WebsiteMocker.
+Each production repo in `pbau3r-sfdy` contains **built output only** (gh-pages branch). The source always lives here in WebsiteMocker.
 
-> ⚠️ `[websites-org]` placeholder — replace with the actual org name once created on GitHub.
+> The production org is `pbau3r-sfdy`. Production repos live at `github.com/pbau3r-sfdy/`.
 
 ## Quick reference — all skills
 
