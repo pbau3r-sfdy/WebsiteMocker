@@ -8,15 +8,16 @@ export interface Props {
 }
 
 const { id, title, date, author, image } = Astro.props;
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const stamp = date.toLocaleDateString('en-GB', {
   day: '2-digit', month: 'short', year: 'numeric',
 }).toUpperCase();
 ---
 
-<a href={`/blog/${id}`} class="card">
+<a href={`${b}/blog/${id}`} class="card">
   <div class="thumb">
     {image
-      ? <img src={image} alt="" loading="lazy" />
+      ? <img src={`${b}${image}`} alt="" loading="lazy" />
       : <div class="placeholder"></div>
     }
   </div>

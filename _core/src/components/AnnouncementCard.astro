@@ -10,12 +10,13 @@ export interface Props {
 }
 
 const { id, title, date, summary, tags } = Astro.props;
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const stamp = date.toLocaleDateString('en-GB', {
   day: '2-digit', month: 'short', year: 'numeric',
 }).toUpperCase();
 ---
 
-<a href={`/announcements/${id}`} class="row">
+<a href={`${b}/announcements/${id}`} class="row">
   <div class="info">
     <time class="mono date" datetime={date.toISOString().split('T')[0]}>{stamp}</time>
     <h2>{title}</h2>
