@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-08-20)
 ## Current Position
 
 Phase: 2 of 5 (Content System)
-Plan: 5 of 9 in current phase — COMPLETE
+Plan: 6 of 9 in current phase — COMPLETE
 Status: Phase 2 executing — 9 plans across 5 waves
-Last activity: 2026-08-20 — 02-05 complete (mogwai-systems + parrot-capital content system scaffold)
+Last activity: 2026-08-20 — 02-06 complete (sfdy-alt-clean jobs + announcements + blog pages)
 
-Progress: [█████░░░░░] 56%
+Progress: [██████░░░░] 61%
 
 ## Performance Metrics
 
@@ -28,11 +28,11 @@ Progress: [█████░░░░░] 56%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | Phase 1 | 2/2 | ~12 min | ~6 min |
-| Phase 2 | 5/9 | ~22 min | ~4.4 min |
+| Phase 2 | 6/9 | ~26 min | ~4.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (~6 min), 02-02 (~3 min), 02-03 (~4 min), 02-04 (~5 min), 02-05 (~4 min)
-- Trend: accelerating
+- Last 5 plans: 02-02 (~3 min), 02-03 (~4 min), 02-04 (~5 min), 02-05 (~4 min), 02-06 (~4 min)
+- Trend: stable ~4 min/plan
 
 *Updated after each plan completion*
 
@@ -64,6 +64,8 @@ Recent decisions affecting current work:
 - 02-04: homepage index.astro slug prop updated to id alongside NewsCard interface change — required for TypeScript type safety
 - 02-05: parrot-capital Layout.astro maps old index.astro vars (--bg, --crimson, --gold, --text, --muted) to full UI-SPEC token set (--bg-base, --accent, --text-primary, etc.) for content page compatibility
 - 02-05: .gitkeep files ensure glob() loaders find valid base directories even when no content has been published yet
+- 02-06: Cross-_core import path depth corrected to 5 levels up (../../../../../_core/) not 4 — pages are in pages/<collection>/ subdirectory adding one extra level vs plan spec
+- 02-06: Vite server.fs.allow not needed — root cause was wrong relative path depth, not Vite restriction; correct path resolves transparently in Astro build
 
 ### Pending Todos
 
@@ -82,5 +84,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-08-20
-Stopped at: Phase 2 Plan 5 complete — mogwai-systems + parrot-capital content system scaffold. Next: 02-06-PLAN.md
-Resume file: None — 02-05 complete. Next: .planning/phases/02-content-system/02-06-PLAN.md
+Stopped at: Phase 2 Plan 6 complete — sfdy-alt-clean jobs + announcements + blog pages. Next: 02-07-PLAN.md
+Resume file: None — 02-06 complete. Next: .planning/phases/02-content-system/02-07-PLAN.md
