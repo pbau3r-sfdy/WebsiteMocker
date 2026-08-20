@@ -1,0 +1,111 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TypeBadge from '../../../../../_core/src/components/TypeBadge.astro';
+
+export async function getStaticPaths() {
+  const jobs = await getCollection('jobs');
+  return jobs.map(job => ({
+    params: { slug: job.id },
+    props:  { job },
+  }));
+}
+
+const { job } = Astro.props;
+const { Content } = await render(job);
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const formatted = job.data.date.toLocaleDateString('en-GB', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+
+<Layout
+  title={job.data.title}
+  description={`${job.data.type} · ${job.data.location}`}
+>
+  <main>
+    <article>
+      <a href={`${b}/jobs`} class="back mono">← All positions</a>
+      <header>
+        <time class="mono date" datetime={job.data.date.toISOString().split('T')[0]}>
+          {formatted}
+        </time>
+        <div class="meta-line">
+          <TypeBadge type={job.data.type} />
+          <span class="location">· {job.data.location}</span>
+        </div>
+        <h1>{job.data.title}</h1>
+        {job.data.department && (
+          <p class="department">{job.data.department}</p>
+        )}
+      </header>
+      <div class="body">
+        <Content />
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  main { padding: 72px var(--gutter) 120px; }
+  article { max-width: 760px; margin: 0 auto; }
+  .back {
+    display: inline-block;
+    margin-bottom: 44px;
+    font-size: .875rem;
+    color: var(--text-muted);
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .back:hover { color: var(--accent); }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow, .34em);
+  }
+  .date {
+    display: block;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .meta-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .location {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow, .34em);
+  }
+  h1 {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.14;
+    margin-bottom: 8px;
+    text-wrap: balance;
+  }
+  .department { font-size: 1rem; color: var(--text-muted); font-weight: 300; }
+
+  .body { font-size: 1.0625rem; font-weight: 300; line-height: 1.75; color: var(--text-secondary); }
+  .body :global(p) { margin-bottom: 24px; }
+  .body :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--text-primary);
+    margin: 40px 0 16px;
+  }
+  .body :global(ul) { margin: 0 0 24px 20px; }
+  .body :global(li) { margin-bottom: .4rem; }
+  .body :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+</style>
