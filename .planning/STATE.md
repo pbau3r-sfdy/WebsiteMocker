@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-08-20)
 
 ## Current Position
 
-Phase: 1 of 5 (Production Deploy Pipeline)
-Plan: 2 of 2 in current phase — COMPLETE
-Status: Phase 1 complete — all 2 plans executed and E2E verified
-Last activity: 2026-08-20 — Plan 01-02 complete (wm-publish.md + E2E verification approved, 4 publish.yml bugs fixed)
+Phase: 2 of 5 (Content System)
+Plan: 1 of 9 in current phase — IN PROGRESS
+Status: Phase 2 executing — 9 plans across 5 waves
+Last activity: 2026-08-20 — 02-01 complete (schema foundation + UI primitives)
 
-Progress: [██░░░░░░░░] 20%
+Progress: [███░░░░░░░] 22%
 
 ## Performance Metrics
 
@@ -50,6 +50,9 @@ Recent decisions affecting current work:
 - 01-02: JamesIves action requires repository-name: (not repository:) — confirmed during E2E verification and fixed in publish.yml
 - 01-02: git remote set-url origin required before commit-back push — JamesIves overwrites origin to the prod repo during gh-pages push
 - Roadmap: Phase 4 (COLLAB) cross-workflow dispatch is untested in this codebase — plan a PAT scope verification spike before implementing `content-ci.yml`
+- 02-01: Schema library pattern — _core/src/content.config.ts exports Zod objects only; each site wires defineCollection/glob itself
+- 02-01: newsSchema includes short? field for sfdy-alt-clean homepage compatibility (post.data.short ?? post.data.title)
+- 02-01: z.coerce.date() on all date fields — accepts ISO strings from GitHub web UI without breaking CI
 
 ### Pending Todos
 
@@ -68,5 +71,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-08-20
-Stopped at: Phase 1 complete — both plans executed and E2E verified. Ready for Phase 2 (Content System).
-Resume file: None — Phase 1 complete. Next: .planning/phases/02-content-system/ (TBD)
+Stopped at: Phase 2 Plan 1 complete — schema foundation + UI primitives committed. Next: 02-02-PLAN.md
+Resume file: None — 02-01 complete. Next: .planning/phases/02-content-system/02-02-PLAN.md
