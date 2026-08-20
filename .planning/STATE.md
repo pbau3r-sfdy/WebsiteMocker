@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-08-20)
 ## Current Position
 
 Phase: 2 of 5 (Content System)
-Plan: 2 of 9 in current phase — COMPLETE
+Plan: 3 of 9 in current phase — COMPLETE
 Status: Phase 2 executing — 9 plans across 5 waves
-Last activity: 2026-08-20 — 02-02 complete (_core news migration + jobs pages)
+Last activity: 2026-08-20 — 02-03 complete (AnnouncementCard + BlogCard + list/detail pages)
 
-Progress: [████░░░░░░] 26%
+Progress: [████░░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: ~6 minutes
-- Total execution time: ~0.2 hours
+- Total plans completed: 3
+- Average duration: ~5 minutes
+- Total execution time: ~0.25 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | Phase 1 | 2/2 | ~12 min | ~6 min |
-| Phase 2 | 2/9 | ~9 min | ~4.5 min |
+| Phase 2 | 3/9 | ~13 min | ~4.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (~10 min inc. E2E verification), 02-01 (~6 min), 02-02 (~3 min)
+- Last 5 plans: 01-01 (2 min), 01-02 (~10 min inc. E2E verification), 02-01 (~6 min), 02-02 (~3 min), 02-03 (~4 min)
 - Trend: accelerating
 
 *Updated after each plan completion*
@@ -56,6 +56,9 @@ Recent decisions affecting current work:
 - 02-01: z.coerce.date() on all date fields — accepts ISO strings from GitHub web UI without breaking CI
 - 02-02: news/index.astro restructured from card-grid to row-list (UI-SPEC mandates row layout for news/jobs/announcements) — enables <time datetime> directly in template
 - 02-02: NewsCard.astro updated to id prop (backward compat); _core news index no longer uses NewsCard (uses inline rows instead)
+- 02-03: AnnouncementCard uses gap: 12px (UI-SPEC spacing exception — no left thumbnail column in announcement rows)
+- 02-03: BlogCard matches NewsCard grid card hover (border-color + translateY); author line in 11px var(--font-mono) var(--text-muted) — no text-transform
+- 02-03: blog/index.astro is the only list page using CSS grid (auto-fill minmax 280px 1fr) — all other list pages use row layout per UI-SPEC
 
 ### Pending Todos
 
@@ -74,5 +77,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-08-20
-Stopped at: Phase 2 Plan 2 complete — _core news migration + jobs pages committed. Next: 02-03-PLAN.md
-Resume file: None — 02-02 complete. Next: .planning/phases/02-content-system/02-03-PLAN.md
+Stopped at: Phase 2 Plan 3 complete — AnnouncementCard + BlogCard + list/detail pages committed. Next: 02-04-PLAN.md
+Resume file: None — 02-03 complete. Next: .planning/phases/02-content-system/02-04-PLAN.md

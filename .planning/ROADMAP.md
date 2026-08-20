@@ -52,7 +52,7 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md — Schema foundation: _core content.config.ts (4 Zod schemas) + TagPill + TypeBadge
 - [x] 02-02-PLAN.md — _core news migration (Astro 5 API) + _core jobs pages
-- [ ] 02-03-PLAN.md — _core announcements + blog pages (parallel with 02-02)
+- [x] 02-03-PLAN.md — _core announcements + blog pages (parallel with 02-02)
 - [ ] 02-04-PLAN.md — sfdy-alt-clean content.config.ts + news migration
 - [ ] 02-05-PLAN.md — mogwai-systems + parrot-capital content.config + content dirs scaffold
 - [ ] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
@@ -136,7 +136,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Production Deploy Pipeline | 2/2 | Complete | 2026-08-20 |
-| 2. Content System | 2/9 | In progress | - |
+| 2. Content System | 3/9 | In progress | - |
 | 3. Brand Consistency | 0/TBD | Not started | - |
 | 4. Collaboration Infrastructure | 0/TBD | Not started | - |
 | 5. Design Artifact Ingestion | 0/TBD | Not started | - |
