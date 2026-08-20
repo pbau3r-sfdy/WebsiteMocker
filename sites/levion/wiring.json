@@ -8,7 +8,11 @@
   "site": "levion",
   "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/levion",
   "last_deploy": null,
-  "newsletter": { "service": "formspree", "endpoint": "placeholder", "status": "pending" },
+  "newsletter": {
+    "service": "formspree",
+    "endpoint": "placeholder",
+    "status": "pending"
+  },
   "socials": {
     "twitter": null,
     "linkedin": "levion-materials",
@@ -16,15 +20,28 @@
     "status": "set"
   },
   "forms": {
-    "contact":           { "service": "formspree", "id": "placeholder", "status": "pending" },
-    "newsletter_signup": { "service": "formspree", "status": "pending" }
+    "contact": {
+      "service": "formspree",
+      "id": "placeholder",
+      "status": "pending"
+    },
+    "newsletter_signup": {
+      "service": "formspree",
+      "status": "pending"
+    }
   },
-  "analytics": { "status": "skipped" },
+  "analytics": {
+    "status": "skipped"
+  },
   "legal": {
     "impressum": "complete",
-    "privacy":   "complete"
+    "privacy": "complete"
   },
   "robots": "disallow",
   "capture": "levion",
-  "notes": "Crystal growth in space. Spin-out from Starflight Dynamics. Built from capture 2026-08-06."
+  "notes": "Crystal growth in space. Spin-out from Starflight Dynamics. Built from capture 2026-08-06.",
+  "archived": true,
+  "archived_at": "2026-08-20",
+  "archive_reason": "Old website, to keep for now, but to retire eventually",
+  "skip_ci": true
 }

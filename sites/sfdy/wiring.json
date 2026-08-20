@@ -6,5 +6,9 @@
   "contact": "mission-control@starflight-dynamics.com",
   "stage": 2,
   "capture": "sfdy",
-  "notes": "Rebuilt from capture 2026-08-06. Dark space theme. Former rote copy wiped."
+  "notes": "Rebuilt from capture 2026-08-06. Dark space theme. Former rote copy wiped.",
+  "archived": true,
+  "archived_at": "2026-08-20",
+  "archive_reason": "archived via dashboard triage",
+  "skip_ci": true
 }
