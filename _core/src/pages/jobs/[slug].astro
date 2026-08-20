@@ -1,0 +1,140 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import TypeBadge from '../../components/TypeBadge.astro';
+
+export async function getStaticPaths() {
+  const jobs = await getCollection('jobs');
+  return jobs.map(job => ({
+    params: { slug: job.id },
+    props:  { job },
+  }));
+}
+
+const { job } = Astro.props;
+const { Content } = await render(job);
+const formatted = job.data.date.toLocaleDateString('en-GB', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+
+<Layout
+  title={job.data.title}
+  description={`${job.data.type} · ${job.data.location}`}
+>
+  <Nav />
+  <main class="main">
+    <article class="article">
+      <a href="/jobs" class="back mono">← All positions</a>
+      <header class="job-header">
+        <time class="mono date" datetime={job.data.date.toISOString().split('T')[0]}>
+          {formatted}
+        </time>
+        <div class="meta-line">
+          <TypeBadge type={job.data.type} />
+          <span class="location">· {job.data.location}</span>
+        </div>
+        <h1 class="job-title">{job.data.title}</h1>
+        {job.data.department && (
+          <p class="department">{job.data.department}</p>
+        )}
+      </header>
+      <div class="body">
+        <Content />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .main {
+    padding: 72px var(--gutter) 120px;
+  }
+  .article {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 44px;
+    font-size: .875rem;
+    color: var(--text-muted);
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .back:hover { color: var(--accent); }
+
+  .job-header { margin-bottom: 36px; }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow, .34em);
+  }
+  .date {
+    display: block;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .meta-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .location {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow, .34em);
+  }
+
+  .job-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.14;
+    margin-bottom: 8px;
+    text-wrap: balance;
+    color: var(--text-primary);
+  }
+  .department {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  .body {
+    font-family: var(--font-body);
+    font-size: clamp(1.0625rem, 2vw, 1.5rem);
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .body h2 {
+    font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+    color: var(--text-primary); margin: 2.5rem 0 1rem;
+  }
+  .body h3 {
+    font-family: var(--font-display); font-size: 1.25rem; font-weight: 600;
+    color: var(--text-primary); margin: 2rem 0 .75rem;
+  }
+  .body p { margin-bottom: 1.25rem; }
+  .body a { color: var(--accent); text-decoration: underline; }
+  .body ul, .body ol { margin: 0 0 1.25rem 1.5rem; }
+  .body li { margin-bottom: .4rem; }
+  .body strong { color: var(--text-primary); font-weight: 600; }
+  .body blockquote {
+    border-left: 3px solid var(--accent);
+    padding: .75rem 1.25rem; margin: 1.5rem 0;
+    background: var(--surface-1); border-radius: 0 4px 4px 0;
+  }
+</style>
