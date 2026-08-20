@@ -1,0 +1,112 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import TagPill from '../../../../../_core/src/components/TagPill.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('announcements');
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props:  { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const formatted = entry.data.date.toLocaleDateString('en-GB', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+
+<Layout
+  title={entry.data.title}
+  description={entry.data.summary}
+>
+  <main>
+    <article>
+      <a href={`${b}/announcements`} class="back mono">← All announcements</a>
+      <header>
+        <time class="mono date" datetime={entry.data.date.toISOString().split('T')[0]}>
+          {formatted}
+        </time>
+        <h1>{entry.data.title}</h1>
+        <p class="summary">{entry.data.summary}</p>
+        {entry.data.tags?.length && (
+          <div class="tags">
+            {entry.data.tags.map(t => <TagPill tag={t} />)}
+          </div>
+        )}
+      </header>
+      <div class="body">
+        <Content />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main { padding: 72px var(--gutter, clamp(1.5rem, 6vw, 5rem)) 120px; }
+  article { max-width: 760px; margin: 0 auto; }
+  .back {
+    display: inline-block;
+    margin-bottom: 44px;
+    font-size: .875rem;
+    color: var(--text-muted);
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .back:hover { color: var(--accent); }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: .34em;
+  }
+  .date {
+    display: block;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.14;
+    margin-bottom: 1rem;
+    text-wrap: balance;
+  }
+  .summary {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .body { font-size: 1.0625rem; font-weight: 300; line-height: 1.75; color: var(--text-muted); }
+  .body :global(p) { margin-bottom: 24px; }
+  .body :global(h2) {
+    font-family: var(--font-head);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--text);
+    margin: 40px 0 16px;
+  }
+  .body :global(ul) { margin: 0 0 24px 20px; }
+  .body :global(li) { margin-bottom: .4rem; }
+  .body :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+</style>
