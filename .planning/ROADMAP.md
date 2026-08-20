@@ -31,7 +31,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. After a successful push, `wiring.json` is automatically updated to `stage: 6` with `last_deploy` and `prod_repo` fields
   4. Running `/wm-publish` on a site missing `stage ≥ 5`, `domain`, or `prod_repo` exits with a clear error before any build runs
   5. A Squarespace DNS handoff guide can be generated for any site — listing CNAME, apex A records, CAA check, SSL wait, and default-record-deletion warning
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Build pipeline core: build-single.mjs + publish.yml + CLAUDE.md/AGENTS.md doc updates
+- [ ] 01-02-PLAN.md — Operator skill: wm-publish.md with inline DNS guide + E2E verification checkpoint
 
 ### Phase 2: Content System
 **Goal**: All active sites use the Astro 5 Content Layer API with four standardised content types, each editable by non-technical contributors via the GitHub web UI
@@ -87,7 +91,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Production Deploy Pipeline | 0/TBD | Not started | - |
+| 1. Production Deploy Pipeline | 0/2 | In progress | - |
 | 2. Content System | 0/TBD | Not started | - |
 | 3. Brand Consistency | 0/TBD | Not started | - |
 | 4. Collaboration Infrastructure | 0/TBD | Not started | - |
