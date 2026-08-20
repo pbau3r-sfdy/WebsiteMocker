@@ -1,0 +1,102 @@
+name: Publish to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Site slug to publish (e.g. sfdy-alt-clean)'
+        required: true
+        type: string
+
+# No permissions block — the WM_PUBLISH_PAT provides access, not GITHUB_TOKEN.
+
+concurrency:
+  group: publish-${{ inputs.slug }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # PAT required so the commit-back git push in the final step succeeds.
+          # GITHUB_TOKEN cannot push back to the WebsiteMocker repo's main branch.
+          token: ${{ secrets.WM_PUBLISH_PAT }}
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-fund --no-audit
+
+      - name: Read and validate wiring.json
+        id: wiring
+        run: |
+          node -e "
+            const fs = require('fs');
+            const slug = process.env.SLUG;
+            if (!/^[a-z0-9-]+$/.test(slug)) {
+              console.error('Error: slug must match ^[a-z0-9-]+\$');
+              process.exit(1);
+            }
+            const path = 'sites/' + slug + '/wiring.json';
+            let w;
+            try { w = JSON.parse(fs.readFileSync(path, 'utf-8')); }
+            catch(e) { console.error('Error: cannot read ' + path); process.exit(1); }
+            if (w.stage < 5)   { console.error('Error: stage ' + w.stage + ' < 5 — site not production-ready'); process.exit(1); }
+            if (!w.domain)     { console.error('Error: domain missing in wiring.json'); process.exit(1); }
+            if (!w.prod_repo)  { console.error('Error: prod_repo missing in wiring.json'); process.exit(1); }
+            const out = 'domain=' + w.domain + '\nprod_repo=' + w.prod_repo;
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, out + '\n');
+            console.log('Validated: stage=' + w.stage + ' domain=' + w.domain + ' prod_repo=' + w.prod_repo);
+          "
+        env:
+          SLUG: ${{ inputs.slug }}
+
+      - name: Build site
+        run: node _scripts/build-single.mjs ${{ inputs.slug }}
+        env:
+          SITE_URL: https://${{ steps.wiring.outputs.domain }}
+          SITE_BASE: /
+
+      - name: Inject CNAME
+        run: echo "${{ steps.wiring.outputs.domain }}" > dist/${{ inputs.slug }}/CNAME
+
+      - name: Swap robots.txt to Allow
+        run: printf 'User-agent: *\nAllow: /\n' > dist/${{ inputs.slug }}/robots.txt
+
+      - name: Push to production gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
+        with:
+          token: ${{ secrets.WM_PUBLISH_PAT }}
+          repository: ${{ steps.wiring.outputs.prod_repo }}
+          folder: dist/${{ inputs.slug }}
+          branch: gh-pages
+          clean: true
+          single-commit: true
+
+      - name: Update wiring.json stage 6
+        run: |
+          node -e "
+            const fs = require('fs');
+            const slug = process.env.SLUG;
+            const path = 'sites/' + slug + '/wiring.json';
+            const w = JSON.parse(fs.readFileSync(path, 'utf-8'));
+            w.stage = 6;
+            w.last_deploy = new Date().toISOString().slice(0, 10);
+            fs.writeFileSync(path, JSON.stringify(w, null, 2) + '\n');
+          "
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sites/${{ inputs.slug }}/wiring.json
+          git commit -m "chore(${{ inputs.slug }}): mark stage 6, live" || echo "No changes to commit"
+          git push
+        env:
+          SLUG: ${{ inputs.slug }}
