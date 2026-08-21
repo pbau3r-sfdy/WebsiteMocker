@@ -42,6 +42,8 @@ Walks through each service in sequence and updates `wiring.json` and source file
    **Configure now:**
    - Check `wiring.json` for a `brand` key:
 
+     **Before choosing a path:** Read `wiring.json brand.status`. If it equals `"skipped"`, do not enter first-run or subsequent-run — instead tell the operator: "Brand block is marked as not needed for this site. Would you like to configure it now?" If yes, proceed as first-run. If no, continue to the next service.
+
      **First-run path** (no `brand` key, or `brand` exists but all four sub-keys are empty arrays / empty string):
      - Read available signals from the following sources — skip any source that is absent without error:
        1. `wiring.json` `name` and `domain` — always present
