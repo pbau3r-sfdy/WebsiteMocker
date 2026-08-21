@@ -138,7 +138,7 @@ Plans:
   3. CSS variable name collisions between the artifact and the existing site are surfaced and must be confirmed before any changes are applied
   4. All artifact images land in `public/images/<slug>/` and fonts in `public/fonts/` — no broken asset references after ingest; extracted CSS custom properties are surfaced as `brand` block candidates
 
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
 
@@ -149,6 +149,10 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [ ] 05-02-PLAN.md — Section mode in script + /wm-ingest operator skill (7-step guided flow with mandatory collision gate)
+
+**Wave 3** *(blocked on Wave 2 completion — gap closure)*
+
+- [ ] 05-03-PLAN.md — Gap closure: Google Fonts injection into Layout.astro + astro.config.mjs SITE_URL/SITE_BASE injection + CSS url() local-path rewriting (closes INGEST-02 and INGEST-05 verification gaps)
 
 ## Progress
 
@@ -161,4 +165,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Content System | 9/9 | Complete | 2026-08-20 |
 | 3. Brand Consistency | 3/3 | Complete | 2026-08-20 |
 | 4. Collaboration Infrastructure | 5/5 | Complete | 2026-08-21 |
-| 5. Design Artifact Ingestion | 0/2 | Planned | - |
+| 5. Design Artifact Ingestion | 0/3 | In Progress (gap closure) | - |
