@@ -68,7 +68,7 @@ git add -A && git commit -m "chore: delete <slug>"
 | `sfdy-alt-clean` | Starflight Dynamics GmbH | `pbau3r-sfdy/starflight-dynamics` | starflight-dynamics.com |
 | `mogwai-systems` | MOGWAI / Starflight Dynamics GmbH | `pbau3r-sfdy/mogwai-systems` | mogwai-systems.com |
 | `parrot-capital` | Parrot Capital UG | `pbau3r-sfdy/parrot-capital` | parrot-capital.com |
-| `crestworks` | — | active template | — |
+| `crestworks` | — | `pbau3r-sfdy/crestworks` | crestworks.co |
 | `levion` | — | active template | — |
 | `orbint` | — | remix reference | — |
 | `hypersonica` | — | remix reference | — |
