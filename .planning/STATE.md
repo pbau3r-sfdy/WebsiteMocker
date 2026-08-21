@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
+status: complete
 last_updated: "2026-08-21T08:00:00.000Z"
-last_activity: 2026-08-21 -- Phase 5 planned (2 plans, 2 waves — ingest-artifact.mjs + wm-ingest skill)
+last_activity: 2026-08-21 -- Phase 5 complete — ingest-artifact.mjs + wm-ingest skill delivered
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 21
   completed_plans: 21
   percent: 100
@@ -20,13 +20,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-20)
 
 **Core value:** A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching
-**Current focus:** Phase 3 — Brand Consistency (planned, ready to execute)
+**Current focus:** Milestone v1.0 complete — all 5 phases delivered
 
 ## Current Position
 
-Phase: 5 of 5 (Design Artifact Ingestion) — PLANNED, ready to execute
+Phase: 5 of 5 (Design Artifact Ingestion) — COMPLETE
 Plan: 2 of 2 — complete
-Status: Phase 5 complete — all plans done
+Status: All 5 phases complete — milestone v1.0 done
 Last activity: 2026-08-21 -- Phase 5 planned (2 plans, 2 waves)
 
 Progress: [████████░░] 80%
