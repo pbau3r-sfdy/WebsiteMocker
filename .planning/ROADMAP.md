@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Content System** - All sites migrate to Astro 5 Content Layer API with four standardised collection types
 - [x] **Phase 3: Brand Consistency** - Structured `brand` block in `wiring.json`; content skills enforce it at write time
 - [x] **Phase 4: Collaboration Infrastructure** - Production repos are contributor-ready with two-tier model and automated rebuilds
-- [ ] **Phase 5: Design Artifact Ingestion** - Claude Design HTML/CSS artifacts become functioning Astro components without manual stitching
+- [x] **Phase 5: Design Artifact Ingestion** - Claude Design HTML/CSS artifacts become functioning Astro components without manual stitching
 
 ## Phase Details
 
@@ -144,15 +144,15 @@ Plans:
 
 **Wave 1**
 
-- [ ] 05-01-PLAN.md — Script core: ingest-artifact.mjs with --analyze mode (collision detect, section manifest, INGEST-07 brand candidates) + full-site write mode (components, assets, index.astro)
+- [x] 05-01-PLAN.md — Script core: ingest-artifact.mjs with --analyze mode (collision detect, section manifest, INGEST-07 brand candidates) + full-site write mode (components, assets, index.astro)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 05-02-PLAN.md — Section mode in script + /wm-ingest operator skill (7-step guided flow with mandatory collision gate)
+- [x] 05-02-PLAN.md — Section mode in script + /wm-ingest operator skill (7-step guided flow with mandatory collision gate)
 
 **Wave 3** *(blocked on Wave 2 completion — gap closure)*
 
-- [ ] 05-03-PLAN.md — Gap closure: Google Fonts injection into Layout.astro + astro.config.mjs SITE_URL/SITE_BASE injection + CSS url() local-path rewriting (closes INGEST-02 and INGEST-05 verification gaps)
+- [x] 05-03-PLAN.md — Gap closure: Google Fonts injection into Layout.astro + astro.config.mjs SITE_URL/SITE_BASE injection + CSS url() local-path rewriting (closes INGEST-02 and INGEST-05 verification gaps)
 
 ## Progress
 
@@ -165,4 +165,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Content System | 9/9 | Complete | 2026-08-20 |
 | 3. Brand Consistency | 3/3 | Complete | 2026-08-20 |
 | 4. Collaboration Infrastructure | 5/5 | Complete | 2026-08-21 |
-| 5. Design Artifact Ingestion | 0/3 | In Progress (gap closure) | - |
+| 5. Design Artifact Ingestion | 3/3 | Complete | 2026-08-21 |
