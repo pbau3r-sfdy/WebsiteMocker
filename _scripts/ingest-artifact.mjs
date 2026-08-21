@@ -276,7 +276,14 @@ function extractScopedCSS(cssText, sectionClass, sectionId) {
       rules.push(`${selector} {\n  ${declarations.replace(/\s+/g, ' ').trim()}\n}`);
     }
   }
-  return rules.join('\n');
+  const raw = rules.join('\n');
+  // Rewrite local absolute url() paths to BASE_URL template literal pattern.
+  // Skip external (http/https) and embedded (data:) URIs — only absolute local paths starting with /.
+  const rewritten = raw.replace(
+    /url\(['"]?(\/[^'")]+)['"]?\)/g,
+    (_match, path) => `url(\`\${b}${path}\`)`
+  );
+  return rewritten;
 }
 
 // ── HELPER: rewriteLocalPaths ─────────────────────────────────────────────────
@@ -346,7 +353,7 @@ function convertLinkedStylesheets(html, artifactDir) {
 // ── HELPER: toAstroComponent ──────────────────────────────────────────────────
 // Builds a scoped Astro component string from section HTML, scoped CSS, name, date.
 function toAstroComponent(sectionHtml, scopedCSS, componentName, date) {
-  const hasLocalAssets = sectionHtml.includes('{b}/');
+  const hasLocalAssets = sectionHtml.includes('{b}/') || scopedCSS.includes('${b}');
   const frontmatter = hasLocalAssets
     ? `---\n// ${componentName} — extracted from Claude Design artifact ${date}\nconst b = import.meta.env.BASE_URL.replace(/\\/$/, '');\n---`
     : `---\n// ${componentName} — extracted from Claude Design artifact ${date}\n---`;
@@ -452,14 +459,23 @@ if (!existsSync(artifactPath)) {
   fail(`No artifact found at _captures/${slug}/raw/artifact.html — paste HTML and re-run /wm-ingest`);
 }
 
-// ── INGEST-02: astro.config.mjs env var check (warn only, do not modify) ──────
+// ── INGEST-02: astro.config.mjs env var check — inject if absent ──────────────
 const configPath = join(siteDir, 'astro.config.mjs');
 if (existsSync(configPath)) {
   const configContent = readFileSync(configPath, 'utf-8');
   if (configContent.includes('SITE_URL') && configContent.includes('SITE_BASE')) {
     ok('astro.config.mjs: SITE_URL/SITE_BASE env var pattern confirmed');
   } else {
-    warn('astro.config.mjs does not use SITE_URL/SITE_BASE env var pattern — site may not have been initialized via /wm-new-site. Sandbox base path may be hardcoded. Review astro.config.mjs before publishing.');
+    const injection = '// injected by /wm-ingest — needed for sandbox/production routing\n  site: process.env.SITE_URL,\n  base: process.env.SITE_BASE || \'/\',';
+    const patched = configContent.replace('defineConfig({', `defineConfig({\n  ${injection}`);
+    if (patched === configContent) {
+      warn('astro.config.mjs: defineConfig({ not found — SITE_URL/SITE_BASE pattern not injected. Add manually.');
+    } else if (!DRY_RUN) {
+      writeFileSync(configPath, patched, 'utf-8');
+      ok('astro.config.mjs: injected SITE_URL/SITE_BASE env var pattern');
+    } else {
+      dry('would inject SITE_URL/SITE_BASE env var pattern into astro.config.mjs');
+    }
   }
 }
 
@@ -597,20 +613,38 @@ if (modeArg === 'full') {
   }
 }
 
-// ── Google Fonts CDN links — surfaced as operator instructions ────────────────
-// (CDN links are not converted or copied in MVP — local font support is out of scope)
+// ── Google Fonts CDN links — inject into Layout.astro <head> ──────────────────
 const googleFontsLinks = extractGoogleFontsLinks(htmlString);
+const layoutPath = join(siteDir, 'src', 'layouts', 'Layout.astro');
 if (googleFontsLinks.length > 0) {
-  log(`\nGoogle Fonts links detected — add them manually to sites/${slug}/src/layouts/Layout.astro <head>:`);
-  for (const url of googleFontsLinks) {
-    log(`  ${url}`);
+  if (!existsSync(layoutPath)) {
+    warn(`Layout.astro not found at ${layoutPath} — Google Fonts links not injected. Add manually.`);
+    for (const href of googleFontsLinks) log(`  <link rel="stylesheet" href="${href}">`);
+  } else {
+    const layoutSrc = readFileSync(layoutPath, 'utf-8');
+    if (layoutSrc.includes('fonts.googleapis.com')) {
+      ok('Google Fonts links already in Layout.astro — skipped');
+    } else {
+      const linkTags = googleFontsLinks
+        .map(href => `  <link rel="stylesheet" href="${href}">`)
+        .join('\n');
+      const updated = layoutSrc.replace('</head>', `${linkTags}\n</head>`);
+      if (updated === layoutSrc) {
+        warn('Layout.astro: </head> not found — Google Fonts links not injected. Add manually.');
+        for (const href of googleFontsLinks) log(`  <link rel="stylesheet" href="${href}">`);
+      } else if (!DRY_RUN) {
+        writeFileSync(join(siteDir, 'src', 'layouts', 'Layout.astro'), updated, 'utf-8');
+        ok(`injected ${googleFontsLinks.length} Google Fonts link(s) into Layout.astro`);
+      } else {
+        dry(`would inject ${googleFontsLinks.length} Google Fonts link(s) into Layout.astro`);
+      }
+    }
   }
 } else {
   info('No Google Fonts CDN links found in artifact.');
 }
 
 // ── INGEST-07: Brand token candidates (informational only — not written to wiring.json) ──
-const layoutPath    = join(siteDir, 'src', 'layouts', 'Layout.astro');
 const layoutContent = existsSync(layoutPath) ? readFileSync(layoutPath, 'utf-8') : '';
 const existingVars  = extractCSSVars(layoutContent);
 
