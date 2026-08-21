@@ -34,6 +34,12 @@
     "impressum": "complete",
     "privacy": "complete"
   },
+  "brand": {
+    "hashtags": [],
+    "vocabulary": [],
+    "avoid": [],
+    "voice": ""
+  },
   "robots": "disallow",
   "notes": "Live at https://parrot-capital.com — TLS via Let's Encrypt, HTTPS enforced. Holding page. Prod repo: pbau3r-sfdy/parrot-capital."
 }

@@ -23,5 +23,11 @@
     "impressum": "complete",
     "privacy":   "complete"
   },
+  "brand": {
+    "hashtags": [],
+    "vocabulary": [],
+    "avoid": [],
+    "voice": ""
+  },
   "robots": "disallow"
 }
