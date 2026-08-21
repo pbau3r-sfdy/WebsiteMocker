@@ -299,6 +299,17 @@ const buildDate = new Date().toISOString().slice(0, 10);
 
     /* ── Section drawers (templates + archive) ── */
     .section-drawer { margin-top: 2.5rem; border-top: 1px solid var(--border); }
+    #archive-section { border-top: 1px solid rgba(239,68,68,.35); }
+    #archive-section {
+      border: 1px solid rgba(239,68,68,.35);
+      border-radius: 0;
+      padding: 0 1rem;
+      background: rgba(239,68,68,.03);
+      margin-top: 2.5rem;
+    }
+    #archive-section .section-toggle { color: rgba(239,68,68,.6); }
+    #archive-section .section-toggle:hover { color: rgba(239,68,68,.85); }
+    #archive-section .section-badge { border-color: rgba(239,68,68,.3); color: rgba(239,68,68,.6); background: rgba(239,68,68,.06); }
     .section-toggle {
       display: flex; align-items: center; gap: .6rem;
       width: 100%; background: none; border: none;
