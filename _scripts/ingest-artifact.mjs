@@ -247,5 +247,281 @@ if (modeArg !== 'full' && modeArg !== 'section') {
   fail(USAGE);
 }
 
-// TODO: full-site write mode (Task 2)
-process.exit(0);
+// ═══════════════════════════════════════════════════════════════════════════════
+// WRITE-MODE HELPERS (used by full-site and section modes)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ── HELPER: extractScopedCSS ──────────────────────────────────────────────────
+// Returns only the CSS rules whose selector contains the section's class or id.
+// Excludes global-only rules (:root, html, body, *).
+// Uses simple split-on-} approach as specified (MVP — does not handle nested @media).
+function extractScopedCSS(cssText, sectionClass, sectionId) {
+  if (!cssText) return '';
+  const rules = [];
+  const blocks = cssText.split('}');
+  for (const block of blocks) {
+    const braceIdx = block.indexOf('{');
+    if (braceIdx === -1) continue;
+    const selector    = block.slice(0, braceIdx).trim();
+    const declarations = block.slice(braceIdx + 1).trim();
+    if (!selector || !declarations) continue;
+    // Exclude stand-alone global rules
+    if (/^(:root|html|body|\*)$/.test(selector)) continue;
+    const matchesClass = sectionClass && selector.includes(`.${sectionClass}`);
+    const matchesId    = sectionId    && selector.includes(`#${sectionId}`);
+    if (matchesClass || matchesId) {
+      rules.push(`${selector} {\n  ${declarations.replace(/\s+/g, ' ').trim()}\n}`);
+    }
+  }
+  return rules.join('\n');
+}
+
+// ── HELPER: rewriteLocalPaths ─────────────────────────────────────────────────
+// Rewrites local src="/" and href="/" attribute values to {b}/ template literal syntax.
+// External URLs (http/https) and protocol-relative (//) are left unchanged.
+function rewriteLocalPaths(html, slug) {
+  // src="/images/..." → src={`${b}/images/<slug>/...`}
+  html = html.replace(/src="(\/[^"]*)"/g, (match, path) => {
+    if (path.startsWith('//')) return match; // protocol-relative
+    if (path.startsWith('/images/')) {
+      const filename = path.slice('/images/'.length);
+      return `src={\`\${b}/images/${slug}/${filename}\`}`;
+    }
+    return `src={\`\${b}${path}\`}`;
+  });
+  // href="/..." → href={`${b}/...`} (local only — skip protocol-relative)
+  html = html.replace(/href="(\/[^"]*)"/g, (match, path) => {
+    if (path.startsWith('//')) return match;
+    return `href={\`\${b}${path}\`}`;
+  });
+  return html;
+}
+
+// ── HELPER: decodeBase64 ──────────────────────────────────────────────────────
+// Decodes a data:image/... base64 URI, writes the binary to destDir/name.ext,
+// returns the filename written (e.g. 'hero-0.png'), or null if not a valid data URI.
+function decodeBase64(dataUri, destDir, name) {
+  const match = dataUri.match(
+    /^data:image\/(png|jpg|jpeg|gif|webp|svg\+xml);base64,([\s\S]+)$/
+  );
+  if (!match) return null;
+  const mimeToExt = { png: 'png', jpg: 'jpg', jpeg: 'jpg', gif: 'gif', webp: 'webp', 'svg+xml': 'svg' };
+  const ext      = mimeToExt[match[1]] || 'bin';
+  const filename = `${name}.${ext}`;
+  if (!DRY_RUN) {
+    mkdirSync(destDir, { recursive: true });
+    writeFileSync(join(destDir, filename), Buffer.from(match[2], 'base64'));
+  }
+  return filename;
+}
+
+// ── HELPER: convertLinkedStylesheets ─────────────────────────────────────────
+// Replaces non-Google-Fonts <link rel="stylesheet"> tags with inline <style> blocks.
+// If the CSS file cannot be found locally, leaves the <link> unchanged and warns.
+function convertLinkedStylesheets(html, artifactDir) {
+  return html.replace(/<link[^>]+rel="stylesheet"[^>]*>/gi, (match) => {
+    if (match.includes('fonts.googleapis.com')) return match; // keep Google Fonts CDN links
+    const hrefMatch = match.match(/href="([^"]*)"/);
+    if (!hrefMatch) return match;
+    const href = hrefMatch[1];
+    if (href.startsWith('http') || href.startsWith('//')) return match; // external
+    const cssPath = join(artifactDir, href);
+    if (existsSync(cssPath)) {
+      try {
+        const css = readFileSync(cssPath, 'utf-8');
+        return `<style>\n${css}\n</style>`;
+      } catch {
+        warn(`Could not read linked stylesheet: ${href}`);
+        return match;
+      }
+    }
+    warn(`Linked stylesheet not found locally (leaving as-is): ${href}`);
+    return match;
+  });
+}
+
+// ── HELPER: toAstroComponent ──────────────────────────────────────────────────
+// Builds a scoped Astro component string from section HTML, scoped CSS, name, date.
+function toAstroComponent(sectionHtml, scopedCSS, componentName, date) {
+  const hasLocalAssets = sectionHtml.includes('{b}/');
+  const frontmatter = hasLocalAssets
+    ? `---\n// ${componentName} — extracted from Claude Design artifact ${date}\nconst b = import.meta.env.BASE_URL.replace(/\\/$/, '');\n---`
+    : `---\n// ${componentName} — extracted from Claude Design artifact ${date}\n---`;
+  return `${frontmatter}\n\n${sectionHtml}\n\n<style>\n${scopedCSS}\n</style>\n`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// FULL-SITE WRITE FLOW
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const artifactPath = join(ROOT, '_captures', slug, 'raw', 'artifact.html');
+if (!existsSync(artifactPath)) {
+  fail(`No artifact found at _captures/${slug}/raw/artifact.html — paste HTML and re-run /wm-ingest`);
+}
+
+// ── INGEST-02: astro.config.mjs env var check (warn only, do not modify) ──────
+const configPath = join(siteDir, 'astro.config.mjs');
+if (existsSync(configPath)) {
+  const configContent = readFileSync(configPath, 'utf-8');
+  if (configContent.includes('SITE_URL') && configContent.includes('SITE_BASE')) {
+    ok('astro.config.mjs: SITE_URL/SITE_BASE env var pattern confirmed');
+  } else {
+    warn('astro.config.mjs does not use SITE_URL/SITE_BASE env var pattern — site may not have been initialized via /wm-new-site. Sandbox base path may be hardcoded. Review astro.config.mjs before publishing.');
+  }
+}
+
+const htmlString  = readFileSync(artifactPath, 'utf-8');
+const cssText     = extractStyleCSS(htmlString);
+const artifactVars = extractCSSVars(cssText);
+const date        = new Date().toISOString().slice(0, 10);
+
+// ── Create output directories ─────────────────────────────────────────────────
+const componentsDir  = join(siteDir, 'src', 'components');
+const publicImagesDir = join(siteDir, 'public', 'images', slug);
+const publicFontsDir  = join(siteDir, 'public', 'fonts'); // stub for future local font support
+
+if (!DRY_RUN) {
+  mkdirSync(componentsDir,   { recursive: true });
+  mkdirSync(publicImagesDir, { recursive: true });
+  mkdirSync(publicFontsDir,  { recursive: true });
+} else {
+  dry(`would create dirs: src/components/, public/images/${slug}/, public/fonts/`);
+}
+
+// ── Parse HAST tree and iterate sections ─────────────────────────────────────
+const tree     = fromHtml(htmlString);
+const htmlNode = tree.children.find(n => n.tagName === 'html');
+const bodyNode = htmlNode?.children.find(n => n.tagName === 'body');
+const sectionNodes = bodyNode?.children.filter(
+  n => n.type === 'element' && ['section', 'nav', 'footer', 'header', 'main'].includes(n.tagName)
+) ?? [];
+
+const componentNames = [];
+let base64Count = 0;
+
+for (const node of sectionNodes) {
+  const sectionId    = node.properties?.id   || null;
+  const sectionClass = node.properties?.className?.[0] || null;
+  const name = sectionId || sectionClass || node.tagName;
+
+  let sectionHtml = toHtml(node);
+  const scopedCSS  = extractScopedCSS(cssText, sectionClass, sectionId);
+
+  // Convert local <link rel="stylesheet"> to inline <style>
+  sectionHtml = convertLinkedStylesheets(sectionHtml, join(ROOT, '_captures', slug, 'raw'));
+
+  // Decode base64 images → public/images/<slug>/
+  let localBase64Idx = 0;
+  sectionHtml = sectionHtml.replace(/src="(data:image\/[^"]*)"/g, (match, dataUri) => {
+    const filename = decodeBase64(dataUri, publicImagesDir, `${name}-${localBase64Idx}`);
+    if (filename) {
+      localBase64Idx++;
+      base64Count++;
+      if (!DRY_RUN) {
+        ok(`decoded base64 image → public/images/${slug}/${filename}`);
+      } else {
+        dry(`would decode base64 image → public/images/${slug}/${filename}`);
+      }
+      return `src={\`\${b}/images/${slug}/${filename}\`}`;
+    }
+    return match;
+  });
+
+  // Rewrite remaining local src="/" and href="/" paths to {b}/ pattern
+  sectionHtml = rewriteLocalPaths(sectionHtml, slug);
+
+  const componentName = toPascalCase(name);
+  const component     = toAstroComponent(sectionHtml, scopedCSS, componentName, date);
+  const componentPath = join(componentsDir, `${componentName}.astro`);
+
+  // Nav/Footer overwrite protection (real-write mode only; dry-run always reports would-write)
+  if (!DRY_RUN && (componentName === 'Nav' || componentName === 'Footer') && existsSync(componentPath)) {
+    const coreTemplatePath = join(ROOT, '_core', 'src', 'components', `${componentName}.astro`);
+    const existingContent  = readFileSync(componentPath, 'utf-8');
+    const coreContent      = existsSync(coreTemplatePath) ? readFileSync(coreTemplatePath, 'utf-8') : null;
+    if (coreContent && existingContent !== coreContent) {
+      warn(`${componentName}.astro has been customized — skipping overwrite. Review artifact ${componentName} manually.`);
+      componentNames.push(componentName);
+      continue;
+    }
+  }
+
+  if (!DRY_RUN) {
+    writeFileSync(componentPath, component, 'utf-8');
+    ok(`wrote component: ${componentName}.astro`);
+  } else {
+    dry(`would write ${componentName}.astro`);
+  }
+  componentNames.push(componentName);
+}
+
+// ── Write index.astro (full mode only) ───────────────────────────────────────
+if (modeArg === 'full') {
+  const wiring   = readJSON(join(siteDir, 'wiring.json')) ?? {};
+  const siteName = wiring.name || slug;
+
+  const importBlock = `import Layout from '../layouts/Layout.astro';\n`
+    + componentNames.map(n => `import ${n} from '../components/${n}.astro';`).join('\n');
+
+  const componentSlots = componentNames.map(n => `  <${n} />`).join('\n');
+
+  const indexContent = `---\n${importBlock}\n\nconst b = import.meta.env.BASE_URL.replace(/\\/$/, '');\n---\n\n<Layout title="${siteName}">\n${componentSlots}\n</Layout>\n`;
+
+  const indexPath = join(siteDir, 'src', 'pages', 'index.astro');
+  if (!DRY_RUN) {
+    writeFileSync(indexPath, indexContent, 'utf-8');
+    ok('wrote index.astro');
+  } else {
+    dry('would write index.astro');
+  }
+}
+
+// ── Google Fonts CDN links — surfaced as operator instructions ────────────────
+// (CDN links are not converted or copied in MVP — local font support is out of scope)
+const googleFontsLinks = extractGoogleFontsLinks(htmlString);
+if (googleFontsLinks.length > 0) {
+  log(`\nGoogle Fonts links detected — add them manually to sites/${slug}/src/layouts/Layout.astro <head>:`);
+  for (const url of googleFontsLinks) {
+    log(`  ${url}`);
+  }
+} else {
+  info('No Google Fonts CDN links found in artifact.');
+}
+
+// ── INGEST-07: Brand token candidates (informational only — not written to wiring.json) ──
+const layoutPath    = join(siteDir, 'src', 'layouts', 'Layout.astro');
+const layoutContent = existsSync(layoutPath) ? readFileSync(layoutPath, 'utf-8') : '';
+const existingVars  = extractCSSVars(layoutContent);
+
+log('\nBrand token candidates from artifact:');
+for (const [name, val] of artifactVars.entries()) {
+  const existing = existingVars.get(name);
+  if (existing) {
+    if (existing !== val) {
+      log(`  ${name}: ${val}  (currently: ${existing} — CONFLICT, keep existing?)`);
+    } else {
+      log(`  ${name}: ${val}  (same as existing)`);
+    }
+  } else {
+    log(`  ${name}: ${val}  (new)`);
+  }
+}
+log('These are informational only — update Layout.astro :root {} manually to adopt any token values.');
+
+// ── Build verification (skipped in dry-run via run() guard) ──────────────────
+log('\n── Build verification');
+run(`node _scripts/build-all.js ${slug}`, ROOT);
+if (!DRY_RUN) ok('Build passed');
+
+// ── Done banner ───────────────────────────────────────────────────────────────
+log(`
+${'═'.repeat(52)}
+ ✅  sites/${slug} ingest complete.
+${'═'.repeat(52)}
+
+Components written to: sites/${slug}/src/components/
+Next steps:
+  cd sites/${slug} && npm run dev     ← preview locally
+  /wm-wire                            ← update brand tokens
+  /wm-publish ${slug}                  ← push to production
+`);
