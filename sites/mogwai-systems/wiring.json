@@ -9,10 +9,10 @@
   "last_deploy": "2026-08-18",
   "capture": null,
   "brand": {
-    "hashtags": [],
-    "vocabulary": [],
+    "hashtags": ["MOGWAI"],
+    "vocabulary": ["autonomous systems"],
     "avoid": [],
-    "voice": ""
+    "voice": "Minimal, operational, no hype"
   },
   "notes": "Holding page for the MOGWAI programme. Black canvas, starfield, emblem, standing-by state. Legal pages carry Starflight Dynamics GmbH as operator. Live at https://www.mogwai-systems.com"
 }
