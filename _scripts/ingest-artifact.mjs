@@ -247,6 +247,11 @@ if (modeArg !== 'full' && modeArg !== 'section') {
   fail(USAGE);
 }
 
+// ── SECTION MODE VALIDATION ───────────────────────────────────────────────────
+if (modeArg === 'section' && !sectionArg) {
+  fail('--mode section requires --section <name>');
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // WRITE-MODE HELPERS (used by full-site and section modes)
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -350,6 +355,96 @@ function toAstroComponent(sectionHtml, scopedCSS, componentName, date) {
   return `${frontmatter}\n\n${sectionHtml}\n\n<style>\n${scopedCSS}\n</style>\n`;
 }
 
+// ── HELPER: writeSectionMode ──────────────────────────────────────────────────
+// Extracts a single named section from the artifact and writes it as a scoped
+// Astro component under sites/<slug>/src/components/. NEVER writes to src/pages/.
+function writeSectionMode(slug, sectionName, sections, cssText, siteDir, date) {
+  // 1. Find the matching section entry
+  const section = sections.find(s =>
+    s.id === sectionName ||
+    s.classes[0] === sectionName ||
+    s.name.toLowerCase() === sectionName.toLowerCase()
+  );
+  if (!section) {
+    fail(`Section "${sectionName}" not found in artifact. Available: ${sections.map(s => s.name).join(', ')}`);
+  }
+
+  // 2. Re-parse artifact HTML from disk and locate the matching element node
+  const artifactPath = join(ROOT, '_captures', slug, 'raw', 'artifact.html');
+  const htmlString   = readFileSync(artifactPath, 'utf-8');
+  const tree         = fromHtml(htmlString);
+  const htmlNode     = tree.children.find(n => n.tagName === 'html');
+  const bodyNode     = htmlNode?.children.find(n => n.tagName === 'body');
+  const sectionNode  = bodyNode?.children.find(n => {
+    if (n.type !== 'element') return false;
+    if (n.tagName !== section.tag) return false;
+    const nodeId    = n.properties?.id             || null;
+    const nodeClass = n.properties?.className?.[0] || null;
+    if (section.id    && nodeId    === section.id)          return true;
+    if (section.classes[0] && nodeClass === section.classes[0]) return true;
+    // fallback: match by tag when no id/class
+    if (!section.id && !section.classes[0] && n.tagName === section.tag) return true;
+    return false;
+  });
+
+  if (!sectionNode) {
+    fail(`Could not locate section node for "${sectionName}" in parsed HTML tree.`);
+  }
+
+  // 3. sectionHtml from the matched node
+  let sectionHtml = toHtml(sectionNode);
+
+  // 4. Scoped CSS — exclude :root/body/html/* rules
+  const scopedCSS = extractScopedCSS(cssText, section.classes[0] || null, section.id || null);
+
+  // 5. Convert linked stylesheets
+  sectionHtml = convertLinkedStylesheets(sectionHtml, join(ROOT, '_captures', slug, 'raw'));
+
+  // 6. Handle base64 images → public/images/<slug>/
+  const publicImagesDir = join(siteDir, 'public', 'images', slug);
+  let localBase64Idx = 0;
+  sectionHtml = sectionHtml.replace(/src="(data:image\/[^"]*)"/g, (match, dataUri) => {
+    const filename = decodeBase64(dataUri, publicImagesDir, `${sectionName}-${localBase64Idx}`);
+    if (filename) {
+      localBase64Idx++;
+      if (!DRY_RUN) {
+        ok(`decoded base64 image → public/images/${slug}/${filename}`);
+      } else {
+        dry(`would decode base64 image → public/images/${slug}/${filename}`);
+      }
+      return `src={\`\${b}/images/${slug}/${filename}\`}`;
+    }
+    return match;
+  });
+
+  // 7. Rewrite remaining local paths to {b}/ template literal pattern
+  sectionHtml = rewriteLocalPaths(sectionHtml, slug);
+
+  // 8. Component name (PascalCase)
+  const componentName = toPascalCase(sectionName);
+
+  // 9. Build the Astro component string
+  const component = toAstroComponent(sectionHtml, scopedCSS, componentName, date);
+
+  // 10. Component output path — ONLY src/components/, never src/pages/
+  const componentPath = join(siteDir, 'src', 'components', `${componentName}.astro`);
+
+  // 11. Write (or dry-run)
+  if (!DRY_RUN) {
+    mkdirSync(join(siteDir, 'src', 'components'), { recursive: true });
+    writeFileSync(componentPath, component, 'utf-8');
+    ok(`wrote ${componentName}.astro`);
+  } else {
+    dry(`would write ${componentName}.astro`);
+  }
+
+  // 13. Print manual import instruction (always, even in dry-run — INGEST-03)
+  log('\nComponent staged. To use it, add to your page:');
+  log(`  import ${componentName} from '../components/${componentName}.astro';`);
+  log(`  <${componentName} />`);
+  log('No existing pages were modified.');
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // FULL-SITE WRITE FLOW
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -386,6 +481,15 @@ if (!DRY_RUN) {
   mkdirSync(publicFontsDir,  { recursive: true });
 } else {
   dry(`would create dirs: src/components/, public/images/${slug}/, public/fonts/`);
+}
+
+// ── SECTION MODE ROUTING ──────────────────────────────────────────────────────
+// Section mode: extract one named section as a component, then exit.
+// NEVER calls writeFileSync on src/pages/ — only src/components/ and public/images/.
+if (modeArg === 'section') {
+  const sections = extractSections(htmlString);
+  writeSectionMode(slug, sectionArg, sections, cssText, siteDir, date);
+  process.exit(0);
 }
 
 // ── Parse HAST tree and iterate sections ─────────────────────────────────────
