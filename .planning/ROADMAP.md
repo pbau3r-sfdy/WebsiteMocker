@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Production Deploy Pipeline** - One command takes a stage-5 site to a live GitHub Pages URL
 - [x] **Phase 2: Content System** - All sites migrate to Astro 5 Content Layer API with four standardised collection types
-- [ ] **Phase 3: Brand Consistency** - Structured `brand` block in `wiring.json`; content skills enforce it at write time
+- [x] **Phase 3: Brand Consistency** - Structured `brand` block in `wiring.json`; content skills enforce it at write time
 - [ ] **Phase 4: Collaboration Infrastructure** - Production repos are contributor-ready with two-tier model and automated rebuilds
 - [ ] **Phase 5: Design Artifact Ingestion** - Claude Design HTML/CSS artifacts become functioning Astro components without manual stitching
 
@@ -72,9 +72,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Brand schema stubs in all four active wiring.json files + _core/brand-schema.md (BRAND-01)
-- [ ] 03-02-PLAN.md — /wm-wire brand block section: first-run artifact workflow + recency-check update path (BRAND-02)
-- [ ] 03-03-PLAN.md — Content skill brand enforcement: all four wm-add-* skills (BRAND-03)
+- [x] 03-01-PLAN.md — Brand schema stubs in all four active wiring.json files + _core/brand-schema.md (BRAND-01)
+- [x] 03-02-PLAN.md — /wm-wire brand block section: first-run artifact workflow + recency-check update path (BRAND-02)
+- [x] 03-03-PLAN.md — Content skill brand enforcement: all four wm-add-* skills (BRAND-03)
 
 ### Phase 4: Collaboration Infrastructure
 **Goal**: Production repos are contributor-ready — team members can push content directly or file structured issues, and the site rebuilds automatically on content pushes without operator intervention
@@ -115,6 +115,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Production Deploy Pipeline | 2/2 | Complete | 2026-08-20 |
 | 2. Content System | 9/9 | Complete | 2026-08-20 |
-| 3. Brand Consistency | 0/3 | Not started | - |
+| 3. Brand Consistency | 3/3 | Complete | 2026-08-20 |
 | 4. Collaboration Infrastructure | 0/TBD | Not started | - |
 | 5. Design Artifact Ingestion | 0/TBD | Not started | - |
