@@ -86,10 +86,14 @@ Plans:
   2. Three YAML issue templates (`content-request.yml`, `design-change.yml`, `bug-report.yml`) are present in each production repo with blank issues disabled
   3. A contributor pushing a new `.md` file to `content/**` on the production repo `main` branch triggers `content-ci.yml`, which dispatches `publish.yml` and rebuilds the live site automatically
   4. Production repo `main` branch holds `content/**/*.md` files editable via GitHub web UI — no local build step required to publish a content entry
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- (to be planned)
+- [ ] 04-01-PLAN.md — Dispatch receiver: publish.yml repository_dispatch trigger + slug resolution + content sync, plus the phase verification harness
+- [ ] 04-02-PLAN.md — Contributor template bundle: _templates/ CONTRIBUTING.md, three issue forms + config.yml, content-ci.yml
+- [ ] 04-03-PLAN.md — Installer: _scripts/init-prod-repo.mjs (orphan main, template render, labels, default branch, secret check)
+- [ ] 04-04-PLAN.md — Operator docs: WM_DISPATCH_PAT procedure in /wm-publish + CLAUDE.md and AGENTS.md collaboration model
+- [ ] 04-05-PLAN.md — Live rollout to all four production repos + end-to-end contributor rebuild verification (has checkpoints)
 
 ### Phase 5: Design Artifact Ingestion
 **Goal**: Operator can feed a Claude Design HTML/CSS artifact into any site and get functioning, routed Astro components without manual file surgery
@@ -116,5 +120,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Production Deploy Pipeline | 2/2 | Complete | 2026-08-20 |
 | 2. Content System | 9/9 | Complete | 2026-08-20 |
 | 3. Brand Consistency | 3/3 | Complete | 2026-08-20 |
-| 4. Collaboration Infrastructure | 0/TBD | Not started | - |
+| 4. Collaboration Infrastructure | 0/5 | Planned | - |
 | 5. Design Artifact Ingestion | 0/TBD | Not started | - |
