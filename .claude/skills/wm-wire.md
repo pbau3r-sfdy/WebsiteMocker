@@ -90,7 +90,7 @@ Walks through each service in sequence and updates `wiring.json` and source file
 6. **Report** summary of what was configured and what still needs attention.
 
 ## Notes
-- "Skip for later" leaves the field null — not counted against stage advancement
+- "Skip for later" — brand block does not block stage advancement; the site can advance with brand block absent or empty. Unlike other services, skipping brand block is not penalised.
 - "Not needed" writes the full-schema stub with `status: "skipped"` — counts as done for stage purposes
 - Tally forms are embedded as iframes OR via redirect URLs — ask the operator which they prefer
 - Brand block is optional enrichment — sites without a brand block (or with all-empty arrays) get no brand-aware behaviour in content skills; /wm-wire is not required before using content skills
