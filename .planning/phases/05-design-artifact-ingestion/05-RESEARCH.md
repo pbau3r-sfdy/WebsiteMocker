@@ -665,22 +665,22 @@ This automatic scoping solves most CSS bleed concerns — as long as we don't pu
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **What does "referenced" mean in INGEST-01 ("pasted or referenced")?**
    - What we know: Operator can paste HTML into the chat. "Referenced" could mean a file path or a URL.
    - What's unclear: Is the artifact ever at a URL (e.g., a GitHub Gist or artifact export URL)?
-   - Recommendation: For MVP, support (a) pasted content (Claude detects HTML in conversation) and (b) a local file path the operator provides. Skip URL fetch.
+   - RESOLVED: For MVP, support (a) pasted content (Claude detects HTML in conversation) and (b) a local file path the operator provides. Skip URL fetch.
 
 2. **Should the skill create a NEW site or ingest into an EXISTING one?**
    - What we know: INGEST-02 says "rewires to `_core/` Layout, Nav, Footer" implying it could start fresh. INGEST-03 says "integrates without overwriting other pages" implying it targets an existing site.
    - What's unclear: If the target `sites/<slug>/` doesn't exist, should the skill scaffold it first (calling `new-site.sh`) or error?
-   - Recommendation: Require the site to exist first (`sites/<slug>/` must be present). Print a clear error if it doesn't: "Run `/wm-new-site <slug>` first."
+   - RESOLVED: Require the site to exist first (`sites/<slug>/` must be present). Print a clear error if it doesn't: "Run `/wm-new-site <slug>` first."
 
 3. **How to handle artifact CSS that references both section-specific and global rules?**
    - What we know: Artifact has one CSS block covering all sections plus body/html resets.
    - What's unclear: When distributing CSS to per-component `<style>` blocks, how do we attribute CSS rules (e.g., `.hero .cta` goes to Hero, but `.cta` might apply globally)?
-   - Recommendation: MVP heuristic — put rules in a component if the selector contains the section's class/id. Put remaining rules (that match multiple sections) in a shared comment block. Document the limitation: "Some CSS rules may need manual distribution."
+   - RESOLVED: MVP heuristic — put rules in a component if the selector contains the section's class/id. Put remaining rules (that match multiple sections) in a shared comment block. Document the limitation: "Some CSS rules may need manual distribution."
 
 ---
 
