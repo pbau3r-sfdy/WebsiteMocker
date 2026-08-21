@@ -42,9 +42,11 @@ Walks through each service in sequence and updates `wiring.json` and source file
    **Configure now:**
    - Check `wiring.json` for a `brand` key:
 
+     **Before choosing a path:** Read `wiring.json brand.status`. If it equals `"skipped"`, do not enter first-run or subsequent-run — instead tell the operator: "Brand block is marked as not needed for this site. Would you like to configure it now?" If yes, proceed as first-run. If no, continue to the next service.
+
      **First-run path** (no `brand` key, or `brand` exists but all four sub-keys are empty arrays / empty string):
      - Read available signals from the following sources — skip any source that is absent without error:
-       1. `wiring.json` `name` and `domain` — always present
+       1. `wiring.json` `name` and `domain` — read both; use `name` if present, fall back to the site slug (directory name) if `name` is absent. `domain` is used for the voice inference if no other signals are available.
        2. `_captures/<capture-value>/CAPTURE.md` and/or `capture.json` — only if `wiring.json capture` field is **non-null**; skip entirely without error if `capture` is null (e.g. mogwai-systems)
        3. `sites/<slug>/keywords.json` — if the file exists, read `brand.avoid`, `hashtags.twitter`, `hashtags.linkedin`, `hashtags.instagram`, and `primary`/`secondary` terms; skip without error if the file does not exist
        4. `src/content/**/*.md` — scan existing content files for recurring `tags[]` values as additional hashtag signals
@@ -74,7 +76,7 @@ Walks through each service in sequence and updates `wiring.json` and source file
 
    **Skip for later:** leave the `brand` key as-is (empty stub or absent). Does not block stage advancement.
 
-   **Not needed:** set `"brand": { "status": "skipped" }` — counts as done for stage advancement purposes, consistent with other services.
+   **Not needed:** write `{ "hashtags": [], "vocabulary": [], "avoid": [], "voice": "", "status": "skipped" }` as the brand block value — the `status` field marks it as intentionally skipped. Content skills will treat all-empty arrays as a silent pass-through. Counts as done for stage advancement.
 
 4. **Advance stage** in `wiring.json` if all services are configured or skipped:
    - All sections done → set `stage: 3`
@@ -88,7 +90,7 @@ Walks through each service in sequence and updates `wiring.json` and source file
 6. **Report** summary of what was configured and what still needs attention.
 
 ## Notes
-- "Skip for later" leaves the field null — not counted against stage advancement
-- "Not needed" sets `status: "skipped"` — counts as done for stage purposes
+- "Skip for later" — brand block does not block stage advancement; the site can advance with brand block absent or empty. Unlike other services, skipping brand block is not penalised.
+- "Not needed" writes the full-schema stub with `status: "skipped"` — counts as done for stage purposes
 - Tally forms are embedded as iframes OR via redirect URLs — ask the operator which they prefer
 - Brand block is optional enrichment — sites without a brand block (or with all-empty arrays) get no brand-aware behaviour in content skills; /wm-wire is not required before using content skills
