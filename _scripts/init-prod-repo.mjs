@@ -278,7 +278,6 @@ try {
   if (!mainExists) {
     info('main branch does not exist — creating orphan branch');
     run(`git clone --depth 1 ${cloneUrl} ${tmp}`);
-    execSync(`git clone --depth 1 ${cloneUrl} ${tmp}`, { stdio: 'inherit' });
     execSync('git checkout --orphan main', { stdio: 'inherit', cwd: tmp });
     execSync('git rm -rf . --quiet', { stdio: 'inherit', cwd: tmp });
     ok('orphan main branch created in temp clone');
