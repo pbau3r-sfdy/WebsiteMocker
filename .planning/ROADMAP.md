@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Production Deploy Pipeline** - One command takes a stage-5 site to a live GitHub Pages URL
 - [x] **Phase 2: Content System** - All sites migrate to Astro 5 Content Layer API with four standardised collection types
 - [x] **Phase 3: Brand Consistency** - Structured `brand` block in `wiring.json`; content skills enforce it at write time
-- [ ] **Phase 4: Collaboration Infrastructure** - Production repos are contributor-ready with two-tier model and automated rebuilds
+- [x] **Phase 4: Collaboration Infrastructure** - Production repos are contributor-ready with two-tier model and automated rebuilds
 - [ ] **Phase 5: Design Artifact Ingestion** - Claude Design HTML/CSS artifacts become functioning Astro components without manual stitching
 
 ## Phase Details
@@ -107,23 +107,23 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 04-01-PLAN.md — Sync receiver: .github/workflows/content-sync.yml (repository_dispatch, no build/publish) + the phase verification harness
+- [x] 04-01-PLAN.md — Sync receiver: .github/workflows/content-sync.yml (repository_dispatch, no build/publish) + the phase verification harness
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 04-02-PLAN.md — Contributor template bundle: _templates/ CONTRIBUTING.md, three issue forms + config.yml, content-ci.yml
+- [x] 04-02-PLAN.md — Contributor template bundle: _templates/ CONTRIBUTING.md, three issue forms + config.yml, content-ci.yml
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 04-03-PLAN.md — Installer: _scripts/init-prod-repo.mjs (idempotent orphan main, template render, labels, default branch, secret check)
+- [x] 04-03-PLAN.md — Installer: _scripts/init-prod-repo.mjs (idempotent orphan main, template render, labels, default branch, secret check)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 04-04-PLAN.md — Operator interface: /wm-init-collab skill with inline WM_DISPATCH_PAT guidance + CLAUDE.md and AGENTS.md collaboration model
+- [x] 04-04-PLAN.md — Operator interface: /wm-init-collab skill with inline WM_DISPATCH_PAT guidance + CLAUDE.md and AGENTS.md collaboration model
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 04-05-PLAN.md — Live rollout to all four production repos + end-to-end contributor round trip verification (has checkpoints)
+- [x] 04-05-PLAN.md — Live rollout to all four production repos + end-to-end contributor round trip verification (has checkpoints)
 
 ### Phase 5: Design Artifact Ingestion
 
