@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contribution Guide
+    url: https://github.com/{{PROD_REPO}}/blob/main/CONTRIBUTING.md
+    about: Read this first — it explains what you can push directly and what needs an issue.
