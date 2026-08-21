@@ -24,7 +24,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 import { tmpdir } from 'os';
 
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..');
@@ -161,7 +161,7 @@ function renderTemplates() {
         // Pattern {{[A-Z_]+}} matches our tokens (uppercase/underscore only).
         // This excludes GitHub Actions expressions like ${{ github.ref }} which
         // use lowercase letters, dots, and are preceded by $.
-        const leftover = content.match(/\{\{[A-Z_]+\}\}/);
+        const leftover = content.match(/\{\{[A-Z_-]+\}\}/);
         if (leftover) {
           fail(`Unsubstituted placeholder in ${relPath}: ${leftover[0]}`);
         }
@@ -279,7 +279,9 @@ try {
     info('main branch does not exist — creating orphan branch');
     run(`git clone --depth 1 ${cloneUrl} ${tmp}`);
     execSync('git checkout --orphan main', { stdio: 'inherit', cwd: tmp });
-    execSync('git rm -rf . --quiet', { stdio: 'inherit', cwd: tmp });
+    // Only rm if the index is non-empty (truly empty repos have nothing to remove)
+    const hasFiles = spawnSync('git', ['ls-files'], { cwd: tmp, encoding: 'utf-8' }).stdout.trim();
+    if (hasFiles) execSync('git rm -rf . --quiet', { stdio: 'inherit', cwd: tmp });
     ok('orphan main branch created in temp clone');
     created++;
   } else {
@@ -321,8 +323,9 @@ try {
   const gitName  = capture('git config user.name')  || 'github-actions[bot]';
   const gitEmail = capture('git config user.email') || 'github-actions[bot]@users.noreply.github.com';
 
-  execSync(`git config user.name "${gitName}"`,   { stdio: 'inherit', cwd: tmp });
-  execSync(`git config user.email "${gitEmail}"`, { stdio: 'inherit', cwd: tmp });
+  // Use spawnSync with argument arrays to avoid shell injection via git identity values
+  spawnSync('git', ['config', 'user.name',  gitName],  { stdio: 'inherit', cwd: tmp });
+  spawnSync('git', ['config', 'user.email', gitEmail], { stdio: 'inherit', cwd: tmp });
   execSync('git add -A', { stdio: 'inherit', cwd: tmp });
 
   try {

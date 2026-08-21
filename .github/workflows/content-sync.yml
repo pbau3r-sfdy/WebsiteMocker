@@ -23,7 +23,10 @@ concurrency:
   group: content-sync-${{ github.event_name == 'repository_dispatch' && github.event.client_payload.slug || inputs.slug }}
   cancel-in-progress: false
 
-# No top-level permissions block — WM_PUBLISH_PAT provides access, matching publish.yml convention.
+# GITHUB_TOKEN is not used for writes (WM_PUBLISH_PAT provides access), but we pin
+# it to read-only so any future step added here cannot silently inherit write permissions.
+permissions:
+  contents: read
 
 jobs:
   sync:

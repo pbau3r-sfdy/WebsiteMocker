@@ -61,14 +61,15 @@ session:
    reminder recommended, see Notes)
 7. Generate and copy the token value
 
-Paste the token so it can be stored, then run:
+Run this command in your terminal — `gh secret set` will prompt you to paste the token securely via stdin:
 
 ```bash
-gh secret set WM_DISPATCH_PAT --body "<token>" --repo <prod_repo>
+gh secret set WM_DISPATCH_PAT --repo <prod_repo>
 ```
 
-**Important:** The token value must never be written into a file, a commit message, or
-`wiring.json`. Use the `--body` flag to pass it directly to `gh` and nowhere else.
+**Important:** The token value must never be written into a file, a commit message, a chat
+session, or passed via `--body`. Always let `gh` read it from stdin so it never appears in
+any transcript or shell history.
 
 ### Why not reuse WM_PUBLISH_PAT?
 
