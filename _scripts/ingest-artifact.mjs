@@ -94,11 +94,6 @@ function readJSON(p) {
   try { return JSON.parse(readFileSync(p, 'utf-8')); } catch { return null; }
 }
 
-function writeJSON(p, obj) {
-  if (DRY_RUN) { dry(`write ${p.replace(ROOT, '.')}`); return; }
-  writeFileSync(p, JSON.stringify(obj, null, 2) + '\n', 'utf-8');
-}
-
 // ── HELPER: extractCSSVars ────────────────────────────────────────────────────
 // Returns a Map of '--name' → 'value' from a CSS string.
 function extractCSSVars(cssText) {
