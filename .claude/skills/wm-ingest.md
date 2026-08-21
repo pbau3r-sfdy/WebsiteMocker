@@ -93,12 +93,20 @@ Report:
 - Collisions resolved or skipped
 - What to customise next (brand tokens in Layout.astro, hero content, nav links)
 
+**Next: push to production**
+
+```
+/wm-publish <slug>
+```
+
+Run this when you are ready to go live. The local build confirms the site is valid — `/wm-publish` builds with production env vars and pushes to the production repo.
+
 ---
 
 ## Notes
 - **`_core/` is never touched** — ingest only writes to `sites/<slug>/src/components/` and `sites/<slug>/src/pages/` (full mode only); the shared template is never modified
 - **Section mode is write-only** — it writes a new component but never modifies existing pages; the operator must add the import manually per the printed instruction (e.g. `import Hero from '../components/Hero.astro';`)
 - **Nav.astro and Footer.astro overwrite protection** — if Nav.astro or Footer.astro has already been customised (differs from `_core/` template), the script skips the overwrite and logs a warning; review the artifact Nav/Footer manually and merge changes as needed
-- **Google Fonts `<link>` tags are not converted** — they are printed as instructions to add to `Layout.astro <head>`; do NOT convert them to `<style>` blocks or attempt to self-host CDN fonts
+- **Google Fonts `<link>` tags are auto-injected** — the script writes CDN `<link rel="stylesheet">` tags directly into `sites/<slug>/src/layouts/Layout.astro` before `</head>` (idempotent — skips if already present); do NOT convert them to `<style>` blocks or attempt to self-host CDN fonts
 - **BASE_URL routing** — all local `src="/..."` and `href="/..."` paths in the artifact are rewritten to `{b}/...` during extraction; both sandbox and production builds resolve correctly without manual path surgery
 - **If build fails after ingest**, check: (a) missing import in `index.astro` — section mode requires a manual import, full mode writes all imports automatically; (b) malformed template literal from path rewriting — look for unmatched backticks; (c) unclosed Astro frontmatter `---` block — verify the generated component starts and ends with `---`
