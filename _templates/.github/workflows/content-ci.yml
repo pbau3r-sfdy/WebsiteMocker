@@ -25,10 +25,10 @@ concurrency:
 #     workflow — WM_DISPATCH_PAT is the only credential, so no permissions block
 #     is needed and GITHUB_TOKEN never gets write access from this workflow.
 # (b) WM_DISPATCH_PAT must be a fine-grained PAT scoped to contents: write on
-#     pbau3r-sfdy/WebsiteMocker only. Do NOT use WM_PUBLISH_PAT here. WM_PUBLISH_PAT
-#     is a Classic PAT with org-wide reach; storing it in a production repo where
-#     contributors have write access would let anyone who edits this workflow file
-#     push to every repo in the pbau3r-sfdy organisation.
+#     pbau3r-sfdy/WebsiteMocker only. A Classic PAT with org-wide reach must never
+#     be stored here — a production repo's contributors have write access, meaning
+#     anyone who edits this workflow file could use a broad PAT to push to every
+#     repo in the pbau3r-sfdy organisation.
 # (c) Per decision D-A3 this dispatch triggers WebsiteMocker's content-sync.yml,
 #     which files the content for operator review. It does NOT publish. The live
 #     site is unchanged until the operator manually runs /wm-publish <slug>.
