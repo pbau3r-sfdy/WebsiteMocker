@@ -41,7 +41,7 @@
 - [ ] **COLLAB-02**: Three YAML Issue templates per production repo: `content-request.yml`, `design-change.yml`, `bug-report.yml` — `config.yml` disables blank issues
 - [ ] **COLLAB-03**: GitHub Issues in production repos label design/page change requests automatically — operator triages them back into the WebsiteMocker sandbox pipeline
 - [ ] **COLLAB-04**: Production repos use a two-branch model — `main` branch holds `content/**/*.md` files + `content-ci.yml`; `gh-pages` branch holds built output only
-- [ ] **COLLAB-05**: `content-ci.yml` in each production repo dispatches WebsiteMocker's `publish.yml` when `content/**/*.md` files change on `main` — contributors push content, site rebuilds automatically
+- [ ] **COLLAB-05**: `content-ci.yml` in each production repo dispatches WebsiteMocker's `content-sync.yml` when `content/**/*.md` files change on `main` — contributor content is synced into WebsiteMocker for operator review; operator runs `/wm-publish` to go live (revised per D-A6: no auto-publish)
 
 ### Design Artifact Ingestion
 
