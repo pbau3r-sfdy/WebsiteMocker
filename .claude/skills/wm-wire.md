@@ -46,7 +46,7 @@ Walks through each service in sequence and updates `wiring.json` and source file
 
      **First-run path** (no `brand` key, or `brand` exists but all four sub-keys are empty arrays / empty string):
      - Read available signals from the following sources — skip any source that is absent without error:
-       1. `wiring.json` `name` and `domain` — always present
+       1. `wiring.json` `name` and `domain` — read both; use `name` if present, fall back to the site slug (directory name) if `name` is absent. `domain` is used for the voice inference if no other signals are available.
        2. `_captures/<capture-value>/CAPTURE.md` and/or `capture.json` — only if `wiring.json capture` field is **non-null**; skip entirely without error if `capture` is null (e.g. mogwai-systems)
        3. `sites/<slug>/keywords.json` — if the file exists, read `brand.avoid`, `hashtags.twitter`, `hashtags.linkedin`, `hashtags.instagram`, and `primary`/`secondary` terms; skip without error if the file does not exist
        4. `src/content/**/*.md` — scan existing content files for recurring `tags[]` values as additional hashtag signals
