@@ -534,8 +534,8 @@ for (const node of sectionNodes) {
   const component     = toAstroComponent(sectionHtml, scopedCSS, componentName, date);
   const componentPath = join(componentsDir, `${componentName}.astro`);
 
-  // Nav/Footer overwrite protection (real-write mode only; dry-run always reports would-write)
-  if (!DRY_RUN && (componentName === 'Nav' || componentName === 'Footer') && existsSync(componentPath)) {
+  // Nav/Footer overwrite protection (checked in both real and dry-run modes)
+  if ((componentName === 'Nav' || componentName === 'Footer') && existsSync(componentPath)) {
     const coreTemplatePath = join(ROOT, '_core', 'src', 'components', `${componentName}.astro`);
     const existingContent  = readFileSync(componentPath, 'utf-8');
     const coreContent      = existsSync(coreTemplatePath) ? readFileSync(coreTemplatePath, 'utf-8') : null;
