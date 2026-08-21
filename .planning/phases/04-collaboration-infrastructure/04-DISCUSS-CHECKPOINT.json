@@ -1,0 +1,36 @@
+{
+  "phase": 4,
+  "phase_slug": "collaboration-infrastructure",
+  "padded_phase": "04",
+  "checkpoint_date": "2026-08-20",
+  "areas_completed": [
+    "Content authoritativeness",
+    "Init tooling shape"
+  ],
+  "areas_remaining": [
+    "Which repos get content-ci.yml",
+    "Template storage approach"
+  ],
+  "decisions": [
+    {
+      "area": "Content authoritativeness",
+      "decisions": [
+        "WebsiteMocker is the canonical source — not the production repo main branch",
+        "Contributor push to production repo main/content/ triggers content-ci.yml → repository_dispatch → automated sync INTO WebsiteMocker (commits content files there)",
+        "No auto-publish — operator manually runs /wm-publish when ready",
+        "Sync is additive-only: never deletes content already in WebsiteMocker",
+        "/wm-add-news stays unchanged — still commits directly to WebsiteMocker",
+        "ROADMAP criterion #3 revised: content-ci.yml dispatches sync workflow, NOT publish.yml",
+        "CONTRIBUTING.md must set clear expectations: content is reviewed before going live"
+      ]
+    },
+    {
+      "area": "Init tooling shape",
+      "decisions": [
+        "/wm-init-collab <slug> skill (skill-first pattern, consistent with project conventions)",
+        "Idempotent: checks what is already done (branch exists, labels exist, templates present) and skips or updates",
+        "Skill guides through human-action steps (creating WM_DISPATCH_PAT, storing in production repo secrets) inline"
+      ]
+    }
+  ]
+}
