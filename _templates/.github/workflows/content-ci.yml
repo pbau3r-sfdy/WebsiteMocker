@@ -1,0 +1,53 @@
+name: Content CI
+
+# Fires only when a contributor pushes a Markdown file under content/ on main.
+# The paths filter is mandatory containment: without it every push to main —
+# including edits to CONTRIBUTING.md or .github/ — would fire a dispatch.
+# No manual trigger is present: manual dispatch is not offered here because it
+# would allow a collaborator to fire a sync event without a content push.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**/*.md'
+
+# A superseded content push can be safely dropped: the newer push carries the
+# full content state, so cancelling the older run loses nothing.
+# This deliberately differs from WebsiteMocker's content-sync.yml, which uses
+# cancel-in-progress: false — a cancelled sync could lose a commit on the
+# WebsiteMocker side where ordering matters.
+concurrency:
+  group: content-ci-${{ github.ref }}
+  cancel-in-progress: true # safe to cancel: newer push already carries latest state
+
+# Notes on credentials and scope:
+# (a) No permissions: block is present. GITHUB_TOKEN is not used at all in this
+#     workflow — WM_DISPATCH_PAT is the only credential, so no permissions block
+#     is needed and GITHUB_TOKEN never gets write access from this workflow.
+# (b) WM_DISPATCH_PAT must be a fine-grained PAT scoped to contents: write on
+#     pbau3r-sfdy/WebsiteMocker only. Do NOT use WM_PUBLISH_PAT here. WM_PUBLISH_PAT
+#     is a Classic PAT with org-wide reach; storing it in a production repo where
+#     contributors have write access would let anyone who edits this workflow file
+#     push to every repo in the pbau3r-sfdy organisation.
+# (c) Per decision D-A3 this dispatch triggers WebsiteMocker's content-sync.yml,
+#     which files the content for operator review. It does NOT publish. The live
+#     site is unchanged until the operator manually runs /wm-publish <slug>.
+
+jobs:
+  dispatch-content-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Notify WebsiteMocker of new content
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.WM_DISPATCH_PAT }}
+          repository: pbau3r-sfdy/WebsiteMocker
+          event-type: content-updated
+          client-payload: '{"slug": "{{SLUG}}"}'
+
+# Note: peter-evans/repository-dispatch@v4 is pinned to a floating major tag.
+# This is acceptable for this repo's current threat profile. If the threat profile
+# changes (e.g. this repo is granted broader org permissions), pin to a specific
+# commit SHA — see https://github.com/peter-evans/repository-dispatch for releases.

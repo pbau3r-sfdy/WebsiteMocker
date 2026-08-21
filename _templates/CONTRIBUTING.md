@@ -1,9 +1,12 @@
 # Contributing to {{SITE_NAME}}
 
-This repository is the contributor surface for the live site at `https://{{DOMAIN}}`. The site
-source lives in the [WebsiteMocker](https://github.com/pbau3r-sfdy/WebsiteMocker) sandbox, where
-the site operator reviews every change and decides when to publish. Contributions go through a
+This is the contributor repository for **{{SITE_NAME}}**, the live site at `https://{{DOMAIN}}`.
+The site source lives in the [WebsiteMocker](https://github.com/pbau3r-sfdy/WebsiteMocker) sandbox,
+where the site operator reviews every change before it is published. Contributions go through a
 two-tier model depending on whether you are adding content or requesting a design change.
+
+Every contribution — whether a direct content push or a filed issue — is reviewed by the operator
+before it reaches the live site.
 
 ## Two-tier contribution model
 
