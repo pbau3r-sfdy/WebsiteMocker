@@ -21,23 +21,24 @@ check() {
 }
 
 # count_in FILE PATTERN — number of non-comment lines matching PATTERN (always exits 0)
+# Uses -- to prevent patterns starting with - from being parsed as flags (ugrep/BSD grep)
 count_in() {
   local file="$1" pattern="$2" n
-  n=$(grep -v '^\s*#' "$file" 2>/dev/null | grep -F "$pattern" 2>/dev/null | wc -l) || n=0
+  n=$(grep -v -- '^\s*#' "$file" 2>/dev/null | grep -F -- "$pattern" 2>/dev/null | wc -l) || n=0
   echo "${n//[[:space:]]/}"
 }
 
 # count_re FILE PATTERN — like count_in but treats PATTERN as an extended regex
 count_re() {
   local file="$1" pattern="$2" n
-  n=$(grep -v '^\s*#' "$file" 2>/dev/null | grep -E "$pattern" 2>/dev/null | wc -l) || n=0
+  n=$(grep -v -- '^\s*#' "$file" 2>/dev/null | grep -E -- "$pattern" 2>/dev/null | wc -l) || n=0
   echo "${n//[[:space:]]/}"
 }
 
 # count_re_js FILE PATTERN — strips JS // comments, extended regex match
 count_re_js() {
   local file="$1" pattern="$2" n
-  n=$(grep -v '^\s*//' "$file" 2>/dev/null | grep -E "$pattern" 2>/dev/null | wc -l) || n=0
+  n=$(grep -v -- '^\s*//' "$file" 2>/dev/null | grep -E -- "$pattern" 2>/dev/null | wc -l) || n=0
   echo "${n//[[:space:]]/}"
 }
 
