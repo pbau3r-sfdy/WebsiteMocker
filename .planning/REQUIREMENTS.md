@@ -7,51 +7,51 @@
 
 ### Deploy Pipeline
 
-- [ ] **DEPLOY-01**: Operator can run `/wm-publish <slug>` to build a site with production env vars (`SITE_URL`, `SITE_BASE`) and push built output to the corresponding production repo's `gh-pages` branch
+- [x] **DEPLOY-01**: Operator can run `/wm-publish <slug>` to build a site with production env vars (`SITE_URL`, `SITE_BASE`) and push built output to the corresponding production repo's `gh-pages` branch
 - [x] **DEPLOY-02**: `publish.yml` validates `stage ≥ 5`, `domain`, and `prod_repo` are set in `wiring.json` before building — exits with a clear error if not
 - [x] **DEPLOY-03**: `publish.yml` writes `CNAME` file (containing the production domain) into built output before pushing — custom domain does not reset on each deploy
 - [x] **DEPLOY-04**: `publish.yml` replaces `robots.txt Disallow: /` with `Allow: /` before pushing — production site is indexable
 - [x] **DEPLOY-05**: `publish.yml` updates `wiring.json` (`stage: 6`, `last_deploy`, `prod_repo`) after a successful push
 - [x] **DEPLOY-06**: `publish.yml` builds only the targeted site (not all sites) via a new `_scripts/build-single.mjs <slug>` wrapper
-- [ ] **DEPLOY-07**: Operator can generate a Squarespace DNS handoff guide for a site — CNAME record, apex A records, CAA check, SSL provisioning wait instructions, default-record-deletion warning
+- [x] **DEPLOY-07**: Operator can generate a Squarespace DNS handoff guide for a site — CNAME record, apex A records, CAA check, SSL provisioning wait instructions, default-record-deletion warning
 - [x] **DEPLOY-08**: Production deploy is authenticated via a Classic PAT (`WM_PUBLISH_PAT`) stored as an org-level Actions secret — `GITHUB_TOKEN` is not used for cross-repo push
 
 ### Content System
 
-- [ ] **CONTENT-01**: All active sites are migrated from the Astro 4 legacy content API (`src/content/config.ts` + `post.render()`) to the Astro 5 Content Layer API (`src/content.config.ts` + `loader: glob()` + `render(entry)`)
-- [ ] **CONTENT-02**: A canonical collection schema lives in `_core/src/content.config.ts` — all sites import from it; no schema drift between sites
-- [ ] **CONTENT-03**: All collection schemas use `z.coerce.date()` (not `z.date()`) — quoted dates from non-technical contributors do not break CI
-- [ ] **CONTENT-04**: Sites missing `src/content/` (`mogwai-systems`, `parrot-capital`) are scaffolded with `content.config.ts` before any content commands are run against them
-- [ ] **CONTENT-05**: `news` content type: Astro content collection at `src/content/news/` — frontmatter fields: `title`, `date`, `summary`, `image`, `imageCredit`, `tags[]`; rendered at `/news/` (list) and `/news/[slug]/` (detail)
-- [ ] **CONTENT-06**: `jobs` content type: Astro content collection at `src/content/jobs/` — frontmatter fields: `title`, `department`, `location`, `type` (full-time/part-time/contract), `open` (boolean), `date`; rendered at `/jobs/` (list, open-only by default) and `/jobs/[slug]/` (detail)
-- [ ] **CONTENT-07**: `announcements` content type: Astro content collection at `src/content/announcements/` — frontmatter fields: `title`, `date`, `summary`, `tags[]`; rendered at `/announcements/` (list) and `/announcements/[slug]/` (detail)
-- [ ] **CONTENT-08**: `blog` content type: Astro content collection at `src/content/blog/` — frontmatter fields: `title`, `date`, `author`, `summary`, `image`, `tags[]`; rendered at `/blog/` (list) and `/blog/[slug]/` (detail)
-- [ ] **CONTENT-09**: `/wm-add-news`, `/wm-add-job`, `/wm-add-announcement`, `/wm-add-blog` skills: guided entry → write `.md` to content collection → commit → site rebuilds on next deploy
-- [ ] **CONTENT-10**: New `.md` content files follow `YYYY-MM-DD-slug.md` naming convention and are editable via GitHub web UI without a local build step
+- [x] **CONTENT-01**: All active sites are migrated from the Astro 4 legacy content API (`src/content/config.ts` + `post.render()`) to the Astro 5 Content Layer API (`src/content.config.ts` + `loader: glob()` + `render(entry)`)
+- [x] **CONTENT-02**: A canonical collection schema lives in `_core/src/content.config.ts` — all sites import from it; no schema drift between sites
+- [x] **CONTENT-03**: All collection schemas use `z.coerce.date()` (not `z.date()`) — quoted dates from non-technical contributors do not break CI
+- [x] **CONTENT-04**: Sites missing `src/content/` (`mogwai-systems`, `parrot-capital`) are scaffolded with `content.config.ts` before any content commands are run against them
+- [x] **CONTENT-05**: `news` content type: Astro content collection at `src/content/news/` — frontmatter fields: `title`, `date`, `summary`, `image`, `imageCredit`, `tags[]`; rendered at `/news/` (list) and `/news/[slug]/` (detail)
+- [x] **CONTENT-06**: `jobs` content type: Astro content collection at `src/content/jobs/` — frontmatter fields: `title`, `department`, `location`, `type` (full-time/part-time/contract), `open` (boolean), `date`; rendered at `/jobs/` (list, open-only by default) and `/jobs/[slug]/` (detail)
+- [x] **CONTENT-07**: `announcements` content type: Astro content collection at `src/content/announcements/` — frontmatter fields: `title`, `date`, `summary`, `tags[]`; rendered at `/announcements/` (list) and `/announcements/[slug]/` (detail)
+- [x] **CONTENT-08**: `blog` content type: Astro content collection at `src/content/blog/` — frontmatter fields: `title`, `date`, `author`, `summary`, `image`, `tags[]`; rendered at `/blog/` (list) and `/blog/[slug]/` (detail)
+- [x] **CONTENT-09**: `/wm-add-news`, `/wm-add-job`, `/wm-add-announcement`, `/wm-add-blog` skills: guided entry → write `.md` to content collection → commit → site rebuilds on next deploy
+- [x] **CONTENT-10**: New `.md` content files follow `YYYY-MM-DD-slug.md` naming convention and are editable via GitHub web UI without a local build step
 
 ### Brand Consistency
 
-- [ ] **BRAND-01**: `brand` block added to `wiring.json` schema: `hashtags[]`, `vocabulary[]`, `avoid[]`, `voice` (string descriptor)
-- [ ] **BRAND-02**: `/wm-wire` detects a missing `brand` block and prompts operator to build it interactively — outputs to `wiring.json`
-- [ ] **BRAND-03**: `/wm-add-news` (and all content skills) read `brand.hashtags` and suggest them for post tagging; scan draft content against `brand.avoid` and surface any matches before committing
+- [x] **BRAND-01**: `brand` block added to `wiring.json` schema: `hashtags[]`, `vocabulary[]`, `avoid[]`, `voice` (string descriptor)
+- [x] **BRAND-02**: `/wm-wire` detects a missing `brand` block and prompts operator to build it interactively — outputs to `wiring.json`
+- [x] **BRAND-03**: `/wm-add-news` (and all content skills) read `brand.hashtags` and suggest them for post tagging; scan draft content against `brand.avoid` and surface any matches before committing
 
 ### Collaboration Infrastructure
 
-- [ ] **COLLAB-01**: Each production repo ships with a `CONTRIBUTING.md` at first publish — defines two-tier model: direct push for `content/**/*.md` files; GitHub Issue for everything else (page edits, design changes, new pages, bugs)
-- [ ] **COLLAB-02**: Three YAML Issue templates per production repo: `content-request.yml`, `design-change.yml`, `bug-report.yml` — `config.yml` disables blank issues
-- [ ] **COLLAB-03**: GitHub Issues in production repos label design/page change requests automatically — operator triages them back into the WebsiteMocker sandbox pipeline
-- [ ] **COLLAB-04**: Production repos use a two-branch model — `main` branch holds `content/**/*.md` files + `content-ci.yml`; `gh-pages` branch holds built output only
-- [ ] **COLLAB-05**: `content-ci.yml` in each production repo dispatches WebsiteMocker's `content-sync.yml` when `content/**/*.md` files change on `main` — contributor content is synced into WebsiteMocker for operator review; operator runs `/wm-publish` to go live (revised per D-A6: no auto-publish)
+- [x] **COLLAB-01**: Each production repo ships with a `CONTRIBUTING.md` at first publish — defines two-tier model: direct push for `content/**/*.md` files; GitHub Issue for everything else (page edits, design changes, new pages, bugs)
+- [x] **COLLAB-02**: Three YAML Issue templates per production repo: `content-request.yml`, `design-change.yml`, `bug-report.yml` — `config.yml` disables blank issues
+- [x] **COLLAB-03**: GitHub Issues in production repos label design/page change requests automatically — operator triages them back into the WebsiteMocker sandbox pipeline
+- [x] **COLLAB-04**: Production repos use a two-branch model — `main` branch holds `content/**/*.md` files + `content-ci.yml`; `gh-pages` branch holds built output only
+- [x] **COLLAB-05**: `content-ci.yml` in each production repo dispatches WebsiteMocker's `content-sync.yml` when `content/**/*.md` files change on `main` — contributor content is synced into WebsiteMocker for operator review; operator runs `/wm-publish` to go live (revised per D-A6: no auto-publish)
 
 ### Design Artifact Ingestion
 
-- [ ] **INGEST-01**: `/wm-ingest <slug>` skill accepts a Claude Design HTML/CSS artifact (pasted or referenced); stages it in `_captures/<slug>/raw/`
-- [ ] **INGEST-02**: Full-site ingest mode: extracts all sections from the artifact into Astro components in `sites/<slug>/src/components/`; rewires to `_core/` Layout, Nav, Footer; updates `astro.config.mjs`; preserves `BASE_URL` routing
-- [ ] **INGEST-03**: Section/page ingest mode: extracts one page or section from the artifact and integrates it into an existing site without overwriting other pages; verifies routing and component integration
-- [ ] **INGEST-04**: Ingest scans for CSS variable name collisions between the artifact and existing site CSS before applying — operator is shown conflicts and confirms before proceeding
-- [ ] **INGEST-05**: Ingest copies all artifact images to `public/images/<slug>/` and rewrites `src` attributes to absolute paths; copies fonts to `public/fonts/` and rewrites CSS `url()` references
-- [ ] **INGEST-06**: Ingest converts `<link rel="stylesheet">` CSS to `<style>` blocks within Astro components — never imports artifact CSS globally
-- [ ] **INGEST-07**: After ingest, extracted CSS custom properties are surfaced as candidates for the site's `brand` block in `wiring.json`
+- [x] **INGEST-01**: `/wm-ingest <slug>` skill accepts a Claude Design HTML/CSS artifact (pasted or referenced); stages it in `_captures/<slug>/raw/`
+- [x] **INGEST-02**: Full-site ingest mode: extracts all sections from the artifact into Astro components in `sites/<slug>/src/components/`; rewires to `_core/` Layout, Nav, Footer; updates `astro.config.mjs`; preserves `BASE_URL` routing
+- [x] **INGEST-03**: Section/page ingest mode: extracts one page or section from the artifact and integrates it into an existing site without overwriting other pages; verifies routing and component integration
+- [x] **INGEST-04**: Ingest scans for CSS variable name collisions between the artifact and existing site CSS before applying — operator is shown conflicts and confirms before proceeding
+- [x] **INGEST-05**: Ingest copies all artifact images to `public/images/<slug>/` and rewrites `src` attributes to absolute paths; copies fonts to `public/fonts/` and rewrites CSS `url()` references *(scope adjusted: CDN fonts injected into Layout.astro; local font copy out of scope for Claude Design CDN-only artifacts)*
+- [x] **INGEST-06**: Ingest converts `<link rel="stylesheet">` CSS to `<style>` blocks within Astro components — never imports artifact CSS globally
+- [x] **INGEST-07**: After ingest, extracted CSS custom properties are surfaced as candidates for the site's `brand` block in `wiring.json`
 
 ## v2 Requirements
 
@@ -88,45 +88,45 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DEPLOY-01 | Phase 1 | Pending |
-| DEPLOY-02 | Phase 1 | Pending |
-| DEPLOY-03 | Phase 1 | Pending |
-| DEPLOY-04 | Phase 1 | Pending |
-| DEPLOY-05 | Phase 1 | Pending |
-| DEPLOY-06 | Phase 1 | Pending |
-| DEPLOY-07 | Phase 1 | Pending |
-| DEPLOY-08 | Phase 1 | Pending |
-| CONTENT-01 | Phase 2 | Pending |
-| CONTENT-02 | Phase 2 | Pending |
-| CONTENT-03 | Phase 2 | Pending |
-| CONTENT-04 | Phase 2 | Pending |
-| CONTENT-05 | Phase 2 | Pending |
-| CONTENT-06 | Phase 2 | Pending |
-| CONTENT-07 | Phase 2 | Pending |
-| CONTENT-08 | Phase 2 | Pending |
-| CONTENT-09 | Phase 2 | Pending |
-| CONTENT-10 | Phase 2 | Pending |
-| BRAND-01 | Phase 3 | Pending |
-| BRAND-02 | Phase 3 | Pending |
-| BRAND-03 | Phase 3 | Pending |
-| COLLAB-01 | Phase 4 | Pending |
-| COLLAB-02 | Phase 4 | Pending |
-| COLLAB-03 | Phase 4 | Pending |
-| COLLAB-04 | Phase 4 | Pending |
-| COLLAB-05 | Phase 4 | Pending |
-| INGEST-01 | Phase 5 | Pending |
-| INGEST-02 | Phase 5 | Pending |
-| INGEST-03 | Phase 5 | Pending |
-| INGEST-04 | Phase 5 | Pending |
-| INGEST-05 | Phase 5 | Pending |
-| INGEST-06 | Phase 5 | Pending |
-| INGEST-07 | Phase 5 | Pending |
+| DEPLOY-01 | Phase 1 | ✅ Complete |
+| DEPLOY-02 | Phase 1 | ✅ Complete |
+| DEPLOY-03 | Phase 1 | ✅ Complete |
+| DEPLOY-04 | Phase 1 | ✅ Complete |
+| DEPLOY-05 | Phase 1 | ✅ Complete |
+| DEPLOY-06 | Phase 1 | ✅ Complete |
+| DEPLOY-07 | Phase 1 | ✅ Complete |
+| DEPLOY-08 | Phase 1 | ✅ Complete |
+| CONTENT-01 | Phase 2 | ✅ Complete |
+| CONTENT-02 | Phase 2 | ✅ Complete |
+| CONTENT-03 | Phase 2 | ✅ Complete |
+| CONTENT-04 | Phase 2 | ✅ Complete |
+| CONTENT-05 | Phase 2 | ✅ Complete |
+| CONTENT-06 | Phase 2 | ✅ Complete |
+| CONTENT-07 | Phase 2 | ✅ Complete |
+| CONTENT-08 | Phase 2 | ✅ Complete |
+| CONTENT-09 | Phase 2 | ✅ Complete |
+| CONTENT-10 | Phase 2 | ✅ Complete |
+| BRAND-01 | Phase 3 | ✅ Complete |
+| BRAND-02 | Phase 3 | ✅ Complete |
+| BRAND-03 | Phase 3 | ✅ Complete |
+| COLLAB-01 | Phase 4 | ✅ Complete |
+| COLLAB-02 | Phase 4 | ✅ Complete |
+| COLLAB-03 | Phase 4 | ✅ Complete |
+| COLLAB-04 | Phase 4 | ✅ Complete |
+| COLLAB-05 | Phase 4 | ✅ Complete |
+| INGEST-01 | Phase 5 | ✅ Complete |
+| INGEST-02 | Phase 5 | ✅ Complete |
+| INGEST-03 | Phase 5 | ✅ Complete |
+| INGEST-04 | Phase 5 | ✅ Complete |
+| INGEST-05 | Phase 5 | ✅ Complete (scope adjusted — CDN fonts) |
+| INGEST-06 | Phase 5 | ✅ Complete |
+| INGEST-07 | Phase 5 | ✅ Complete |
 
 **Coverage:**
 - v1 requirements: 33 total
-- Mapped to phases: 33 (Phase 1: 8, Phase 2: 10, Phase 3: 3, Phase 4: 5, Phase 5: 7)
-- Unmapped: 0 ✓
+- Delivered: 33/33 ✅
+- Scope adjustments: INGEST-05 (CDN-only font handling accepted per plan boundary)
 
 ---
 *Requirements defined: 2026-08-20*
-*Last updated: 2026-08-20 after roadmap creation — traceability complete*
+*Last updated: 2026-08-21 — all 33 v1 requirements marked complete after phase verification*
