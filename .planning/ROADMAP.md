@@ -69,18 +69,12 @@ Plans:
   1. `wiring.json` for every active site contains a `brand` block with `hashtags[]`, `vocabulary[]`, `avoid[]`, and `voice`
   2. Running `/wm-wire` on a site with no `brand` block prompts the operator to build one interactively and writes the result to `wiring.json`
   3. Running `/wm-add-news` on a site with a `brand` block suggests hashtags from `brand.hashtags` and flags any `brand.avoid` matches before committing
-**Plans**: 9 plans
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Schema foundation: _core content.config.ts (4 Zod schemas) + TagPill + TypeBadge
-- [ ] 02-02-PLAN.md — _core news migration (Astro 5 API) + _core jobs pages
-- [ ] 02-03-PLAN.md — _core announcements + blog pages (parallel with 02-02)
-- [ ] 02-04-PLAN.md — sfdy-alt-clean content.config.ts + news migration
-- [ ] 02-05-PLAN.md — mogwai-systems + parrot-capital content.config + content dirs scaffold
-- [x] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
-- [ ] 02-07-PLAN.md — mogwai-systems all 4 collection page templates
-- [x] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
-- [ ] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
+- [ ] 03-01-PLAN.md — Brand schema stubs in all four active wiring.json files + _core/brand-schema.md (BRAND-01)
+- [ ] 03-02-PLAN.md — /wm-wire brand block section: first-run artifact workflow + recency-check update path (BRAND-02)
+- [ ] 03-03-PLAN.md — Content skill brand enforcement: all four wm-add-* skills (BRAND-03)
 
 ### Phase 4: Collaboration Infrastructure
 **Goal**: Production repos are contributor-ready — team members can push content directly or file structured issues, and the site rebuilds automatically on content pushes without operator intervention
@@ -92,18 +86,10 @@ Plans:
   2. Three YAML issue templates (`content-request.yml`, `design-change.yml`, `bug-report.yml`) are present in each production repo with blank issues disabled
   3. A contributor pushing a new `.md` file to `content/**` on the production repo `main` branch triggers `content-ci.yml`, which dispatches `publish.yml` and rebuilds the live site automatically
   4. Production repo `main` branch holds `content/**/*.md` files editable via GitHub web UI — no local build step required to publish a content entry
-**Plans**: 9 plans
+**Plans**: TBD
 
 Plans:
-- [ ] 02-01-PLAN.md — Schema foundation: _core content.config.ts (4 Zod schemas) + TagPill + TypeBadge
-- [ ] 02-02-PLAN.md — _core news migration (Astro 5 API) + _core jobs pages
-- [ ] 02-03-PLAN.md — _core announcements + blog pages (parallel with 02-02)
-- [ ] 02-04-PLAN.md — sfdy-alt-clean content.config.ts + news migration
-- [ ] 02-05-PLAN.md — mogwai-systems + parrot-capital content.config + content dirs scaffold
-- [x] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
-- [ ] 02-07-PLAN.md — mogwai-systems all 4 collection page templates
-- [x] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
-- [ ] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
+- (to be planned)
 
 ### Phase 5: Design Artifact Ingestion
 **Goal**: Operator can feed a Claude Design HTML/CSS artifact into any site and get functioning, routed Astro components without manual file surgery
@@ -115,18 +101,10 @@ Plans:
   2. Single-page and full-site ingest modes both produce a build that passes `npm run build` for the target site
   3. CSS variable name collisions between the artifact and the existing site are surfaced and must be confirmed before any changes are applied
   4. All artifact images land in `public/images/<slug>/` and fonts in `public/fonts/` — no broken asset references after ingest; extracted CSS custom properties are surfaced as `brand` block candidates
-**Plans**: 9 plans
+**Plans**: TBD
 
 Plans:
-- [ ] 02-01-PLAN.md — Schema foundation: _core content.config.ts (4 Zod schemas) + TagPill + TypeBadge
-- [ ] 02-02-PLAN.md — _core news migration (Astro 5 API) + _core jobs pages
-- [ ] 02-03-PLAN.md — _core announcements + blog pages (parallel with 02-02)
-- [ ] 02-04-PLAN.md — sfdy-alt-clean content.config.ts + news migration
-- [ ] 02-05-PLAN.md — mogwai-systems + parrot-capital content.config + content dirs scaffold
-- [x] 02-06-PLAN.md — sfdy-alt-clean jobs + announcements + blog pages
-- [ ] 02-07-PLAN.md — mogwai-systems all 4 collection page templates
-- [x] 02-08-PLAN.md — parrot-capital all 4 collection page templates (parallel with 02-07)
-- [ ] 02-09-PLAN.md — Content skills: update wm-add-news + create wm-add-job/announcement/blog
+- (to be planned)
 
 ## Progress
 
@@ -137,6 +115,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Production Deploy Pipeline | 2/2 | Complete | 2026-08-20 |
 | 2. Content System | 9/9 | Complete | 2026-08-20 |
-| 3. Brand Consistency | 0/TBD | Not started | - |
+| 3. Brand Consistency | 0/3 | Not started | - |
 | 4. Collaboration Infrastructure | 0/TBD | Not started | - |
 | 5. Design Artifact Ingestion | 0/TBD | Not started | - |
