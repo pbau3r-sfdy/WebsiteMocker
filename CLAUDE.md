@@ -86,11 +86,50 @@ WebsiteMocker (sandbox, pbau3r-sfdy/WebsiteMocker)
             pushes dist/<slug>/ → pbau3r-sfdy/<slug>  gh-pages branch
                                           │
                                           └── GitHub Pages → custom domain ✓
+
+pbau3r-sfdy/<slug>  main branch (contributor surface)
+    │
+    │  contributor pushes content/**/*.md
+    │
+    └── content-ci.yml dispatches content-updated to WebsiteMocker
+            ↓
+        content-sync.yml copies *.md into sites/<slug>/src/content/
+        commits to WebsiteMocker main — does NOT build, does NOT publish
+            ↓
+        operator reviews, then runs /wm-publish <slug> to go live
 ```
 
-Each production repo in `pbau3r-sfdy` contains **built output only** (gh-pages branch). The source always lives here in WebsiteMocker.
+Each production repo in `pbau3r-sfdy` has two branches:
+- `main` — contributor surface (`content/**/*.md`, `.github/`, `CONTRIBUTING.md`). Default branch.
+- `gh-pages` — built output only. Force-overwritten by every publish. Never hand-edited.
+
+The source always lives in WebsiteMocker.
 
 > The production org is `pbau3r-sfdy`. Production repos live at `github.com/pbau3r-sfdy/`.
+
+## Contributor collaboration (production repos)
+
+Each production-bound site supports a two-tier contribution model once `/wm-init-collab <slug>` has been run:
+
+| Tier | Path |
+|---|---|
+| Content `.md` files under `content/` | Direct push to `main`; auto-synced to WebsiteMocker for operator review |
+| Everything else (design, layout, bug reports) | GitHub Issue using one of the three issue templates |
+
+**Branch model:** `main` = contributor surface and default branch. `gh-pages` = generated output, never hand-edited.
+
+**A contributor push does NOT publish.** It triggers `content-sync.yml`, which syncs the `.md` files into WebsiteMocker for review. Going live requires the operator to run `/wm-publish <slug>`.
+
+**Additive-only policy:** deleting a content file from the production repo does not unpublish it from the live site.
+
+**Setting up a production repo:**
+
+```bash
+node _scripts/init-prod-repo.mjs <slug>          # dry run — shows what will happen
+node _scripts/init-prod-repo.mjs <slug> --confirm # execute
+```
+
+`/wm-init-collab <slug>` is the preferred operator entry point because it also handles the `WM_DISPATCH_PAT` step inline.
 
 ## Quick reference — all skills
 
@@ -104,6 +143,7 @@ Each production repo in `pbau3r-sfdy` contains **built output only** (gh-pages b
 | `/wm-deploy` | Build and push to sandbox GitHub Pages |
 | `/wm-preflight` | Full readiness checklist before deploy |
 | `/wm-wire` | Interactive wizard for all service connections |
+| `/wm-init-collab` | Make a production repo contributor-ready (branch, templates, labels, PAT) |
 
 ### Content (inherited from `_core/.claude/skills/`)
 | Skill | What it does |
@@ -148,7 +188,9 @@ WebsiteMocker/
 ├── _core/               ← base template (all sites inherit)
 ├── _scripts/
 │   ├── build-all.js     ← builds dashboard + all sites
-│   └── capture-site.mjs ← Playwright capture (Wix/SPA-safe)
+│   ├── capture-site.mjs ← Playwright capture (Wix/SPA-safe)
+│   └── init-prod-repo.mjs ← bootstrap a production repo for contributors
+├── _templates/          ← production repo bundle (CONTRIBUTING.md, issue templates, content-ci.yml)
 ├── sites/
 │   ├── sfdy/            ← Starflight Dynamics (stage 2, production-bound)
 │   ├── parrot-capital/  ← Parrot Capital UG (stage 4, production-bound)
@@ -160,7 +202,8 @@ WebsiteMocker/
 ├── .claude/skills/      ← framework-level skills
 ├── .github/workflows/
 │   ├── deploy.yml       ← sandbox deploy (every push to main)
-│   └── publish.yml      ← production publish (manual, per site) [TODO]
+│   ├── publish.yml      ← production publish (manual, per site)
+│   └── content-sync.yml ← receives contributor content (no publish)
 ├── src/pages/index.astro   ← dashboard
 └── public/
     ├── robots.txt       ← Disallow: / (sandbox — never indexed)

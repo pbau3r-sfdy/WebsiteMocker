@@ -82,3 +82,5 @@ Build and publish a stage-5 site to its production GitHub Pages URL.
 - `WM_PUBLISH_PAT` must be stored as a repo-level Actions secret before this skill can succeed
 - Check workflow status anytime: `gh run list --workflow publish.yml --limit 5`
 - Re-deploying an already-live site (stage 6) is safe — publish.yml is idempotent; CNAME and robots.txt are re-written on every run
+- Contributor content arriving from a production repo is synced into `sites/<slug>/src/content/` by `content-sync.yml` and then waits — it does not publish. Publishing synced content is this skill's job; review the sync commit in WebsiteMocker before running `/wm-publish`
+- To see what synced content is waiting for review: `gh run list --workflow content-sync.yml --limit 5`. To make a production repo contributor-ready in the first place, run `/wm-init-collab <slug>`
