@@ -1,0 +1,147 @@
+name: Sync Content from Production Repo
+
+# This workflow only moves Markdown files into the WebsiteMocker repository for
+# operator review. It never builds and never publishes anything. The live site is
+# unchanged until the operator explicitly runs /wm-publish <slug>.
+#
+# Triggered by a repository_dispatch event (type: content-updated) from a
+# production repo whose content-ci.yml runs on contributor pushes to content/.
+
+on:
+  repository_dispatch:
+    types: [content-updated]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Site slug to sync (e.g. sfdy-alt-clean) — debugging affordance only, does not publish'
+        required: true
+        type: string
+
+# Serialise per site so two dispatches cannot race the same git push.
+# cancel-in-progress: false ensures a burst of dispatches queues rather than drops.
+concurrency:
+  group: content-sync-${{ github.event_name == 'repository_dispatch' && github.event.client_payload.slug || inputs.slug }}
+  cancel-in-progress: false
+
+# No top-level permissions block — WM_PUBLISH_PAT provides access, matching publish.yml convention.
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Resolve slug
+        id: slug-step
+        # T-04-01: The client_payload.slug value is attacker-controllable and must NEVER
+        # be interpolated into the run: body. It is passed via DISPATCH_SLUG env var only.
+        # The github.event_name context is safe to interpolate — it is not user-controlled.
+        env:
+          DISPATCH_SLUG: ${{ github.event.client_payload.slug }}
+          INPUT_SLUG: ${{ inputs.slug }}
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            SLUG="$DISPATCH_SLUG"
+          else
+            SLUG="$INPUT_SLUG"
+          fi
+          if [ -z "$SLUG" ]; then
+            echo "Error: slug is empty" >&2
+            exit 1
+          fi
+          if [[ ! "$SLUG" =~ ^[a-z0-9-]+$ ]]; then
+            echo "Error: slug must match ^[a-z0-9-]+$" >&2
+            exit 1
+          fi
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # PAT required so the commit-back git push in the final step succeeds.
+          # GITHUB_TOKEN cannot push back to the WebsiteMocker repo's main branch.
+          token: ${{ secrets.WM_PUBLISH_PAT }}
+          # CR-02: persist-credentials must be false so the PAT remote URL set later
+          # (git remote set-url origin https://x-access-token:PAT@...) is not silently
+          # overridden by credentials stored in the git config by actions/checkout.
+          persist-credentials: false
+
+      - name: Read wiring.json
+        id: wiring
+        env:
+          SLUG: ${{ steps.slug-step.outputs.slug }}
+        run: |
+          node -e "
+            const fs = require('fs');
+            const slug = process.env.SLUG;
+            if (!/^[a-z0-9-]+$/.test(slug)) {
+              console.error('Error: slug must match ^[a-z0-9-]+\$');
+              process.exit(1);
+            }
+            const path = 'sites/' + slug + '/wiring.json';
+            let w;
+            try { w = JSON.parse(fs.readFileSync(path, 'utf-8')); }
+            catch(e) { console.error('Error: cannot read ' + path); process.exit(1); }
+            if (!w.prod_repo) {
+              console.error('Error: prod_repo missing in wiring.json for ' + slug);
+              process.exit(1);
+            }
+            // WR-04: strip any newlines from values before writing to GITHUB_OUTPUT
+            const prod_repo = w.prod_repo.replace(/[\r\n]/g, '');
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'prod_repo=' + prod_repo + '\n');
+            console.log('Resolved: slug=' + slug + ' prod_repo=' + prod_repo);
+          "
+
+      - name: Sync content
+        # T-04-02: find -type f excludes symlinks a contributor could aim outside the
+        # content tree. find -name '*.md' ensures no non-Markdown file (including .yml)
+        # can enter the WebsiteMocker source tree.
+        env:
+          PROD_REPO: ${{ steps.wiring.outputs.prod_repo }}
+          SLUG: ${{ steps.slug-step.outputs.slug }}
+        run: |
+          git clone --depth 1 --branch main "https://github.com/${PROD_REPO}.git" /tmp/prod-content || {
+            echo "No main branch on ${PROD_REPO} — nothing to sync"
+            exit 0
+          }
+          if [ ! -d /tmp/prod-content/content ]; then
+            echo "No content/ directory in ${PROD_REPO} — nothing to sync"
+            exit 0
+          fi
+          # Additive sync (D-A4) — deletions in the production repo are NOT propagated
+          while IFS= read -r -d '' srcfile; do
+            relpath="${srcfile#/tmp/prod-content/content/}"
+            destfile="sites/${SLUG}/src/content/${relpath}"
+            mkdir -p "$(dirname "$destfile")"
+            cp "$srcfile" "$destfile"
+            echo "  synced: $relpath"
+          done < <(find /tmp/prod-content/content -type f -name '*.md' -print0)
+
+      - name: Commit to WebsiteMocker main
+        env:
+          SLUG: ${{ steps.slug-step.outputs.slug }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "sites/${SLUG}/src/content/"
+          git commit -m "chore(${SLUG}): sync content from production repo" || echo "No content changes"
+          git remote set-url origin "https://x-access-token:${{ secrets.WM_PUBLISH_PAT }}@github.com/${{ github.repository }}.git"
+          git push origin main
+
+      - name: Report
+        env:
+          SLUG: ${{ steps.slug-step.outputs.slug }}
+          PROD_REPO: ${{ steps.wiring.outputs.prod_repo }}
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" << 'SUMMARY_EOF'
+          ## Content Sync Complete
+
+          SUMMARY_EOF
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Site slug | \`${SLUG}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Source repo | \`${PROD_REPO}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Content files from \`${PROD_REPO}\` have been committed to \`sites/${SLUG}/src/content/\` for operator review." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "> **The live site is unchanged.** To publish the synced content, run: \`/wm-publish ${SLUG}\`" >> "$GITHUB_STEP_SUMMARY"
