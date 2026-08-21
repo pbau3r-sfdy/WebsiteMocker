@@ -497,6 +497,7 @@ const sectionNodes = bodyNode?.children.filter(
 ) ?? [];
 
 const componentNames = [];
+const usedNames = new Map(); // baseName → count; tracks collisions across loop iterations
 let base64Count = 0;
 
 for (const node of sectionNodes) {
@@ -530,7 +531,13 @@ for (const node of sectionNodes) {
   // Rewrite remaining local src="/" and href="/" paths to {b}/ pattern
   sectionHtml = rewriteLocalPaths(sectionHtml, slug);
 
-  const componentName = toPascalCase(name);
+  const baseName   = toPascalCase(name);
+  const useCount   = usedNames.get(baseName) ?? 0;
+  usedNames.set(baseName, useCount + 1);
+  if (useCount > 0) {
+    warn(`Duplicate section name "${baseName}" — writing as ${baseName}${useCount + 1}.astro`);
+  }
+  const componentName = useCount === 0 ? baseName : `${baseName}${useCount + 1}`;
   const component     = toAstroComponent(sectionHtml, scopedCSS, componentName, date);
   const componentPath = join(componentsDir, `${componentName}.astro`);
 
