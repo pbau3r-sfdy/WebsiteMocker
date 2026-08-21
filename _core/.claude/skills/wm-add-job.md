@@ -33,14 +33,35 @@ Add a job listing to this site.
    - `open` is a boolean — no quotes
    - `type` must be exactly one of: `full-time`, `part-time`, `contract`
 
-4. **Commit and push**:
+4. **Brand signal check** (skip entirely if no `brand` key in `sites/<site-slug>/wiring.json`, or all brand arrays are empty):
+   - Read `sites/<site-slug>/wiring.json` and check for the `brand` key. Determine the site slug from the context established in step 1 (or ask if ambiguous).
+   - If the `brand` key is absent, or if `brand.hashtags`, `brand.vocabulary`, and `brand.avoid` are all empty arrays, continue silently to Step 5 — output nothing, do not mention the brand block.
+   - When the brand block is present with at least one non-empty field, run the applicable sub-steps:
+
+   **Note:** This is a narrower check than wm-add-news. Job listings have no `tags[]` frontmatter field, so hashtag enrichment does not apply. Only avoid scan and vocabulary nudge are performed.
+
+   **Sub-step A — Avoid scan** (runs when `brand.avoid` is non-empty):
+   - Perform a case-insensitive plain string match of each `brand.avoid` term against the full draft body text.
+   - If any term matches, surface a warning for each one: "⚠ Draft contains '[matched term]' which is on your avoid list. Continue anyway? (y/N)" — default N.
+   - This is non-blocking: if the operator confirms (y), proceed without removing the term. Never block the commit based on avoid matches.
+
+   **Sub-step B — Vocabulary nudge** (runs when `brand.vocabulary` is non-empty):
+   - Review the draft body text for concepts that could be expressed using a `brand.vocabulary` term.
+   - If a match opportunity is found, note it as a suggestion: "Suggestion: consider using '[vocabulary term]' here."
+   - This is informational only — the operator always wins. Do not loop or repeat suggestions.
+
+   **Hashtag enrichment:** Not applicable to job listings — job listings have no `tags[]` frontmatter field, so `brand.hashtags` is not consulted and no hashtag suggestions are made. Do not offer to add hashtags to the brand kit.
+
+   **Voice field:** Do not read or act on the `voice` field in this step — it is informational only in Phase 3.
+
+5. **Commit and push**:
    ```bash
    git add src/content/jobs/<slug>.md
    git commit -m "content(<site-slug>): add job — <title>"
    git push
    ```
 
-5. **Report**: confirm file path and remind operator that the site rebuilds on next deploy or `/wm-publish` run.
+6. **Report**: confirm file path and remind operator that the site rebuilds on next deploy or `/wm-publish` run.
 
 ## Notes
 - Date MUST be a quoted string: `date: "YYYY-MM-DD"` — both unquoted and quoted dates work at build time, but quoted dates work when contributors edit via GitHub web UI
