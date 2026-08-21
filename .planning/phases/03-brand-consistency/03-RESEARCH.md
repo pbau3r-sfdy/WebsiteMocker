@@ -398,22 +398,25 @@ The three-way prompt ("Configure now / Skip for later / Not needed") is already 
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Does mogwai-systems have a keywords.json?**
    - What we know: wiring.json has `capture: null`, no keywords.json found in site root during inspection
    - What's unclear: keywords.json may exist but wasn't checked directly
    - Recommendation: Planner should add a "check for keywords.json" instruction to the pre-fill step; graceful degradation if absent
+   - **RESOLVED:** 03-02 handles gracefully — skill checks for keywords.json existence and skips if absent; skips capture entirely when capture is null. No error in either case.
 
 2. **Should brand block stubs be added to all 4 active wiring.json files as part of BRAND-01, or only created on first wm-wire run?**
    - What we know: BRAND-01 requirement says "brand block added to wiring.json schema" — schema definition, not necessarily population
    - What's unclear: "Added to schema" could mean document the schema, or actually insert stubs
    - Recommendation: Add minimal stubs to all 4 active wiring.json files in BRAND-01 plan. Stubs make the schema immediately discoverable by Claude.ai when operators read wiring.json directly. Stubs with empty arrays are inert — content skills see them as "exists but empty" and behave like no-op.
+   - **RESOLVED:** 03-01 adds minimal empty stubs to all 4 active wiring.json files (sfdy-alt-clean, mogwai-systems, parrot-capital, crestworks) and creates _core/brand-schema.md as a discoverable reference.
 
 3. **Voice field: how does it influence content skills?**
    - What we know: `voice` is a string descriptor; BRAND-03 specifies hashtag suggestions, avoid scan, and vocabulary nudge — but not voice enforcement
    - What's unclear: Whether voice should surface in content skills at all in Phase 3
    - Recommendation: In Phase 3, voice is informational only — displayed in the artifact template for operator context but not actively read by content skills. Content skills read hashtags, avoid, vocabulary. Voice is deferred to Phase 4+ where richer brand enforcement could apply. Planner should encode this explicitly in content skill instructions.
+   - **RESOLVED:** Voice is informational only in Phase 3. 03-03 content skill tasks explicitly exclude voice from enforcement logic. 03-01 brand-schema.md documents the voice field's intent and its Phase 3 scope (context only, not enforced).
 
 ---
 
