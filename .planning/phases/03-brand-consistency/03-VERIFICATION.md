@@ -1,26 +1,29 @@
 ---
 phase: 03-brand-consistency
 verified: 2026-08-20T00:00:00Z
-status: verified
-score: 3/3 must-haves verified
+status: fully_verified
+score: 3/3 must-haves verified + 3/3 human checks passed
 overrides_applied: 0
 human_verification:
   - test: "Run /wm-wire on mogwai-systems, choose 'Configure now' for Brand block"
     expected: "Skill reads only name/domain (skips capture because capture=null), generates a pre-filled template with the four required keys, prints the 'Take this to Claude.ai' instruction, waits for paste-back, validates the pasted JSON, then writes to wiring.json"
     why_human: "Skill files are Claude instruction documents — interactive wizard flow can only be confirmed in a live Claude session. Plan 03-02 had a blocking checkpoint:human-verify task that was substituted by code inspection in the SUMMARY."
+    result: "PASS — 2026-08-20. capture=null skipped silently. Template generated from name/domain + keywords.json (sparse, as expected). Paste-back validated (4 keys, correct types). Written to wiring.json correctly."
   - test: "Run /wm-wire on parrot-capital, choose 'Skip for later' for Brand block"
     expected: "Stage advancement is not blocked — skill proceeds to next service / stage advance check without error or gate"
     why_human: "Non-blocking skip behavior and stage gate logic can only be confirmed by watching the wizard execute"
+    result: "PASS — 2026-08-20. Brand key left unchanged (empty stub). Stage 6 unchanged. No error, no gate, no prompt."
   - test: "Run /wm-wire on any site a second time the same day (last_deploy = today), choose 'Configure now'"
     expected: "Recency check fires: skill skips the 'Has anything changed?' prompt and immediately shows current brand fields"
     why_human: "Date-comparison branch in the recency check requires observing the wizard's actual runtime decision"
+    result: "PASS — 2026-08-20. last_deploy set to 2026-08-20 (today). Subsequent-run path: date match detected, 'Has anything changed?' prompt suppressed, current fields displayed directly."
 ---
 
 # Phase 3: Brand Consistency — Verification Report
 
 **Phase Goal:** Every active site has a structured `brand` block in `wiring.json` that content skills read and enforce at write time
 **Verified:** 2026-08-20
-**Status:** human_needed
+**Status:** fully_verified — all human checks passed 2026-08-20
 **Re-verification:** No — initial verification
 
 ## Goal Achievement
