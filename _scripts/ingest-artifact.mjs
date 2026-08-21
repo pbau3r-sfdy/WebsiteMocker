@@ -257,6 +257,9 @@ if (modeArg === 'section' && !sectionArg) {
 // Uses simple split-on-} approach as specified (MVP — does not handle nested @media).
 function extractScopedCSS(cssText, sectionClass, sectionId) {
   if (!cssText) return '';
+  if (/@media\s/.test(cssText)) {
+    warn('Artifact contains @media blocks — responsive rules are not extracted by this MVP parser. Add them manually to the component <style>.');
+  }
   const rules = [];
   const blocks = cssText.split('}');
   for (const block of blocks) {
