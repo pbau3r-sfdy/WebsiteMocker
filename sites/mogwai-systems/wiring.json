@@ -8,5 +8,11 @@
   "prod_repo": "pbau3r-sfdy/mogwai-systems",
   "last_deploy": "2026-08-18",
   "capture": null,
+  "brand": {
+    "hashtags": [],
+    "vocabulary": [],
+    "avoid": [],
+    "voice": ""
+  },
   "notes": "Holding page for the MOGWAI programme. Black canvas, starfield, emblem, standing-by state. Legal pages carry Starflight Dynamics GmbH as operator. Live at https://www.mogwai-systems.com"
 }

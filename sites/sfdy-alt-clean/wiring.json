@@ -31,6 +31,12 @@
     "impressum": "complete",
     "privacy": "complete"
   },
+  "brand": {
+    "hashtags": [],
+    "vocabulary": [],
+    "avoid": [],
+    "voice": ""
+  },
   "capture": "sfdy",
   "notes": "Live at https://www.starflight-dynamics.com — redesign replacing sfdy. Prod repo: pbau3r-sfdy/starflight-dynamics."
 }
