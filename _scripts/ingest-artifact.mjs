@@ -468,14 +468,12 @@ const date        = new Date().toISOString().slice(0, 10);
 // ── Create output directories ─────────────────────────────────────────────────
 const componentsDir  = join(siteDir, 'src', 'components');
 const publicImagesDir = join(siteDir, 'public', 'images', slug);
-const publicFontsDir  = join(siteDir, 'public', 'fonts'); // stub for future local font support
 
 if (!DRY_RUN) {
   mkdirSync(componentsDir,   { recursive: true });
   mkdirSync(publicImagesDir, { recursive: true });
-  mkdirSync(publicFontsDir,  { recursive: true });
 } else {
-  dry(`would create dirs: src/components/, public/images/${slug}/, public/fonts/`);
+  dry(`would create dirs: src/components/, public/images/${slug}/`);
 }
 
 // ── SECTION MODE ROUTING ──────────────────────────────────────────────────────
