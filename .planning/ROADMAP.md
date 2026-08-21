@@ -138,11 +138,17 @@ Plans:
   3. CSS variable name collisions between the artifact and the existing site are surfaced and must be confirmed before any changes are applied
   4. All artifact images land in `public/images/<slug>/` and fonts in `public/fonts/` — no broken asset references after ingest; extracted CSS custom properties are surfaced as `brand` block candidates
 
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
 
-- (to be planned)
+**Wave 1**
+
+- [ ] 05-01-PLAN.md — Script core: ingest-artifact.mjs with --analyze mode (collision detect, section manifest, INGEST-07 brand candidates) + full-site write mode (components, assets, index.astro)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 05-02-PLAN.md — Section mode in script + /wm-ingest operator skill (7-step guided flow with mandatory collision gate)
 
 ## Progress
 
@@ -154,5 +160,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Production Deploy Pipeline | 2/2 | Complete | 2026-08-20 |
 | 2. Content System | 9/9 | Complete | 2026-08-20 |
 | 3. Brand Consistency | 3/3 | Complete | 2026-08-20 |
-| 4. Collaboration Infrastructure | 0/5 | Planned | - |
-| 5. Design Artifact Ingestion | 0/TBD | Not started | - |
+| 4. Collaboration Infrastructure | 5/5 | Complete | 2026-08-21 |
+| 5. Design Artifact Ingestion | 0/2 | Planned | - |
