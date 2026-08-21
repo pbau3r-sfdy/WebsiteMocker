@@ -1,0 +1,51 @@
+name: Content Request
+description: Request a new content item, or a change or removal of an existing one.
+title: "[Content] "
+labels: ["content-request"]
+body:
+  - type: dropdown
+    id: content-type
+    attributes:
+      label: Content Type
+      options:
+        - News article
+        - Job posting
+        - Announcement
+        - Blog post
+        - Change to existing content
+        - Remove existing content
+    validations:
+      required: true
+
+  - type: input
+    id: headline
+    attributes:
+      label: Headline or title
+    validations:
+      required: true
+
+  - type: textarea
+    id: body
+    attributes:
+      label: What should this say?
+      description: >
+        Include key points, facts, dates, and links. The more detail you provide,
+        the easier it is for the operator to draft or update the content accurately.
+    validations:
+      required: true
+
+  - type: input
+    id: deadline
+    attributes:
+      label: Publish by (optional)
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: false
+
+  - type: textarea
+    id: assets
+    attributes:
+      label: Images or files (optional)
+      description: Drag image files into this box to attach them to the issue.
+    validations:
+      required: false
