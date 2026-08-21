@@ -44,6 +44,7 @@ Add a news post to this site.
    - After the operator finalises the tags list, identify any tags that are NOT already in `brand.hashtags`.
    - For each new tag, ask individually: "Add '[tag]' to your brand hashtag kit? (y/N)" — default is N (operator must explicitly type y or yes).
    - If the operator confirms any additions, stage those updates to `brand.hashtags` in memory; they will be written to `wiring.json` in the commit step (Step 7).
+   - After all confirmations: immediately write confirmed additions to `wiring.json brand.hashtags` on disk (do not defer to the commit step) — this prevents silent loss if the session is interrupted between the brand check and commit.
 
    **Sub-step B — Avoid scan** (runs when `brand.avoid` is non-empty):
    - Perform a case-insensitive plain string match of each `brand.avoid` term against the full draft body text.
@@ -75,6 +76,7 @@ Add a news post to this site.
    git commit -m "content(<slug>): add news — <title>"
    git push
    ```
+   Before running git add, re-read `wiring.json brand.hashtags` to confirm confirmed additions are present; if a session interruption discarded them, re-apply from the operator's confirmation before staging.
 
 8. **Report**: file path, social post draft, and note that the site rebuilds on next deploy or `/wm-publish` run.
 
