@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WebsiteMocker — Operator Manual</title>
+<meta name="description" content="How to build, publish, and maintain branded websites using WebsiteMocker — without writing code." />
+<style>
+
+/* ── TOKENS ─────────────────────────────────────────────────────────── */
+:root {
+  --bg:         #F2F3F6;
+  --surface:    #E4E6EC;
+  --border:     #C8CCD6;
+  --text:       #141720;
+  --muted:      #5A6072;
+  --accent:     #1C5F8E;
+  --accent-dim: #DDE8F5;
+  --success:    #1A6B35;
+  --warning:    #7A5200;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:         #0C0E14;
+    --surface:    #141820;
+    --border:     #20283C;
+    --text:       #E4E8F4;
+    --muted:      #7880A2;
+    --accent:     #5AACD8;
+    --accent-dim: #0D1826;
+    --success:    #4AB86A;
+    --warning:    #D6A040;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:         #0C0E14;
+  --surface:    #141820;
+  --border:     #20283C;
+  --text:       #E4E8F4;
+  --muted:      #7880A2;
+  --accent:     #5AACD8;
+  --accent-dim: #0D1826;
+  --success:    #4AB86A;
+  --warning:    #D6A040;
+}
+
+/* ── RESET ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem 1.75rem 7rem;
+}
+
+/* ── TYPE SCALE ─────────────────────────────────────────────────────── */
+h1, h2 {
+  font-family: Georgia, 'Times New Roman', 'Book Antiqua', serif;
+  text-wrap: balance;
+}
+h1 {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.5rem;
+}
+h2 {
+  font-size: 1.45rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin-top: 3.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+h3 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+p  { margin-bottom: 1rem; max-width: 68ch; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; max-width: 68ch; }
+li { margin-bottom: 0.4rem; }
+strong { font-weight: 600; }
+a  { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+/* ── INLINE CODE + BLOCKS ───────────────────────────────────────────── */
+code {
+  font-family: ui-monospace, 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+  font-weight: 500;
+  background: var(--accent-dim);
+  color: var(--accent);
+  padding: 0.1em 0.5em;
+  border-radius: 4px;
+}
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+pre code {
+  background: none;
+  color: var(--text);
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  border-radius: 0;
+}
+
+/* ── CALLOUTS ───────────────────────────────────────────────────────── */
+.note, .tip, .warning {
+  padding: 0.9rem 1.1rem;
+  margin: 1.75rem 0;
+  background: var(--surface);
+  border-left: 3px solid var(--border);
+  border-radius: 0 6px 6px 0;
+  max-width: 68ch;
+}
+.note    { border-left-color: var(--accent); }
+.tip     { border-left-color: var(--success); }
+.warning { border-left-color: var(--warning); }
+.label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.note    .label { color: var(--accent); }
+.tip     .label { color: var(--success); }
+.warning .label { color: var(--warning); }
+.note p, .tip p, .warning p { margin-bottom: 0; max-width: none; }
+
+/* ── PAGE HEADER ────────────────────────────────────────────────────── */
+.doc-header {
+  border-bottom: 2px solid var(--text);
+  padding-bottom: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+  max-width: 60ch;
+}
+
+/* ── TOC ────────────────────────────────────────────────────────────── */
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin: 2.25rem 0;
+}
+.toc-heading {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+.toc ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+  margin: 0;
+  columns: 2;
+  column-gap: 2.5rem;
+}
+.toc li { margin-bottom: 0.3rem; font-size: 0.9rem; break-inside: avoid; }
+.toc a  { color: var(--text); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+
+/* ── STAGE TRACK ────────────────────────────────────────────────────── */
+.stages {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin: 2rem 0;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+.stage {
+  flex: 1;
+  min-width: 76px;
+  text-align: center;
+  position: relative;
+}
+.stage::after {
+  content: '';
+  position: absolute;
+  top: 19px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.stage:last-child::after { display: none; }
+.stage-dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0 auto 0.5rem;
+  position: relative;
+  z-index: 1;
+  font-family: ui-monospace, monospace;
+}
+.stage.live .stage-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.stage-name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  line-height: 1.3;
+}
+.stage-req {
+  font-size: 0.62rem;
+  color: var(--muted);
+  opacity: 0.7;
+  line-height: 1.3;
+}
+.stage.live .stage-name { color: var(--accent); }
+
+/* ── PREREQUISITES GRID ─────────────────────────────────────────────── */
+.prereq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.prereq-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+}
+.prereq-card strong { display: block; font-size: 0.88rem; margin-bottom: 0.2rem; }
+.prereq-card span   { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+.prereq-card.optional { border-style: dashed; opacity: 0.8; }
+
+/* ── STEP LIST ──────────────────────────────────────────────────────── */
+.steps { list-style: none; padding: 0; counter-reset: step; margin: 1.5rem 0; }
+.steps > li {
+  counter-increment: step;
+  padding-left: 2.75rem;
+  position: relative;
+  margin-bottom: 1.25rem;
+  max-width: 68ch;
+}
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: ui-monospace, monospace;
+}
+
+/* ── TABLES ─────────────────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th {
+  text-align: left;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+
+/* ── FOOTER ─────────────────────────────────────────────────────────── */
+footer {
+  margin-top: 4rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════ HEADER -->
+<header class="doc-header">
+  <p class="eyebrow">Operator Manual · v1.0</p>
+  <h1>WebsiteMocker</h1>
+  <p class="subtitle">How to build, publish, and maintain branded websites — without writing code.</p>
+</header>
+
+<!-- ══════════════════════════════════ TOC -->
+<nav class="toc" aria-label="Contents">
+  <p class="toc-heading">On this page</p>
+  <ol>
+    <li><a href="#what-is">What is WebsiteMocker?</a></li>
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#prerequisites">What you need first</a></li>
+    <li><a href="#new-site">Creating a new website</a></li>
+    <li><a href="#update-design">Updating an existing design</a></li>
+    <li><a href="#post-content">Publishing new content</a></li>
+    <li><a href="#reference">Command reference</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════ 1. WHAT IS -->
+<section id="what-is">
+<h2>1 — What is WebsiteMocker?</h2>
+
+<p>WebsiteMocker is a private workshop where websites are built and tested before they go live. Think of it like a print shop's proofing room: designs are created and refined here — nobody else sees them. When everything looks right, one command sends it to your live domain.</p>
+
+<p>Everything is controlled by typing commands in <strong>Claude</strong>. You don't need to know how websites are coded. You describe what you want, paste in a design, or point Claude at an existing site — and Claude handles the technical work.</p>
+
+<h3>The two spaces</h3>
+<ul>
+  <li><strong>Sandbox</strong> — your private workshop. Every site has a preview link you can visit at any time, but it won't appear in search engines. Change anything freely here.</li>
+  <li><strong>Production</strong> — the live, public website at your custom domain. Nothing reaches here until you explicitly run the publish command.</li>
+</ul>
+
+<h3>Sites and slugs</h3>
+<p>Multiple websites live inside WebsiteMocker at once. Each has a short nickname called a <strong>slug</strong> — for example, <code>parrot-capital</code> or <code>sfdy-alt-clean</code>. You use the slug whenever you want to work on a specific site.</p>
+
+<h3>The seven stages</h3>
+<p>Every site moves through seven numbered stages. The stage tells you — and the live dashboard — exactly how ready a site is to go live.</p>
+
+<div class="stages">
+  <div class="stage">
+    <div class="stage-dot">0</div>
+    <div class="stage-name">Captured</div>
+    <div class="stage-req">design DNA saved</div>
+  </div>
+  <div class="stage">
+    <div class="stage-dot">1</div>
+    <div class="stage-name">Scaffolded</div>
+    <div class="stage-req">site builds</div>
+  </div>
+  <div class="stage">
+    <div class="stage-dot">2</div>
+    <div class="stage-name">Content</div>
+    <div class="stage-req">no placeholders</div>
+  </div>
+  <div class="stage">
+    <div class="stage-dot">3</div>
+    <div class="stage-name">Wired</div>
+    <div class="stage-req">forms &amp; socials</div>
+  </div>
+  <div class="stage">
+    <div class="stage-dot">4</div>
+    <div class="stage-name">Legal</div>
+    <div class="stage-req">impressum &amp; privacy</div>
+  </div>
+  <div class="stage">
+    <div class="stage-dot">5</div>
+    <div class="stage-name">Prod Ready</div>
+    <div class="stage-req">all checks pass</div>
+  </div>
+  <div class="stage live">
+    <div class="stage-dot">6</div>
+    <div class="stage-name">Live</div>
+    <div class="stage-req">on your domain</div>
+  </div>
+</div>
+
+<p>Stage 6 is the only stage visible to the public. Every other stage stays inside the sandbox.</p>
+
+</section>
+
+<!-- ══════════════════════════════════ 2. HOW IT WORKS -->
+<section id="how-it-works">
+<h2>2 — How it works</h2>
+
+<p>WebsiteMocker sits between your design and the live site. Designs come in from three sources; a sandbox preview is always available; and the live site only changes when you give the explicit publish command.</p>
+
+<h3>Three ways to bring a design in</h3>
+<ul>
+  <li><strong>Capture a live URL</strong> — point Claude at any existing website. It visits the page, takes screenshots, and extracts the design DNA (colours, fonts, layout structure) into the design library.</li>
+  <li><strong>Paste a Claude Design artifact</strong> — create an HTML/CSS design in Claude's canvas, then paste the output directly into WebsiteMocker. Claude extracts all sections into working components automatically.</li>
+  <li><strong>Read a Claude Design file as a reference</strong> — you don't have to ingest a design to use it. Paste any Claude Design artifact into the chat and ask Claude to extract a specific element, copy a colour palette, adapt a section, or use it as a template for something new. Claude reads the HTML/CSS and can work with individual parts without touching your existing site.</li>
+</ul>
+
+<h3>The wiring file</h3>
+<p>Every site has a file called <code>wiring.json</code> — a record card that tracks everything: the domain name, which email or newsletter service it uses, which social accounts are connected, and which stage it's at. Claude reads this file whenever you run a command, and updates it automatically when you publish.</p>
+
+<h3>The dashboard</h3>
+<p>There's a live dashboard at <a href="https://pbau3r-sfdy.github.io/WebsiteMocker/" target="_blank" rel="noopener">pbau3r-sfdy.github.io/WebsiteMocker/</a> showing all active sites, their stage, domain, and last deploy date. It reads directly from each site's <code>wiring.json</code>.</p>
+
+<h3>The contributor loop</h3>
+<p>Once a site is live, team members can add content by uploading a simple text file to GitHub — no tools required. Their upload triggers an automatic sync back into WebsiteMocker. You review it, then run <code>/wm-publish</code> to take it live. Nothing publishes automatically.</p>
+
+</section>
+
+<!-- ══════════════════════════════════ 3. PREREQUISITES -->
+<section id="prerequisites">
+<h2>3 — What you need first</h2>
+
+<p>These are one-time setup steps. Once done, day-to-day work is just typing commands.</p>
+
+<div class="prereq-grid">
+  <div class="prereq-card">
+    <strong>Claude Code</strong>
+    <span>The desktop app or terminal tool. This is where you type all commands.</span>
+  </div>
+  <div class="prereq-card">
+    <strong>GitHub account</strong>
+    <span>With access to the <code>pbau3r-sfdy</code> organisation — where all sites are stored and deployed from.</span>
+  </div>
+  <div class="prereq-card">
+    <strong>GitHub CLI (<code>gh</code>)</strong>
+    <span>A small tool that lets Claude talk to GitHub on your behalf. One-time install and login.</span>
+  </div>
+  <div class="prereq-card">
+    <strong>Node.js</strong>
+    <span>The technology that builds websites locally. Install once from nodejs.org.</span>
+  </div>
+  <div class="prereq-card">
+    <strong>WM_PUBLISH_PAT</strong>
+    <span>A security token (created once in GitHub) that gives Claude permission to push live updates. Set up by the operator.</span>
+  </div>
+  <div class="prereq-card optional">
+    <strong>Squarespace access</strong>
+    <span>Only needed the <em>first time</em> you connect a new domain. Once DNS is configured and the site is live, you never need Squarespace again — republishing updates the site directly. See below.</span>
+  </div>
+</div>
+
+<div class="note">
+  <span class="label">Squarespace: first time only</span>
+  <p>Squarespace is only involved when you first connect a custom domain to a new site. WebsiteMocker generates the exact DNS records to paste in. After that, the records are permanent — every subsequent <code>/wm-publish</code> updates the live site without touching DNS or requiring Squarespace access at all.</p>
+</div>
+
+<div class="warning">
+  <span class="label">One-time setup required</span>
+  <p>The <strong>WM_PUBLISH_PAT</strong> token must be added to the WebsiteMocker repository's secrets on GitHub before the publish command can work. This is a Classic Personal Access Token with <code>repo</code> scope, stored as a secret named <code>WM_PUBLISH_PAT</code>.</p>
+</div>
+
+<h3>Checking your setup</h3>
+<p>Open Claude Code in the WebsiteMocker folder and type:</p>
+<pre><code>/wm-list-sites</code></pre>
+<p>If you see a list of sites with their stages and domains, you're ready to go.</p>
+
+</section>
+
+<!-- ══════════════════════════════════ 4. NEW SITE -->
+<section id="new-site">
+<h2>4 — Creating a new website</h2>
+
+<p>There are three ways to start, depending on where the design comes from.</p>
+
+<h3>Path A — From a Claude Design artifact</h3>
+<p>You've created a design in Claude's canvas (or received an HTML file). This is the most direct path when building something new from scratch.</p>
+
+<ol class="steps">
+  <li>
+    <strong>Create the site container.</strong>
+    <pre><code>/wm-new-site my-site-slug "My Site Name" "#3A8FD8" "hello@domain.com"</code></pre>
+    Replace the slug, name, accent colour, and email with your own.
+  </li>
+  <li>
+    <strong>Ingest the design.</strong> Paste your Claude Design HTML into the chat and type:
+    <pre><code>/wm-ingest my-site-slug</code></pre>
+    Claude extracts all sections into components, rewrites links and asset paths, and injects any fonts. It first shows you a <em>collision report</em> — a list of any design settings that conflict with the base template. Type <code>y</code> to proceed.
+  </li>
+  <li><strong>Preview it.</strong> Visit the sandbox preview URL Claude shows you. Refresh any time.</li>
+  <li><strong>Fill in real content.</strong> Use content commands (see Section 6) to add news posts, update the hero, and replace placeholder text.</li>
+  <li>
+    <strong>Connect services.</strong>
+    <pre><code>/wm-wire my-site-slug</code></pre>
+    Walk through connecting newsletter, contact form, social handles, and the live domain. This advances the site to Stage 3.
+  </li>
+  <li><strong>Complete legal pages.</strong> Add the Impressum and Privacy Policy. Stage 4.</li>
+  <li>
+    <strong>Run preflight.</strong>
+    <pre><code>/wm-preflight my-site-slug</code></pre>
+    Claude checks every requirement for going live. Fix anything that shows as FAIL.
+  </li>
+  <li>
+    <strong>Publish.</strong>
+    <pre><code>/wm-publish my-site-slug</code></pre>
+    Claude builds the site with production settings, pushes it to GitHub, and outputs the DNS records to paste into Squarespace. This is the only step that requires Squarespace access.
+  </li>
+</ol>
+
+<div class="note">
+  <span class="label">About the collision report</span>
+  <p>When you ingest a design, Claude compares its colour variables against the base template. If both use <code>--accent</code> with different values, that's a collision. Claude lists every conflict and asks you to confirm before making changes — even with zero conflicts, type <code>y</code> to proceed.</p>
+</div>
+
+<h3>Path B — From an existing website URL</h3>
+<p>You want to build something inspired by, or based on, a live site.</p>
+
+<ol class="steps">
+  <li>
+    <strong>Capture the reference site.</strong>
+    <pre><code>/wm-capture https://example.com</code></pre>
+    Claude visits the URL, takes screenshots, and extracts colours, fonts, and layout structure into the design library. Works on Wix and other JavaScript-heavy sites.
+  </li>
+  <li>
+    <strong>Instantiate a new site from the capture.</strong>
+    <pre><code>/wm-instantiate my-site-slug</code></pre>
+    Claude uses the captured design plus a brand brief you provide to scaffold the site.
+  </li>
+  <li><strong>Continue from Step 3 in Path A.</strong></li>
+</ol>
+
+<h3>Path C — Using a Claude Design file as a template</h3>
+<p>You have an existing Claude Design artifact — perhaps a previous project, a design reference, or a template someone shared — and you want to extract specific parts without ingesting the whole thing.</p>
+
+<p>Simply paste the HTML into the chat and describe what you want. Some examples:</p>
+<ul>
+  <li>"Extract the colour palette from this design and apply it to <code>parrot-capital</code>"</li>
+  <li>"Use the hero section from this artifact as a starting point for a new hero for <code>mogwai-systems</code>"</li>
+  <li>"What fonts and spacing does this design use? I'd like to match that feel."</li>
+  <li>"Adapt the card layout from this artifact into a news section for <code>sfdy-alt-clean</code>"</li>
+</ul>
+
+<p>Claude reads the full HTML/CSS and can work with individual elements, extract tokens, or remix sections — without running a full ingest or touching any existing site files.</p>
+
+<div class="tip">
+  <span class="label">The design library</span>
+  <p>Every captured or ingested design is stored in the <code>_captures/</code> folder with screenshots, colour palettes, and layout notes. Claude can reference any past capture when starting a new site — useful for maintaining a family resemblance across related sites.</p>
+</div>
+
+</section>
+
+<!-- ══════════════════════════════════ 5. UPDATE DESIGN -->
+<section id="update-design">
+<h2>5 — Updating an existing design</h2>
+
+<p>These are changes to the design itself — layout, sections, colours, the hero area — not content updates (those are in Section 6).</p>
+
+<h3>Replace the hero section</h3>
+<p>To change the headline, sub-headline, or call-to-action button:</p>
+<pre><code>/wm-update-hero my-site-slug</code></pre>
+<p>Claude asks for the new text and optional background image, writes the changes, and you can preview immediately.</p>
+
+<h3>Add a new design section</h3>
+<p>If you've created a new section in Claude Design and want to add it without replacing anything else:</p>
+<pre><code>/wm-ingest my-site-slug</code></pre>
+<p>When prompted for mode, choose <strong>section</strong>. Paste the HTML for just that section. Claude creates a new component file and prints the one import line you need to add to your page — nothing else is touched.</p>
+
+<h3>Update service connections</h3>
+<p>If you change your newsletter provider, add a contact form, or connect new social accounts:</p>
+<pre><code>/wm-wire my-site-slug</code></pre>
+
+<h3>After any design change</h3>
+<p>The sandbox preview rebuilds automatically. When you're happy, run <code>/wm-publish my-site-slug</code> to push it live.</p>
+
+<div class="tip">
+  <span class="label">No Squarespace needed for updates</span>
+  <p>Republishing an already-live site never requires Squarespace access. DNS records are permanent once set. <code>/wm-publish</code> rebuilds and redeploys the site directly — your domain, SSL certificate, and search engine settings are all preserved automatically.</p>
+</div>
+
+</section>
+
+<!-- ══════════════════════════════════ 6. POST CONTENT -->
+<section id="post-content">
+<h2>6 — Publishing new content</h2>
+
+<p>Content — news posts, job listings, announcements, blog articles — is added separately from design changes. There are two paths: you add it yourself via Claude Code, or a team member adds it on GitHub.</p>
+
+<h3>Adding content yourself (as operator)</h3>
+<p>Each command walks you through a short Q&amp;A — Claude asks for the title, date, body text, and any images, then writes and commits the file.</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Content type</th><th>Command</th><th>What it creates</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>News post</td>
+      <td><code>/wm-add-news</code></td>
+      <td>Appears at <code>/news/</code>. Press releases, updates, milestones.</td>
+    </tr>
+    <tr>
+      <td>Blog article</td>
+      <td><code>/wm-add-blog</code></td>
+      <td>Appears at <code>/blog/</code>. Longer editorial pieces.</td>
+    </tr>
+    <tr>
+      <td>Job listing</td>
+      <td><code>/wm-add-job</code></td>
+      <td>Appears at <code>/jobs/</code>. Includes department, location, type, open/closed status.</td>
+    </tr>
+    <tr>
+      <td>Announcement</td>
+      <td><code>/wm-add-announcement</code></td>
+      <td>Appears at <code>/announcements/</code>. Short, dated notices.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>After Claude commits the file, run <code>/wm-publish my-site-slug</code> to make it live.</p>
+
+<h3>Brand consistency check</h3>
+<p>If your site has a brand kit (set up via <code>/wm-wire</code>), Claude checks each new post before committing:</p>
+<ul>
+  <li><strong>Hashtag suggestions</strong> — Claude proposes relevant tags from your brand kit.</li>
+  <li><strong>Avoid list scan</strong> — if the draft uses a word on your avoid list, Claude flags it. You can still proceed.</li>
+  <li><strong>Vocabulary nudges</strong> — if the draft could use a preferred brand term, Claude notes it as a suggestion.</li>
+</ul>
+
+<h3>Team contributors adding content via GitHub</h3>
+<p>Once <code>/wm-init-collab</code> has been run for a site, team members can add content without any tools — just a GitHub account.</p>
+
+<ol class="steps">
+  <li>The contributor goes to the production repository on GitHub (e.g. <code>github.com/pbau3r-sfdy/starflight-dynamics</code>)</li>
+  <li>They navigate to <code>content/news/</code> (or whichever section applies)</li>
+  <li>They click <strong>Add file → Create new file</strong>, name it <code>YYYY-MM-DD-title.md</code>, write the content, and commit</li>
+  <li>GitHub automatically sends the file to WebsiteMocker</li>
+  <li>You review the sync commit in WebsiteMocker, then run <code>/wm-publish</code> to take it live</li>
+</ol>
+
+<div class="note">
+  <span class="label">Content never goes live automatically</span>
+  <p>A contributor push triggers a sync into WebsiteMocker, but not a publish. The live site is unchanged until you run <code>/wm-publish</code>. This gives you a review step before anything goes public. Deleting a file from the contributor repo does not remove it from the live site — content is additive only.</p>
+</div>
+
+<h3>Making a production repo contributor-ready</h3>
+<p>Run this once after a site goes live. It installs contribution guidelines, issue templates, and the auto-sync into the production repo:</p>
+<pre><code>/wm-init-collab my-site-slug</code></pre>
+
+</section>
+
+<!-- ══════════════════════════════════ 7. REFERENCE -->
+<section id="reference">
+<h2>7 — Command reference</h2>
+
+<p>All commands are typed in Claude Code while inside the WebsiteMocker folder.</p>
+
+<h3>Building and publishing</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><code>/wm-new-site</code></td><td>Create a blank new site. Requires slug, name, accent colour, and contact email.</td></tr>
+    <tr><td><code>/wm-capture</code></td><td>Visit a live URL and extract its design DNA — colours, fonts, layout — into the design library.</td></tr>
+    <tr><td><code>/wm-instantiate</code></td><td>Build a new site from a previously captured design plus a brand brief.</td></tr>
+    <tr><td><code>/wm-ingest</code></td><td>Import a Claude Design HTML/CSS artifact into a site. Full-site or single-section modes.</td></tr>
+    <tr><td><code>/wm-wire</code></td><td>Connect newsletter, contact form, social handles, domain, and brand kit to a site.</td></tr>
+    <tr><td><code>/wm-preflight</code></td><td>Run all readiness checks before publishing. Lists any FAIL items to resolve first.</td></tr>
+    <tr><td><code>/wm-publish</code></td><td>Build with production settings and push live. Requires Stage 5. Squarespace DNS only on first publish.</td></tr>
+    <tr><td><code>/wm-deploy</code></td><td>Push to the sandbox preview URL only (not live).</td></tr>
+    <tr><td><code>/wm-list-sites</code></td><td>Show all sites with stage, domain, and wiring status.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Content</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><code>/wm-add-news</code></td><td>Guided Q&amp;A to write and commit a news post. Includes brand check and social draft.</td></tr>
+    <tr><td><code>/wm-add-blog</code></td><td>Guided Q&amp;A for a blog article.</td></tr>
+    <tr><td><code>/wm-add-job</code></td><td>Add a job listing with department, location, type, and open/closed status.</td></tr>
+    <tr><td><code>/wm-add-announcement</code></td><td>Add a short, dated announcement.</td></tr>
+    <tr><td><code>/wm-edit-news</code></td><td>Edit any field of an existing news post.</td></tr>
+    <tr><td><code>/wm-list-news</code></td><td>List all posts with dates and word counts.</td></tr>
+    <tr><td><code>/wm-update-hero</code></td><td>Change the headline, sub-headline, CTA, or background image on the homepage.</td></tr>
+    <tr><td><code>/wm-init-keywords</code></td><td>Build the initial keyword and hashtag dictionary from existing content.</td></tr>
+    <tr><td><code>/wm-reserve-socials</code></td><td>Research available handles, guide registration, and wire them to the site.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Collaboration</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><code>/wm-init-collab</code></td><td>Make a live site's production repo contributor-ready: guidelines, issue templates, auto-sync. Run once after going live.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Asking for help</h3>
+<p>For any task, describe what you're trying to do in plain language and Claude will suggest the right command and walk you through it.</p>
+
+</section>
+</main>
+
+<footer>
+  <p>WebsiteMocker v1.0 · Operator Manual · <a href="https://pbau3r-sfdy.github.io/WebsiteMocker/">Dashboard</a> · All commands run in Claude Code inside the <code>WebsiteMocker/</code> folder</p>
+</footer>
+
+</body>
+</html>
