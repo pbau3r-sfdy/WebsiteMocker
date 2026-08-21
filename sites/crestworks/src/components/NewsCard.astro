@@ -3,25 +3,25 @@ export interface Props {
   title:   string;
   date:    Date;
   summary: string;
-  slug:    string;
+  id:      string;
   image?:  string;
 }
 
-const { title, date, summary, slug, image } = Astro.props;
+const { title, date, summary, id, image } = Astro.props;
 const formatted = date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 
 <article class="news-card">
   {image && (
-    <a href={`/news/${slug}`} class="card-image-link" tabindex="-1" aria-hidden="true">
+    <a href={`/news/${id}`} class="card-image-link" tabindex="-1" aria-hidden="true">
       <img src={image} alt="" class="card-image" loading="lazy" />
     </a>
   )}
   <div class="card-body">
     <time class="card-date" datetime={date.toISOString().slice(0, 10)}>{formatted}</time>
-    <h3 class="card-title"><a href={`/news/${slug}`}>{title}</a></h3>
+    <h3 class="card-title"><a href={`/news/${id}`}>{title}</a></h3>
     <p class="card-summary">{summary}</p>
-    <a href={`/news/${slug}`} class="card-read-more">Read more →</a>
+    <a href={`/news/${id}`} class="card-read-more">Read more →</a>
   </div>
 </article>
 
