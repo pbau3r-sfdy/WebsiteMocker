@@ -574,8 +574,22 @@ if (modeArg === 'full') {
 
   const indexContent = `---\n${importBlock}\n\nconst b = import.meta.env.BASE_URL.replace(/\\/$/, '');\n---\n\n<Layout title="${siteName}">\n${componentSlots}\n</Layout>\n`;
 
-  const indexPath = join(siteDir, 'src', 'pages', 'index.astro');
-  if (!DRY_RUN) {
+  const indexPath     = join(siteDir, 'src', 'pages', 'index.astro');
+  const coreIndexPath = join(ROOT, '_core', 'src', 'pages', 'index.astro');
+
+  if (existsSync(indexPath)) {
+    const existingContent = readFileSync(indexPath, 'utf-8');
+    const coreContent = existsSync(coreIndexPath) ? readFileSync(coreIndexPath, 'utf-8') : null;
+    if (coreContent && existingContent !== coreContent) {
+      warn('index.astro has been customized — skipping overwrite. Review artifact sections and merge manually.');
+      // components are already written; skip only the page write
+    } else if (!DRY_RUN) {
+      writeFileSync(indexPath, indexContent, 'utf-8');
+      ok('wrote index.astro');
+    } else {
+      dry('would write index.astro');
+    }
+  } else if (!DRY_RUN) {
     writeFileSync(indexPath, indexContent, 'utf-8');
     ok('wrote index.astro');
   } else {
