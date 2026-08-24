@@ -2,7 +2,7 @@
 
 ## Doc Pipeline
 
-- [ ] **DOCS-01**: Operator can run `ingest-artifact.mjs <slug> --mode docs` to produce a single self-contained HTML file from a Claude Design artifact — no Astro build step required
+- [ ] **DOCS-01**: Operator can run `ingest-artifact.mjs <slug> --mode docs` with either a bare HTML file or a Claude Design `.zip` export in `_captures/<slug>/raw/`; if a zip is supplied the script unpacks it, detects the entry HTML, and proceeds automatically — no Astro build step required
 - [ ] **DOCS-02**: The generated HTML document automatically inherits the site's brand colours and typography from `wiring.json`, with no manual CSS editing
 - [ ] **DOCS-03**: Operator can run `/wm-gen-docs <slug>` to go from pasted artifact to a committed HTML file in the site's `prod_repo docs/` folder in one command
 - [ ] **DOCS-04**: Operator can commit a generated doc to any GitHub repo's `docs/` folder via a single `gh api` call — no PR, no CI trigger
@@ -17,11 +17,8 @@
 - [ ] **ARCH-04**: Operator can pass `--capture <timestamp>` to hand off a selected snapshot to `capture-site.mjs`, extracting its design DNA into `_captures/<slug>-<timestamp>/`
 - [ ] **ARCH-05**: Operator can use `/wm-archive-browse [slug|domain]` for an interactive flow: browse timeline → inspect links → optionally capture a selected snapshot
 
-## Documentation Expansion
+## Verification & Records
 
-- [ ] **DEXP-01**: Operator can generate and publish the WebsiteMocker operator manual as a branded HTML doc using `/wm-gen-docs`
-- [ ] **DEXP-02**: Operator can publish a Raise Engine user manual to `pbau3r-sfdy/raise-engine/docs/` using `/wm-gen-docs --target-repo`
-- [ ] **DEXP-03**: Operator can publish an Inbox Curer user manual to its GitHub repo using `/wm-gen-docs --target-repo`
 - [ ] **DEXP-04**: `02-VERIFICATION.md` accurately reflects the current codebase state (stale CR-01 entry corrected — fix shipped in 05e614a)
 - [ ] **DEXP-05**: Phase 4 (Collaboration Infrastructure) has a Nyquist VALIDATION.md documenting what was verified in that phase
 - [ ] **DEXP-06**: Phase 5 (Design Artifact Ingestion) has a Nyquist VALIDATION.md documenting what was verified in that phase
@@ -42,6 +39,7 @@
 - Vercel DB and Supabase bindings in `/wm-wire` — separate project, not WebsiteMocker
 - Additional Wayback capture modes (full-site crawl, multi-page) — post-ARCH-04 extension
 - Social media integration (SOCIAL-01–03) — v2 milestone
+- **DEXP-01** (WebsiteMocker manual), **DEXP-02** (Raise Engine manual), **DEXP-03** (Inbox Curer manual) — these are executed *in those package repos* using `/wm-gen-docs` as a tool; they are not WebsiteMocker implementation work
 
 ## Out of Scope
 
@@ -49,17 +47,32 @@
 |---------|--------|
 | Automated doc-to-Confluence/Notion export | No production Confluence/Notion in the stack |
 | Wayback Machine API write access (submitting pages) | CDX is read-only; submit API is separate and not needed here |
-| Full Internet Archive search (not just CDX by domain) | Out of scope — we only need captures for known domains |
+| Full Internet Archive search (not just CDX by domain) | We only need captures for known wiring.json domains |
 | Vercel DB / Supabase wiring | Wrong project — removed from WebsiteMocker backlog |
 | Auto-generating docs on every publish | Too noisy; operator-triggered only |
+| Publishing operator manuals for other packages (DEXP-01–03) | Those are operator tasks done *using* WebsiteMocker, not WebsiteMocker implementation work |
 
 ## Traceability
 
-*(filled by roadmapper)*
-
 | REQ-ID | Phase | Notes |
 |--------|-------|-------|
-| DOCS-01–06 | TBD | |
-| ARCH-01–05 | TBD | |
-| DEXP-01–06 | TBD | |
-| HSK-01–03  | TBD | |
+| DOCS-01 | Phase 6 | --mode docs flag + zip extraction on ingest-artifact.mjs |
+| DOCS-02 | Phase 6 | Brand-token injection from wiring.json |
+| DOCS-03 | Phase 6 | /wm-gen-docs skill |
+| DOCS-04 | Phase 6 | gh api PUT commit step |
+| DOCS-05 | Phase 6 | --target-repo flag |
+| DOCS-06 | Phase 6 | GFM Markdown export (P3) |
+| ARCH-01 | Phase 7 | CDX API client + snapshot timeline |
+| ARCH-02 | Phase 7 | Toolbar-stripped Wayback inspection links |
+| ARCH-03 | Phase 7 | --sweep mode across all wiring.json domains |
+| ARCH-04 | Phase 7 | --capture handoff to capture-site.mjs |
+| ARCH-05 | Phase 7 | /wm-archive-browse interactive skill |
+| DEXP-01 | out of scope | Operator task in WebsiteMocker repo using /wm-gen-docs |
+| DEXP-02 | out of scope | Operator task in Raise Engine repo using /wm-gen-docs |
+| DEXP-03 | out of scope | Operator task in Inbox Curer repo using /wm-gen-docs |
+| DEXP-04 | Phase 8 | Fix stale 02-VERIFICATION.md |
+| DEXP-05 | Phase 8 | Nyquist VALIDATION.md for Phase 4 |
+| DEXP-06 | Phase 8 | Nyquist VALIDATION.md for Phase 5 |
+| HSK-01 | Phase 8 | crestworks content routes (jobs, announcements, blog) |
+| HSK-02 | Phase 8 | _core newsletter button --accent token fix |
+| HSK-03 | Phase 8 | _core/astro.config.mjs env-var pattern |

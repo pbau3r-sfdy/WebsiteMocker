@@ -13,10 +13,10 @@ A new branded website — from captured reference or Claude Design artifact to l
 **Goal:** Extend WebsiteMocker from a site builder into a full design-output pipeline — generating branded HTML documents from Claude Design artifacts, surfacing historical design artifacts from the Wayback Machine, and shipping operator manuals for all active codebases.
 
 **Target features:**
-- Doc pipeline: `--mode docs` on ingest-artifact.mjs, brand-token injection, `/wm-gen-docs` skill, gh CLI commit, cross-repo `--target-repo` flag, optional GFM export (DOCS-01–06)
+- Doc pipeline: `--mode docs` + zip extraction on ingest-artifact.mjs, brand-token injection, `/wm-gen-docs` skill, gh CLI commit, cross-repo `--target-repo` flag, optional GFM export (DOCS-01–06)
 - Archive module: `archive-browse.mjs` CDX client, Wayback inspection links, `--sweep` mode, `--capture` handoff to capture-site.mjs, `/wm-archive-browse` skill (ARCH-01–05)
-- Documentation expansion: operator manuals for WebsiteMocker / Raise Engine / Inbox Curer via `/wm-gen-docs`; fix stale 02-VERIFICATION.md; Nyquist VALIDATION.md for phases 4 + 5
-- Housekeeping: crestworks jobs/announcements/blog routes; `_core` newsletter button token fix (#18); `_core/astro.config.mjs` env-var pattern (#17)
+- Cleanup & verification: fix stale 02-VERIFICATION.md; Nyquist VALIDATION.md for phases 4 + 5; crestworks content routes; `_core` token fixes #17, #18 (DEXP-04–06, HSK-01–03)
+- *Note: publishing operator manuals (WebsiteMocker, Raise Engine, Inbox Curer) are operator tasks using `/wm-gen-docs` — not WebsiteMocker implementation work*
 
 ## Current State
 
@@ -72,13 +72,10 @@ All v1.0 milestone goals delivered:
 - [ ] **ARCH-04** — `--capture <timestamp>`: handoff to capture-site.mjs via toolbar-stripped Wayback URL
 - [ ] **ARCH-05** — `/wm-archive-browse [slug|domain]` skill: browse → inspect → optionally capture
 
-**Documentation Expansion**
-- [ ] **DOC-EXP-01** — Generate and publish WebsiteMocker operator manual via `/wm-gen-docs`
-- [ ] **DOC-EXP-02** — Publish Raise Engine manual to `pbau3r-sfdy/raise-engine/docs/` via `--target-repo`
-- [ ] **DOC-EXP-03** — Publish Inbox Curer manual to its repo via `--target-repo`
-- [ ] **DOC-EXP-04** — Fix stale 02-VERIFICATION.md (CR-01 entry; code fixed in 05e614a)
-- [ ] **DOC-EXP-05** — Add Nyquist VALIDATION.md for phase 4 (Collaboration Infrastructure)
-- [ ] **DOC-EXP-06** — Add Nyquist VALIDATION.md for phase 5 (Design Artifact Ingestion)
+**Verification & Records**
+- [ ] **DEXP-04** — Fix stale 02-VERIFICATION.md (CR-01 entry; code fixed in 05e614a)
+- [ ] **DEXP-05** — Add Nyquist VALIDATION.md for phase 4 (Collaboration Infrastructure)
+- [ ] **DEXP-06** — Add Nyquist VALIDATION.md for phase 5 (Design Artifact Ingestion)
 
 **Housekeeping**
 - [ ] **HSK-01** — crestworks: complete jobs, announcements, blog content routes (currently news-only)

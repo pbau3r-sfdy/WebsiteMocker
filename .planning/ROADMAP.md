@@ -1,8 +1,57 @@
 # Roadmap: WebsiteMocker
 
-## Active Milestone
+## Active Milestone: v1.1 — Doc Generation, Archive Ingestion & Documentation Expansion
 
-*No active milestone. Run `/gsd:new-milestone` to define the next one.*
+### Phases
+
+- [ ] **Phase 6: Doc Pipeline** — Operator can generate and publish branded HTML documents from Claude Design artifacts
+- [ ] **Phase 7: Archive Module** — Operator can browse Wayback Machine history for any domain and hand off snapshots to the capture pipeline
+- [ ] **Phase 8: Cleanup & Verification** — All v1.0 tech debt is resolved and crestworks operates as a fully-featured active site
+
+### Progress
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 6. Doc Pipeline | 0/? | Not started | - |
+| 7. Archive Module | 0/? | Not started | - |
+| 8. Cleanup & Verification | 0/? | Not started | - |
+
+## Phase Details
+
+### Phase 6: Doc Pipeline
+**Goal**: Operator can generate and publish a branded, self-contained HTML document from a Claude Design artifact with a single skill invocation — no Astro build required
+**Depends on**: Nothing (Phase 6 is the foundation; `/wm-gen-docs` with `--target-repo` enables doc publishing in other repos)
+**Requirements**: DOCS-01, DOCS-02, DOCS-03, DOCS-04, DOCS-05, DOCS-06
+**Success Criteria** (what must be TRUE):
+  1. Operator places a bare HTML file or a Claude Design `.zip` export in `_captures/<slug>/raw/` and runs `ingest-artifact.mjs <slug> --mode docs` — a single self-contained HTML file is produced with no Astro build required
+  2. The output HTML reflects the site's brand colours and typography from `wiring.json` without any manual CSS editing
+  3. Operator runs `/wm-gen-docs <slug>` and the resulting HTML file appears committed to the site's `prod_repo docs/` folder via a single `gh api` call — no PR, no CI trigger
+  4. Operator can direct doc output to any `pbau3r-sfdy/*` repo using `--target-repo org/repo`, overriding the site's `prod_repo`
+  5. Operator can export a GFM Markdown version of a generated doc alongside the HTML using `--format md`
+**Plans**: TBD
+
+### Phase 7: Archive Module
+**Goal**: Operator can inspect any domain's Wayback Machine snapshot history and hand off selected snapshots to the capture pipeline
+**Depends on**: Nothing (independent of Phase 6)
+**Requirements**: ARCH-01, ARCH-02, ARCH-03, ARCH-04, ARCH-05
+**Success Criteria** (what must be TRUE):
+  1. Operator runs `archive-browse.mjs <slug|domain>` and sees a snapshot timeline grouped by year/month with clickable toolbar-stripped Wayback URLs
+  2. Operator runs `archive-browse.mjs --sweep` and sees archive coverage (snapshot count, date range) for all active domains in `wiring.json`
+  3. Operator passes `--capture <timestamp>` and design DNA is extracted into `_captures/<slug>-<timestamp>/` via handoff to `capture-site.mjs`
+  4. Operator uses `/wm-archive-browse [slug|domain]` for an interactive flow from browse to inspect to optional snapshot capture
+**Plans**: TBD
+
+### Phase 8: Cleanup & Verification
+**Goal**: All v1.0 tech debt is resolved, crestworks operates as a fully-featured active site, and phases 4–5 have formal verification records
+**Depends on**: Nothing (can run in any order relative to Phases 6 and 7)
+**Requirements**: DEXP-04, DEXP-05, DEXP-06, HSK-01, HSK-02, HSK-03
+**Success Criteria** (what must be TRUE):
+  1. crestworks site has functioning jobs, announcements, and blog content routes — consistent with all other active sites
+  2. `_core` newsletter button uses `var(--accent)` everywhere with no hardcoded colour values remaining
+  3. `_core/astro.config.mjs` uses the SITE_URL/SITE_BASE env-var pattern, matching all active sites
+  4. `02-VERIFICATION.md` accurately documents the current codebase state with the stale CR-01 entry corrected
+  5. Phase 4 (Collaboration Infrastructure) and Phase 5 (Design Artifact Ingestion) each have a Nyquist VALIDATION.md on disk
+**Plans**: TBD
 
 ---
 
