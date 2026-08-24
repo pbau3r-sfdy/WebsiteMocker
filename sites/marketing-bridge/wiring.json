@@ -1,0 +1,21 @@
+{
+  "slug": "marketing-bridge",
+  "name": "MarketingBridge",
+  "stage": 1,
+  "prod_repo": "pbau3r-sfdy/marketing-bridge",
+  "brand": {
+    "doc_tokens": {
+      "--sfdy-blue":    "#0432FF",
+      "--sfdy-cyan":    "#00FDFF",
+      "--sfdy-green":   "#00FB92",
+      "--sfdy-magenta": "#FF008A",
+      "--sfdy-black":   "#000000",
+      "--sfdy-white":   "#FFFFFF",
+      "--ink-950":      "#000000",
+      "--ink-900":      "#06070A",
+      "--ink-800":      "#101319",
+      "--accent":       "#00FB92"
+    }
+  },
+  "notes": "MarketingBridge operator documentation site. Docs-only — no Astro build."
+}
