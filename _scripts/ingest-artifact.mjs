@@ -337,7 +337,7 @@ function runDocsMode(slug, siteDir, opts) {
     fail('--target-repo must match org/repo format');
   }
   if (targetRepoArg && !targetRepoArg.startsWith('pbau3r-sfdy/')) {
-    warn(`--target-repo "${targetRepoArg}" is outside the pbau3r-sfdy org — proceed with caution`);
+    fail(`--target-repo "${targetRepoArg}" is outside the pbau3r-sfdy org — operation aborted`);
   }
 
   // b. READ wiring.json
