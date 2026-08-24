@@ -4,7 +4,7 @@
 
 ### Phases
 
-- [ ] **Phase 6: Doc Pipeline** — Operator can generate and publish branded HTML documents from Claude Design artifacts
+- [x] **Phase 6: Doc Pipeline** — Operator can generate and publish branded HTML documents from Claude Design artifacts
 - [ ] **Phase 7: Archive Module** — Operator can browse Wayback Machine history for any domain and hand off snapshots to the capture pipeline
 - [ ] **Phase 8: Cleanup & Verification** — All v1.0 tech debt is resolved and crestworks operates as a fully-featured active site
 
@@ -12,7 +12,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 6. Doc Pipeline | 0/3 | Not started | - |
+| 6. Doc Pipeline | 3/3 | Complete | 2026-08-24 |
 | 7. Archive Module | 0/? | Not started | - |
 | 8. Cleanup & Verification | 0/? | Not started | - |
 
@@ -31,9 +31,9 @@
 **Plans**: 3 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Package gate + install (adm-zip, turndown) with npmjs.com verification checkpoint
-- [ ] 06-02-PLAN.md — ingest-artifact.mjs --mode docs: artifact detection, zip extraction, brand token injection, gh api commit, GFM export
-- [ ] 06-03-PLAN.md — /wm-gen-docs skill: 7-step guided workflow from artifact staging to committed HTML
+- [x] 06-01-PLAN.md — Package gate + install (adm-zip, turndown) with npmjs.com verification checkpoint
+- [x] 06-02-PLAN.md — ingest-artifact.mjs --mode docs: artifact detection, zip extraction, brand token injection, gh api commit, GFM export
+- [x] 06-03-PLAN.md — /wm-gen-docs skill: 7-step guided workflow from artifact staging to committed HTML
 
 ### Phase 7: Archive Module
 **Goal**: Operator can inspect any domain's Wayback Machine snapshot history and hand off selected snapshots to the capture pipeline
