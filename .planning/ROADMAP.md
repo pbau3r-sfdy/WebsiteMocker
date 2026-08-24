@@ -12,7 +12,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 6. Doc Pipeline | 0/? | Not started | - |
+| 6. Doc Pipeline | 0/3 | Not started | - |
 | 7. Archive Module | 0/? | Not started | - |
 | 8. Cleanup & Verification | 0/? | Not started | - |
 
@@ -28,7 +28,12 @@
   3. Operator runs `/wm-gen-docs <slug>` and the resulting HTML file appears committed to the site's `prod_repo docs/` folder via a single `gh api` call — no PR, no CI trigger
   4. Operator can direct doc output to any `pbau3r-sfdy/*` repo using `--target-repo org/repo`, overriding the site's `prod_repo`
   5. Operator can export a GFM Markdown version of a generated doc alongside the HTML using `--format md`
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Package gate + install (adm-zip, turndown) with npmjs.com verification checkpoint
+- [ ] 06-02-PLAN.md — ingest-artifact.mjs --mode docs: artifact detection, zip extraction, brand token injection, gh api commit, GFM export
+- [ ] 06-03-PLAN.md — /wm-gen-docs skill: 7-step guided workflow from artifact staging to committed HTML
 
 ### Phase 7: Archive Module
 **Goal**: Operator can inspect any domain's Wayback Machine snapshot history and hand off selected snapshots to the capture pipeline
