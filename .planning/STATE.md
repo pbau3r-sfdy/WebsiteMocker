@@ -5,11 +5,11 @@ milestone_name: Doc Generation, Archive Ingestion & Documentation Expansion
 status: planning
 stopped_at: ~
 last_updated: "2026-08-24T00:00:00.000Z"
-last_activity: 2026-08-24 -- Roadmap created (4 phases, 20 requirements)
+last_activity: 2026-08-24 -- Phase 6 (Doc Pipeline) planned — 3 plans in 3 waves
 progress:
   total_phases: 3
   completed_phases: 0
-  total_plans: 0
+  total_plans: 3
   completed_plans: 0
   percent: 0
 ---

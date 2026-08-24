@@ -564,19 +564,19 @@ The skill has 7 steps matching the validate → stage → analyze → confirm �
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Should `--force` be added to the script in this phase, or deferred?**
+1. **Should `--force` be added to the script in this phase, or deferred?** — RESOLVED: Add to script this phase, omit from skill per D-07. Low cost, removes a follow-up.
    - What we know: D-07 says it's Claude's discretion for the script; the skill NEVER bypasses confirm.
    - What's unclear: Whether CI/scripting use cases exist now or only later.
    - Recommendation: Add `--force` to the script in Phase 6 but leave it undocumented in the skill. Low cost, removes a follow-up.
 
-2. **Should the skill call `gh api` directly via Bash, or invoke the script with a `--commit` flag?**
+2. **Should the skill call `gh api` directly via Bash, or invoke the script with a `--commit` flag?** — RESOLVED: Script handles `gh api` commit when `--commit` flag is passed; skill runs script with `--dry-run` first, then `--commit` after operator confirms.
    - What we know: The script already calls `run()` via execSync; the skill calls scripts via Bash.
    - What's unclear: Whether to keep all `gh api` logic inside the script (self-contained) or split commit out to the skill.
    - Recommendation: Put `gh api` commit inside the script (called when `--commit` flag is passed). The skill runs the script twice: first `--dry-run` for summary, then with `--commit` after confirmation. This keeps auth/error handling in one place.
 
-3. **Does the `docs/` staging area in `_captures/<slug>/docs/` need to be created by the script or pre-exist?**
+3. **Does the `docs/` staging area in `_captures/<slug>/docs/` need to be created by the script or pre-exist?** — RESOLVED: Created inline via `mkdirSync(docsDir, { recursive: true })` in `runDocsMode` step (e).
    - Recommendation: Create with `mkdirSync(docsDir, { recursive: true })` inline — same pattern used for `components/` and `public/images/<slug>/`.
 
 ---
