@@ -398,9 +398,14 @@ function runDocsMode(slug, siteDir, opts) {
       } else if (!forceFlag) {
         log('Multiple HTML files found in zip. Select one:');
         htmlFiles.forEach((f, i) => log(`  ${i + 1}. ${basename(f)}`));
-        const reply = execSync('read reply < /dev/tty && echo $reply', {
-          encoding: 'utf-8', stdio: ['pipe', 'pipe', 'inherit'],
-        }).trim();
+        let reply;
+        try {
+          reply = execSync('read reply < /dev/tty && echo $reply', {
+            encoding: 'utf-8', stdio: ['pipe', 'pipe', 'inherit'],
+          }).trim();
+        } catch {
+          fail('Interactive file selection requires a TTY — re-run with --force to auto-select the first HTML file');
+        }
         const idx = parseInt(reply, 10);
         if (isNaN(idx) || idx < 1 || idx > htmlFiles.length) {
           fail('Invalid choice');
