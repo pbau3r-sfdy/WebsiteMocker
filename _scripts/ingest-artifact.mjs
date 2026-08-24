@@ -300,7 +300,12 @@ function ghApiPutFile(repoFullName, repoPath, fileBytes, commitMessage) {
   try {
     const result = execSync(`gh api ${apiPath} --jq .sha`, { encoding: 'utf-8' }).trim();
     if (result && result !== 'null') { sha = result; info(`updating existing ${repoPath} (sha: ${sha.slice(0, 8)}…)`); }
-  } catch { info(`creating new ${repoPath}`); /* file does not exist yet — no SHA needed */ }
+  } catch (err) {
+    // Only suppress 404 (file not found); rethrow auth, network, or other errors
+    const msg = (err.message || '') + (err.stderr ? err.stderr.toString() : '');
+    if (!msg.includes('404') && !msg.includes('Not Found')) throw err;
+    info(`creating new ${repoPath}`); /* file does not exist yet — no SHA needed */
+  }
 
   // 2. Build JSON body — never shell-interpolate the base64 string (T-06-03)
   const body = JSON.stringify({
