@@ -35,7 +35,18 @@
     "hashtags": [],
     "vocabulary": [],
     "avoid": [],
-    "voice": ""
+    "voice": "",
+    "doc_tokens": {
+      "--sfdy-blue":    "#0432FF",
+      "--sfdy-cyan":    "#00FDFF",
+      "--sfdy-green":   "#00FB92",
+      "--sfdy-magenta": "#FF008A",
+      "--bg-base":      "#000000",
+      "--surface-1":    "#06070A",
+      "--surface-2":    "#101319",
+      "--text-primary": "#FFFFFF",
+      "--accent":       "#00FB92"
+    }
   },
   "capture": "sfdy",
   "notes": "Live at https://www.starflight-dynamics.com — redesign replacing sfdy. Prod repo: pbau3r-sfdy/starflight-dynamics."
