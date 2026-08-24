@@ -10,8 +10,17 @@
  *   --mode full            Full-site ingest: extract all sections as Astro components,
  *                          write index.astro, copy assets.
  *   --mode section         Single section ingest (write component only, do not modify pages).
+ *   --mode docs            Docs mode: self-contained branded HTML output, no Astro build.
  *   --section <name>       Section name to extract (required with --mode section).
  *   --dry-run              Show what would happen without making any changes.
+ *
+ * What it does (docs mode):
+ *   1. Detects artifact: uses _captures/<slug>/raw/artifact.html or auto-extracts from .zip
+ *   2. Validates brand.doc_tokens in wiring.json; exits 1 with suggestions if absent (D-02)
+ *   3. Injects brand.doc_tokens overrides into artifact :root {} via HAST tree walk
+ *   4. Writes branded HTML to _captures/<slug>/docs/<name>.html
+ *   5. Optionally exports GFM Markdown to _captures/<slug>/docs/<name>.md (--format md)
+ *   6. Commits docs/<name>.html (and .md) to prod_repo via gh api PUT when --commit is passed
  *
  * Artifact location:
  *   _captures/<slug>/raw/artifact.html  — paste HTML here before running
@@ -31,12 +40,14 @@
 import { execSync }                          from 'child_process';
 import {
   existsSync, mkdirSync, cpSync, copyFileSync,
-  readdirSync, readFileSync, writeFileSync,
+  readdirSync, readFileSync, writeFileSync, rmSync,
 } from 'fs';
 import { join, basename, dirname }           from 'path';
 import { fileURLToPath }                     from 'url';
 import { fromHtml } from 'hast-util-from-html';
 import { toHtml }   from 'hast-util-to-html';
+import AdmZip          from 'adm-zip';           // docs mode — zip extraction
+import TurndownService  from 'turndown';           // docs mode — GFM export
 
 // ── Resolve repo root ─────────────────────────────────────────────────────────
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..');
@@ -71,7 +82,7 @@ const slugArg     = args[0];
 
 const dry = (...a) => DRY_RUN && console.log('  [dry]', ...a);
 
-const USAGE = 'Usage: node _scripts/ingest-artifact.mjs <slug> [--analyze] [--mode full|section] [--section <name>] [--dry-run]';
+const USAGE = 'Usage: node _scripts/ingest-artifact.mjs <slug> [--analyze] [--mode docs|full|section] [--section <name>] [--name <n>] [--format md] [--target-repo org/repo] [--commit] [--force] [--dry-run]';
 
 if (!slugArg || !/^[a-z0-9-]+$/.test(slugArg)) {
   fail(USAGE);
@@ -199,6 +210,294 @@ function extractImages(htmlString) {
   return { images, base64Images };
 }
 
+// ── HELPER: findHtmlFiles ─────────────────────────────────────────────────────
+// Recursively finds all .html files under dir. Used by zip extraction in docs mode.
+function findHtmlFiles(dir) {
+  const results = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) {
+      results.push(...findHtmlFiles(join(dir, entry.name)));
+    } else if (entry.name.endsWith('.html')) {
+      results.push(join(dir, entry.name));
+    }
+  }
+  return results;
+}
+
+// ── DOCS MODE HELPERS ─────────────────────────────────────────────────────────
+
+// ── HELPER: warnMissingDocTokens ──────────────────────────────────────────────
+// Warns the operator about a missing brand.doc_tokens field, prints copy-paste
+// suggestion from Layout.astro :root vars, then exits 1 (D-02).
+function warnMissingDocTokens(slug, siteDir) {
+  warn(`brand.doc_tokens not set in sites/${slug}/wiring.json`);
+  warn('Add this field before running --mode docs. Suggested values from Layout.astro:');
+  const layoutPath = join(siteDir, 'src', 'layouts', 'Layout.astro');
+  if (existsSync(layoutPath)) {
+    const layoutCSS = extractStyleCSS(readFileSync(layoutPath, 'utf-8'));
+    const vars = extractCSSVars(layoutCSS);
+    log('  "brand": {');
+    log('    "doc_tokens": {');
+    for (const [name, val] of vars) {
+      log(`      "${name}": "${val}",`);
+    }
+    log('    }');
+    log('  }');
+  }
+  process.exit(1);
+}
+
+// ── HELPER: injectDocTokens ───────────────────────────────────────────────────
+// Walks the HAST tree, finds <style> text nodes containing ':root', and applies
+// brand.doc_tokens overrides. Returns { injectedHtml, beforeAfter }.
+// Uses HAST tree walk to safely target only <style> elements (Pitfall 4 mitigation).
+function injectDocTokens(html, docTokens) {
+  const tree = fromHtml(html);
+  const beforeAfter = [];
+  walkTree(tree, node => {
+    if (node.type === 'element' && node.tagName === 'style') {
+      for (const child of (node.children || [])) {
+        if (child.type === 'text' && child.value.includes(':root')) {
+          let css = child.value;
+          for (const [prop, newVal] of Object.entries(docTokens)) {
+            const escapedProp   = prop.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const existingMatch = css.match(new RegExp(`${escapedProp}\\s*:\\s*([^;\\n]+)`));
+            const beforeVal     = existingMatch ? existingMatch[1].trim() : null;
+            if (existingMatch) {
+              const varRe = new RegExp(`(${escapedProp}\\s*:\\s*)[^;\\n]+`, 'g');
+              css = css.replace(varRe, `$1${newVal}`);
+            } else {
+              css = css.replace(/:root\s*\{/, `:root {\n  ${prop}: ${newVal};`);
+            }
+            beforeAfter.push({ prop, before: beforeVal, after: newVal });
+          }
+          child.value = css;
+        }
+      }
+    }
+  });
+  return { injectedHtml: toHtml(tree), beforeAfter };
+}
+
+// ── HELPER: ghApiPutFile ──────────────────────────────────────────────────────
+// Commits a single file to a GitHub repo via gh api PUT.
+// Fetches existing SHA before PUT to prevent 422 on updates (Pitfall 1).
+// Content is passed via --input - stdin JSON body to avoid shell injection (T-06-03).
+function ghApiPutFile(repoFullName, repoPath, fileBytes, commitMessage) {
+  const [owner, repo] = repoFullName.split('/');
+  const apiPath = `repos/${owner}/${repo}/contents/${repoPath}`;
+
+  // 1. Fetch existing SHA (null if new file)
+  let sha = null;
+  try {
+    const result = execSync(`gh api ${apiPath} --jq .sha`, { encoding: 'utf-8' }).trim();
+    if (result && result !== 'null') sha = result;
+  } catch { /* file does not exist yet — no SHA needed */ }
+
+  // 2. Build JSON body — never shell-interpolate the base64 string (T-06-03)
+  const body = JSON.stringify({
+    message: commitMessage,
+    content: fileBytes.toString('base64'),
+    ...(sha ? { sha } : {}),
+  });
+
+  // 3. PUT via stdin
+  execSync(`gh api ${apiPath} --method PUT --input -`, {
+    input: body,
+    stdio: ['pipe', 'inherit', 'inherit'],
+  });
+}
+
+// ── runDocsMode ───────────────────────────────────────────────────────────────
+// Implements --mode docs end-to-end: artifact detection, brand token injection,
+// local output, optional GFM export, and gh api PUT commit.
+function runDocsMode(slug, siteDir, opts) {
+  const { nameArg, formatArg, targetRepoArg, commitFlag, forceFlag } = opts;
+
+  // a. VALIDATE flags (D-10: --name must match ^[a-z0-9-]+$; T-06-01, T-06-02)
+  if (nameArg && !/^[a-z0-9-]+$/.test(nameArg)) {
+    fail('--name must match ^[a-z0-9-]+$');
+  }
+  const outputName = nameArg || 'index';
+
+  if (targetRepoArg && !/^[a-z0-9-]+\/[a-z0-9-]+$/.test(targetRepoArg)) {
+    fail('--target-repo must match org/repo format');
+  }
+  if (targetRepoArg && !targetRepoArg.startsWith('pbau3r-sfdy/')) {
+    warn(`--target-repo "${targetRepoArg}" is outside the pbau3r-sfdy org — proceed with caution`);
+  }
+
+  // b. READ wiring.json
+  const wiring    = readJSON(join(ROOT, 'sites', slug, 'wiring.json')) ?? {};
+  const docTokens = wiring?.brand?.doc_tokens;
+  if (!docTokens || Object.keys(docTokens).length === 0) {
+    warnMissingDocTokens(slug, siteDir); // calls process.exit(1)
+  }
+
+  const prodRepo = targetRepoArg || wiring?.prod_repo;
+  if (!prodRepo) {
+    fail(`prod_repo not set in sites/${slug}/wiring.json — pass --target-repo org/repo`);
+  }
+
+  // c. ARTIFACT DETECTION
+  const rawDir       = join(ROOT, '_captures', slug, 'raw');
+  const artifactPath = join(rawDir, 'artifact.html');
+  let   htmlPath     = null;
+  let   extractedDir = null; // set when a zip is extracted (for cleanup in step g)
+
+  if (existsSync(artifactPath)) {
+    htmlPath = artifactPath;
+    ok('using artifact.html');
+  } else {
+    let zipFiles = [];
+    if (existsSync(rawDir)) {
+      zipFiles = readdirSync(rawDir).filter(f => f.endsWith('.zip'));
+    }
+    if (zipFiles.length === 0) {
+      fail(`No artifact found at _captures/${slug}/raw/artifact.html and no .zip file in _captures/${slug}/raw/ — stage the artifact first`);
+    }
+
+    const zipPath = join(rawDir, zipFiles[0]);
+    extractedDir  = join(rawDir, 'extracted');
+
+    if (!DRY_RUN) {
+      new AdmZip(zipPath).extractAllTo(extractedDir, true);
+      ok(`extracted ${zipFiles[0]} to raw/extracted/`);
+
+      // T-06-04: zip slip mitigation — verify all HTML paths stay under extractedDir
+      const rawHtmlFiles = findHtmlFiles(extractedDir);
+      const htmlFiles    = rawHtmlFiles.filter(p => {
+        if (!p.startsWith(extractedDir)) {
+          fail(`Zip slip detected: ${basename(p)} escapes the extraction directory — aborting`);
+        }
+        return true;
+      });
+
+      if (htmlFiles.length === 0) {
+        fail(`No HTML file found in zip ${zipFiles[0]} — check the zip contents`);
+      } else if (htmlFiles.length === 1) {
+        htmlPath = htmlFiles[0];
+        ok(`auto-selected ${basename(htmlFiles[0])}`);
+      } else if (!forceFlag) {
+        log('Multiple HTML files found in zip. Select one:');
+        htmlFiles.forEach((f, i) => log(`  ${i + 1}. ${basename(f)}`));
+        const reply = execSync('read reply < /dev/tty && echo $reply', {
+          encoding: 'utf-8', stdio: ['pipe', 'pipe', 'inherit'],
+        }).trim();
+        const idx = parseInt(reply, 10);
+        if (isNaN(idx) || idx < 1 || idx > htmlFiles.length) {
+          fail('Invalid choice');
+        }
+        htmlPath = htmlFiles[idx - 1];
+      } else {
+        htmlPath = htmlFiles[0];
+        warn(`--force: auto-selected ${basename(htmlFiles[0])} (first of ${htmlFiles.length} HTML files)`);
+      }
+    } else {
+      dry(`would extract ${zipFiles[0]} to raw/extracted/`);
+    }
+  }
+
+  // d. READ and PROCESS artifact
+  const htmlString = DRY_RUN
+    ? '<html><head><style>:root{}</style></head><body></body></html>'
+    : readFileSync(htmlPath, 'utf-8');
+  const { injectedHtml, beforeAfter } = injectDocTokens(htmlString, docTokens);
+
+  // e. WRITE local output
+  const docsDir    = join(ROOT, '_captures', slug, 'docs');
+  const outputPath = join(docsDir, outputName + '.html');
+  if (!DRY_RUN) {
+    mkdirSync(docsDir, { recursive: true });
+    writeFileSync(outputPath, injectedHtml, 'utf-8');
+    ok(`wrote _captures/${slug}/docs/${outputName}.html`);
+  } else {
+    dry(`would write _captures/${slug}/docs/${outputName}.html`);
+  }
+
+  // f. PRINT SUMMARY (D-06 format)
+  const fileSize = DRY_RUN ? '?' : `${Math.round(Buffer.byteLength(injectedHtml, 'utf-8') / 1024)} KB`;
+  log('── Doc Generation Summary ─────────────────────────────────');
+  log(`  Brand tokens injected (${beforeAfter.length}):`);
+  for (const { prop, before, after } of beforeAfter) {
+    log(`    ${prop}: ${before || '(new)'}  →  ${after}`);
+  }
+  log(`  Output:           docs/${outputName}.html:  ${fileSize}`);
+  log(`  Target repo:      ${prodRepo} → docs/${outputName}.html`);
+  if (formatArg === 'md') {
+    log(`  GFM export:       docs/${outputName}.md: (pending)`);
+  }
+  log('────────────────────────────────────────────────────────────');
+
+  // g. CLEANUP extracted/ on success (leave on failure for debugging)
+  if (extractedDir && existsSync(extractedDir) && !DRY_RUN) {
+    try {
+      rmSync(extractedDir, { recursive: true });
+      ok('cleaned up raw/extracted/');
+    } catch {
+      warn('Could not clean up raw/extracted/ — leaving for debugging');
+    }
+  }
+
+  // ── GFM EXPORT ───────────────────────────────────────────────────────────────
+  let gfmOutputPath = null;
+  if (formatArg === 'md' && !DRY_RUN) {
+    const bodyMatch   = injectedHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    const bodyContent = bodyMatch ? bodyMatch[1] : injectedHtml;
+    const td          = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-', codeBlockStyle: 'fenced' });
+    const gfmContent  = td.turndown(bodyContent);
+    gfmOutputPath     = join(docsDir, outputName + '.md');
+    writeFileSync(gfmOutputPath, gfmContent, 'utf-8');
+    ok(`wrote _captures/${slug}/docs/${outputName}.md`);
+  } else if (formatArg === 'md' && DRY_RUN) {
+    dry(`would write _captures/${slug}/docs/${outputName}.md`);
+  }
+
+  // ── COMMIT ────────────────────────────────────────────────────────────────────
+  if (commitFlag && !DRY_RUN) {
+    ok(`committing docs/${outputName}.html to ${prodRepo}...`);
+    const htmlBytes = readFileSync(outputPath);
+    ghApiPutFile(prodRepo, `docs/${outputName}.html`, htmlBytes, `docs: add ${outputName}.html [wm-gen-docs]`);
+    ok(`committed docs/${outputName}.html to github.com/${prodRepo}`);
+    if (gfmOutputPath) {
+      const gfmBytes = readFileSync(gfmOutputPath);
+      ghApiPutFile(prodRepo, `docs/${outputName}.md`, gfmBytes, `docs: add ${outputName}.md [wm-gen-docs]`);
+      ok(`committed docs/${outputName}.md to github.com/${prodRepo}`);
+    }
+  } else if (commitFlag && DRY_RUN) {
+    dry(`would call gh api PUT → ${prodRepo}/docs/${outputName}.html`);
+  }
+
+  // ── DONE BANNER ───────────────────────────────────────────────────────────────
+  if (commitFlag && !DRY_RUN) {
+    const gfmLine = gfmOutputPath ? `\n  and docs/${outputName}.md` : '';
+    log(`
+${'═'.repeat(52)}
+ ✅  docs/${outputName}.html generated for ${slug}.
+${'═'.repeat(52)}
+
+Committed: github.com/${prodRepo}/blob/main/docs/${outputName}.html${gfmLine}
+Next steps:
+  /wm-gen-docs ${slug} --name <n>              ← generate another doc
+  /wm-gen-docs ${slug} --format md             ← also export GFM Markdown
+  /wm-gen-docs ${slug} --target-repo org/repo  ← route to a different repo
+`);
+  } else {
+    log(`
+${'═'.repeat(52)}
+ ✅  docs/${outputName}.html generated for ${slug}.
+${'═'.repeat(52)}
+
+Staged at: _captures/${slug}/docs/${outputName}.html
+Run with --commit to push to ${prodRepo}
+Next steps:
+  Add --format md to also export GFM Markdown
+  Add --target-repo org/repo to route to a different repo
+  Add --commit to push docs/${outputName}.html to ${prodRepo}
+`);
+  }
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // ANALYZE FLOW — exits 0 with JSON report; no file writes
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -238,13 +537,24 @@ if (analyzeOnly) {
 }
 
 // ── MODE GUARD ────────────────────────────────────────────────────────────────
-if (modeArg !== 'full' && modeArg !== 'section') {
+if (modeArg !== 'full' && modeArg !== 'section' && modeArg !== 'docs') {
   fail(USAGE);
 }
 
 // ── SECTION MODE VALIDATION ───────────────────────────────────────────────────
 if (modeArg === 'section' && !sectionArg) {
   fail('--mode section requires --section <name>');
+}
+
+// ── DOCS MODE DISPATCH ────────────────────────────────────────────────────────
+if (modeArg === 'docs') {
+  const nameArg       = option('--name');
+  const formatArg     = option('--format');
+  const targetRepoArg = option('--target-repo');
+  const commitFlag    = flag('--commit');
+  const forceFlag     = flag('--force');
+  runDocsMode(slug, siteDir, { nameArg, formatArg, targetRepoArg, commitFlag, forceFlag });
+  process.exit(0);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
