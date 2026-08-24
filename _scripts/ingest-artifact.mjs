@@ -265,7 +265,7 @@ function injectDocTokens(html, docTokens) {
             const beforeVal     = existingMatch ? existingMatch[1].trim() : null;
             if (existingMatch) {
               const varRe = new RegExp(`(${escapedProp}\\s*:\\s*)[^;\\n]+`, 'g');
-              css = css.replace(varRe, `$1${newVal}`);
+              css = css.replace(varRe, (_, prefix) => prefix + newVal);
             } else {
               css = css.replace(/:root\s*\{/, `:root {\n  ${prop}: ${newVal};`);
             }
