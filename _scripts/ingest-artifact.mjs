@@ -334,7 +334,11 @@ function runDocsMode(slug, siteDir, opts) {
     warnMissingDocTokens(slug, siteDir); // calls process.exit(1)
   }
 
-  const prodRepo = targetRepoArg || wiring?.prod_repo;
+  const rawProdRepo = targetRepoArg || wiring?.prod_repo;
+  if (rawProdRepo && !/^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/.test(rawProdRepo)) {
+    fail(`prod_repo value "${rawProdRepo}" contains invalid characters — check wiring.json`);
+  }
+  const prodRepo = rawProdRepo;
   if (!prodRepo) {
     fail(`prod_repo not set in sites/${slug}/wiring.json — pass --target-repo org/repo`);
   }
