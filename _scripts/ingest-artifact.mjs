@@ -479,11 +479,19 @@ function runDocsMode(slug, siteDir, opts) {
   if (commitFlag && !DRY_RUN) {
     ok(`committing docs/${outputName}.html to ${prodRepo}...`);
     const htmlBytes = readFileSync(outputPath);
-    ghApiPutFile(prodRepo, `docs/${outputName}.html`, htmlBytes, `docs: add ${outputName}.html [wm-gen-docs]`);
+    try {
+      ghApiPutFile(prodRepo, `docs/${outputName}.html`, htmlBytes, `docs: add ${outputName}.html [wm-gen-docs]`);
+    } catch (err) {
+      fail(`gh api PUT failed for docs/${outputName}.html → ${prodRepo}\n  ${err.message}`);
+    }
     ok(`committed docs/${outputName}.html to github.com/${prodRepo}`);
     if (gfmOutputPath) {
       const gfmBytes = readFileSync(gfmOutputPath);
-      ghApiPutFile(prodRepo, `docs/${outputName}.md`, gfmBytes, `docs: add ${outputName}.md [wm-gen-docs]`);
+      try {
+        ghApiPutFile(prodRepo, `docs/${outputName}.md`, gfmBytes, `docs: add ${outputName}.md [wm-gen-docs]`);
+      } catch (err) {
+        fail(`gh api PUT failed for docs/${outputName}.md → ${prodRepo}\n  ${err.message}`);
+      }
       ok(`committed docs/${outputName}.md to github.com/${prodRepo}`);
     }
   } else if (commitFlag && DRY_RUN) {
