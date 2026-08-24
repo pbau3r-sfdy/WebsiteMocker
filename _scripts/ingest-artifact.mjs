@@ -260,15 +260,23 @@ function injectDocTokens(html, docTokens) {
         if (child.type === 'text' && child.value.includes(':root')) {
           let css = child.value;
           for (const [prop, newVal] of Object.entries(docTokens)) {
-            const escapedProp   = prop.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const existingMatch = css.match(new RegExp(`${escapedProp}\\s*:\\s*([^;\\n]+)`));
-            const beforeVal     = existingMatch ? existingMatch[1].trim() : null;
-            if (existingMatch) {
-              const varRe = new RegExp(`(${escapedProp}\\s*:\\s*)[^;\\n]+`, 'g');
-              css = css.replace(varRe, (_, prefix) => prefix + newVal);
-            } else {
-              css = css.replace(/:root\s*\{/, `:root {\n  ${prop}: ${newVal};`);
+            const escapedProp = prop.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const propRe      = new RegExp(`(${escapedProp}\\s*:\\s*)[^;\\n]+`);
+            // Find the existing value within :root {} only (for before/after reporting)
+            let beforeVal = null;
+            const rootMatch = css.match(/:root\s*\{([^}]*)\}/);
+            if (rootMatch) {
+              const inRoot = rootMatch[1].match(new RegExp(`${escapedProp}\\s*:\\s*([^;\\n]+)`));
+              if (inRoot) beforeVal = inRoot[1].trim();
             }
+            // Replace or append inside :root {} only — never touch component-level overrides
+            const rootBlockRe = /(:root\s*\{)([^}]*)(})/g;
+            css = css.replace(rootBlockRe, (_, open, body, close) => {
+              const updated = propRe.test(body)
+                ? body.replace(propRe, (_, prefix) => prefix + newVal)
+                : body + `\n  ${prop}: ${newVal};`;
+              return open + updated + close;
+            });
             beforeAfter.push({ prop, before: beforeVal, after: newVal });
           }
           child.value = css;
