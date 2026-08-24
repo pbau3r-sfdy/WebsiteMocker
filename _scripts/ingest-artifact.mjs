@@ -287,12 +287,12 @@ function ghApiPutFile(repoFullName, repoPath, fileBytes, commitMessage) {
   const [owner, repo] = repoFullName.split('/');
   const apiPath = `repos/${owner}/${repo}/contents/${repoPath}`;
 
-  // 1. Fetch existing SHA (null if new file)
+  // 1. Fetch existing SHA (null if new file) — required for updates (Pitfall 1)
   let sha = null;
   try {
     const result = execSync(`gh api ${apiPath} --jq .sha`, { encoding: 'utf-8' }).trim();
-    if (result && result !== 'null') sha = result;
-  } catch { /* file does not exist yet — no SHA needed */ }
+    if (result && result !== 'null') { sha = result; info(`updating existing ${repoPath} (sha: ${sha.slice(0, 8)}…)`); }
+  } catch { info(`creating new ${repoPath}`); /* file does not exist yet — no SHA needed */ }
 
   // 2. Build JSON body — never shell-interpolate the base64 string (T-06-03)
   const body = JSON.stringify({
