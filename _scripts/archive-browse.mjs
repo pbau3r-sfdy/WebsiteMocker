@@ -68,7 +68,15 @@ async function fetchCDX(domain, limit) {
     res = await fetch(url, { signal: AbortSignal.timeout(15000) });
   }
   if (!res.ok) fail(`CDX API error ${res.status} for ${domain}`);
-  const rows = await res.json();
+  let rows;
+  try {
+    rows = await res.json();
+  } catch {
+    fail(`CDX API returned non-JSON for ${domain} — the archive may be temporarily unavailable`);
+  }
+  if (!Array.isArray(rows)) {
+    fail(`CDX API returned unexpected format for ${domain}`);
+  }
   return rows.slice(1); // skip header row ["timestamp","statuscode"]
 }
 
