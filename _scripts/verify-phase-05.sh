@@ -55,6 +55,11 @@ want() {
 SCRIPT="_scripts/ingest-artifact.mjs"
 SKILL=".claude/skills/wm-ingest.md"
 
+# Trap-based cleanup: track mktemp files and remove on exit regardless of how the script ends
+_TMPFILES=()
+mktemp_tracked() { local f; f=$(mktemp); _TMPFILES+=("$f"); echo "$f"; }
+trap 'rm -f "${_TMPFILES[@]+"${_TMPFILES[@]}"}" 2>/dev/null || true' EXIT
+
 echo "Phase 5: Design Artifact Ingestion — Structural Verification"
 echo "============================================================"
 
@@ -93,12 +98,11 @@ if want "02"; then
   [ "$count" -ge 1 ] && R=0 || R=1
   check "section-mode routing guard present" "$R"
 
-  section_body=$(mktemp)
+  section_body=$(mktemp_tracked)
   sed -n '/^function writeSectionMode/,/^}/p' "$SCRIPT" > "$section_body"
   count=$(count_re "$section_body" "['\"]pages['\"]")
   [ "$count" -eq 0 ] && R=0 || R=1
   check "writeSectionMode body contains no pages path" "$R"
-  rm -f "$section_body"
 
   # The third pattern matches the literal string used in ingest-artifact.mjs's ok() call
   # (line ~815: ok('astro.config.mjs: injected SITE_URL/SITE_BASE env var pattern')).
@@ -127,13 +131,12 @@ if want "02"; then
   [ "$count" -ge 1 ] && R=0 || R=1
   check "unknown-mode guard present" "$R"
 
-  analyze_output=$(mktemp)
+  analyze_output=$(mktemp_tracked)
   if node "$SCRIPT" sfdy-alt-clean --analyze > "$analyze_output" 2>/dev/null &&
     node -e "const fs=require('fs'); const j=JSON.parse(fs.readFileSync(process.argv[1], 'utf8')); process.exit(j.sections.length > 0 && j.collisions.length > 0 ? 0 : 1)" "$analyze_output"; then R=0; else R=1; fi
   check "--analyze emits valid JSON with sections and collisions" "$R"
-  rm -f "$analyze_output"
 
-  dry_output=$(mktemp)
+  dry_output=$(mktemp_tracked)
   node "$SCRIPT" sfdy-alt-clean --mode section --section hero --dry-run > "$dry_output" 2>&1 && R=0 || R=1
   check "section dry-run exits 0" "$R"
   count=$(count_in "$dry_output" "would write Hero.astro")
@@ -141,7 +144,6 @@ if want "02"; then
   check "section dry-run reports would write Hero.astro" "$R"
   test ! -f sites/sfdy-alt-clean/src/components/Hero.astro && R=0 || R=1
   check "section dry-run leaves Hero.astro absent" "$R"
-  rm -f "$dry_output"
 fi
 
 if want "03"; then
