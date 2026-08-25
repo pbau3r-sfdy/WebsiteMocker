@@ -144,6 +144,7 @@ node _scripts/init-prod-repo.mjs <slug> --confirm # execute
 | `/wm-preflight` | Full readiness checklist before deploy |
 | `/wm-wire` | Interactive wizard for all service connections |
 | `/wm-init-collab` | Make a production repo contributor-ready (branch, templates, labels, PAT) |
+| `/wm-archive-browse` | Browse Wayback Machine snapshots for a site, inspect with toolbar-stripped URLs, optionally capture |
 
 ### Content (inherited from `_core/.claude/skills/`)
 | Skill | What it does |
