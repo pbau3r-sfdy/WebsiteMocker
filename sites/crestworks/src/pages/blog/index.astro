@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import BlogCard from '../../../../../_core/src/components/BlogCard.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const posts = (await getCollection('blog'))
+  .sort((x, y) => y.data.date.valueOf() - x.data.date.valueOf());
+---
+
+<Layout title="Blog" description="Writing from the Crestworks team.">
+  <Nav />
+  <main class="main">
+    <div class="container">
+      <header class="page-header">
+        <h1>Blog</h1>
+        <p>Writing from the Crestworks team.</p>
+      </header>
+      {posts.length === 0 ? (
+        <p class="empty">No posts yet.</p>
+      ) : (
+        <div class="grid">
+          {posts.map(post => (
+            <BlogCard
+              id={post.id}
+              title={post.data.title}
+              date={post.data.date}
+              author={post.data.author}
+              image={post.data.image}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .main { padding-top: 6rem; min-height: 70vh; }
+  .page-header {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .page-header h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: .5rem;
+  }
+  .page-header p { font-size: 1.125rem; color: var(--text-muted); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    padding: 24px var(--gutter) 120px;
+  }
+  .empty { color: var(--text-muted); padding-bottom: 6rem; }
+</style>
