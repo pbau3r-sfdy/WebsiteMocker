@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import JobCard from '../../../../../_core/src/components/JobCard.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const jobs = (await getCollection('jobs'))
+  .filter(j => j.data.open !== false)
+  .sort((x, y) => y.data.date.valueOf() - x.data.date.valueOf());
+---
+
+<Layout title="Jobs" description="Open roles at Crestworks.">
+  <Nav />
+  <main class="main">
+    <div class="container">
+      <header class="page-header">
+        <h1>Jobs</h1>
+        <p>Explore open roles and opportunities to work with Crestworks.</p>
+      </header>
+      {jobs.length === 0 ? (
+        <p class="empty">No open roles right now.</p>
+      ) : (
+        <div class="list">
+          {jobs.map(job => (
+            <JobCard
+              id={job.id}
+              title={job.data.title}
+              date={job.data.date}
+              type={job.data.type}
+              department={job.data.department}
+              location={job.data.location}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .main { padding-top: 6rem; padding-bottom: 6rem; min-height: 70vh; }
+  .page-header {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .page-header h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: .5rem;
+  }
+  .page-header p { font-size: 1.125rem; color: var(--text-muted); }
+  .list { max-width: 1000px; }
+  .empty { color: var(--text-muted); }
+</style>
