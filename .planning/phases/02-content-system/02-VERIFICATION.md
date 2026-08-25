@@ -127,7 +127,8 @@ Note: mogwai-systems and parrot-capital content collections are intentionally em
 | jobs/index.astro open filter present (all sites) | `grep "open !== false"` | 4 matches | ✓ PASS |
 | sfdy-alt-clean news articles follow naming | `ls sites/sfdy-alt-clean/src/content/news/` | 6 YYYY-MM-DD-*.md files | ✓ PASS |
 | All 4 skills use quoted date format | `grep '"YYYY-MM-DD"'` on all 4 skill files | 4 matches | ✓ PASS |
-| All active site builds produce dist output | Check dist/ for content pages | dist/ stale (pre-Plans 06-09) | ? SKIP — needs human run |
+| All active site builds produce dist output | `npx astro build` in each site directory | sfdy-alt-clean, mogwai-systems, and parrot-capital each exited 0; each emitted `sites/<slug>/dist/{jobs,announcements,blog}/index.html` | ✓ PASS |
+| Phase 2 structural verification | `bash _scripts/verify-phase-02.sh` | 68 passed, 0 failed (exit 0) | ✓ PASS |
 
 ---
 
@@ -135,9 +136,7 @@ Note: mogwai-systems and parrot-capital content collections are intentionally em
 
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| `_core/src/components/AnnouncementCard.astro` | 18 | `href={'/announcements/${id}'}` — root-relative href, no BASE_URL | Warning | All announcement card links are broken in sandbox sub-path deployment. Works correctly in production (root URL). Identified in 02-REVIEW.md as CR-01. |
-| `_core/src/components/BlogCard.astro` | 16, 19 | `href={'/blog/${id}'}` and `src={image}` — root-relative, no BASE_URL | Warning | Blog card navigation and hero images broken in sandbox. Works in production. Identified in 02-REVIEW.md as CR-01/CR-02. |
-| `_core/src/components/JobCard.astro` | 19 | `href={'/jobs/${id}'}` — root-relative href, no BASE_URL | Warning | Job card links broken in sandbox. Works in production. Identified in 02-REVIEW.md as CR-01. |
+| `_core/src/components/{AnnouncementCard,BlogCard,JobCard}.astro` | AnnouncementCard: 13, 19; BlogCard: 11, 17, 20; JobCard: 14, 20 | CR-01/CR-02 fixed in commit `05e614a` (2026-08-20): every card declares `b` from `BASE_URL`; announcement, blog, and job hrefs use `${b}`, and BlogCard image src uses `${b}${image}` | Resolved | First-hand code inspection confirms sandbox sub-path links and blog images are base-prefixed. |
 | 9 site index files (mogwai/parrot/sfdy jobs, announcements, blog index.astro) | 7-8 | `const b = import.meta.env.BASE_URL…` declared but never used (dead code) | Info | Identified in 02-REVIEW.md as WR-01. Removed once CR-01 is fixed by moving b computation into card components. |
 
 No TBD, FIXME, or XXX markers found in any file modified by this phase.
