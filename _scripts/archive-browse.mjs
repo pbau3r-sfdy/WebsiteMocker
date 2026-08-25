@@ -102,27 +102,65 @@ function printTimeline(domain, rows) {
 
 // ── Sweep mode ─────────────────────────────────────────────────────────────────
 function getActiveSites() {
-  /* Task 2 */
+  const sitesDir = join(ROOT, 'sites');
+  return readdirSync(sitesDir, { withFileTypes: true })
+    .filter(e => e.isDirectory())
+    .map(e => {
+      const w = readJSON(join(sitesDir, e.name, 'wiring.json'));
+      return { slug: e.name, wiring: w };
+    })
+    .filter(({ wiring: w }) => w && !w.archived && !w.template && w.domain);
 }
 
 // ── Capture handoff ────────────────────────────────────────────────────────────
-// Implemented in Task 2 — --capture branch in main()
+// Implemented inline in main() --capture branch below
 
 // ── Main ───────────────────────────────────────────────────────────────────────
 async function main() {
+  // (1) --sweep mode: multi-domain coverage audit
   if (SWEEP) {
-    /* Task 2 */
+    const sites = getActiveSites();
+    if (sites.length === 0) fail('No active domains found in sites/ — check wiring.json');
+
+    console.log('\nWayback Archive Coverage');
+    console.log('─'.repeat(70));
+
+    for (const site of sites) {
+      const domain = site.wiring.domain;
+      const rows = await fetchCDX(domain, LIMIT);
+      if (rows.length === 0) {
+        console.log(`  ${domain.padEnd(40)}       0 snapshots   —`);
+      } else {
+        const count   = rows.length;
+        const oldest  = rows[0][0];
+        const newest  = rows[rows.length - 1][0];
+        const fmtDate = ts =>
+          `${ts.slice(0,4)}-${ts.slice(4,6)}-${ts.slice(6,8)} ${ts.slice(8,10)}:${ts.slice(10,12)}`;
+        console.log(
+          `  ${domain.padEnd(40)}  ${count.toString().padStart(5)} snapshots   ${fmtDate(oldest)} → ${fmtDate(newest)}`
+        );
+      }
+    }
     return;
+  }
+
+  // (2) --capture early validation: reject invalid timestamp BEFORE any CDX fetch
+  if (CAPTURE && !/^\d{14}$/.test(CAPTURE)) {
+    fail('--capture value must be exactly 14 digits (YYYYMMDDHHmmss)');
   }
 
   if (!inputArg) {
     fail('Usage: archive-browse.mjs <slug|domain> [--capture <timestamp>] [--limit N]\n       archive-browse.mjs --sweep');
   }
 
+  // (3) Resolve domain from slug or bare domain
   const { domain, slug } = resolveDomain(inputArg);
+
+  // (4) Fetch CDX rows
   const rows = await fetchCDX(domain, LIMIT);
   if (rows.length === 0) fail(`No snapshots found for ${domain}`);
 
+  // (5) Print timeline
   console.log(`\nArchive: ${domain}  (${rows.length} snapshots shown)`);
   printTimeline(domain, rows);
 
@@ -130,8 +168,18 @@ async function main() {
     console.log(`\nShowing ${LIMIT} of ≥${LIMIT} snapshots — use --limit N to increase`);
   }
 
+  // (6) --capture: validate against CDX rows and hand off to capture-site.mjs
   if (CAPTURE) {
-    /* Task 2 */
+    const found = rows.some(([ts]) => ts === CAPTURE);
+    if (!found) {
+      fail(`Snapshot ${CAPTURE} not found for ${slug ?? domain}. Run without --capture to browse available snapshots.`);
+    }
+    const captureSlug = slug ? `${slug}-${CAPTURE}` : `archive-${CAPTURE}`;
+    const ifUrl       = `https://web.archive.org/web/${CAPTURE}if_/${domain}`;
+    const cmd         = `node _scripts/capture-site.mjs "${ifUrl}" "${captureSlug}"`;
+    console.log(`\n▶  ${cmd}`);
+    execSync(cmd, { stdio: 'inherit', cwd: ROOT });
+    ok(`Design DNA written to _captures/${captureSlug}/`);
   }
 }
 
