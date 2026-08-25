@@ -100,6 +100,9 @@ if want "02"; then
   check "writeSectionMode body contains no pages path" "$R"
   rm -f "$section_body"
 
+  # The third pattern matches the literal string used in ingest-artifact.mjs's ok() call
+  # (line ~815: ok('astro.config.mjs: injected SITE_URL/SITE_BASE env var pattern')).
+  # It is intentional — the check verifies that success message is present in the script.
   for pattern in SITE_URL SITE_BASE "injected SITE_URL/SITE_BASE env var pattern"; do
     count=$(count_in "$SCRIPT" "$pattern")
     [ "$count" -ge 1 ] && R=0 || R=1
