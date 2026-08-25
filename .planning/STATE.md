@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.1
-milestone_name: Doc Generation, Archive Ingestion & Documentation Expansion
-status: in_progress
-stopped_at: Phase 8 context gathered
-last_updated: "2026-08-25T00:00:00.000Z"
-last_activity: 2026-08-25 -- Phase 8 (Cleanup & Verification) context gathered — 2 plans in 2 waves, all ARCH-01–05 covered, verification passed
+milestone_name: — Doc Generation, Archive Ingestion & Documentation Expansion
+status: executing
+stopped_at: ~
+last_updated: "2026-08-25T07:27:39.249Z"
+last_activity: 2026-08-25 -- Phase 08 planning complete
 progress:
   total_phases: 3
-  completed_phases: 1
-  total_plans: 5
-  completed_plans: 3
-  percent: 33
+  completed_phases: 2
+  total_plans: 11
+  completed_plans: 5
+  percent: 45
 ---
 
 # Project State
@@ -27,8 +27,8 @@ See: .planning/PROJECT.md (updated 2026-08-23)
 
 Phase: Phase 7 (Archive Module) — verified complete
 Plan: 07-01 ✓, 07-02 ✓
-Status: All plans done, code review fixed (5 findings), 10/10 must-haves verified
-Last activity: 2026-08-25 — Phase 7 complete: archive-browse.mjs + /wm-archive-browse skill, 10/10 must-haves verified, 5 code review fixes applied
+Status: Ready to execute
+Last activity: 2026-08-25 -- Phase 08 planning complete
 
 ## Performance Metrics
 
@@ -39,6 +39,7 @@ Last activity: 2026-08-25 — Phase 7 complete: archive-browse.mjs + /wm-archive
 ### Decisions
 
 Carried from v1.0:
+
 - build-single.mjs delegates to build-all.js via execSync subprocess (not module import) for correct stdio inheritance
 - publish.yml checkout uses WM_PUBLISH_PAT so commit-back git push succeeds (GITHUB_TOKEN cannot push to WebsiteMocker main from within the workflow)
 - wm-publish validates wiring.json inline (not via a separate script) — keeps the skill self-contained and auditable
