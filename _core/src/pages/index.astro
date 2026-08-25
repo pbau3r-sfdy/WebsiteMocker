@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title="Home" description="{{SITE_TAGLINE}}">
@@ -15,8 +16,8 @@ import Footer from '../components/Footer.astro';
       <h1 class="hero-headline">{{HERO_HEADLINE}}</h1>
       <p class="hero-sub">{{HERO_SUB}}</p>
       <div class="hero-actions">
-        <a href="/#contact" class="btn-primary">{{CTA_PRIMARY}}</a>
-        <a href="/news" class="btn-ghost">Latest News</a>
+        <a href={`${b}/#contact`} class="btn-primary">{{CTA_PRIMARY}}</a>
+        <a href={`${b}/news`} class="btn-ghost">Latest News</a>
       </div>
     </div>
   </section>
