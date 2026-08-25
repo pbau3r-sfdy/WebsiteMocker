@@ -9,7 +9,7 @@
  *   node _scripts/archive-browse.mjs <slug> --limit N
  */
 
-import { execSync }                              from 'child_process';
+import { execFileSync }                          from 'child_process';
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join }                                  from 'path';
 import { fileURLToPath }                         from 'url';
@@ -65,8 +65,13 @@ async function fetchCDX(domain, limit) {
 
 // ── Domain resolution ──────────────────────────────────────────────────────────
 function resolveDomain(input) {
-  // If input looks like a bare domain (contains a dot), use directly
-  if (input && input.includes('.')) return { domain: input, slug: null };
+  // If input looks like a bare domain (contains a dot), validate and use directly
+  if (input && input.includes('.')) {
+    if (!/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(input)) {
+      fail('Invalid domain — only alphanumeric characters, dots, hyphens allowed');
+    }
+    return { domain: input, slug: null };
+  }
   // Otherwise treat as slug — validate first to prevent shell injection
   if (!/^[a-z0-9-]+$/.test(input)) {
     fail('Usage: archive-browse.mjs <slug|domain> [--capture <timestamp>] [--limit N] [--sweep]');
@@ -176,9 +181,12 @@ async function main() {
     }
     const captureSlug = slug ? `${slug}-${CAPTURE}` : `archive-${CAPTURE}`;
     const ifUrl       = `https://web.archive.org/web/${CAPTURE}if_/${domain}`;
-    const cmd         = `node _scripts/capture-site.mjs "${ifUrl}" "${captureSlug}"`;
-    console.log(`\n▶  ${cmd}`);
-    execSync(cmd, { stdio: 'inherit', cwd: ROOT });
+    console.log(`\n▶  node _scripts/capture-site.mjs "${ifUrl}" "${captureSlug}"`);
+    execFileSync(
+      process.execPath,
+      ['_scripts/capture-site.mjs', ifUrl, captureSlug],
+      { stdio: 'inherit', cwd: ROOT }
+    );
     ok(`Design DNA written to _captures/${captureSlug}/`);
   }
 }
