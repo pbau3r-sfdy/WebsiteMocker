@@ -42,7 +42,7 @@ const formatted = entry.data.date.toLocaleDateString('en-GB', {
         )}
       </header>
       {entry.data.image && (
-        <img class="lead" src={`${b}${entry.data.image}`} alt="" />
+        <img class="lead" src={`${b}/${entry.data.image.replace(/^\//, '')}`} alt="" />
       )}
       <div class="body">
         <Content />
