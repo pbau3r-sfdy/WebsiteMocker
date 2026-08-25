@@ -49,7 +49,12 @@ const inputArg = args[0];
 
 // ── readJSON ───────────────────────────────────────────────────────────────────
 function readJSON(p) {
-  try { return JSON.parse(readFileSync(p, 'utf-8')); } catch { return null; }
+  try {
+    return JSON.parse(readFileSync(p, 'utf-8'));
+  } catch (e) {
+    if (e.code === 'ENOENT') return null;
+    fail(`${p}: invalid JSON — ${e.message}`);
+  }
 }
 
 // ── CDX fetch ──────────────────────────────────────────────────────────────────
