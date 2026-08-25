@@ -7,7 +7,7 @@ import TypeBadge from '../../../../../_core/src/components/TypeBadge.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('jobs');
-  return entries.map(entry => ({
+  return entries.filter(e => e.data.open !== false).map(entry => ({
     params: { slug: entry.id },
     props: { entry },
   }));
