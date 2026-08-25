@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-08-23)
 
 ## Current Position
 
-Phase: Phase 6 complete — Phase 7 (Archive Module) is next
-Plan: —
-Status: Phase 6 verified; human E2E test pending before final sign-off
-Last activity: 2026-08-24 — Phase 6 (Doc Pipeline) executed: 3/3 plans complete, 8 code review fixes applied, 10/10 must-haves verified
+Phase: Phase 7 (Archive Module) — in progress
+Plan: 07-01 complete, 07-02 pending
+Status: Wave 1 merged — archive-browse.mjs built; Wave 2 executing
+Last activity: 2026-08-25 — Phase 7 Wave 1: archive-browse.mjs (CDX timeline, --sweep, --capture) committed and merged
 
 ## Performance Metrics
 

@@ -49,7 +49,7 @@ Plans:
 Plans:
 
 **Wave 1**
-- [ ] 07-01-PLAN.md — archive-browse.mjs: CDX fetch, year-grouped timeline, --sweep coverage table, --capture handoff
+- [x] 07-01-PLAN.md — archive-browse.mjs: CDX fetch, year-grouped timeline, --sweep coverage table, --capture handoff
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 07-02-PLAN.md — /wm-archive-browse skill: guided browse → inspect → optional capture flow
