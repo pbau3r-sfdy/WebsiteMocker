@@ -2,6 +2,7 @@
   "slug": "marketing-bridge",
   "name": "MarketingBridge",
   "stage": 1,
+  "skip_ci": true,
   "prod_repo": "pbau3r-sfdy/marketing-bridge",
   "brand": {
     "doc_tokens": {
