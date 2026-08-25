@@ -1,24 +1,19 @@
 ---
 phase: 02-content-system
 verified: 2026-08-20T12:00:00Z
-status: human_needed
-score: 9/10 must-haves verified
+status: verified
+score: 10/10 must-haves verified
 overrides_applied: 0
-human_verification:
-  - test: "Run npm run build in each active site and confirm exit 0"
-    expected: "cd sites/sfdy-alt-clean && npm run build exits 0 with jobs/, announcements/, blog/ pages generated. Same for sites/mogwai-systems and sites/parrot-capital."
-    why_human: "The dist/ directory is stale — it predates Plans 06–09. Individual per-site builds were reported as passing in git commit messages but have not been re-confirmed as a whole. Cannot verify builds pass without running them."
-  - test: "Confirm card link bugs (CR-01, CR-02) are tracked or accept the deviation"
-    expected: "AnnouncementCard, BlogCard, and JobCard should prepend BASE_URL to hrefs/image src. Currently they use root-relative paths, which break all card links and blog hero images in the sandbox sub-path deployment."
-    why_human: "The code review (02-REVIEW.md, CR-01 and CR-02) flagged these as critical. They are unfixed in the committed codebase. Human must decide: fix now (before Phase 3), or accept as a known limitation until Phase 3 brand/CSS work."
+re_verified: 2026-08-25
+re_verified_by: "Phase 8 DEXP-04"
 ---
 
 # Phase 2: Content System Verification Report
 
 **Phase Goal:** All active sites use the Astro 5 Content Layer API with four standardised content types, each editable by non-technical contributors via the GitHub web UI
 **Verified:** 2026-08-20
-**Status:** human_needed — code implementation complete; two items need human confirmation before proceeding
-**Re-verification:** No — initial verification
+**Status:** verified — CR-01/CR-02 fixed in `05e614a`; all three Phase 2 active-site builds confirmed green
+**Re-verification:** Yes — corrected 2026-08-25 by Phase 8 (DEXP-04)
 
 ---
 
@@ -37,9 +32,9 @@ human_verification:
 | 7 | `/wm-add-news`, `/wm-add-job`, `/wm-add-announcement`, `/wm-add-blog` skills exist with `"YYYY-MM-DD"` quoted date format and git commit step | ✓ VERIFIED | All 4 skill files confirmed; grep confirms quoted date format in all 4 |
 | 8 | Content files follow `YYYY-MM-DD-slug.md` naming convention | ✓ VERIFIED | All 6 existing sfdy-alt-clean news files follow the pattern |
 | 9 | `jobs/index.astro` open-only filter (`j.data.open !== false`) applied on all 3 sites and `_core` | ✓ VERIFIED | grep confirms presence in all 4 jobs list pages |
-| 10 | All 3 active sites build cleanly with all 4 content types (SC-1, SC-2) | ? UNCERTAIN | dist/ directory is stale — predates Plans 06–09. Code is correct but dashboard build not re-run after new page files were added. Individual site builds were reported passing in git commits but need re-confirmation. |
+| 10 | All 3 active sites build cleanly with all 4 content types (SC-1, SC-2) | ✓ VERIFIED | `npx astro build` exited 0 in sfdy-alt-clean, mogwai-systems, and parrot-capital; all three emitted `sites/<slug>/dist/{jobs,announcements,blog}/index.html`. |
 
-**Score:** 9/10 truths verified
+**Score:** 10/10 truths verified
 
 ---
 
@@ -143,42 +138,26 @@ No TBD, FIXME, or XXX markers found in any file modified by this phase.
 
 ---
 
-### Human Verification Required
+### Human Verification — Resolved
 
-### 1. Build verification for all 3 active sites with 4 content types
-
-**Test:** Run `npm run build` inside each active site directory:
-```bash
-cd /path/to/WebsiteMocker/sites/sfdy-alt-clean && npm run build
-cd /path/to/WebsiteMocker/sites/mogwai-systems && npm run build
-cd /path/to/WebsiteMocker/sites/parrot-capital && npm run build
-```
-**Expected:** All three exits 0. dist/ for sfdy-alt-clean includes news/, jobs/, announcements/, blog/ directories. dist/ for mogwai and parrot includes all 4 collection routes.
-**Why human:** The local dist/ directory predates Plans 06–09 (shows news/ for sfdy but no jobs/announcements/blog; nothing for mogwai/parrot). Individual builds were declared passing in git commit messages but the CI dashboard build and local full build have not been re-run. Cross-directory import paths use 5-level relative paths (`../../../../../_core/…`) that need Astro's Vite resolver to accept — this works without `vite.server.fs.allow` in Astro 5 based on the existing configs, but needs build confirmation.
-
----
-
-### 2. Card link and image bugs (CR-01 / CR-02 from 02-REVIEW.md) — confirm tracked or fix
-
-**Test:** Open the sandbox at `https://pbau3r-sfdy.github.io/WebsiteMocker/sfdy-alt-clean/`. Navigate to /jobs/ or /announcements/ or /blog/. Click any card.
-**Expected:** Card should navigate to the detail page under the site's sub-path. Currently it navigates to root-relative `/jobs/…` which is a 404 in sandbox.
-**Why human:** `AnnouncementCard`, `BlogCard`, and `JobCard` use root-relative hrefs (e.g. `href={'/announcements/${id}'}`) without prepending `import.meta.env.BASE_URL`. The per-site page templates correctly compute `const b` but never pass it to the card components. This was identified in 02-REVIEW.md as critical issue CR-01 (links) and CR-02 (BlogCard images). Human must decide: fix before Phase 3 or accept as sandbox-only limitation (production sites deploy to root URL so links work in production).
+| Former verification item | Resolution | Evidence |
+|--------------------------|------------|----------|
+| Build verification for all 3 active sites with 4 content types | Resolved by first-hand per-site builds on 2026-08-25 | `npx astro build` exited 0 for sfdy-alt-clean, mogwai-systems, and parrot-capital; each emitted `dist/{jobs,announcements,blog}/index.html`. |
+| Card link and image defects CR-01/CR-02 | Resolved by commit `05e614a` and confirmed against current code | AnnouncementCard `b` line 13 / href line 19; BlogCard `b` line 11 / href line 17 / image src line 20; JobCard `b` line 14 / href line 20. |
 
 ---
 
 ## Gaps Summary
 
-No gaps blocking the phase goal. All 10 CONTENT-* requirements are implemented in code. All 4 roadmap success criteria are addressed by the implementation.
+Zero remaining Phase 2 gaps. All 10 CONTENT-* requirements and all 10 observable truths are verified.
 
-Two items need human confirmation before proceeding to Phase 3:
+1. **Build verification — closed:** first-hand `npx astro build` runs for sfdy-alt-clean, mogwai-systems, and parrot-capital all exited 0 and emitted the expected content indexes.
+2. **CR-01/CR-02 — closed:** commit `05e614a` base-prefixes all affected card hrefs and the BlogCard image source; current line-level inspection confirms the fix remains present.
 
-1. **Builds pass** — The stale dist/ is the primary uncertainty. The code structure is correct (Astro 5 API patterns verified throughout, import paths verified), but a clean build run should confirm no TypeScript or Vite errors surface with the new content pages and cross-directory component imports.
-
-2. **CR-01/CR-02 acknowledged** — The card link/image bugs are sandbox-UX issues, not migration blockers (production routing is root-relative which matches the current href values). The decision to fix now or defer needs to be made explicitly before Phase 3 work builds on this foundation.
-
-**Note on crestworks:** `sites/crestworks/src/content/config.ts` (Astro 4) still exists. Crestworks is an active deployed site (stage 6, live at crestworks.co). It was explicitly declared out of scope in 02-RESEARCH.md ("Template sites (`crestworks`, `levion`, `orbint`, `hypersonica`, `tnt-ventures`) do NOT need content system migration") despite its wiring.json having no `"template": true` flag. This is a scope boundary that should be reconciled — either crestworks needs migration (extend Phase 2 scope) or its wiring.json should have `"template": true` added.
+**Note on crestworks:** Crestworks is an active stage-6 site but was explicitly out of scope for Phase 2 per `02-RESEARCH.md`. Phase 8 requirement HSK-01, delivered through plans 08-02 and 08-03, is the reconciliation path for its jobs, announcements, and blog content routes; this scope boundary is therefore tracked rather than an open Phase 2 gap.
 
 ---
 
 _Verified: 2026-08-20_
 _Verifier: Claude (gsd-verifier)_
+_Corrected: 2026-08-25 by Phase 8 (DEXP-04)_
