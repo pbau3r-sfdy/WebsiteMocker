@@ -35,10 +35,10 @@ Plans:
 - [x] 06-02-PLAN.md — ingest-artifact.mjs --mode docs: artifact detection, zip extraction, brand token injection, gh api commit, GFM export
 - [x] 06-03-PLAN.md — /wm-gen-docs skill: 7-step guided workflow from artifact staging to committed HTML
 
-### Phase 7: Archive Module
+### Phase 7: Archive Module ✓ COMPLETE
 **Goal**: Operator can inspect any domain's Wayback Machine snapshot history and hand off selected snapshots to the capture pipeline
 **Depends on**: Nothing (independent of Phase 6)
-**Requirements**: ARCH-01, ARCH-02, ARCH-03, ARCH-04, ARCH-05
+**Requirements**: ARCH-01, ARCH-02, ARCH-03, ARCH-04, ARCH-05 (all verified 2026-08-25)
 **Success Criteria** (what must be TRUE):
   1. Operator runs `archive-browse.mjs <slug|domain>` and sees a snapshot timeline grouped by year/month with clickable toolbar-stripped Wayback URLs
   2. Operator runs `archive-browse.mjs --sweep` and sees archive coverage (snapshot count, date range) for all active domains in `wiring.json`
