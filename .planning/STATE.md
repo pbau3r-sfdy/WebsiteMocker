@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Doc Generation, Archive Ingestion & Documentation Expansion
 status: in_progress
-stopped_at: Phase 7 planned
+stopped_at: Phase 8 context gathered
 last_updated: "2026-08-25T00:00:00.000Z"
-last_activity: 2026-08-25 -- Phase 7 (Archive Module) planned — 2 plans in 2 waves, all ARCH-01–05 covered, verification passed
+last_activity: 2026-08-25 -- Phase 8 (Cleanup & Verification) context gathered — 2 plans in 2 waves, all ARCH-01–05 covered, verification passed
 progress:
   total_phases: 3
   completed_phases: 1
