@@ -143,8 +143,11 @@ node _scripts/init-prod-repo.mjs <slug> --confirm # execute
 | `/wm-deploy` | Build and push to sandbox GitHub Pages |
 | `/wm-preflight` | Full readiness checklist before deploy |
 | `/wm-wire` | Interactive wizard for all service connections |
+| `/wm-publish` | Build with production env vars and push to the production repo's `gh-pages` branch |
 | `/wm-init-collab` | Make a production repo contributor-ready (branch, templates, labels, PAT) |
 | `/wm-archive-browse` | Browse Wayback Machine snapshots for a site, inspect with toolbar-stripped URLs, optionally capture |
+| `/wm-ingest` | Ingest a Claude Design HTML/CSS artifact into an existing site as routed Astro components |
+| `/wm-gen-docs` | Generate a branded HTML document from a Claude Design artifact and commit it to the production repo's `docs/` folder |
 
 ### Content (inherited from `_core/.claude/skills/`)
 | Skill | What it does |
