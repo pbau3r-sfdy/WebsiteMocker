@@ -44,6 +44,25 @@ const fontFaces = `
       --cw-grey-500:#7f7f7f;
       --cw-grey-400:#a6a6a6;
       --cw-grey-300:#cccccc;
+
+      /* Map shared _core component tokens onto the Crestworks palette. */
+      --accent:         var(--cw-magenta);
+      --accent-dim:     rgba(255,47,146,.12);
+      --border-accent:  var(--cw-magenta);
+      --border-subtle:  var(--cw-grey-300);
+      --border-strong:  var(--cw-grey-400);
+      --text-primary:   var(--cw-black);
+      --text-secondary: var(--cw-grey-600);
+      --text-muted:     var(--cw-grey-500);
+      --text-soft:      var(--cw-grey-400);
+      --surface-1:      var(--cw-white);
+      --surface-2:      #fafafa;
+      --bg-base:        var(--cw-white);
+      --font-display:   'Avenir Next', 'Avenir', sans-serif;
+      --font-head:      'Avenir Next', 'Avenir', sans-serif;
+      --font-mono:      ui-monospace, SFMono-Regular, Menlo, monospace;
+      --gutter:         clamp(20px, 5vw, 64px);
+      --radius:         4px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }

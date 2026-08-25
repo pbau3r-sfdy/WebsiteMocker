@@ -69,7 +69,7 @@ Plans:
 Plans:
 
 **Wave 1**
-- [ ] 08-01-PLAN.md — verify-phase-08.sh harness + `_core` env-var config (HSK-03) + `_core` accent token (HSK-02) + crestworks design-token bridge
+- [x] 08-01-PLAN.md — verify-phase-08.sh harness + `_core` env-var config (HSK-03) + `_core` accent token (HSK-02) + crestworks design-token bridge
 
 **Wave 2** *(blocked on Wave 1)*
 - [ ] 08-02-PLAN.md — crestworks jobs + announcements routes and stub content (HSK-01)
