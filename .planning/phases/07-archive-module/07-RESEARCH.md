@@ -695,17 +695,19 @@ Report: "Timeline browsing complete. Run `/wm-archive-browse` again to inspect a
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **CDX rate limiting**
    - What we know: No documented rate limit in the CDX README.
    - What's unclear: Whether rapid sequential domain fetches in `--sweep` (e.g. 5 domains in < 2 seconds) triggers throttling.
    - Recommendation: Add a 500ms sleep between sweep domain fetches as a conservative default.
+   - **RESOLVED:** Plan 07-01 Task 2 uses a sequential `for...of` loop (no `Promise.all`) per Pitfall 6. No sleep is added — CONTEXT.md discretion section notes sequential is assumed safe for the domain counts in `wiring.json` (≤10 active sites).
 
 2. **Domain field format variation**
    - What we know: `sfdy-alt-clean` uses `"domain": "www.starflight-dynamics.com"` (www prefix); `parrot-capital` uses `"domain": "parrot-capital.com"` (no www).
    - What's unclear: CDX behavior differences between `www.` and non-`www.` queries — it may not return both.
    - Recommendation: Pass `domain` verbatim from `wiring.json`. Operators can use `--limit` to inspect whether both variants have captures.
+   - **RESOLVED:** Plan 07-01 Task 2 passes `wiring.domain` verbatim to the CDX query per Pitfall 2 recommendation. Operators query the domain exactly as stored; no `www.` normalisation is applied.
 
 ---
 

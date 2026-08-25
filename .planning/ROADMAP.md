@@ -13,7 +13,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 6. Doc Pipeline | 3/3 | Complete | 2026-08-24 |
-| 7. Archive Module | 0/? | Not started | - |
+| 7. Archive Module | 2/2 | Planned | - |
 | 8. Cleanup & Verification | 0/? | Not started | - |
 
 ## Phase Details
@@ -47,7 +47,11 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
+
+**Wave 1**
 - [ ] 07-01-PLAN.md — archive-browse.mjs: CDX fetch, year-grouped timeline, --sweep coverage table, --capture handoff
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 07-02-PLAN.md — /wm-archive-browse skill: guided browse → inspect → optional capture flow
 
 ### Phase 8: Cleanup & Verification
@@ -60,11 +64,7 @@ Plans:
   3. `_core/astro.config.mjs` uses the SITE_URL/SITE_BASE env-var pattern, matching all active sites
   4. `02-VERIFICATION.md` accurately documents the current codebase state with the stale CR-01 entry corrected
   5. Phase 4 (Collaboration Infrastructure) and Phase 5 (Design Artifact Ingestion) each have a Nyquist VALIDATION.md on disk
-**Plans**: 2 plans
-
-Plans:
-- [ ] 07-01-PLAN.md — archive-browse.mjs: CDX fetch, year-grouped timeline, --sweep coverage table, --capture handoff
-- [ ] 07-02-PLAN.md — /wm-archive-browse skill: guided browse → inspect → optional capture flow
+**Plans**: TBD
 
 ---
 
