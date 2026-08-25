@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-08-23)
 
 ## Current Position
 
-Phase: Phase 7 (Archive Module) — in progress
-Plan: 07-01 complete, 07-02 pending
-Status: Wave 1 merged — archive-browse.mjs built; Wave 2 executing
-Last activity: 2026-08-25 — Phase 7 Wave 1: archive-browse.mjs (CDX timeline, --sweep, --capture) committed and merged
+Phase: Phase 7 (Archive Module) — complete, verification pending
+Plan: 07-01 complete, 07-02 complete
+Status: Both waves merged; verification agent running
+Last activity: 2026-08-25 — Phase 7: 2/2 plans complete — archive-browse.mjs + /wm-archive-browse skill built
 
 ## Performance Metrics
 
