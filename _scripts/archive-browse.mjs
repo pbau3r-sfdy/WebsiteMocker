@@ -40,7 +40,11 @@ function option(name) {
 
 const SWEEP   = flag('--sweep');
 const CAPTURE = option('--capture');
-const LIMIT   = parseInt(option('--limit') ?? '100', 10);
+const rawLimit = option('--limit');
+const LIMIT    = rawLimit !== null ? parseInt(rawLimit, 10) : 100;
+if (isNaN(LIMIT) || LIMIT < 1) {
+  fail('--limit must be a positive integer');
+}
 const inputArg = args[0];
 
 // ── readJSON ───────────────────────────────────────────────────────────────────
