@@ -66,6 +66,6 @@ Timeline browsing complete. Run `/wm-archive-browse` again to inspect another sn
 
 - **`--limit N`** — appending this flag to the Step 2 command overrides the default 100-snapshot fetch; useful for domains with a long history
 - **domain is read from `wiring.json`** — the script reads `sites/<slug>/wiring.json`; if `domain` is null or missing, the script exits 1 with an actionable error — update `wiring.json` before re-running
-- **bare domain input** — if the operator provides a domain name (contains a dot) instead of a slug, the script uses it directly without reading `wiring.json`; `--capture` is not available in domain mode (no slug to build the output path)
+- **bare domain input** — if the operator provides a domain name (contains a dot) instead of a slug, the script uses it directly without reading `wiring.json`; **bare domain + `--capture`** is supported — the capture slug becomes `archive-<timestamp>` (e.g. `_captures/archive-20240315123045/`). To use a more descriptive slug, pass the matching `wiring.json` slug instead of the bare domain
 - **capture output is namespaced** — historical captures land in `_captures/<slug>-<timestamp>/` to prevent overwriting the live site capture in `_captures/<slug>/`
 - **CDX fetch requires internet** — the script contacts `web.archive.org`; if the network is unavailable, the script exits 1 with a clear message
