@@ -13,8 +13,8 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 6. Doc Pipeline | 3/3 | Complete | 2026-08-24 |
-| 7. Archive Module | 2/2 | Planned | - |
-| 8. Cleanup & Verification | 0/? | Not started | - |
+| 7. Archive Module | 2/2 | Complete | 2026-08-25 |
+| 8. Cleanup & Verification | 0/6 | Planned | - |
 
 ## Phase Details
 
@@ -64,7 +64,23 @@ Plans:
   3. `_core/astro.config.mjs` uses the SITE_URL/SITE_BASE env-var pattern, matching all active sites
   4. `02-VERIFICATION.md` accurately documents the current codebase state with the stale CR-01 entry corrected
   5. Phase 4 (Collaboration Infrastructure) and Phase 5 (Design Artifact Ingestion) each have a Nyquist VALIDATION.md on disk
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+
+**Wave 1**
+- [ ] 08-01-PLAN.md — verify-phase-08.sh harness + `_core` env-var config (HSK-03) + `_core` accent token (HSK-02) + crestworks design-token bridge
+
+**Wave 2** *(blocked on Wave 1)*
+- [ ] 08-02-PLAN.md — crestworks jobs + announcements routes and stub content (HSK-01)
+- [ ] 08-04-PLAN.md — correct the stale `02-VERIFICATION.md` against real card code and real builds (DEXP-04)
+
+**Wave 3** *(blocked on Wave 2)*
+- [ ] 08-03-PLAN.md — crestworks blog routes, stub post, and hsk01 build gate (HSK-01)
+- [ ] 08-05-PLAN.md — verify-phase-05.sh + live artifact ingest E2E + `05-VALIDATION.md` (DEXP-06)
+
+**Wave 4** *(blocked on Wave 3 — runs alone: mutates remote main and runs the full monorepo build)*
+- [ ] 08-06-PLAN.md — live contributor round trip against `pbau3r-sfdy/mogwai-systems` + `04-VALIDATION.md` + phase-wide regression gate (DEXP-05)
 
 ---
 
