@@ -14,7 +14,7 @@
 |-------|----------------|--------|-----------|
 | 6. Doc Pipeline | 3/3 | Complete | 2026-08-24 |
 | 7. Archive Module | 2/2 | Complete | 2026-08-25 |
-| 8. Cleanup & Verification | 0/6 | Planned | - |
+| 8. Cleanup & Verification | 2/6 | In Progress | - |
 
 ## Phase Details
 
@@ -72,7 +72,7 @@ Plans:
 - [x] 08-01-PLAN.md — verify-phase-08.sh harness + `_core` env-var config (HSK-03) + `_core` accent token (HSK-02) + crestworks design-token bridge
 
 **Wave 2** *(blocked on Wave 1)*
-- [ ] 08-02-PLAN.md — crestworks jobs + announcements routes and stub content (HSK-01)
+- [x] 08-02-PLAN.md — crestworks jobs + announcements routes and stub content (HSK-01)
 - [ ] 08-04-PLAN.md — correct the stale `02-VERIFICATION.md` against real card code and real builds (DEXP-04)
 
 **Wave 3** *(blocked on Wave 2)*
