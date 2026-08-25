@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # verify-phase-08.sh — Structural verification for Phase 8: Cleanup & Verification
 # Usage: bash _scripts/verify-phase-08.sh [hsk01|hsk02|hsk03|dexp|all]
-# Exit code: 0 = all selected checks pass, 1 = one or more failures
+# Exit codes: 0 = all selected checks pass, 1 = one or more failures, 2 = invalid argument
 
 set -euo pipefail
 PASS=0
