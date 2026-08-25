@@ -44,7 +44,11 @@ Plans:
   2. Operator runs `archive-browse.mjs --sweep` and sees archive coverage (snapshot count, date range) for all active domains in `wiring.json`
   3. Operator passes `--capture <timestamp>` and design DNA is extracted into `_captures/<slug>-<timestamp>/` via handoff to `capture-site.mjs`
   4. Operator uses `/wm-archive-browse [slug|domain]` for an interactive flow from browse to inspect to optional snapshot capture
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 07-01-PLAN.md — archive-browse.mjs: CDX fetch, year-grouped timeline, --sweep coverage table, --capture handoff
+- [ ] 07-02-PLAN.md — /wm-archive-browse skill: guided browse → inspect → optional capture flow
 
 ### Phase 8: Cleanup & Verification
 **Goal**: All v1.0 tech debt is resolved, crestworks operates as a fully-featured active site, and phases 4–5 have formal verification records
@@ -56,7 +60,11 @@ Plans:
   3. `_core/astro.config.mjs` uses the SITE_URL/SITE_BASE env-var pattern, matching all active sites
   4. `02-VERIFICATION.md` accurately documents the current codebase state with the stale CR-01 entry corrected
   5. Phase 4 (Collaboration Infrastructure) and Phase 5 (Design Artifact Ingestion) each have a Nyquist VALIDATION.md on disk
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 07-01-PLAN.md — archive-browse.mjs: CDX fetch, year-grouped timeline, --sweep coverage table, --capture handoff
+- [ ] 07-02-PLAN.md — /wm-archive-browse skill: guided browse → inspect → optional capture flow
 
 ---
 
