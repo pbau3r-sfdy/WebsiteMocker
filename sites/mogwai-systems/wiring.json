@@ -14,5 +14,29 @@
     "avoid": [],
     "voice": "Minimal, operational, no hype"
   },
+  "socials": {
+    "youtube": {
+      "handle": "@mogwaiconsortium",
+      "url": "https://www.youtube.com/@mogwaiconsortium",
+      "account_email": "sfdy.space@gmail.com",
+      "status": "active"
+    },
+    "linkedin": {
+      "handle": "mogwai-systems",
+      "url": "https://linkedin.com/company/mogwai-systems",
+      "status": "active"
+    },
+    "instagram": {
+      "handle": "@mogwaiconsortium",
+      "url": "https://www.instagram.com/mogwaiconsortium/",
+      "account_email": "me@starflight-dynamics.com",
+      "status": "active"
+    },
+    "twitter_x": {
+      "handle": "@mogwaisystems",
+      "status": "pending",
+      "note": "To be created by Marc with a dedicated email address."
+    }
+  },
   "notes": "Holding page for the MOGWAI programme. Black canvas, starfield, emblem, standing-by state. Legal pages carry Starflight Dynamics GmbH as operator. Live at https://www.mogwai-systems.com"
 }
