@@ -4,14 +4,16 @@
   "parallelization": true,
   "commit_docs": true,
   "model_profile": "balanced",
-  "execution_runtime": "codex",
   "instruction_file": "AGENTS.md",
   "workflow": {
     "research": true,
     "plan_check": true,
     "verifier": true,
     "nyquist_validation": false,
-    "auto_advance": false
+    "auto_advance": false,
+    "cross_ai_execution": true,
+    "cross_ai_command": "/Users/pbau3r/DevWorks/MCPBindings/HelperBridge/.venv/bin/hb-codex-cross-ai",
+    "cross_ai_timeout": 600
   },
   "ship": {
     "pr_body_sections": [
