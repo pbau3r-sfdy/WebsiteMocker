@@ -5,8 +5,8 @@
 ### Phases
 
 - [x] **Phase 6: Doc Pipeline** — Operator can generate and publish branded HTML documents from Claude Design artifacts
-- [ ] **Phase 7: Archive Module** — Operator can browse Wayback Machine history for any domain and hand off snapshots to the capture pipeline
-- [ ] **Phase 8: Cleanup & Verification** — All v1.0 tech debt is resolved and crestworks operates as a fully-featured active site
+- [x] **Phase 7: Archive Module** — Operator can browse Wayback Machine history for any domain and hand off snapshots to the capture pipeline
+- [x] **Phase 8: Cleanup & Verification** — All v1.0 tech debt is resolved and crestworks operates as a fully-featured active site
 
 ### Progress
 
@@ -14,7 +14,7 @@
 |-------|----------------|--------|-----------|
 | 6. Doc Pipeline | 3/3 | Complete | 2026-08-24 |
 | 7. Archive Module | 2/2 | Complete | 2026-08-25 |
-| 8. Cleanup & Verification | 2/6 | In Progress | - |
+| 8. Cleanup & Verification | 6/6 | Complete | 2026-08-25 |
 
 ## Phase Details
 
