@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
+import Footer from '../components/Footer.astro';
+import Tbd from '../components/Tbd.astro';
+
+// "[[…]]" inside a paragraph marks an open point (rendered as a yellow TBD marker).
+const SECTIONS: [string, string[]][] = [
+  ['Controller', ['Starflight Dynamics GmbH, Tal 44, 80331 Munich, Germany, mission-control@starflight-dynamics.com. For applications to positions in Vilnius, Starflight Dynamics UAB, [[street address]], Vilnius, Lithuania, is joint controller with Starflight Dynamics GmbH.']],
+  ['Hosting and server logs', ['This website is hosted on GitHub Pages, a service of GitHub, Inc., San Francisco, USA. When you visit it, GitHub logs your IP address for security purposes, together with technical data such as the page requested and your browser type. GitHub is certified under the EU–US Data Privacy Framework. We have no access to these logs beyond what GitHub provides; see GitHub’s privacy statement for retention. Legal basis: Art. 6 (1)(f) GDPR (legitimate interest in a secure, reliable website).']],
+  ['Cookies and fonts', ['This website sets no cookies. All fonts are hosted on our own server; your browser does not connect to third-party font services.']],
+  ['Contact form and email', ['If you write to us, we process your name, email address and message to answer you. The contact form is transmitted through Web3Forms, acting as our processor. Legal basis: Art. 6 (1)(b) GDPR where your message concerns a contract, otherwise Art. 6 (1)(f) GDPR. We delete the data when your request is settled, unless retention periods apply.']],
+  ['Newsletter', ['If you subscribe, we process your email address to send programme milestones, contract awards and company announcements. We use Mailchimp (The Rocket Science Group LLC, Atlanta, USA), certified under the EU–US Data Privacy Framework. Subscription uses double opt-in; we record the time of sign-up and confirmation as proof. Legal basis: Art. 6 (1)(a) GDPR. You can withdraw consent at any time through the unsubscribe link in every newsletter.']],
+  ['Applications', ['If you apply, we process the data you send (CV, cover letter, contact details) to assess your application. Legal basis: Art. 6 (1)(b) GDPR. Some positions require a security clearance; we tell you before any related processing. If we do not hire you, we delete your data six months after the decision, unless you agree to a longer retention for future positions.']],
+  ['Social media', ['We link to our profiles on LinkedIn, X, Instagram and Facebook. These are plain links: no data reaches these platforms until you click them.']],
+  ['Your rights', ['You have the right to access (Art. 15 GDPR), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data portability (Art. 20) and objection (Art. 21). You can withdraw consent at any time with effect for the future (Art. 7 (3)). Write to mission-control@starflight-dynamics.com.', 'You may also complain to a supervisory authority. For Starflight Dynamics GmbH this is the Bayerisches Landesamt für Datenschutzaufsicht (BayLDA), Ansbach. For Starflight Dynamics UAB it is the State Data Protection Inspectorate of the Republic of Lithuania, Vilnius.']],
+  ['Automated decisions', ['We make no decisions based solely on automated processing, including profiling.']],
+  ['Changes', ['We update this policy when the website or the law changes. Version: 11 October 2026.']],
+];
+const sections = SECTIONS.map(([title, paras], i) => ({
+  id: `s${i + 1}`, n: String(i + 1).padStart(2, '0'), title,
+  paras: paras.map(p => p.split(/\[\[(.+?)\]\]/)), // odd indexes are open points
+}));
+---
+
+<Layout title="Privacy" description="How Starflight Dynamics processes personal data.">
+  <Nav />
+
+  <PageHero eyebrow="Legal" narrow={false} pad="64px" bg="50% 50%">Privacy</PageHero>
+
+  <div class="body">
+    <div class="wrap cols">
+      <nav aria-label="Contents" class="toc" data-print-hide>
+        <div class="k">Contents</div>
+        {sections.map(s => <a href={`#${s.id}`}><span class="n">{s.n}</span><span>{s.title}</span></a>)}
+      </nav>
+      <article>
+        {sections.map(s => (
+          <section id={s.id}>
+            <h2><span class="n">{s.n}</span>{s.title}</h2>
+            {s.paras.map(parts => <p>{parts.map((t, i) => i % 2 ? <Tbd id="vilnius-address">{t}</Tbd> : t)}</p>)}
+          </section>
+        ))}
+      </article>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<style>
+  .body { padding: 0 var(--gutter) 96px; }
+  .cols { display: flex; flex-wrap: wrap; gap: 48px 64px; align-items: flex-start; border-top: 1px solid var(--border-strong); padding-top: 48px; }
+  .toc { flex: 1 0 220px; max-width: 260px; position: sticky; top: 108px; display: flex; flex-direction: column; }
+  .k { padding-bottom: 10px; font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--text-muted); }
+  .toc a { display: grid; grid-template-columns: 28px minmax(0, 1fr); padding: 7px 0; border-top: 1px solid rgba(255,255,255,.08); font-size: 14px; font-weight: 300; color: var(--text-secondary); }
+  .toc a:hover { color: var(--accent); }
+  .n { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--accent); }
+  article { flex: 999 1 520px; min-width: 0; max-width: 760px; display: flex; flex-direction: column; gap: 44px; }
+  section { display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 100px; }
+  h2 { display: flex; gap: 14px; align-items: baseline; font-size: 20px; font-weight: 700; line-height: 1.25; text-transform: uppercase; }
+  h2 .n { font-size: 13px; }
+  p { font-size: 16px; line-height: 1.75; font-weight: 300; color: rgba(255,255,255,.80); text-wrap: pretty; }
+  @media (max-width: 819px) { .toc { position: static; max-width: 100%; } }
+</style>

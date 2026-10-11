@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
+import Footer from '../components/Footer.astro';
+import { CAPABILITIES } from '../data/capabilities';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const blocks = CAPABILITIES.map((c, i) => ({ ...c, num: String(i + 1).padStart(2, '0') }));
+---
+
+<Layout title="Capabilities" description="Propulsion, payloads, high-endurance platforms, mission preparation and derivatives.">
+  <Nav active="capabilities" />
+
+  <PageHero eyebrow="Capabilities" bg="50% 55%" lede="From propulsion to mission preparation, built to work as one system.">
+    Mobility, endurance and effect <span class="green">in orbit.</span>
+    <nav slot="after" aria-label="On this page" class="toc">
+      {blocks.map(c => <a href={`#${c.id}`} class="mono">{c.num} {c.short}</a>)}
+    </nav>
+  </PageHero>
+
+  {blocks.map(c => (
+    <section id={c.id} class="cap">
+      <div class="wrap inner">
+        <div class="img" style={`background-image:url('${b}/images/capabilities/${c.img}')`} role="img" aria-label=""></div>
+        <div class="cols">
+          <div class="h">
+            <div class="mono kick"><span class="num">{c.num}</span><span>{c.site}</span></div>
+            <h2>{c.title}</h2>
+          </div>
+          <p>{c.body}</p>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="cta-wrap">
+    <div class="wrap cta">
+      <p>If you are working on one of these problems, talk to us.</p>
+      <a href={`${b}/contact`} class="btn">Contact</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .toc { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .toc a { padding: 8px 12px; border: 1px solid var(--border-strong); background: rgba(0,0,0,.4); color: rgba(255,255,255,.80); }
+  .toc a:hover { border-color: var(--accent); color: var(--accent); }
+
+  .cap { padding: 0 var(--gutter); scroll-margin-top: 76px; }
+  .inner { border-top: 1px solid var(--border-subtle); padding: clamp(40px, 6vw, 72px) 0; }
+  .img {
+    height: clamp(170px, 24vw, 320px); margin-bottom: clamp(28px, 4vw, 44px);
+    border: 1px solid rgba(255,255,255,.08); background: #000 75% 50% / cover no-repeat;
+  }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px clamp(28px, 5vw, 80px); }
+  .h { display: flex; flex-direction: column; gap: 14px; }
+  .kick { display: flex; gap: 16px; color: var(--text-soft); }
+  .num { color: var(--accent); }
+  h2 { max-width: 16ch; font-size: clamp(26px, 3.4vw, 40px); font-weight: 700; line-height: 1.05; text-transform: uppercase; text-wrap: balance; }
+  .cols p { font-size: 18px; line-height: 1.75; font-weight: 300; color: rgba(255,255,255,.80); text-wrap: pretty; }
+
+  .cta-wrap { padding: 0 var(--gutter) 96px; }
+  .cta {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px 64px;
+    padding: 36px 40px; background: var(--surface-1); border: 1px solid var(--border-subtle); border-top: 3px solid var(--accent);
+  }
+  .cta p { flex: 1 1 360px; font-size: clamp(20px, 2vw, 24px); line-height: 1.45; font-weight: 300; text-wrap: pretty; }
+  .btn {
+    display: inline-block; padding: 13px 22px; background: var(--accent); color: #000; border: 1px solid var(--accent);
+    font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap;
+  }
+  .btn:hover { background: #fff; border-color: #fff; color: #000; }
+  @media (max-width: 560px) { .cta { padding: 28px 20px; } }
+</style>

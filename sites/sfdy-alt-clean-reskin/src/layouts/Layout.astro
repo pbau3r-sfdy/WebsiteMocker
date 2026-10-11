@@ -1,0 +1,204 @@
+---
+interface Props { title?: string; description?: string; }
+const {
+  title = 'Starflight Dynamics',
+  description = 'Technologies for the High Frontier.',
+} = Astro.props;
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pageName = title.replace(/"/g, '\\"');
+// Print: white A4 pages with running header/footer (page margin boxes need current Chrome/Edge).
+const printCSS = `@media print {
+  @page { size: A4; margin: 16mm 16mm 18mm;
+    @top-left { content: "${pageName}"; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .06em; color: #666; }
+    @top-right { content: "Starflight Dynamics"; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .06em; color: #666; }
+    @bottom-left { content: "© 2026 Starflight Dynamics GmbH · starflight-dynamics.com"; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .06em; color: #666; }
+    @bottom-right { content: "Page " counter(page) " / " counter(pages); font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .06em; color: #666; }
+  }
+}`;
+const fontFaceCSS = `
+  @font-face{font-family:'Avenir Next';src:url('${b}/fonts/avenir-lt-light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Avenir Next';src:url('${b}/fonts/avenir-lt-heavy.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+  @font-face{font-family:'IBM Plex Mono';src:url('${b}/fonts/ibm-plex-mono-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'IBM Plex Mono';src:url('${b}/fonts/ibm-plex-mono-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title === 'Starflight Dynamics' ? title : `${title} · Starflight Dynamics`}</title>
+    <link rel="icon" type="image/png" href={`${b}/favicon.png`} />
+    <meta name="robots" content="noindex, nofollow" />
+    <style set:html={fontFaceCSS}></style>
+    <style set:html={printCSS}></style>
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+    <div class="tbd-pill" data-print-hide hidden>
+      <button type="button" class="tbd-next"></button>
+      <a href={`${b}/open-points`} class="tbd-all">All open points →</a>
+    </div>
+    <script>
+      // Parallax for hero backgrounds marked [data-parallax]; "flip" keeps the mirrored image.
+      const layers = [...document.querySelectorAll<HTMLElement>('[data-parallax]')];
+      if (layers.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const move = () => {
+          const y = Math.min(scrollY, innerHeight * 1.2) * 0.45;
+          for (const el of layers) el.style.transform = `translate3d(0,${y}px,0)${el.dataset.parallax === 'flip' ? ' scaleX(-1)' : ''}`;
+        };
+        addEventListener('scroll', move, { passive: true });
+        move();
+      }
+
+      // Open points: count every .tbd marker on the page; the pill jumps to the next one.
+      const marks = [...document.querySelectorAll<HTMLElement>('.tbd')];
+      const pill = document.querySelector<HTMLElement>('.tbd-pill');
+      const next = pill?.querySelector<HTMLButtonElement>('.tbd-next');
+      const flash = (m: HTMLElement) => {
+        marks.forEach(x => x.classList.remove('tbd-flash'));
+        m.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        void m.offsetWidth;
+        m.classList.add('tbd-flash');
+      };
+      if (pill && next && marks.length) {
+        let i = -1;
+        pill.hidden = false;
+        next.textContent = `${marks.length} open point${marks.length > 1 ? 's' : ''} · Next ↓`;
+        next.addEventListener('click', () => { i = (i + 1) % marks.length; flash(marks[i]); });
+      }
+      // Links from /open-points use #tbd-<point id>; a marker may carry several points.
+      const fromHash = () => {
+        const id = decodeURIComponent(location.hash).match(/^#tbd-(.+)$/)?.[1];
+        const m = id && marks.find(x => x.dataset.points?.split(' ').includes(id));
+        if (m) setTimeout(() => flash(m), 150);
+      };
+      addEventListener('hashchange', fromHash);
+      fromHash();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* SFDY design-system tokens */
+  :root {
+    --sfdy-blue:    #0432FF;
+    --sfdy-cyan:    #00FDFF;
+    --sfdy-green:   #00FB92;
+    --sfdy-magenta: #FF008A;
+
+    --bg-base:      #000000;
+    --surface-1:    #06070A;
+    --surface-2:    #101319;
+
+    --text-primary:   #FFFFFF;
+    --text-secondary: rgba(255,255,255,.70);
+    --text-soft:      rgba(255,255,255,.56);
+    --text-muted:     rgba(255,255,255,.40);
+
+    --border-subtle: rgba(255,255,255,.14);
+    --border-strong: rgba(255,255,255,.24);
+    --border-accent: rgba(0,251,146,.40);
+
+    --accent: var(--sfdy-green);
+    --beam: linear-gradient(180deg, var(--sfdy-blue) 0%, var(--sfdy-cyan) 33%, var(--sfdy-green) 65%, var(--sfdy-green) 100%);
+
+    --font-display: 'Avenir Next', 'Mulish', system-ui, sans-serif;
+    --font-body:    'Avenir Next', 'Mulish', system-ui, sans-serif;
+    --font-mono:    'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+    --ls-eyebrow: .34em;
+    --gutter: clamp(20px, 5vw, 72px);
+    --measure: 1180px;
+    --ease: cubic-bezier(.2,.6,.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--accent); }
+  img { max-width: 100%; display: block; }
+
+  h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .wrap { max-width: var(--measure); margin: 0 auto; }
+  input::placeholder, textarea::placeholder { color: var(--text-muted); }
+  .print-only { display: none; }
+
+  /* Open points: deliberately off-brand yellow so they cannot be missed. */
+  :root { --tbd: #FFE600; }
+  .tbd {
+    display: inline; padding: 1px 6px;
+    background: var(--tbd); color: #000; font-weight: 700;
+    box-decoration-break: clone; -webkit-box-decoration-break: clone;
+  }
+  .tbd::before {
+    content: "TBD"; margin-right: 6px; padding: 0 4px;
+    font-family: var(--font-mono); font-size: .68em; font-weight: 500; letter-spacing: .1em;
+    background: #000; color: var(--tbd); vertical-align: .12em;
+  }
+  .tbd.block {
+    display: block; padding: 14px 16px; border-left: 6px solid #000;
+    font-size: 15px; line-height: 1.55; font-weight: 400;
+  }
+  .tbd.block::before { content: "TO BE RESOLVED"; display: inline-block; margin: 0 10px 6px 0; }
+  .tbd-flash { animation: tbd-flash 1.2s var(--ease) 2; }
+  @keyframes tbd-flash { 50% { outline: 4px solid var(--tbd); outline-offset: 4px; } }
+  .tbd { scroll-margin: 140px 0; }
+  .tbd-pill {
+    position: fixed; left: 16px; bottom: 16px; z-index: 300;
+    display: flex; border: 2px solid #000;
+    background: var(--tbd); box-shadow: 0 4px 18px rgba(0,0,0,.5);
+  }
+  .tbd-pill[hidden] { display: none; }
+  .tbd-pill > * {
+    padding: 10px 14px; background: none; border: 0; cursor: pointer; color: #000;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  }
+  .tbd-pill .tbd-all { border-left: 2px solid #000; }
+  .tbd-pill > *:hover { background: #000; color: var(--tbd); }
+
+  @media print {
+    :root, html, body { color-scheme: light !important; background: #fff !important; }
+    body * {
+      color: #111 !important; background-color: transparent !important; border-color: #d0d0d0 !important;
+      box-shadow: none !important; backdrop-filter: none !important; transform: none !important; text-shadow: none !important;
+    }
+    [data-print-hide], .beam { display: none !important; }
+    .print-only { display: block !important; }
+    .print-only img { filter: invert(1); }
+    [style*="url("] { background-image: none !important; min-height: 0 !important; }
+    a[href], li, dl > div, blockquote, aside, section { break-inside: avoid; }
+    h1, h2, h3 { break-after: avoid; }
+    h1 { font-size: 30pt !important; }
+    .tbd { outline: 1.5pt dashed #111; }
+  }
+</style>

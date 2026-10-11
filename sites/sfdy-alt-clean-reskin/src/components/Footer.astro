@@ -1,0 +1,54 @@
+---
+import { OPEN_POINTS } from '../data/open-points';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pages = [
+  ['Home', '/'], ['About', '/about'], ['Capabilities', '/capabilities'], ['Careers', '/jobs'], ['News', '/news'],
+  ['Contact', '/contact'], ['Press', '/press'], ['Imprint', '/imprint'], ['Privacy', '/privacy-policy'],
+];
+const socials = [
+  ['LinkedIn', 'https://www.linkedin.com/company/starflight-dynamics/'],
+  ['X', 'https://x.com/sfdy_space'],
+  ['Instagram', 'https://www.instagram.com/starflight_dynamics/'],
+  ['Facebook', 'https://www.facebook.com/profile.php?id=100092226416926'],
+];
+---
+
+<footer data-print-hide>
+  <div class="rule" aria-hidden="true"></div>
+  <div class="wrap grid">
+    <div class="brand">
+      <a href={`${b}/`} aria-label="Starflight Dynamics home"><img src={`${b}/images/logo.png`} alt="Starflight Dynamics" class="logo" /></a>
+      <div class="claim">Technologies for the <span>High Frontier</span></div>
+      <p class="sites">Munich, Germany<br />Vilnius, Lithuania</p>
+    </div>
+    <nav aria-label="Footer" class="pages">
+      {pages.map(([label, href]) => <a href={`${b}${href}`}>{label}</a>)}
+    </nav>
+    <nav aria-label="Social media" class="social">
+      {socials.map(([label, href]) => <a href={href} target="_blank" rel="me noopener">{label}</a>)}
+    </nav>
+  </div>
+  <div class="wrap copy mono">
+    <span>© {new Date().getFullYear()} Starflight Dynamics GmbH</span>
+    {OPEN_POINTS.length > 0 && <a href={`${b}/open-points`} class="open">{OPEN_POINTS.length} open points →</a>}
+  </div>
+</footer>
+
+<style>
+  footer { position: relative; border-top: 1px solid var(--border-subtle); background: var(--bg-base); padding: 64px var(--gutter) 36px; }
+  .rule { position: absolute; top: -1px; left: 0; width: min(38vw, 420px); height: 3px; background: linear-gradient(90deg, var(--sfdy-blue) 0%, var(--sfdy-cyan) 33%, var(--sfdy-green) 65%, var(--sfdy-green) 100%); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; }
+  .brand { display: flex; flex-direction: column; gap: 20px; }
+  .logo { height: 30px; width: auto; }
+  .claim { font-size: 11px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; }
+  .claim span { color: var(--accent); }
+  .sites { font-size: 15px; line-height: 1.6; font-weight: 300; color: var(--text-soft); }
+  .pages { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; align-content: start; }
+  .social { display: flex; flex-direction: column; gap: 10px; }
+  nav a { font-size: 14px; font-weight: 300; color: var(--text-secondary); }
+  nav a:hover { color: var(--accent); }
+  .copy { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
+  .open { padding: 4px 8px; background: var(--tbd); color: #000; font-weight: 500; }
+  .open:hover { background: #fff; color: #000; }
+  .copy { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); color: var(--text-muted); }
+</style>

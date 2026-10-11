@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
+import Footer from '../components/Footer.astro';
+import Tbd from '../components/Tbd.astro';
+
+// Lines wrapped in { tbd } are open points rendered in yellow.
+type Line = string | { tbd: string; id: string };
+const entities: { tag: string; name: string; lines: Line[] }[] = [
+  { tag: 'Germany', name: 'Starflight Dynamics GmbH', lines: [
+    'Tal 44, 80331 Munich, Germany',
+    'Register: Amtsgericht München, HRB 282254',
+    'Represented by: Dr. Philipp Bauer, Managing Director',
+    'VAT ID: DE360871568',
+    'Email: mission-control@starflight-dynamics.com',
+  ] },
+  { tag: 'Lithuania', name: 'Starflight Dynamics UAB', lines: [
+    { tbd: 'Street address, Vilnius, Lithuania', id: 'vilnius-address' },
+    'Register of Legal Entities of the Republic of Lithuania, company code 307442013',
+    'Represented by: Dr. Philipp Bauer, acting Director',
+    { tbd: 'VAT number, if registered', id: 'uab-vat' },
+  ] },
+];
+const rows = [
+  ['Responsible for content according to § 18 (2) MStV', 'Dr. Philipp Bauer, address as above'],
+  ['Press', 'press@starflight-dynamics.com'],
+  ['Consumer dispute resolution', 'We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board.'],
+  ['Liability for content', 'We prepare the content of this website with care but cannot guarantee that it is complete, accurate or current. As a service provider we are responsible for our own content under the general laws (§ 7 (1) DDG). Under §§ 8 to 10 DDG we are not obliged to monitor third-party information we transmit or store. Obligations to remove or block information under the general laws remain unaffected; we act as soon as we become aware of a specific infringement.'],
+  ['Liability for links', 'This website links to external sites over whose content we have no control. The respective provider is responsible for linked content. We checked linked pages for legal infringements when we set the link and remove any link as soon as we become aware of an infringement.'],
+  ['Copyright', 'Content and works on this website are subject to German copyright law. Reproduction, editing or distribution beyond the limits of copyright law requires our prior written consent or that of the respective rights holder.'],
+  ['Image credits', 'All images by Starflight Dynamics GmbH. Some are created with AI tools.'],
+  ['Social media', 'This imprint also applies to our profiles on LinkedIn, X, Instagram and Facebook.'],
+];
+---
+
+<Layout title="Imprint" description="Legal information according to § 5 DDG.">
+  <Nav />
+
+  <PageHero eyebrow="Legal" narrow={false} pad="64px" lede="Information according to § 5 DDG">Imprint</PageHero>
+
+  <section class="body">
+    <div class="wrap">
+      <div class="entities">
+        {entities.map(e => (
+          <div class="entity">
+            <div class="mono tag">{e.tag}</div>
+            <h2>{e.name}</h2>
+            {e.lines.map(l => <p>{typeof l === 'string' ? l : <Tbd id={l.id}>{l.tbd}</Tbd>}</p>)}
+          </div>
+        ))}
+      </div>
+      <p class="sub">Starflight Dynamics UAB is a wholly owned subsidiary of Starflight Dynamics GmbH.</p>
+
+      <dl>
+        {rows.map(([k, v]) => <div class="row"><dt>{k}</dt><dd>{v}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .body { padding: 0 var(--gutter) 96px; }
+  .entities { max-width: 960px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 24px; }
+  .entity { padding: 28px; background: var(--surface-1); border: 1px solid var(--border-subtle); border-top: 3px solid var(--accent); display: flex; flex-direction: column; gap: 10px; }
+  .tag { color: var(--accent); }
+  .entity h2 { margin-bottom: 6px; font-size: 22px; font-weight: 700; line-height: 1.15; text-transform: uppercase; }
+  .entity p { font-size: 15px; line-height: 1.6; font-weight: 300; color: rgba(255,255,255,.80); }
+  .sub { margin-top: 20px; max-width: 960px; font-size: 15px; font-weight: 300; color: var(--text-soft); }
+  dl { margin-top: 56px; max-width: 960px; border-top: 1px solid var(--border-strong); }
+  .row { display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 20px 0; border-bottom: 1px solid var(--border-subtle); }
+  dt { flex: 0 0 240px; padding-top: 4px; font-size: 10px; font-weight: 700; letter-spacing: .22em; line-height: 1.6; text-transform: uppercase; color: var(--text-soft); }
+  dd { flex: 1 1 420px; min-width: 0; font-size: 15px; line-height: 1.75; font-weight: 300; color: rgba(255,255,255,.80); text-wrap: pretty; }
+  @media (max-width: 560px) { .entity { padding: 22px 20px; } }
+</style>

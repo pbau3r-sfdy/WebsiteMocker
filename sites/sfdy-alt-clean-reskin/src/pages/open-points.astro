@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
+import Footer from '../components/Footer.astro';
+import { OPEN_POINTS } from '../data/open-points';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const link = (path: string, id: string) => `${b}${path}#tbd-${id}`;
+const points = OPEN_POINTS.map((p, i) => ({ ...p, n: String(i + 1).padStart(2, '0') }));
+
+// Same points regrouped by page, for walking through the site page by page.
+const pageName = (label: string) => label.split(' · ')[0];
+const byPage = [...new Set(points.flatMap(p => p.where.map(w => pageName(w.label))))].map(page => ({
+  page,
+  items: points.flatMap(p => p.where
+    .filter(w => pageName(w.label) === page)
+    .map(w => ({ n: p.n, title: p.title, spot: w.label.split(' · ')[1] ?? '', href: link(w.path, p.id) }))),
+}));
+---
+
+<Layout title="Open points" description="Internal review: open points to resolve before launch.">
+  <Nav />
+
+  <PageHero eyebrow="Internal review" narrow={false} pad="56px" image={false}>
+    Open points <span class="y">{String(points.length).padStart(2, '0')}</span>
+    <p slot="after" class="lede">Everything marked <mark class="chip">TBD</mark> in yellow across the reskin. Each link opens the page and highlights the exact spot. Resolve the point in the content, then remove it from <code>src/data/open-points.ts</code>.</p>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="head"><h2 class="label">All open points</h2><span class="cnt">{points.length} open</span></div>
+      <ol class="list">
+        {points.map(p => (
+          <li id={p.id} class="pt">
+            <span class="num">{p.n}</span>
+            <div class="txt">
+              <h3>{p.title}</h3>
+              <p>{p.detail}</p>
+            </div>
+            <div class="where">
+              <div class="k">Appears on</div>
+              {p.where.map(w => <a href={link(w.path, p.id)}>{w.label} <span aria-hidden="true">→</span></a>)}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="head"><h2 class="label">By page</h2><span class="cnt">{byPage.length} pages</span></div>
+      <div class="pages">
+        {byPage.map(g => (
+          <div class="pg">
+            <h3>{g.page}</h3>
+            {g.items.map(it => (
+              <a href={it.href}><span class="mini">{it.n}</span><span>{it.title}{it.spot && <span class="spot"> · {it.spot}</span>}</span></a>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .y { display: inline-block; padding: 0 .18em; background: var(--tbd); color: #000; }
+  .lede { margin-top: 28px; max-width: 680px; font-size: 18px; line-height: 1.7; font-weight: 300; color: rgba(255,255,255,.80); }
+  .chip { padding: 1px 6px; background: var(--tbd); color: #000; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .1em; }
+  code { font-family: var(--font-mono); font-size: 14px; color: #fff; }
+
+  .sec { padding: 0 var(--gutter) 88px; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-strong); }
+  .label { font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--text-secondary); }
+  .cnt { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; color: var(--tbd); }
+
+  .list { list-style: none; }
+  .pt {
+    display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(220px, 300px); gap: 16px 32px;
+    padding: 28px 0; border-bottom: 1px solid var(--border-subtle); scroll-margin-top: 100px;
+  }
+  .num {
+    align-self: start; width: 48px; height: 48px; display: grid; place-items: center;
+    background: var(--tbd); color: #000; font-family: var(--font-mono); font-size: 16px; font-weight: 500;
+  }
+  .txt h3 { font-size: 22px; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
+  .txt p { margin-top: 10px; max-width: 620px; font-size: 16px; line-height: 1.7; font-weight: 300; color: var(--text-secondary); text-wrap: pretty; }
+  .where { display: flex; flex-direction: column; gap: 8px; }
+  .k { font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--text-muted); }
+  .where a {
+    display: flex; justify-content: space-between; gap: 12px; padding: 9px 12px;
+    border: 1px solid rgba(255,230,0,.45); font-size: 14px; font-weight: 300; color: #fff;
+    transition: background .2s var(--ease), color .2s var(--ease);
+  }
+  .where a:hover { background: var(--tbd); border-color: var(--tbd); color: #000; }
+
+  .pages { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .pg { padding: 22px; background: var(--surface-1); border: 1px solid var(--border-subtle); border-top: 3px solid var(--tbd); display: flex; flex-direction: column; gap: 4px; }
+  .pg h3 { margin-bottom: 10px; font-size: 18px; font-weight: 700; text-transform: uppercase; }
+  .pg a { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: baseline; padding: 7px 0; border-top: 1px solid rgba(255,255,255,.08); font-size: 14px; font-weight: 300; color: #fff; }
+  .pg a:hover { color: var(--tbd); }
+  .mini { font-family: var(--font-mono); font-size: 12px; color: var(--tbd); }
+  .spot { color: var(--text-soft); }
+
+  @media (max-width: 820px) {
+    .pt { grid-template-columns: 56px minmax(0, 1fr); }
+    .where { grid-column: 2; }
+  }
+  @media (max-width: 480px) {
+    .pt { grid-template-columns: 1fr; }
+    .where { grid-column: auto; }
+  }
+  @media print {
+    .num, .y, .chip { outline: 1.5pt solid #111; }
+    .pg { border-top-color: #111 !important; }
+  }
+</style>

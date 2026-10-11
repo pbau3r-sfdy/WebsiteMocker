@@ -1,0 +1,468 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Beam from '../../components/Beam.astro';
+import Tbd from '../../components/Tbd.astro';
+import Share from '../../components/Share.astro';
+import { SITES, OPERATOR } from '../../data/sites';
+import {
+  CAREERS_EMAIL, OFFERS, ABOUT, EQUAL_OPPORTUNITY,
+  applyHref, siteLabel, salaryLabel, isPublished, jobPlaces,
+} from '../../data/careers';
+
+export async function getStaticPaths() {
+  const jobs = (await getCollection('jobs')).filter(isPublished);
+  return jobs.map(job => ({
+    params: { slug: job.id },
+    props:  { job },
+  }));
+}
+
+const { job } = Astro.props;
+const d = job.data;
+const { Content, headings } = await render(job);
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const location = siteLabel(d);
+const salary   = salaryLabel(d.salary);
+const href     = applyHref(d.reference, d.title);
+const sites    = d.sites.map(k => SITES[k]);
+const employers = [...new Set([...sites.map(s => s.employer), ...(d.locations.length ? [OPERATOR] : [])])];
+const foreignEmployer = employers.some(e => e !== OPERATOR);
+
+const employment = d.type.charAt(0).toUpperCase() + d.type.slice(1).replace('-', ' ');
+const facts = [
+  { label: 'Location',   value: location },
+  { label: 'Department', value: d.department },
+  { label: 'Employment', value: employment },
+  { label: 'Reports to', value: d.reports_to },
+  { label: 'Start',      value: d.start },
+  { label: 'Reference',  value: d.reference, mono: true },
+].filter(f => f.value);
+
+// Section index: the markdown's h2 sections, then eligibility and the company note.
+const extra = [
+  ...(d.eligibility ? [{ slug: 'eligibility', text: 'Eligibility' }] : []),
+  ...(OFFERS.length ? [{ slug: 'offers', text: 'What SFDY offers' }] : []),
+  { slug: 'about', text: 'About Starflight Dynamics' },
+];
+const toc = [...headings.filter(h => h.depth === 2), ...extra]
+  .map((h, i) => ({ href: `#${h.slug}`, label: h.text, n: String(i + 1).padStart(2, '0') }));
+const n = (slug: string) => toc.find(t => t.href === `#${slug}`)!.n;
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const urlShort = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+
+const others = (await getCollection('jobs'))
+  .filter(j => j.id !== job.id && isPublished(j))
+  .sort((a, z) => Number(z.data.priority) - Number(a.data.priority) || a.data.title.localeCompare(z.data.title))
+  .slice(0, 3);
+
+const employmentType = { 'full-time': 'FULL_TIME', 'part-time': 'PART_TIME', 'contract': 'CONTRACTOR' }[d.type];
+const site = Astro.site ?? new URL('https://www.starflight-dynamics.com');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: `${d.title} (m/f/d)`,
+  description: `<p>${d.summary}</p>${job.rendered?.html ?? ''}`,
+  identifier: { '@type': 'PropertyValue', name: 'Starflight Dynamics', value: d.reference },
+  datePosted: d.date.toISOString().split('T')[0],
+  ...(d.valid_through && { validThrough: d.valid_through.toISOString() }),
+  employmentType,
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: employers.length === 1 ? employers[0] : 'Starflight Dynamics',
+    sameAs: 'https://www.starflight-dynamics.com',
+    logo: new URL(`${b}/images/logo.png`, site).href,
+  },
+  jobLocation: jobPlaces(d).map((p: { city: string; country: string; street?: string; postcode?: string }) => ({
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      ...(p.street && { streetAddress: p.street }),
+      ...(p.postcode && { postalCode: p.postcode }),
+      addressLocality: p.city,
+      addressCountry: p.country,
+    },
+  })),
+  ...(d.workplace === 'remote' && { jobLocationType: 'TELECOMMUTE' }),
+  ...(d.salary && {
+    baseSalary: {
+      '@type': 'MonetaryAmount',
+      currency: d.salary.currency,
+      value: {
+        '@type': 'QuantitativeValue',
+        minValue: d.salary.min,
+        ...(d.salary.max && { maxValue: d.salary.max }),
+        unitText: d.salary.period === 'month' ? 'MONTH' : 'YEAR',
+      },
+    },
+  }),
+  directApply: false,
+};
+---
+
+<Layout title={`${d.title} (m/f/d)`} description={d.summary}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Nav active="careers" />
+
+  <main class="page-main">
+    <header class="hero">
+      <Beam thickness={7} />
+      <div class="wrap">
+        <a href={`${b}/jobs`} class="back" data-print-hide>← All positions</a>
+        <div class="kick">
+          <span class="eyebrow accent">Open position{d.department && ` · ${d.department}`}</span>
+          {d.priority && <span class="tag">Priority</span>}
+        </div>
+        <h1>{d.title} <span class="mfd">(m/f/d)</span></h1>
+        <p class="summary">{d.summary}</p>
+        <div class="tbd-wrap" data-print-hide>
+          <Tbd block id={['job-listings', 'offers', 'careers-mailbox']}>Placeholder position. Still open: real job listings, the “What SFDY offers” benefits section and the careers@ mailbox.</Tbd>
+        </div>
+        <dl class="facts">
+          {facts.map(f => (
+            <div><dt>{f.label}</dt><dd class:list={{ mono: f.mono }}>{f.value}</dd></div>
+          ))}
+        </dl>
+      </div>
+    </header>
+
+    <div class="body-wrap">
+      <div class="wrap cols">
+        <article>
+          <div class="md"><Content /></div>
+
+          {d.eligibility && (
+            <section class="sec" id="eligibility">
+              <div class="sec-label"><span class="n">{n('eligibility')}</span><span>Eligibility</span></div>
+              <p class="callout">{d.eligibility}</p>
+            </section>
+          )}
+
+          {OFFERS.length > 0 && (
+            <section class="sec" id="offers">
+              <div class="sec-label"><span class="n">{n('offers')}</span><span>What SFDY offers</span></div>
+              <div class="offers">
+                {OFFERS.map(o => <div><h4>{o.title}</h4><p>{o.text}</p></div>)}
+              </div>
+            </section>
+          )}
+
+          <section class="sec" id="about">
+            <div class="sec-label"><span class="n">{n('about')}</span><span>About Starflight Dynamics</span></div>
+            <div>
+              <p class="plain">{ABOUT}</p>
+              {foreignEmployer && <p class="plain employer">Employer for this position: {employers.join(' / ')}.</p>}
+            </div>
+          </section>
+        </article>
+
+        <aside class="apply">
+          <div class="a-head">How to apply</div>
+          <p class="a-text">
+            Applications by email to <a href={href}>{CAREERS_EMAIL}</a>, with the reference in the
+            subject line. Include a CV and a cover letter, both as PDF.
+          </p>
+          <div class="a-block">
+            <div class="label">Reference</div>
+            <div class="ref-row">
+              <span class="mono ref">{d.reference}</span>
+              <button type="button" class="copy-ref" data-copy={d.reference} data-label="Copy" data-print-hide>Copy</button>
+            </div>
+          </div>
+          {salary && (
+            <div class="a-block">
+              <div class="label">Salary</div>
+              <div class="salary">{salary}</div>
+            </div>
+          )}
+          <a href={href} class="apply-btn" data-print-hide>Apply by email</a>
+          <button type="button" class="print-btn" data-print data-print-hide>Print / PDF</button>
+          <div class="a-block" data-print-hide>
+            <div class="label">Share</div>
+            <div class="share-wrap"><Share title={`${d.title} (m/f/d)`} summary={d.summary} url={url} print={false} /></div>
+          </div>
+          {toc.length > 1 && (
+            <nav class="toc" aria-label="On this page" data-print-hide>
+              <div class="label">On this page</div>
+              {toc.map(t => <a href={t.href}><span class="n">{t.n}</span><span>{t.label}</span></a>)}
+            </nav>
+          )}
+        </aside>
+      </div>
+    </div>
+
+    {others.length > 0 && (
+      <section class="others" data-print-hide>
+        <div class="wrap">
+          <div class="eyebrow">Other open positions</div>
+          <div class="o-grid">
+            {others.map(o => (
+              <a href={`${b}/jobs/${o.id}`} class="o-card">
+                <span class="o-title">{o.data.title}</span>
+                <span class="o-meta"><span>{siteLabel(o.data)}</span><span class="green">→</span></span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <p class="eeo">{EQUAL_OPPORTUNITY}</p>
+  </main>
+
+  <!-- Print layout: a compact A4 job description, used instead of the page above. -->
+  <div class="print-doc">
+    <div class="pd-top">
+      <img src={`${b}/images/logo.png`} alt="Starflight Dynamics" />
+      <span>Careers · Job description</span>
+    </div>
+    <div class="pd-kick">Open position · {d.department}{d.priority && ' · Priority'}</div>
+    <h1 class="pd-title">{d.title} <span>(m/f/d)</span></h1>
+    <p class="pd-sum">{d.summary}</p>
+    <div class="pd-facts">
+      {facts.map(f => <div><div class="pd-k">{f.label}</div><div class:list={['pd-v', { mono: f.mono }]}>{f.value}</div></div>)}
+    </div>
+    <div class="pd-md"><Content /></div>
+    {d.eligibility && (
+      <section class="pd-sec"><div class="pd-h"><span>{n('eligibility')}</span>Eligibility</div><p>{d.eligibility}</p></section>
+    )}
+    <section class="pd-sec"><div class="pd-h"><span>{n('about')}</span>About Starflight Dynamics</div><p>{ABOUT}</p></section>
+    <section class="pd-sec pd-apply">
+      <div class="pd-h"><span>{String(toc.length + 1).padStart(2, '0')}</span>How to apply</div>
+      <div class="pd-apply-body">
+        <p>Applications by email to {CAREERS_EMAIL}, with the reference in the subject line. Include a CV and a cover letter, both as PDF.</p>
+        <div class="pd-apply-facts">
+          <div><div class="pd-k">Reference</div><div class="pd-v mono">{d.reference}</div></div>
+          {salary && <div><div class="pd-k">Salary</div><div class="pd-v">{salary}</div></div>}
+          <div><div class="pd-k">Online</div><div class="pd-v mono small">{urlShort}</div></div>
+        </div>
+      </div>
+    </section>
+    <p class="pd-eeo">{EQUAL_OPPORTUNITY}</p>
+  </div>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.copy-ref').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.dataset.copy!); } catch {}
+      btn.textContent = 'Copied';
+      btn.classList.add('done');
+      setTimeout(() => { btn.textContent = btn.dataset.label!; btn.classList.remove('done'); }, 1600);
+    });
+  });
+  document.querySelectorAll('.print-btn').forEach(btn => btn.addEventListener('click', () => window.print()));
+</script>
+
+<style>
+  .eyebrow { font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+  .eyebrow.accent { color: var(--accent); }
+  .green { color: var(--accent); }
+  .label { font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--text-muted); }
+
+  /* Hero */
+  .hero { position: relative; padding: 64px var(--gutter) 0; }
+  .tbd-wrap { margin-top: 24px; max-width: 760px; }
+  .back { display: inline-block; white-space: nowrap; font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); }
+  .kick { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: baseline; }
+  .tag { padding: 2px 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #000; background: var(--accent); }
+  .draft { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--sfdy-magenta); border: 1px solid var(--sfdy-magenta); padding: 1px 5px; }
+  h1 {
+    margin-top: 20px; max-width: 14ch;
+    font-size: clamp(40px, 7vw, 88px); font-weight: 700; line-height: .98;
+    text-transform: uppercase; letter-spacing: .005em; text-wrap: balance;
+  }
+  .mfd { font-size: .28em; font-weight: 300; letter-spacing: .1em; color: var(--text-muted); vertical-align: middle; white-space: nowrap; }
+  .summary { margin-top: 28px; max-width: 620px; font-size: 19px; line-height: 1.65; font-weight: 300; color: var(--text-secondary); text-wrap: pretty; }
+  .facts {
+    margin-top: 56px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1px; background: var(--border-subtle);
+    border-top: 1px solid var(--border-strong); border-bottom: 1px solid var(--border-subtle);
+  }
+  .facts > div { background: #000; padding: 18px 20px 18px 0; }
+  .facts dt { font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--text-muted); }
+  .facts dd { margin-top: 6px; font-size: 15px; color: #fff; }
+  .facts dd.mono { font-family: var(--font-mono); font-size: 13px; }
+
+  /* Body */
+  .body-wrap { padding: 72px var(--gutter) 96px; }
+  .cols { display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start; }
+  article { flex: 999 1 420px; min-width: 0; max-width: 780px; display: flex; flex-direction: column; gap: 64px; counter-reset: sec; }
+
+  /* Markdown sections: each h2 becomes a numbered label in the left column. */
+  .md { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 0 32px; align-items: start; }
+  .md > :global(*) { grid-column: 2; }
+  .md :global(h2) {
+    grid-column: 1;
+    display: flex; flex-direction: column; gap: 6px;
+    font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--text-secondary);
+    counter-increment: sec; scroll-margin-top: 96px;
+  }
+  .md :global(h2::before) { content: counter(sec, decimal-leading-zero); font-family: var(--font-mono); font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--accent); }
+  .md :global(h2:not(:first-child)), .md :global(h2:not(:first-child) + *) { margin-top: 64px; }
+  .md :global(p) { font-size: 19px; line-height: 1.65; font-weight: 300; color: rgba(255,255,255,.9); text-wrap: pretty; }
+  .md :global(p + p) { margin-top: 16px; }
+  .md :global(h3) {
+    font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border-strong);
+  }
+  .md :global(h3:not(h2 + h3)) { margin-top: 32px; }
+  .md :global(ol), .md :global(ul) { list-style: none; }
+  .md :global(ol) { counter-reset: item; }
+  .md :global(ul) { border-top: 1px solid var(--border-strong); }
+  .md :global(h3 + ul) { border-top: 0; }
+  .md :global(li) {
+    display: grid; grid-template-columns: 40px minmax(0, 1fr);
+    padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 16px; line-height: 1.65; font-weight: 300; color: var(--text-secondary);
+  }
+  .md :global(ol > li) { counter-increment: item; }
+  .md :global(ol > li::before) { content: counter(item, decimal-leading-zero); font-family: var(--font-mono); font-size: 12px; color: var(--accent); padding-top: 3px; }
+  .md :global(ul > li::before) { content: '→'; color: var(--accent); }
+  .md :global(strong) { font-weight: 700; color: #fff; }
+  .md :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  .sec { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 16px 32px; scroll-margin-top: 96px; }
+  .sec-label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--text-secondary); }
+  .sec-label .n { font-family: var(--font-mono); font-weight: 400; letter-spacing: 0; color: var(--accent); }
+  .callout {
+    padding: 18px 20px; background: var(--surface-1);
+    border: 1px solid var(--border-subtle); border-left: 2px solid var(--accent);
+    font-size: 16px; line-height: 1.7; font-weight: 300; color: var(--text-secondary);
+  }
+  .plain { font-size: 16px; line-height: 1.7; font-weight: 300; color: var(--text-secondary); }
+  .employer { margin-top: 12px; color: var(--text-soft); }
+  .offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .offers h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .offers p { margin-top: 6px; font-size: 15px; line-height: 1.6; font-weight: 300; color: var(--text-secondary); }
+
+  /* Apply card */
+  .apply {
+    flex: 1 0 260px; max-width: 320px;
+    position: sticky; top: 108px; max-height: calc(100vh - 132px); overflow-y: auto; scrollbar-width: thin;
+    background: var(--surface-1); border: 1px solid var(--border-subtle); border-top: 3px solid var(--accent);
+    padding: 28px;
+  }
+  .a-head { font-size: 11px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--text-soft); }
+  .a-text { margin-top: 14px; font-size: 15px; line-height: 1.65; font-weight: 300; color: var(--text-secondary); }
+  .a-text a { color: var(--accent); word-break: break-word; }
+  .a-block { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-subtle); }
+  .ref-row { margin-top: 6px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .ref { font-size: 12px; white-space: nowrap; letter-spacing: .02em; text-transform: none; }
+  .copy-ref {
+    background: none; border: 1px solid var(--border-strong); padding: 4px 8px; cursor: pointer;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-secondary);
+  }
+  .copy-ref:hover, .copy-ref:global(.done) { border-color: var(--accent); color: var(--accent); }
+  .salary { margin-top: 6px; font-size: 14px; }
+  .apply-btn {
+    display: block; margin-top: 22px; padding: 13px 20px; text-align: center;
+    background: var(--accent); color: #000;
+    font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    transition: background .2s var(--ease);
+  }
+  .apply-btn:hover { background: #fff; color: #000; }
+  .print-btn {
+    display: block; width: 100%; margin-top: 10px; padding: 9px 10px; cursor: pointer;
+    background: none; border: 1px solid var(--border-strong);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-secondary);
+    transition: border-color .2s var(--ease), color .2s var(--ease);
+  }
+  .print-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .share-wrap { margin-top: 8px; }
+  .toc { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; }
+  .toc .label { padding-bottom: 6px; }
+  .toc a { display: grid; grid-template-columns: 28px minmax(0, 1fr); padding: 6px 0; font-size: 13px; font-weight: 300; color: var(--text-secondary); }
+  .toc a:hover { color: var(--accent); }
+  .toc .n { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* Others */
+  .others { padding: 0 var(--gutter) 64px; }
+  .o-grid {
+    margin-top: 20px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle);
+  }
+  .o-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; background: #000; color: #fff; transition: background .2s var(--ease); }
+  .o-card:hover { background: var(--surface-1); color: #fff; }
+  .o-title { font-weight: 700; text-transform: uppercase; letter-spacing: .04em; line-height: 1.3; }
+  .o-meta { display: flex; justify-content: space-between; gap: 16px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+
+  .eeo {
+    max-width: var(--measure); margin: 0 auto; box-sizing: content-box;
+    padding: 32px var(--gutter) 48px;
+    font-size: 13px; line-height: 1.6; color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  @media (max-width: 899px) {
+    .apply { position: static; max-width: 100%; max-height: none; order: -1; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding-top: 40px; }
+    .kick { margin-top: 32px; }
+    .facts { margin-top: 40px; }
+    .body-wrap { padding-top: 48px; }
+    .md { display: block; }
+    .sec { grid-template-columns: minmax(0, 1fr); }
+    .md :global(h2) { margin-bottom: 16px; }
+    .md :global(h2:not(:first-child) + *) { margin-top: 0; }
+    .facts { background: #000; gap: 0 20px; }
+    .facts > div { padding-right: 0; border-bottom: 1px solid var(--border-subtle); }
+    .facts > div:last-child { border-bottom: 0; }
+    .md :global(p) { font-size: 17px; }
+    .apply { padding: 24px 20px; }
+  }
+
+  /* ── Print document ─────────────────────────────────────────── */
+  .print-doc { display: none; }
+  @media print {
+    .page-main { display: none !important; }
+    .print-doc { display: block !important; font-family: var(--font-body); }
+    .pd-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid #ddd !important; }
+    .pd-top img { height: 20px; width: auto; filter: invert(1); }
+    .pd-top span, .pd-kick { font-size: 7pt; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: #666 !important; }
+    .pd-kick { margin-top: 20px; font-size: 7.5pt; }
+    .pd-title { max-width: none; margin-top: 6px; font-size: 22pt !important; line-height: 1.1; text-transform: uppercase; color: #000 !important; text-wrap: balance; }
+    .pd-title span { font-size: 10pt; font-weight: 300; letter-spacing: .06em; color: #999 !important; }
+    .pd-sum { margin-top: 8px; max-width: 150mm; font-size: 11pt; line-height: 1.45; font-weight: 300; }
+    .pd-facts { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 0 14px; border-top: 1px solid #bbb !important; border-bottom: 1px solid #ddd !important; }
+    .pd-facts > div { padding: 6px 0; flex: 1 1 auto; }
+    .pd-k { font-size: 6.5pt; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #999 !important; }
+    .pd-v { margin-top: 2px; font-size: 8.5pt; color: #000 !important; }
+    .pd-v.mono { font-family: var(--font-mono); text-transform: none; letter-spacing: .02em; }
+    .pd-v.small { font-size: 7.5pt; word-break: break-all; }
+    .pd-md { display: grid; grid-template-columns: 34mm minmax(0, 1fr); gap: 0 6mm; counter-reset: pdsec; }
+    .pd-md > :global(*) { grid-column: 2; }
+    .pd-md :global(h2) {
+      grid-column: 1; margin-top: 14px; padding-top: 10px;
+      font-size: 10pt !important; line-height: 1.3; text-transform: none; letter-spacing: 0; color: #000 !important;
+      counter-increment: pdsec;
+    }
+    .pd-md :global(h2::before) { content: counter(pdsec, decimal-leading-zero) '  '; font-family: var(--font-mono); font-size: 8pt; font-weight: 400; color: #999; white-space: pre; }
+    .pd-md :global(h2 + *) { margin-top: 14px; padding-top: 10px; }
+    .pd-md :global(p), .pd-md :global(li) { font-size: 9.5pt; line-height: 1.5; font-weight: 300; }
+    .pd-md :global(h3) { margin: 8px 0 3px; font-size: 7.5pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #000 !important; }
+    .pd-md :global(h2 + h3) { margin-top: 14px; }
+    .pd-md :global(ol), .pd-md :global(ul) { list-style: none; counter-reset: pditem; }
+    .pd-md :global(li) { display: grid; grid-template-columns: 7mm minmax(0, 1fr); padding: 2px 0; }
+    .pd-md :global(ol > li) { counter-increment: pditem; }
+    .pd-md :global(ol > li::before) { content: counter(pditem, decimal-leading-zero); font-family: var(--font-mono); font-size: 7.5pt; color: #999; padding-top: 2px; }
+    .pd-md :global(ul > li::before) { content: '–'; color: #999; }
+    .pd-sec { display: grid; grid-template-columns: 34mm minmax(0, 1fr); gap: 0 6mm; margin-top: 14px; padding-top: 10px; border-top: 1px solid #e6e6e6 !important; break-inside: avoid; }
+    .pd-h { font-size: 10pt; font-weight: 700; color: #000 !important; line-height: 1.3; }
+    .pd-h span { margin-right: 6px; font-family: var(--font-mono); font-size: 8pt; font-weight: 400; color: #999 !important; }
+    .pd-sec p { font-size: 9.5pt; line-height: 1.55; font-weight: 300; }
+    .pd-apply { padding-bottom: 10px; border-bottom: 1px solid #ddd !important; }
+    .pd-apply-body { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; }
+    .pd-apply-body p { flex: 1 1 90mm; }
+    .pd-apply-facts { display: flex; flex-direction: column; gap: 6px; }
+    .pd-eeo { margin-top: 12px; font-size: 7.5pt; line-height: 1.5; color: #999 !important; }
+  }
+</style>
