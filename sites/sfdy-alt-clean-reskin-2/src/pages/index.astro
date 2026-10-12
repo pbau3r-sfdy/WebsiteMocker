@@ -7,7 +7,7 @@ import NewsCard from '../components/NewsCard.astro';
 import Newsletter from '../components/Newsletter.astro';
 import Footer from '../components/Footer.astro';
 import { CAPABILITIES } from '../data/capabilities';
-import { HOME_DESCRIPTION, HOME_INTRO_BEFORE, HOME_INTRO_AFTER } from '../data/positioning';
+import { HOME_DESCRIPTION, HOME_INTRO } from '../data/positioning';
 
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -34,7 +34,7 @@ const caps = CAPABILITIES.filter(c => c.home);
   </section>
 
   <section class="intro">
-    <p class="wrap"><span>{HOME_INTRO_BEFORE}<span class="green">in-space power projection</span>{HOME_INTRO_AFTER}</span></p>
+    <p class="wrap"><span>{HOME_INTRO}</span></p>
   </section>
 
   <section aria-label="Capabilities" class="caps-wrap">

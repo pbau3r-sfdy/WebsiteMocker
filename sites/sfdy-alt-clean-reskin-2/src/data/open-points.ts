@@ -26,6 +26,14 @@ export const PARKED: { title: string; detail: string }[] = [
     title: 'Reachable by public transport',
     detail: 'Both offices are reachable by public transport. Possible perk for “What SFDY offers” once the perks are defined; not used on the site for now.',
   },
+  {
+    title: 'Name the Bundeswehr in the positioning line',
+    detail: 'Once Bundeswehr contracts are running. Announce it as a news item first.',
+  },
+  {
+    title: '“Programmes and partners”',
+    detail: 'Rename “Ecosystem partners” on Home to “Programmes and partners” and add programme references (e.g. REAGAN), once we are free to show them.',
+  },
 ];
 
 export const pointById = (id: string) => {

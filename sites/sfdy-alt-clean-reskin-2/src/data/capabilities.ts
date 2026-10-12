@@ -21,8 +21,8 @@ export const CAPABILITIES: Capability[] = [
   },
   {
     id: 'platforms', img: 'platforms.webp', site: 'Munich', title: 'High-endurance platforms', short: 'Platforms', home: true,
-    line: 'Attritable platforms with long endurance in orbit, built around our own propulsion and payloads.',
-    body: 'Our platforms maintain proximity to other objects for inspection, intelligence gathering and, where required, interdiction. They combine commercial subsystems with our proprietary technology in a hardened design, producible at scale, that supports a calibrated response.',
+    line: 'High-endurance platforms, producible at scale, built around our own propulsion and payloads.',
+    body: 'Our platforms maintain proximity to other objects for inspection and space domain awareness. They combine commercial subsystems with our proprietary technology in a hardened design, producible at scale.',
     status: 'Demonstration mission OVERWATCH in preparation.',
   },
   {
