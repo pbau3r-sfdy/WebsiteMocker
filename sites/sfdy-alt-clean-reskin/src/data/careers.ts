@@ -3,7 +3,7 @@ import { SITES, type CompanySite } from './sites';
 export const CAREERS_EMAIL = 'join-the-crew@starflight-dynamics.com';
 
 // Company-wide benefits shown on every position. Empty → section hidden.
-// TODO: fill in with real benefits before advertising.
+// Being defined by SFDY; add entries here once they are available.
 export const OFFERS: { title: string; text: string }[] = [];
 
 export const ABOUT =

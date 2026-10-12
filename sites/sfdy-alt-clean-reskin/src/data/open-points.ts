@@ -17,11 +17,6 @@ export const OPEN_POINTS: OpenPoint[] = [
       { label: 'Position page · banner', path: '/jobs/jedi-master' },
     ],
   },
-  {
-    id: 'offers', title: '“What SFDY offers” benefits',
-    detail: 'The benefits section on position pages is empty and therefore hidden. Write the offer (benefits, equipment, relocation, etc.) once for all positions.',
-    where: [{ label: 'Position page · banner', path: '/jobs/jedi-master' }],
-  },
 ];
 
 export const pointById = (id: string) => {
