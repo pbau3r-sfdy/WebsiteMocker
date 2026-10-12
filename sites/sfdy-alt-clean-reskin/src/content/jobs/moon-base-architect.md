@@ -8,7 +8,6 @@ reference: "SFDY-STRD-JDS-26-0403"
 start: "2027"
 date: 2026-09-11
 summary: "Sketch our long-term infrastructure beyond Earth orbit. That is no moon \u2014 well, actually, it is."
-salary: { min: 4200, max: 5800 } # placeholder range, EUR gross per month
 draft: true
 ---
 

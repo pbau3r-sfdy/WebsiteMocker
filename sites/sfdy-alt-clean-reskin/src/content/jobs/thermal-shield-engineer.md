@@ -8,7 +8,6 @@ reference: "SFDY-AMAT-JDS-26-0372"
 start: "Q1 2027"
 date: 2026-09-20
 summary: "Develop thermal protection materials that keep our hardware cooler than Hoth."
-salary: { min: 3600, max: 5000 } # placeholder range, EUR gross per month
 draft: true
 ---
 

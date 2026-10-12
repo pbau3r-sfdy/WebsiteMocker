@@ -8,7 +8,6 @@ reference: "SFDY-COMM-JDS-26-0503"
 start: "As soon as possible"
 date: 2026-09-07
 summary: "Tell our story across holonet, LinkedIn and the press. Help us, Obi-Wan \u2014 you are our only hope."
-salary: { min: 2800, max: 3800 } # placeholder range, EUR gross per month
 draft: true
 ---
 

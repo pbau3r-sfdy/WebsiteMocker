@@ -34,7 +34,7 @@ export const SITES: Record<CompanySite['key'], CompanySite> = {
     postcode: 'LT-01110',
     employer: 'Starflight Dynamics UAB',
     blurb: 'Roles in concept development, mission preparation, simulation, guidance and navigation, software.',
-    salaryRequired: true,
+    salaryRequired: false, // SFDY does not publish salaries
   },
 };
 

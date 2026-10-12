@@ -9,7 +9,6 @@ start: "A long time ago would be ideal; Q1 2027 also works"
 date: 2026-10-08
 summary: "Take a seat on the Council, steer the Order across Munich and Vilnius, and make sure prophecies come with a delivery plan."
 eligibility: "A seat on the Council is granted, not taken. We will verify your past rank with references from at least one Grand Master. Frequent travel between Munich and Vilnius is required; hyperdrive not provided, Lufthansa and airBaltic are."
-salary: { min: 6000, max: 8000 } # placeholder range, EUR gross per month
 draft: true
 ---
 

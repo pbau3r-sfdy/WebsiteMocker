@@ -8,7 +8,6 @@ reference: "SFDY-GSEG-JDS-26-0391"
 start: "As soon as possible"
 date: 2026-09-18
 summary: "Build our ground segment software, from telemetry pipelines to operator dashboards."
-salary: { min: 3800, max: 5200 } # placeholder range, EUR gross per month
 draft: true
 ---
 
