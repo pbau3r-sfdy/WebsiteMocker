@@ -10,14 +10,6 @@ export interface OpenPoint {
 
 export const OPEN_POINTS: OpenPoint[] = [
   {
-    id: 'careers-mailbox', title: 'careers@ mailbox',
-    detail: 'careers@starflight-dynamics.com is used for applications, the open application and the Contact page, but the mailbox is not set up yet.',
-    where: [
-      { label: 'Contact · Careers', path: '/contact' },
-      { label: 'Position page · banner', path: '/jobs/jedi-master' },
-    ],
-  },
-  {
     id: 'job-listings', title: 'Real job listings',
     detail: 'All 30 positions are placeholders (dummy content). Replace them with the real openings.',
     where: [

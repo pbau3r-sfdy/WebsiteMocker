@@ -3,13 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import PageHero from '../components/PageHero.astro';
 import Footer from '../components/Footer.astro';
-import Tbd from '../components/Tbd.astro';
+import { CAREERS_EMAIL } from '../data/careers';
 
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const mails = [
   ['General', 'mission-control@starflight-dynamics.com'],
   ['Press', 'press@starflight-dynamics.com'],
-  ['Careers', 'careers@starflight-dynamics.com'],
+  ['Careers', CAREERS_EMAIL],
 ];
 ---
 
@@ -26,7 +26,6 @@ const mails = [
             <dt>{k}</dt>
             <dd>
               <a href={`mailto:${v}`}>{v}</a>
-              {k === 'Careers' && <div class="note"><Tbd id="careers-mailbox">Mailbox to be set up</Tbd></div>}
             </dd>
           </div>
         ))}
