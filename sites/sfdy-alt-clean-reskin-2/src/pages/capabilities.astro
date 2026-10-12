@@ -7,6 +7,8 @@ import { CAPABILITIES } from '../data/capabilities';
 
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const blocks = CAPABILITIES.map((c, i) => ({ ...c, num: String(i + 1).padStart(2, '0') }));
+// Programme and mission names are set in the accent colour; odd indexes are the names.
+const NAMES = /(REAGAN|OVERWATCH)/;
 ---
 
 <Layout title="Capabilities" description="Propulsion, payloads, high-endurance platforms, mission preparation and derivatives.">
@@ -31,7 +33,7 @@ const blocks = CAPABILITIES.map((c, i) => ({ ...c, num: String(i + 1).padStart(2
           <div>
             <p>{c.body}</p>
             {c.status && (
-              <p class="status mono"><span class="st">Status</span> {c.status}{c.statusLink && <> <a href={`${b}${c.statusLink.href}`}>{c.statusLink.text}</a></>}</p>
+              <p class="status mono"><span class="st">Status</span> {c.status.split(NAMES).map((t, i) => i % 2 ? <strong class="name">{t}</strong> : t)}{c.statusLink && <> <a href={`${b}${c.statusLink.href}`}>{c.statusLink.text}</a></>}</p>
             )}
           </div>
         </div>
@@ -64,6 +66,7 @@ const blocks = CAPABILITIES.map((c, i) => ({ ...c, num: String(i + 1).padStart(2
   .h { display: flex; flex-direction: column; gap: 14px; }
   .kick { display: flex; gap: 16px; color: var(--text-soft); }
   .cols p.status { margin-top: 20px; font-size: 13px; line-height: 1.7; color: var(--text-soft); }
+  .status .name { color: var(--accent); font-weight: 500; }
   .status .st { color: var(--text-secondary); letter-spacing: .34em; text-transform: uppercase; margin-right: 8px; }
   .status a { color: rgba(255,255,255,.85); border-bottom: 1px solid var(--border-strong); }
   .status a:hover { color: var(--accent); border-color: var(--accent); }
