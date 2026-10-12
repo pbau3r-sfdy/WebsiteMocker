@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import plausible from '../../_scripts/plausible.mjs';
 
 // Production build: SITE_URL=https://parrot-capital.com SITE_BASE=/ npm run build
 // Sandbox default:  serves at pbau3r-sfdy.github.io/WebsiteMocker/parrot-capital/
@@ -9,4 +10,5 @@ export default defineConfig({
   site:   SITE_URL,
   base:   SITE_BASE,
   output: 'static',
+  integrations: [plausible()],
 });

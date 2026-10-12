@@ -32,6 +32,15 @@ Walks through each service in sequence and updates `wiring.json` and source file
    - Update `keywords.json` brand.handles
    - Update `wiring.json` socials block
 
+### Analytics (Plausible)
+   Ask: "Configure now, skip for later, or mark as not needed?"
+   - The site's `astro.config.mjs` must list `integrations: [plausible()]` (from `_scripts/plausible.mjs`); add it if missing
+   - Set in `wiring.json`: `"analytics": { "service": "plausible", "status": "configured" }`
+   - Optional keys: `domain` (production, defaults to `wiring.domain` without `www.`), `sandbox: false` (do not track the preview), `host` (self-hosted instance URL)
+   - The production domain must be added as a site in the Plausible account; sandbox previews all report to `pbau3r-sfdy.github.io` (filter by path)
+   - Add a Plausible section to the privacy policy (cookie-free, no personal data, legal basis Art. 6 (1) (f) GDPR, processor Plausible Insights OÜ, Estonia, EU hosting) and remove any "no analytics" statement
+   - Nothing is injected in `astro dev`; check `dist/index.html` for `dataset.domain` after a build
+
 ### Domain
    - Ask: production domain (e.g. `starflight-dynamics.com`)
    - Update `wiring.json` domain field (do NOT change `astro.config.mjs` yet — that's for `/wm-deploy-production`)
