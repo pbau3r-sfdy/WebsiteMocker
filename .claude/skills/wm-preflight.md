@@ -22,7 +22,7 @@ For the specified site (`sites/<slug>/`), check each item and report PASS / FAIL
 - [ ] Newsletter endpoint is not the Formspree placeholder
 - [ ] Contact form ID is set (for stage ≥ 3)
 - [ ] Socials configured or explicitly skipped (for stage ≥ 3)
-- [ ] Analytics configured or explicitly skipped; if `analytics.service === "plausible"`, `astro.config.mjs` lists `plausible()`
+- [ ] Analytics is optional (skipped is fine); if `analytics.service === "plausible"`, `astro.config.mjs` lists `plausible()`
 
 ### Legal (for stage ≥ 4)
 - [ ] `imprint.astro` contains no `—` placeholder lines
