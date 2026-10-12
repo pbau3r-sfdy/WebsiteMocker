@@ -3,11 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import PageHero from '../components/PageHero.astro';
 import Footer from '../components/Footer.astro';
-import Tbd from '../components/Tbd.astro';
 
-// "[[…]]" inside a paragraph marks an open point (rendered as a yellow TBD marker).
 const SECTIONS: [string, string[]][] = [
-  ['Controller', ['Starflight Dynamics GmbH, Tal 44, 80331 Munich, Germany, mission-control@starflight-dynamics.com. For applications to positions in Vilnius, Starflight Dynamics UAB, [[street address]], Vilnius, Lithuania, is joint controller with Starflight Dynamics GmbH.']],
+  ['Controller', ['Starflight Dynamics GmbH, Tal 44, 80331 Munich, Germany, mission-control@starflight-dynamics.com. For applications to positions in Vilnius, Starflight Dynamics UAB, Gynėjų g. 4-333, LT-01110 Vilnius, Lithuania, is joint controller with Starflight Dynamics GmbH.']],
   ['Hosting and server logs', ['This website is hosted on GitHub Pages, a service of GitHub, Inc., San Francisco, USA. When you visit it, GitHub logs your IP address for security purposes, together with technical data such as the page requested and your browser type. GitHub is certified under the EU–US Data Privacy Framework. We have no access to these logs beyond what GitHub provides; see GitHub’s privacy statement for retention. Legal basis: Art. 6 (1)(f) GDPR (legitimate interest in a secure, reliable website).']],
   ['Cookies and fonts', ['This website sets no cookies. All fonts are hosted on our own server; your browser does not connect to third-party font services.']],
   ['Contact form and email', ['If you write to us, we process your name, email address and message to answer you. The contact form is transmitted through Web3Forms, acting as our processor. Legal basis: Art. 6 (1)(b) GDPR where your message concerns a contract, otherwise Art. 6 (1)(f) GDPR. We delete the data when your request is settled, unless retention periods apply.']],
@@ -20,7 +18,7 @@ const SECTIONS: [string, string[]][] = [
 ];
 const sections = SECTIONS.map(([title, paras], i) => ({
   id: `s${i + 1}`, n: String(i + 1).padStart(2, '0'), title,
-  paras: paras.map(p => p.split(/\[\[(.+?)\]\]/)), // odd indexes are open points
+  paras,
 }));
 ---
 
@@ -39,7 +37,7 @@ const sections = SECTIONS.map(([title, paras], i) => ({
         {sections.map(s => (
           <section id={s.id}>
             <h2><span class="n">{s.n}</span>{s.title}</h2>
-            {s.paras.map(parts => <p>{parts.map((t, i) => i % 2 ? <Tbd id="vilnius-address">{t}</Tbd> : t)}</p>)}
+            {s.paras.map(t => <p>{t}</p>)}
           </section>
         ))}
       </article>

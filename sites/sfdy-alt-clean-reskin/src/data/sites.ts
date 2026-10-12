@@ -30,6 +30,8 @@ export const SITES: Record<CompanySite['key'], CompanySite> = {
     key: 'vilnius',
     city: 'Vilnius',
     country: 'LT',
+    street: 'Gynėjų g. 4-333',
+    postcode: 'LT-01110',
     employer: 'Starflight Dynamics UAB',
     blurb: 'Roles in concept development, mission preparation, simulation, guidance and navigation, software.',
     salaryRequired: true,

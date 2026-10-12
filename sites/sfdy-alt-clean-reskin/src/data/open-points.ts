@@ -10,15 +10,6 @@ export interface OpenPoint {
 
 export const OPEN_POINTS: OpenPoint[] = [
   {
-    id: 'vilnius-address', title: 'Vilnius street address',
-    detail: 'Street address of Starflight Dynamics UAB. Needed in the Imprint, on the Contact page and for the joint-controller clause in the Privacy policy.',
-    where: [
-      { label: 'Imprint · Lithuanian entity', path: '/imprint' },
-      { label: 'Contact · Vilnius address', path: '/contact' },
-      { label: 'Privacy · 01 Controller', path: '/privacy-policy' },
-    ],
-  },
-  {
     id: 'uab-vat', title: 'Starflight Dynamics UAB VAT number',
     detail: 'VAT number of the Lithuanian entity, if registered. Otherwise remove the line from the Imprint.',
     where: [{ label: 'Imprint · Lithuanian entity', path: '/imprint' }],
