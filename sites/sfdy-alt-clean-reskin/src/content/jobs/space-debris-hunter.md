@@ -8,6 +8,7 @@ reference: "SFDY-ORBS-JDS-26-0372"
 start: "As soon as possible"
 date: 2026-10-02
 summary: "Track, characterise and plan around space debris. Somebody has to clean up after the Empire."
+salary: { min: 3200, max: 4400 } # placeholder range, EUR gross per month
 draft: true
 ---
 

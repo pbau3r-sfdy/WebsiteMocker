@@ -8,6 +8,7 @@ reference: "SFDY-AMAT-JDS-26-0351"
 start: "Q1 2027"
 date: 2026-10-05
 summary: "Grow, characterise and qualify advanced crystalline materials in Vilnius, and on orbit soon after."
+salary: { min: 3800, max: 5200 } # placeholder range, EUR gross per month
 draft: true
 ---
 

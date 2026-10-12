@@ -19,7 +19,7 @@ export const OPEN_POINTS: OpenPoint[] = [
   },
   {
     id: 'job-listings', title: 'Real job listings',
-    detail: 'All 30 positions are placeholders (dummy content). Replace them with the real openings and their salaries; Vilnius positions must state a salary.',
+    detail: 'All 30 positions are placeholders (dummy content). Replace them with the real openings. Vilnius positions must state a salary (Lithuanian Labour Code); the ranges shown there now are placeholders.',
     where: [
       { label: 'Careers · banner', path: '/jobs' },
       { label: 'Position page · banner', path: '/jobs/jedi-master' },

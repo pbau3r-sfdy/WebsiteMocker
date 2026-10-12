@@ -8,6 +8,7 @@ reference: "SFDY-STRD-JDS-26-0392"
 start: "Working student, from next semester"
 date: 2026-09-14
 summary: "Working-student role crunching orbits for strategy and mission teams. Calculations, not prophecies."
+salary: { min: 3600, max: 5000 } # placeholder range, EUR gross per month
 draft: true
 ---
 

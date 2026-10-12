@@ -39,7 +39,7 @@ const jobs = defineCollection({
       if (job.sites.length + job.locations.length === 0) {
         ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['sites'], message: 'Set at least one of `sites` or `locations`.' });
       }
-      if (job.draft) return; // salary rule enforced once a position is publishable
+      // No draft exemption: this sandbox builds drafts too, so every built position must comply.
       for (const key of job.sites) {
         if (SITES[key].salaryRequired && !job.salary) {
           ctx.addIssue({

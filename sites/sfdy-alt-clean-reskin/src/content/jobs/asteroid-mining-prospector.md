@@ -8,6 +8,7 @@ reference: "SFDY-AMAT-JDS-26-0393"
 start: "3-month study contract"
 date: 2026-09-17
 summary: "A short study contract to scout space-resource opportunities. Please do not fly into the asteroid field."
+salary: { min: 3200, max: 4400 } # placeholder range, EUR gross per month
 draft: true
 ---
 

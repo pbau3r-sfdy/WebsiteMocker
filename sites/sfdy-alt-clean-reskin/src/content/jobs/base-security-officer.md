@@ -9,6 +9,7 @@ start: "As soon as possible"
 date: 2026-09-04
 summary: "Protect our people, sites and information. Unlike the rebel base on Hoth, we would prefer not to evacuate."
 eligibility: "German citizenship or EU citizenship with willingness to undergo an extended security clearance (\u00dc2)."
+salary: { min: 2400, max: 3200 } # placeholder range, EUR gross per month
 draft: true
 ---
 

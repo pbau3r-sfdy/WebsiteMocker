@@ -9,6 +9,7 @@ start: "When the Force wills it"
 date: 2026-10-10
 summary: "Begin your training at our Vilnius site. Lift rocks, meditate, and learn why we do not touch the propellant lines with a lightsaber."
 eligibility: "Midi-chlorian count above 7,000 per cell (we test discreetly during onboarding). No prior attachment to the Dark Side. Must be willing to relocate to Vilnius; the swamp planet option is no longer available."
+salary: { min: 1800, max: 2400 } # placeholder range, EUR gross per month
 draft: true
 ---
 
