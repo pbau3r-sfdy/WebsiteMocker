@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import PageHero from '../components/PageHero.astro';
 import Footer from '../components/Footer.astro';
-import { OPEN_POINTS } from '../data/open-points';
+import { OPEN_POINTS, PARKED } from '../data/open-points';
 
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const link = (path: string, id: string) => `${b}${path}#tbd-${id}`;
@@ -64,6 +64,22 @@ const byPage = [...new Set(points.flatMap(p => p.where.map(w => pageName(w.label
     </div>
   </section>
 
+  {PARKED.length > 0 && (
+    <section class="sec">
+      <div class="wrap">
+        <div class="head"><h2 class="label">Parked for later</h2><span class="cnt parked">{PARKED.length} not counted</span></div>
+        <ul class="list">
+          {PARKED.map(p => (
+            <li class="pt parked-pt">
+              <span class="num parked">—</span>
+              <div class="txt"><h3>{p.title}</h3><p>{p.detail}</p></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
   <Footer />
 </Layout>
 
@@ -105,6 +121,10 @@ const byPage = [...new Set(points.flatMap(p => p.where.map(w => pageName(w.label
   .pg a:hover { color: var(--tbd); }
   .mini { font-family: var(--font-mono); font-size: 12px; color: var(--tbd); }
   .spot { color: var(--text-soft); }
+
+  .cnt.parked { color: var(--text-muted); }
+  .num.parked { background: transparent; border: 1px solid var(--border-strong); color: var(--text-muted); }
+  .parked-pt { grid-template-columns: 64px minmax(0, 1fr); }
 
   @media (max-width: 820px) {
     .pt { grid-template-columns: 56px minmax(0, 1fr); }

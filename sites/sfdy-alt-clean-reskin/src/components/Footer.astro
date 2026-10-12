@@ -30,7 +30,7 @@ const socials = [
   </div>
   <div class="wrap copy mono">
     <span>© {new Date().getFullYear()} Starflight Dynamics GmbH</span>
-    {OPEN_POINTS.length > 0 && <a href={`${b}/open-points`} class="open">{OPEN_POINTS.length} open points →</a>}
+    {OPEN_POINTS.length > 0 && <a href={`${b}/open-points`} class="open">{OPEN_POINTS.length} open point{OPEN_POINTS.length > 1 ? 's' : ''} →</a>}
   </div>
 </footer>
 
