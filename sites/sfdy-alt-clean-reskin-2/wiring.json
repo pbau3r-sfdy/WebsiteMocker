@@ -1,0 +1,54 @@
+{
+  "slug": "sfdy-alt-clean-reskin-2",
+  "name": "Starflight Dynamics (Reskin 2)",
+  "accent": "#00FB92",
+  "contact": "mission-control@starflight-dynamics.com",
+  "stage": 2,
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/sfdy-alt-clean-reskin-2",
+  "newsletter": {
+    "service": "mailchimp",
+    "audience_id": "88bca13b57",
+    "server": "us17",
+    "status": "configured"
+  },
+  "forms": {
+    "contact": {
+      "service": "web3forms",
+      "status": "configured"
+    }
+  },
+  "socials": {
+    "linkedin": "https://www.linkedin.com/company/starflight-dynamics/",
+    "twitter": "https://x.com/SFDY_Space",
+    "instagram": "https://www.instagram.com/starflight_dynamics/",
+    "threads": "https://www.threads.net/@starflight_dynamics",
+    "facebook": "https://www.facebook.com/sfdy.space",
+    "youtube": "https://www.youtube.com/@Starflight-Dynamics",
+    "tiktok": "https://tiktok.com/@starflight_dynamics",
+    "discord": "https://discord.com/channels/starflight_dynamics",
+    "status": "configured"
+  },
+  "legal": {
+    "impressum": "complete",
+    "privacy": "complete"
+  },
+  "brand": {
+    "hashtags": [],
+    "vocabulary": [],
+    "avoid": [],
+    "voice": "",
+    "doc_tokens": {
+      "--sfdy-blue": "#0432FF",
+      "--sfdy-cyan": "#00FDFF",
+      "--sfdy-green": "#00FB92",
+      "--sfdy-magenta": "#FF008A",
+      "--bg-base": "#000000",
+      "--surface-1": "#06070A",
+      "--surface-2": "#101319",
+      "--text-primary": "#FFFFFF",
+      "--accent": "#00FB92"
+    }
+  },
+  "capture": "sfdy",
+  "notes": "Reskin 2: copy of sfdy-alt-clean-reskin with the Increment 2 positioning texts (W1–W12, 12 Oct 2026). Internal review only, no production path. Open points in yellow."
+}

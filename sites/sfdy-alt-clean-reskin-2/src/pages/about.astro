@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ABOUT_SETTING } from '../data/positioning';
+import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
+import Footer from '../components/Footer.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const principles = [
+  ['We are user-driven', 'We work with end users from the start, so that requirements come directly from their operational needs, not from us.'],
+  ['We test early', 'We build and test early in development. Practice emerges through testing, and faults show while they are cheap to fix.'],
+  ['We partner up', 'Each development runs with partners drawn from across the institutional and industrial ecosystem, working together throughout.'],
+];
+const sites = [
+  { name: 'Munich', tag: '01 · Headquarters', code: 'DE', img: 'munich.webp', entity: 'Starflight Dynamics GmbH',
+    text: 'Propulsion, payloads and platforms: from design through to build and test. Programme work with German institutions. As our headquarters, Munich is home to company leadership and coordinates the work carried out across both of our sites.' },
+  { name: 'Vilnius', tag: '02 · Mission engineering', code: 'LT', img: 'vilnius.webp', entity: 'Starflight Dynamics UAB',
+    text: 'Concept development and mission preparation, guidance and navigation, and work on derivatives. Our base for working with partners across Northern and Eastern Europe and the European institutions.' },
+];
+---
+
+<Layout title="About" description="Starflight Dynamics: space systems for Europe's defence, from Munich and Vilnius.">
+  <Nav active="about" />
+
+  <PageHero eyebrow="About" pad="88px">
+    A few assets that hold their own <span class="green">against many.</span>
+    <div slot="after" class="lede">
+      <p>Europe depends on space for communication, navigation and observation. It will not field the largest fleets in orbit. What it does field has to count.</p>
+      <p>{ABOUT_SETTING} We use what the market offers and develop what it does not.</p>
+    </div>
+  </PageHero>
+
+  <section aria-labelledby="how" class="sec how-sec">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="how" class="label">How we work</h2></div>
+      <div class="how">
+        {principles.map(([t, d], i) => (
+          <div class="pr">
+            <span class="mono num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{t}</h3>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="sites" class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="sites" class="label">Sites</h2><span class="cnt">02</span></div>
+      {sites.map((s, i) => (
+        <div class:list={['site', { flip: i % 2 === 1 }]}>
+          <div class="photo"><img src={`${b}/images/${s.img}`} alt={`${s.name} site`} loading="lazy" /></div>
+          <div class="txt">
+            <div class="mono tag"><span class="green">{s.tag}</span><span class="code">{s.code}</span></div>
+            <h3 class="city">{s.name}</h3>
+            <p>{s.text}</p>
+            <div class="entity">{s.entity}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap cta">
+      <h2>Work <span class="green">with us.</span></h2>
+      <div class="btns">
+        <a href={`${b}/jobs`} class="btn solid">Careers</a>
+        <a href={`${b}/contact`} class="btn line">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .green { color: var(--accent); }
+  .lede { margin-top: 36px; max-width: 620px; display: flex; flex-direction: column; gap: 16px; font-size: 19px; line-height: 1.7; font-weight: 300; color: rgba(255,255,255,.80); text-wrap: pretty; }
+  .sec { padding: 0 var(--gutter) 96px; }
+  .how-sec { padding-top: 24px; }
+  .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-strong); }
+  .label { font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--text-secondary); }
+  .cnt { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; color: var(--text-muted); }
+
+  .how { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0 48px; }
+  .pr { padding: 32px 0; border-bottom: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 14px; }
+  .num { font-size: 12px; letter-spacing: .1em; color: var(--accent); }
+  .pr h3 { font-size: 22px; font-weight: 700; line-height: 1.15; text-transform: uppercase; }
+  .pr p { font-size: 16px; line-height: 1.7; font-weight: 300; color: var(--text-secondary); text-wrap: pretty; }
+
+  .site { display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: center; padding: 48px 0; border-bottom: 1px solid var(--border-subtle); }
+  .site.flip { flex-direction: row-reverse; flex-wrap: wrap-reverse; }
+  .photo { flex: 1 1 460px; min-width: 0; aspect-ratio: 3 / 2; border: 1px solid var(--border-subtle); background: var(--surface-1); overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .txt { flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+  .tag { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .code { color: var(--text-muted); }
+  .city { font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1; text-transform: uppercase; }
+  .txt p { font-size: 16px; line-height: 1.75; font-weight: 300; color: rgba(255,255,255,.75); text-wrap: pretty; }
+  .entity { padding-top: 14px; border-top: 1px solid var(--border-subtle); font-size: 14px; line-height: 1.6; font-weight: 300; color: var(--text-soft); }
+
+  .cta {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 32px 64px;
+    padding: 40px; background: var(--surface-1); border: 1px solid var(--border-subtle); border-top: 3px solid var(--accent);
+  }
+  .cta h2 { flex: 1 1 320px; font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.02; text-transform: uppercase; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 13px 22px; border: 1px solid var(--accent); font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
+  .solid { background: var(--accent); color: #000; }
+  .solid:hover { background: #fff; border-color: #fff; color: #000; }
+  .line { color: var(--accent); }
+  .line:hover { background: var(--accent); color: #000; }
+  @media (max-width: 560px) { .cta { padding: 28px 20px; } }
+</style>

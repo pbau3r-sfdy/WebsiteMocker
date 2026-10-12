@@ -1,0 +1,19 @@
+{
+  "site":    "sfdy-alt-clean",
+  "updated": "2026-08-08",
+  "brand": {
+    "names":   ["Starflight Dynamics", "SFDY"],
+    "handles": { "twitter": "sfdy_space", "instagram": "starflightdynamics", "linkedin": "starflight-dynamics" },
+    "avoid":   []
+  },
+  "primary":   ["orbital propulsion", "space defense", "sovereign space capability"],
+  "secondary": ["ReaGAn", "BAAINBw", "high frontier"],
+  "hashtags": { "twitter": [], "linkedin": [], "instagram": [] },
+  "seo": {
+    "meta_description": "Starflight Dynamics — Technologies for the High Frontier. Site currently under construction.",
+    "keywords": ["Starflight Dynamics", "orbital propulsion", "space defense", "Munich"]
+  },
+  "people":    ["Philipp Bauer", "Jonas Radtke"],
+  "partners":  ["bavAIRia", "BDLI", "NewSpace BDI Initiative"],
+  "locations": ["Munich"]
+}
