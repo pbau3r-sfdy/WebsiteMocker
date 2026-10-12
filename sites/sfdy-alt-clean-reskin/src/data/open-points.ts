@@ -10,11 +10,6 @@ export interface OpenPoint {
 
 export const OPEN_POINTS: OpenPoint[] = [
   {
-    id: 'uab-vat', title: 'Starflight Dynamics UAB VAT number',
-    detail: 'VAT number of the Lithuanian entity, if registered. Otherwise remove the line from the Imprint.',
-    where: [{ label: 'Imprint · Lithuanian entity', path: '/imprint' }],
-  },
-  {
     id: 'careers-mailbox', title: 'careers@ mailbox',
     detail: 'careers@starflight-dynamics.com is used for applications, the open application and the Contact page, but the mailbox is not set up yet.',
     where: [
