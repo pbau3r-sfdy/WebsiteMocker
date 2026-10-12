@@ -11,7 +11,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="bg" data-parallax="flip" aria-hidden="true" data-print-hide style={`background-image:url('${b}/images/earth-night.webp');background-position:${bg}`}></div>
     <div class="shade" aria-hidden="true" data-print-hide></div>
   </>}
-  <Beam thickness={7} />
+  <Beam />
   <div class="inner">
     <slot name="before" />
     <div class="eyebrow-l">{eyebrow}</div>

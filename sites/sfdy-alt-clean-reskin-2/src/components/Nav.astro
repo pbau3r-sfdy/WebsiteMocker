@@ -13,6 +13,9 @@ const links = [
 ];
 ---
 
+{/* Without the overlay the hero, and its beam, start below the bar; this segment carries
+    the beam up to the top edge, as on the home page, and scrolls away with the page. */}
+{!overlay && <div class="top-beam" aria-hidden="true" data-print-hide></div>}
 <header class:list={['site-nav', { overlay }]} data-print-hide>
   <nav class="bar" aria-label="Main">
     <a href={`${b}/`} aria-label="Starflight Dynamics home" class="logo">
@@ -54,6 +57,10 @@ const links = [
 
 <style>
   .site-nav { position: sticky; top: 0; z-index: 200; }
+  .top-beam {
+    position: absolute; top: 0; left: 0; z-index: 201;
+    width: 9px; height: 76px; background: var(--sfdy-blue); pointer-events: none;
+  }
   .bar {
     display: flex; align-items: center; justify-content: space-between; gap: 24px;
     height: 76px; padding: 0 var(--gutter);
