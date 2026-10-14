@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { siteLabel, salaryLabel } from '../data/careers';
+
+interface Props { job: CollectionEntry<'jobs'>; }
+const { job: j } = Astro.props;
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sites = [...j.data.sites, ...(j.data.locations.length ? ['elsewhere'] : [])].join(' ');
+const type = j.data.type.replace('-', ' ');
+const search = [j.data.title, j.data.summary, j.data.department].join(' ').toLowerCase();
+---
+
+<a href={`${b}/jobs/${j.id}`} class="row" data-job data-sites={sites} data-dept={j.data.department ?? 'General'} data-type={type} data-search={search}>
+  <span class="main">
+    <span class="head">
+      <span class="title">{j.data.title} <span class="mfd">(m/f/d)</span></span>
+      {j.data.priority && <span class="tag priority" data-print-tag>Priority</span>}
+      {j.data.draft && <span class="tag draft">Draft</span>}
+    </span>
+    <span class="summary">{j.data.summary}</span>
+  </span>
+  <span class="meta">
+    <span>{siteLabel(j.data)}</span>
+    <span class="dim">{type}{j.data.salary && ` · ${salaryLabel(j.data.salary)}`}</span>
+  </span>
+  <span class="arrow" aria-hidden="true">→</span>
+</a>
+
+<style>
+  .row {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 32px;
+    padding: 22px 0; border-bottom: 1px solid var(--border-subtle); color: #fff;
+    transition: padding .2s var(--ease);
+  }
+  .row:hover { padding-left: 12px; color: #fff; }
+  .row[hidden] { display: none; }
+  .main { flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .title { font-size: 19px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; line-height: 1.25; }
+  .mfd { font-size: 12px; font-weight: 300; letter-spacing: .08em; color: var(--text-muted); }
+  .summary { font-size: 15px; line-height: 1.55; font-weight: 300; color: var(--text-soft); }
+  .meta {
+    flex: 0 1 260px; display: flex; flex-direction: column; gap: 4px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-soft);
+  }
+  .dim { color: var(--text-muted); }
+  .arrow { flex: 0 0 24px; color: var(--accent); }
+  .tag { padding: 2px 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+  .priority { color: #000; background: var(--accent); }
+  .draft { color: var(--sfdy-magenta); border: 1px solid var(--sfdy-magenta); padding: 1px 5px; }
+
+  @media (max-width: 560px) {
+    .arrow { display: none; }
+    .meta { flex-basis: 100%; }
+  }
+  @media print { .priority { border: 1px solid #111; } }
+</style>

@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Beam from '../../components/Beam.astro';
+import Footer from '../../components/Footer.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const stamp = (d: Date) => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
+
+// "COMPANY ANNOUNCEMENT: …" titles become a kicker plus the plain headline.
+const posts = (await getCollection('news'))
+  .sort((a, z) => z.data.date.valueOf() - a.data.date.valueOf())
+  .map(p => {
+    const m = p.data.title.match(/^COMPANY ANNOUNCEMENT:\s*(.*)$/i);
+    return {
+      href: `${b}/news/${p.id}`,
+      img: p.data.image ? `${b}${p.data.image}` : null,
+      date: stamp(p.data.date),
+      iso: p.data.date.toISOString().slice(0, 10),
+      title: m ? m[1] : p.data.title,
+      kicker: m ? 'Company announcement' : '',
+      summary: p.data.summary,
+      year: String(p.data.date.getFullYear()),
+    };
+  });
+
+const [lead, ...rest] = posts;
+const years = [...new Set(rest.map(p => p.year))].map(year => {
+  const items = rest.filter(p => p.year === year);
+  return { year, items, count: String(items.length).padStart(2, '0') };
+});
+---
+
+<Layout title="News" description="Announcements and programme updates from Starflight Dynamics.">
+  <Nav active="news" />
+
+  <main>
+    <header class="hero">
+      <Beam thickness={7} />
+      <div class="wrap">
+        <div class="eyebrow accent">Newsroom</div>
+        <h1>News <span class="green">&amp; announcements</span></h1>
+      </div>
+    </header>
+
+    {lead && (
+      <section class="lead-wrap">
+        <a href={lead.href} class="wrap lead">
+          <span class="lead-img">{lead.img && <img src={lead.img} alt="" />}</span>
+          <span class="lead-body">
+            <span class="kick"><span class="green">Latest</span><time datetime={lead.iso}>{lead.date}</time></span>
+            <span class="lead-title">{lead.title}</span>
+            <span class="lead-sum">{lead.summary}</span>
+            <span class="read">Read article →</span>
+          </span>
+        </a>
+      </section>
+    )}
+
+    <section class="archive">
+      <div class="wrap">
+        {years.map(y => (
+          <div class="year">
+            <h2><span>{y.year}</span><span class="cnt">{y.count}</span></h2>
+            {y.items.map(n => (
+              <a href={n.href} class="row">
+                <span class="thumb">{n.img && <img src={n.img} alt="" loading="lazy" />}</span>
+                <span class="info">
+                  <span class="kick"><time datetime={n.iso}>{n.date}</time>{n.kicker && <span class="green">{n.kicker}</span>}</span>
+                  <span class="title">{n.title}</span>
+                  <span class="sum">{n.summary}</span>
+                </span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .eyebrow { font-size: 12px; font-weight: 700; }
+  .eyebrow.accent { color: var(--accent); }
+  .green { color: var(--accent); }
+
+  .hero { position: relative; padding: 104px var(--gutter) 72px; }
+  h1 {
+    margin-top: 20px; max-width: 14ch;
+    font-size: clamp(40px, 7vw, 88px); font-weight: 700; line-height: .98;
+    letter-spacing: .005em; text-transform: uppercase; text-wrap: balance;
+  }
+
+  .kick {
+    display: flex; flex-wrap: wrap; gap: 8px 16px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted);
+  }
+
+  .lead-wrap { padding: 0 var(--gutter); }
+  .lead {
+    display: flex; flex-wrap: wrap; color: #fff;
+    background: var(--surface-1); border: 1px solid var(--border-subtle); border-top: 3px solid var(--accent);
+    transition: border-color .2s var(--ease), box-shadow .2s;
+  }
+  .lead:hover { border-color: var(--border-accent); box-shadow: 0 0 24px rgba(0,251,146,.12); color: #fff; }
+  .lead-img { flex: 1 1 420px; min-height: 280px; display: block; background: var(--surface-2); overflow: hidden; }
+  .lead-img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
+  .lead-body { flex: 1 1 380px; display: flex; flex-direction: column; gap: 16px; padding: 36px 40px; }
+  .lead-title { font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px); font-weight: 700; line-height: 1.12; text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; }
+  .lead-sum { font-size: 17px; line-height: 1.65; font-weight: 300; color: var(--text-secondary); }
+  .read { margin-top: auto; font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+
+  .archive { padding: 72px var(--gutter) 96px; }
+  .year { margin-top: 28px; }
+  .year h2 {
+    display: flex; justify-content: space-between; gap: 16px;
+    font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border-strong);
+  }
+  .cnt { font-family: var(--font-mono); font-weight: 400; letter-spacing: .06em; color: var(--text-muted); }
+  .row {
+    display: flex; flex-wrap: wrap; align-items: flex-start; gap: 16px 32px;
+    padding: 24px 0; border-bottom: 1px solid var(--border-subtle); color: #fff;
+    transition: padding .2s var(--ease);
+  }
+  .row:hover { padding-left: 12px; color: #fff; }
+  .thumb { flex: 0 0 240px; aspect-ratio: 16 / 9; display: block; overflow: hidden; background: var(--surface-2); border: 1px solid rgba(255,255,255,.08); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .info { flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .title { font-size: 19px; font-weight: 700; line-height: 1.3; text-transform: uppercase; letter-spacing: .02em; text-wrap: pretty; }
+  .sum { font-size: 15px; line-height: 1.6; font-weight: 300; color: var(--text-soft); text-wrap: pretty; }
+  .arrow { flex: 0 0 24px; color: var(--accent); padding-top: 2px; }
+
+  @media (max-width: 440px) { h1 { font-size: 34px; } }
+  @media (max-width: 360px) { h1 { font-size: 28px; } }
+  @media (max-width: 640px) {
+    .hero { padding-top: 72px; padding-bottom: 48px; }
+    .lead-img { min-height: 200px; }
+    .lead-body { padding: 24px 20px; }
+    .thumb { flex-basis: 100%; }
+    .arrow { display: none; }
+  }
+</style>

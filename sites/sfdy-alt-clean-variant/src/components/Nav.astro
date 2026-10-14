@@ -1,0 +1,105 @@
+---
+// Site navigation. `active` highlights the current section; `overlay` keeps the
+// bar transparent over a hero image until the page scrolls.
+interface Props { active?: 'about' | 'news' | 'careers' | 'contact' | ''; overlay?: boolean; }
+const { active = '', overlay = false } = Astro.props;
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const links = [
+  { key: 'about',   label: 'ABOUT',   href: `${b}/about` },
+  { key: 'news',    label: 'NEWS',    href: `${b}/news` },
+  { key: 'careers', label: 'CAREERS', href: `${b}/jobs` },
+  { key: 'contact', label: 'CONTACT', href: `${b}/contact` },
+];
+---
+
+<header class:list={['site-nav', { overlay }]} data-print-hide>
+  <nav class="bar" aria-label="Main">
+    <a href={`${b}/`} aria-label="Starflight Dynamics home" class="logo">
+      <img src={`${b}/images/logo.png`} alt="Starflight Dynamics" width="131" height="30" />
+    </a>
+    <div class="links">
+      {links.map(l => (
+        <a href={l.href} class="link" aria-current={l.key === active ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </div>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  </nav>
+  <div class="menu" id="site-menu" hidden>
+    {links.map(l => (
+      <a href={l.href} aria-current={l.key === active ? 'page' : undefined}>{l.label}</a>
+    ))}
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('.site-nav');
+  const btn = nav?.querySelector<HTMLButtonElement>('.menu-btn');
+  const menu = nav?.querySelector<HTMLElement>('.menu');
+  if (nav && btn && menu) {
+    btn.addEventListener('click', () => {
+      const open = menu.hidden;
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? 'Close ×' : 'Menu';
+      nav.classList.toggle('open', open);
+    });
+    if (nav.classList.contains('overlay')) {
+      const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+  }
+</script>
+
+<style>
+  .site-nav { position: sticky; top: 0; z-index: 200; }
+  .bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    height: 76px; padding: 0 var(--gutter);
+    background: rgba(0,0,0,.86);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background .3s var(--ease), border-color .3s;
+  }
+  /* Over the home hero: transparent until scrolled or the menu opens */
+  .overlay { position: fixed; left: 0; right: 0; }
+  .overlay:not(.scrolled):not(.open) .bar {
+    background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom-color: transparent;
+  }
+  .logo { flex: none; }
+  .logo img { height: 30px; width: auto; }
+  .links { display: flex; gap: clamp(16px, 2.4vw, 32px); }
+  .link {
+    font-size: 11px; font-weight: 600; letter-spacing: .24em; white-space: nowrap;
+    color: var(--text-secondary);
+    transition: color .2s var(--ease);
+  }
+  .link:hover, .link[aria-current="page"] { color: var(--accent); }
+
+  .menu-btn {
+    display: none; flex: none; height: 44px; padding: 0 14px;
+    background: none; border: 1px solid var(--border-strong); cursor: pointer;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+    color: rgba(255,255,255,.80);
+  }
+  .menu-btn[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
+  .menu {
+    display: flex; flex-direction: column;
+    padding: 8px var(--gutter) 16px;
+    background: rgba(0,0,0,.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .menu[hidden] { display: none; }
+  .menu a {
+    display: flex; align-items: center; min-height: 48px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 12px; font-weight: 600; letter-spacing: .24em; color: var(--text-secondary);
+  }
+  .menu a[aria-current="page"] { color: var(--accent); }
+
+  @media (max-width: 639px) {
+    .links { display: none; }
+    .menu-btn { display: block; }
+  }
+  @media (min-width: 640px) { .menu { display: none !important; } }
+</style>

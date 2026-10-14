@@ -1,0 +1,447 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Beam from '../../components/Beam.astro';
+import Footer from '../../components/Footer.astro';
+import JobRow from '../../components/JobRow.astro';
+import { SITES } from '../../data/sites';
+import { CAREERS_EMAIL, EQUAL_OPPORTUNITY, isPublished, siteLabel } from '../../data/careers';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const jobs = (await getCollection('jobs'))
+  .filter(isPublished)
+  // Priority positions first, then newest first.
+  .sort((a, b) => Number(b.data.priority) - Number(a.data.priority) || b.data.date.valueOf() - a.data.date.valueOf());
+
+const priority = jobs.filter(j => j.data.priority);
+
+const byDept = new Map<string, typeof jobs>();
+for (const j of jobs) {
+  const dept = j.data.department ?? 'General';
+  byDept.set(dept, [...(byDept.get(dept) ?? []), j]);
+}
+// Departments with a priority position first, then alphabetical.
+const depts = [...byDept]
+  .map(([name, list]) => ({
+    name,
+    list,
+    id: 'dept-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+    hasPriority: list.some(j => j.data.priority),
+  }))
+  .sort((a, b) => Number(b.hasPriority) - Number(a.hasPriority) || a.name.localeCompare(b.name));
+
+// Site tiles: the two company sites, plus "Elsewhere" when a position sits outside them.
+const elsewhereJobs = jobs.filter(j => j.data.locations.length > 0);
+const elsewhereCities = [...new Set(elsewhereJobs.flatMap(j => j.data.locations.map(l => l.city)))];
+const siteTiles = [
+  ...Object.values(SITES).map(s => ({
+    key: s.key as string, name: s.city, code: s.country, desc: s.blurb,
+    count: jobs.filter(j => j.data.sites.includes(s.key)).length,
+  })),
+  ...(elsewhereJobs.length ? [{
+    key: 'elsewhere', name: 'Elsewhere', code: 'EU',
+    desc: elsewhereCities.length > 1 ? `${elsewhereCities.slice(0, -1).join(', ')} and ${elsewhereCities.at(-1)}.` : `${elsewhereCities[0]}.`,
+    count: elsewhereJobs.length,
+  }] : []),
+];
+
+const types = ['full time', 'part time', 'contract'].filter(t => jobs.some(j => j.data.type.replace('-', ' ') === t));
+const pad = (n: number) => String(n).padStart(2, '0');
+const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('Open application')}`;
+---
+
+<Layout title="Careers" description="Open positions at Starflight Dynamics in Munich and Vilnius.">
+  <Nav active="careers" />
+
+  <main>
+    <header class="hero">
+      <div class="print-only logo-print"><img src={`${b}/images/logo.png`} alt="Starflight Dynamics" /></div>
+      <Beam thickness={7} />
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow accent">Careers</div>
+          <h1>Build <span class="green">the fleet</span></h1>
+          <p class="lede">
+            Space is Europe’s first line of defence. We develop the technologies and systems that keep
+            it safe, and we are looking for people who want to build them with us.
+          </p>
+        </div>
+        <a href="#positions" class="total">
+          <span class="total-n">{jobs.length}</span>
+          <span class="total-l">Open positions ↓</span>
+        </a>
+      </div>
+    </header>
+
+    <section class="sites-wrap" aria-label="Our sites">
+      <div class="wrap sites">
+        {siteTiles.map(s => (
+          <button type="button" class="site" data-site={s.key} aria-pressed="false">
+            <span class="site-head">
+              <span class="site-name">{s.name}</span>
+              <span class="site-count">{s.code} · {s.count} open</span>
+            </span>
+            <span class="site-desc">{s.desc}</span>
+            <span class="site-action" data-print-hide data-name={s.name}>Show positions →</span>
+          </button>
+        ))}
+      </div>
+    </section>
+
+    {priority.length > 0 && (
+      <section class="priority" id="priority" aria-labelledby="priority-h" data-print-hide>
+        <div class="wrap">
+          <div class="eyebrow accent" id="priority-h">Priority hiring</div>
+          <div class="pgrid">
+            {priority.map((j, i) => (
+              <a href={`${b}/jobs/${j.id}`} class="pcard">
+                <span class="pnum">{pad(i + 1)} · {j.data.department}</span>
+                <span class="ptitle">{j.data.title} <span class="mfd">(m/f/d)</span></span>
+                <span class="psum">{j.data.summary}</span>
+                <span class="ploc"><span>{siteLabel(j.data)}</span><span class="green">→</span></span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section id="positions" class="positions" aria-labelledby="open-positions">
+      <div class="wrap pos-grid">
+        {jobs.length > 0 && (
+          <aside class="filters" data-print-hide>
+            <div>
+              <div class="f-head">Department</div>
+              <select class="dept-select" aria-label="Department">
+                <option value="all">All departments ({jobs.length})</option>
+                {depts.map(d => <option value={d.name}>{d.name} ({d.list.length})</option>)}
+              </select>
+              <div class="dept-list">
+                <button type="button" data-dept-key="all" class="on"><span>All departments</span><span class="c">{jobs.length}</span></button>
+                {depts.map(d => (
+                  <button type="button" data-dept-key={d.name}><span>{d.name}</span><span class="c">{d.list.length}</span></button>
+                ))}
+              </div>
+            </div>
+            {types.length > 1 && (
+              <div>
+                <div class="f-head">Employment</div>
+                <div class="chips">
+                  <button type="button" data-type-key="all" class="on">All</button>
+                  {types.map(t => <button type="button" data-type-key={t}>{t}</button>)}
+                </div>
+              </div>
+            )}
+          </aside>
+        )}
+
+        <div class="results">
+          <div class="r-head">
+            <div class="r-title">
+              <div class="eyebrow" id="open-positions">Open positions</div>
+              <span class="r-count" data-result-label>{jobs.length} {jobs.length === 1 ? 'position' : 'positions'}</span>
+              <button type="button" class="clear" data-clear hidden data-print-hide>Clear filters ×</button>
+            </div>
+            {jobs.length > 0 && (
+              <div class="tools" data-print-hide>
+                <input type="search" placeholder="Search roles" aria-label="Search roles" data-search-input />
+                <button type="button" class="tool-btn" data-print>Print / PDF</button>
+              </div>
+            )}
+          </div>
+
+          {jobs.length === 0 ? (
+            <p class="empty">
+              No open positions right now. Follow us on
+              <a href="https://www.linkedin.com/company/starflight-dynamics/">LinkedIn</a> for updates.
+            </p>
+          ) : depts.map(d => (
+            <section class="group" id={d.id} data-group={d.name}>
+              <h3><span>{d.name}</span><span class="g-count">{pad(d.list.length)}</span></h3>
+              {d.list.map(j => <JobRow job={j} />)}
+            </section>
+          ))}
+
+          <p class="no-results" data-no-results hidden>
+            No positions match these filters. <button type="button" data-clear>Show all positions</button>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="open-wrap">
+      <div class="wrap open">
+        <div>
+          <div class="eyebrow">Your role is not listed?</div>
+          <p>We are always glad to hear from exceptional people. Send us your CV and a short note on what you would like to work on.</p>
+          <p class="print-only mail">{CAREERS_EMAIL}</p>
+        </div>
+        <a href={openApplication} class="btn" data-print-hide>Send an open application</a>
+      </div>
+    </section>
+
+    <p class="eeo">{EQUAL_OPPORTUNITY}</p>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const state = { site: 'all', dept: 'all', type: 'all', q: '' };
+  const rows = [...document.querySelectorAll<HTMLElement>('[data-job]')];
+  const groups = [...document.querySelectorAll<HTMLElement>('[data-group]')];
+  const priority = document.getElementById('priority');
+  const pad = (n: number) => String(n).padStart(2, '0');
+
+  // Matches every filter except department (department counts are computed on this).
+  const baseMatch = (r: HTMLElement) =>
+    (state.site === 'all' || r.dataset.sites!.split(' ').includes(state.site)) &&
+    (state.type === 'all' || r.dataset.type === state.type) &&
+    (!state.q || r.dataset.search!.includes(state.q));
+
+  function render() {
+    const base = rows.filter(baseMatch);
+    let shown = 0;
+    rows.forEach(r => {
+      const show = base.includes(r) && (state.dept === 'all' || r.dataset.dept === state.dept);
+      r.hidden = !show;
+      if (show) shown++;
+    });
+    groups.forEach(g => {
+      const n = g.querySelectorAll('[data-job]:not([hidden])').length;
+      g.hidden = n === 0;
+      g.querySelector('.g-count')!.textContent = pad(n);
+    });
+
+    // Department nav: counts follow the other filters; empty departments fade.
+    document.querySelectorAll<HTMLButtonElement>('[data-dept-key]').forEach(btn => {
+      const key = btn.dataset.deptKey!;
+      const n = key === 'all' ? base.length : base.filter(r => r.dataset.dept === key).length;
+      btn.querySelector('.c')!.textContent = String(n);
+      btn.classList.toggle('on', state.dept === key);
+      btn.classList.toggle('empty', n === 0);
+    });
+    const select = document.querySelector<HTMLSelectElement>('.dept-select');
+    if (select) {
+      [...select.options].forEach(o => {
+        const n = o.value === 'all' ? base.length : base.filter(r => r.dataset.dept === o.value).length;
+        o.textContent = `${o.value === 'all' ? 'All departments' : o.value} (${n})`;
+      });
+      select.value = state.dept;
+    }
+    document.querySelectorAll<HTMLButtonElement>('[data-type-key]').forEach(btn =>
+      btn.classList.toggle('on', state.type === btn.dataset.typeKey));
+    document.querySelectorAll<HTMLButtonElement>('[data-site]').forEach(btn => {
+      const on = state.site === btn.dataset.site;
+      btn.setAttribute('aria-pressed', String(on));
+      const action = btn.querySelector<HTMLElement>('.site-action')!;
+      action.textContent = on ? `Showing ${action.dataset.name} · clear ×` : 'Show positions →';
+    });
+
+    const filtered = state.site !== 'all' || state.dept !== 'all' || state.type !== 'all' || !!state.q;
+    document.querySelector('[data-result-label]')!.textContent = `${shown} ${shown === 1 ? 'position' : 'positions'}`;
+    document.querySelectorAll<HTMLElement>('.clear[data-clear]').forEach(el => (el.hidden = !filtered));
+    document.querySelector<HTMLElement>('[data-no-results]')!.hidden = shown > 0;
+    if (priority) priority.hidden = filtered;
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-site]').forEach(btn => btn.addEventListener('click', () => {
+    state.site = state.site === btn.dataset.site ? 'all' : btn.dataset.site!;
+    render();
+  }));
+  document.querySelectorAll<HTMLButtonElement>('[data-dept-key]').forEach(btn => btn.addEventListener('click', () => {
+    state.dept = btn.dataset.deptKey!;
+    render();
+  }));
+  document.querySelector<HTMLSelectElement>('.dept-select')?.addEventListener('change', e => {
+    state.dept = (e.target as HTMLSelectElement).value;
+    render();
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-type-key]').forEach(btn => btn.addEventListener('click', () => {
+    state.type = btn.dataset.typeKey!;
+    render();
+  }));
+  document.querySelector<HTMLInputElement>('[data-search-input]')?.addEventListener('input', e => {
+    state.q = (e.target as HTMLInputElement).value.trim().toLowerCase();
+    render();
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-clear]').forEach(btn => btn.addEventListener('click', () => {
+    Object.assign(state, { site: 'all', dept: 'all', type: 'all', q: '' });
+    const input = document.querySelector<HTMLInputElement>('[data-search-input]');
+    if (input) input.value = '';
+    render();
+  }));
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  .eyebrow { font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+  .eyebrow.accent { color: var(--accent); }
+  .green { color: var(--accent); }
+  .mfd { font-size: 12px; font-weight: 300; letter-spacing: .08em; color: var(--text-muted); }
+
+  /* Hero */
+  .hero { position: relative; padding: 104px var(--gutter) 72px; }
+  .logo-print { margin-bottom: 18px; }
+  .logo-print img { height: 22px; width: auto; }
+  .hero-grid { display: flex; flex-wrap: wrap; gap: 48px 64px; align-items: flex-end; justify-content: space-between; }
+  .hero-copy { flex: 1 1 560px; min-width: 0; }
+  h1 {
+    margin-top: 20px; max-width: 14ch;
+    font-size: clamp(40px, 7vw, 88px); font-weight: 700; line-height: .98;
+    letter-spacing: .005em; text-transform: uppercase; text-wrap: balance;
+  }
+  .lede { margin-top: 28px; max-width: 620px; font-size: 19px; line-height: 1.65; font-weight: 300; color: var(--text-secondary); text-wrap: pretty; }
+  .total { flex: none; display: flex; flex-direction: column; gap: 6px; padding-left: 24px; border-left: 1px solid var(--border-strong); }
+  .total-n { font-family: var(--font-mono); font-size: 72px; line-height: 1; letter-spacing: -.02em; color: #fff; }
+  .total-l { font-size: 11px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--text-soft); }
+  .total:hover .total-l { color: var(--accent); }
+
+  /* Site tiles */
+  .sites-wrap { padding: 0 var(--gutter); }
+  .sites {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle);
+  }
+  .site {
+    text-align: left; cursor: pointer; font: inherit; color: #fff;
+    background: #000; border: 0; border-top: 3px solid transparent;
+    padding: 25px 28px 28px; display: flex; flex-direction: column; gap: 12px;
+    transition: background .2s var(--ease);
+  }
+  .site:hover, .site[aria-pressed="true"] { background: var(--surface-1); }
+  .site[aria-pressed="true"] { border-top-color: var(--accent); }
+  .site-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; width: 100%; }
+  .site-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .site-count { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .site-desc { font-size: 15px; line-height: 1.6; font-weight: 300; color: var(--text-soft); }
+  .site-action { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); }
+  .site[aria-pressed="true"] .site-action { color: var(--accent); }
+
+  /* Priority */
+  .priority { padding: 96px var(--gutter) 0; }
+  .priority[hidden] { display: none; }
+  .pgrid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .pcard {
+    display: flex; flex-direction: column; gap: 14px; padding: 25px 28px 28px; color: #fff;
+    background: var(--surface-1); border: 1px solid var(--border-subtle); border-top: 3px solid var(--accent);
+    transition: transform .2s var(--ease), border-color .2s, box-shadow .2s;
+  }
+  .pcard:hover { transform: translateY(-2px); border-color: var(--border-accent); border-top-color: var(--accent); box-shadow: 0 0 24px rgba(0,251,146,.12); color: #fff; }
+  .pnum { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); }
+  .ptitle { font-family: var(--font-display); font-size: 22px; font-weight: 700; line-height: 1.15; text-transform: uppercase; letter-spacing: .02em; }
+  .psum { flex: 1; font-size: 15px; line-height: 1.6; font-weight: 300; color: var(--text-secondary); }
+  .ploc {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding-top: 14px; border-top: 1px solid var(--border-subtle);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-soft);
+  }
+
+  /* Positions + filters */
+  .positions { padding: 96px var(--gutter) 48px; scroll-margin-top: 76px; }
+  .pos-grid { display: flex; flex-wrap: wrap; gap: 48px 64px; align-items: flex-start; }
+  .filters { flex: 1 0 200px; max-width: 240px; position: sticky; top: 108px; display: flex; flex-direction: column; gap: 36px; }
+  .f-head {
+    font-size: 11px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--text-soft);
+    padding-bottom: 10px; border-bottom: 1px solid var(--border-strong);
+  }
+  .dept-select {
+    display: none; margin-top: 14px; width: 100%; padding: 10px 12px;
+    background: #000; color: #fff; border: 1px solid var(--border-strong); border-radius: 0;
+    font-family: var(--font-body); font-size: 14px; font-weight: 300;
+  }
+  .dept-list { display: flex; flex-direction: column; }
+  .dept-list button {
+    display: flex; justify-content: space-between; gap: 12px; padding: 9px 0;
+    background: none; border: 0; border-bottom: 1px solid rgba(255,255,255,.08); cursor: pointer; text-align: left;
+    font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-secondary);
+    transition: color .2s var(--ease);
+  }
+  .dept-list button:hover, .dept-list button.on { color: var(--accent); }
+  .dept-list button.empty { opacity: .35; }
+  .dept-list .c { font-family: var(--font-mono); font-size: 12px; }
+  .chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 6px 10px; cursor: pointer; background: transparent; color: var(--text-secondary); border: 1px solid var(--border-strong);
+  }
+  .chips button.on { background: var(--accent); color: #000; border-color: var(--accent); }
+
+  .results { flex: 999 1 420px; min-width: 0; }
+  .r-head { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; padding-bottom: 20px; }
+  .r-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  .r-count { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; color: var(--text-muted); }
+  .clear, .no-results button {
+    background: none; border: 0; padding: 0; cursor: pointer; color: var(--accent);
+  }
+  .clear { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+  .clear[hidden] { display: none; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; flex: 0 1 380px; }
+  .tools input {
+    flex: 1 1 200px; min-width: 0; padding: 10px 14px;
+    background: #000; color: #fff; border: 1px solid var(--border-strong); border-radius: 0;
+    font-family: var(--font-body); font-size: 14px; font-weight: 300; outline: none;
+  }
+  .tools input:focus { border-color: var(--accent); }
+  .tool-btn {
+    background: none; border: 1px solid var(--border-strong); padding: 9px 14px; cursor: pointer;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-secondary);
+    transition: border-color .2s var(--ease), color .2s var(--ease);
+  }
+  .tool-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .group { margin-top: 28px; scroll-margin-top: 96px; }
+  .group[hidden] { display: none; }
+  .group h3 {
+    display: flex; justify-content: space-between; gap: 16px;
+    font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border-strong);
+  }
+  .g-count { font-family: var(--font-mono); font-weight: 400; letter-spacing: .06em; color: var(--text-muted); }
+  .no-results { margin-top: 32px; font-size: 18px; font-weight: 300; color: var(--text-soft); }
+  .no-results[hidden] { display: none; }
+  .no-results button { font: inherit; }
+  .empty { margin-top: 24px; color: var(--text-muted); font-size: 18px; }
+  .empty a { color: var(--accent); }
+
+  /* Open application */
+  .open-wrap { padding: 48px var(--gutter) 80px; }
+  .open {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;
+    padding: 36px 40px; background: var(--surface-1);
+    border: 1px solid var(--border-subtle); border-top: 3px solid var(--accent);
+  }
+  .open p { margin-top: 12px; max-width: 560px; font-size: 16px; line-height: 1.65; font-weight: 300; color: var(--text-secondary); }
+  .open .mail { font-family: var(--font-mono); font-size: 12px; }
+  .btn {
+    display: inline-block; padding: 13px 22px; border: 1px solid var(--accent); color: var(--accent);
+    font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    transition: background .2s var(--ease), color .2s var(--ease);
+  }
+  .btn:hover { background: var(--accent); color: #000; }
+
+  .eeo {
+    max-width: var(--measure); margin: 0 auto; box-sizing: content-box;
+    padding: 32px var(--gutter) 48px;
+    font-size: 13px; line-height: 1.6; color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  @media (max-width: 820px) {
+    .filters { position: static; max-width: 100%; gap: 24px; }
+    .dept-select { display: block; }
+    .dept-list { display: none; }
+  }
+  @media (max-width: 560px) {
+    .hero { padding-top: 72px; padding-bottom: 48px; }
+    .total-n { font-size: 56px; }
+    .priority { padding-top: 64px; }
+    .positions { padding-top: 64px; }
+    .open { padding: 28px 20px; }
+  }
+  @media print {
+    .hero, .positions, .open-wrap, .sites-wrap { padding-left: 0; padding-right: 0; }
+    .eeo { padding-left: 0; padding-right: 0; }
+  }
+</style>

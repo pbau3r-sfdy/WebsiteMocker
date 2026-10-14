@@ -1,0 +1,58 @@
+{
+  "slug": "sfdy-alt-clean-variant",
+  "name": "Starflight Dynamics (Reskin)",
+  "accent": "#00FB92",
+  "contact": "mission-control@starflight-dynamics.com",
+  "stage": 2,
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/sfdy-alt-clean-variant",
+  "newsletter": {
+    "service": "mailchimp",
+    "audience_id": "88bca13b57",
+    "server": "us17",
+    "status": "configured"
+  },
+  "forms": {
+    "contact": {
+      "service": "web3forms",
+      "status": "configured"
+    }
+  },
+  "socials": {
+    "linkedin": "https://www.linkedin.com/company/starflight-dynamics/",
+    "twitter": "https://x.com/SFDY_Space",
+    "instagram": "https://www.instagram.com/starflight_dynamics/",
+    "threads": "https://www.threads.net/@starflight_dynamics",
+    "facebook": "https://www.facebook.com/sfdy.space",
+    "youtube": "https://www.youtube.com/@Starflight-Dynamics",
+    "tiktok": "https://tiktok.com/@starflight_dynamics",
+    "discord": "https://discord.com/channels/starflight_dynamics",
+    "status": "configured"
+  },
+  "legal": {
+    "impressum": "complete",
+    "privacy": "complete"
+  },
+  "brand": {
+    "hashtags": [],
+    "vocabulary": [],
+    "avoid": [],
+    "voice": "",
+    "doc_tokens": {
+      "--sfdy-blue": "#0432FF",
+      "--sfdy-cyan": "#00FDFF",
+      "--sfdy-green": "#00FB92",
+      "--sfdy-magenta": "#FF008A",
+      "--bg-base": "#000000",
+      "--surface-1": "#06070A",
+      "--surface-2": "#101319",
+      "--text-primary": "#FFFFFF",
+      "--accent": "#00FB92"
+    }
+  },
+  "capture": "sfdy",
+  "notes": "Design variant of sfdy-alt-clean from the Claude Design reskin (2026-10-10). No production path; the live site stays sfdy-alt-clean.",
+  "archived": true,
+  "archived_at": "2026-10-14",
+  "archive_reason": "Superseded 2026-10-14 by sfdy-alt-clean-reskin-2 (baseline).",
+  "skip_ci": true
+}

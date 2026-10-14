@@ -1,0 +1,182 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Beam from '../../components/Beam.astro';
+import Share from '../../components/Share.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news');
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const stamp = (d: Date) => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+const url = new URL(Astro.url.pathname, Astro.site).href;
+
+const more = (await getCollection('news'))
+  .filter(p => p.id !== post.id)
+  .sort((a, z) => z.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3)
+  .map(p => ({
+    href: `${b}/news/${p.id}`,
+    date: stamp(p.data.date).toUpperCase(),
+    title: p.data.short ?? p.data.title.replace(/^COMPANY ANNOUNCEMENT:\s*/i, ''),
+  }));
+---
+
+<Layout title={post.data.title} description={post.data.summary}>
+  <Nav active="news" />
+
+  <main>
+    <header class="hero">
+      <Beam thickness={7} />
+      <div class="wrap">
+        <a href={`${b}/news`} class="back mono" data-print-hide>← All news</a>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="kick"><time datetime={post.data.date.toISOString().slice(0, 10)} class="green">{stamp(post.data.date)}</time><span>News</span></div>
+            <h1>{post.data.title}</h1>
+            <p class="summary">{post.data.summary}</p>
+          </div>
+          {post.data.image && (
+            <div class="hero-img"><img src={`${b}${post.data.image}`} alt="" /></div>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <div class="body-wrap">
+      <div class="wrap body-grid">
+        <article class="body"><Content /></article>
+
+        <aside data-print-hide>
+          <div class="side-block">
+            <div class="label">Published</div>
+            <div class="pub mono">{stamp(post.data.date)} · Munich</div>
+          </div>
+          <div>
+            <div class="label">Share</div>
+            <div class="share-wrap"><Share title={post.data.title} summary={post.data.summary} url={url} /></div>
+          </div>
+          <div class="side-block top">
+            <div class="label">Press</div>
+            <a href="mailto:press@starflight-dynamics.com" class="press">press@starflight-dynamics.com</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    {more.length > 0 && (
+      <section class="more" data-print-hide>
+        <div class="wrap">
+          <div class="more-head">
+            <div class="eyebrow">More news</div>
+            <a href={`${b}/news`} class="mono all">All news →</a>
+          </div>
+          <div class="more-grid">
+            {more.map(o => (
+              <a href={o.href} class="more-card">
+                <span class="mono date">{o.date}</span>
+                <span class="more-title">{o.title}</span>
+                <span class="green arrow">→</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .green { color: var(--accent); }
+  .eyebrow { font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+
+  .hero { position: relative; padding: 64px var(--gutter) 72px; }
+  .back { display: inline-block; white-space: nowrap; letter-spacing: .2em; color: var(--text-muted); }
+  .hero-grid { margin-top: 48px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px 64px; }
+  .hero-copy { flex: 1 1 520px; min-width: 0; }
+  .kick { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--text-soft); }
+  h1 {
+    margin-top: 20px;
+    font-size: clamp(36px, 5.6vw, 72px); font-weight: 700; line-height: 1;
+    letter-spacing: .005em; text-transform: uppercase; text-wrap: balance;
+  }
+  .summary { margin-top: 28px; max-width: 620px; font-size: 19px; line-height: 1.65; font-weight: 300; color: var(--text-secondary); text-wrap: pretty; }
+  .hero-img { flex: 0 1 380px; min-width: 260px; }
+  .hero-img img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; border: 1px solid var(--border-subtle); }
+
+  .body-wrap { padding: 0 var(--gutter) 96px; }
+  .body-grid {
+    display: flex; flex-wrap: wrap; gap: 48px 64px; align-items: flex-start;
+    border-top: 1px solid var(--border-strong); padding-top: 56px;
+  }
+  .body {
+    flex: 999 1 460px; min-width: 0; max-width: 720px;
+    display: flex; flex-direction: column; gap: 20px;
+    font-size: 17px; line-height: 1.75; font-weight: 300; color: rgba(255,255,255,.80);
+  }
+  .body :global(p) { text-wrap: pretty; }
+  .body :global(> p:first-child) { font-size: 20px; line-height: 1.65; color: #fff; }
+  .body :global(blockquote) { margin: 24px 0 0; padding: 4px 0 4px 28px; border-left: 2px solid var(--accent); }
+  .body :global(blockquote p) { font-size: 22px; line-height: 1.55; color: #fff; }
+  /* The line after a quote is its attribution */
+  .body :global(blockquote + p) {
+    margin-bottom: 24px; padding-left: 30px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-soft);
+  }
+  .body :global(h2) {
+    margin-top: 28px;
+    font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--text-secondary);
+  }
+  .body :global(h3) { margin-top: 16px; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #fff; }
+  .body :global(strong) { font-weight: 700; color: #fff; }
+  .body :global(p > strong:only-child) {
+    display: block; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-subtle);
+    font-family: var(--font-display); font-size: 18px; text-transform: uppercase; letter-spacing: .04em;
+  }
+  .body :global(ul), .body :global(ol) { padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
+  .body :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .body :global(img) { border: 1px solid var(--border-subtle); }
+
+  aside { flex: 1 0 240px; max-width: 280px; position: sticky; top: 108px; display: flex; flex-direction: column; gap: 24px; }
+  .label { font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--text-muted); }
+  .side-block { padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+  .side-block.top { padding-bottom: 0; border-bottom: 0; padding-top: 16px; border-top: 1px solid var(--border-subtle); }
+  .pub { margin-top: 6px; font-size: 13px; letter-spacing: .06em; color: #fff; }
+  .share-wrap { margin-top: 8px; }
+  .press { display: block; margin-top: 6px; font-size: 14px; color: var(--accent); word-break: break-word; }
+
+  .more { padding: 0 var(--gutter) 72px; }
+  .more-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .all { color: var(--accent); letter-spacing: .14em; }
+  .more-grid {
+    margin-top: 20px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle);
+  }
+  .more-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; background: #000; color: #fff; transition: background .2s var(--ease); }
+  .more-card:hover { background: var(--surface-1); color: #fff; }
+  .more-card .date { color: var(--text-muted); }
+  .more-title { font-weight: 700; text-transform: uppercase; letter-spacing: .04em; line-height: 1.3; }
+  .arrow { margin-top: auto; }
+
+  @media (max-width: 820px) {
+    aside { position: static; max-width: 100%; }
+  }
+  @media (max-width: 560px) {
+    .hero { padding-top: 40px; padding-bottom: 48px; }
+    .hero-img { min-width: 0; flex-basis: 100%; }
+  }
+
+  @media print {
+    .body-wrap, .hero { padding-left: 0; padding-right: 0; }
+    .body-grid { border-top-color: #ccc; }
+  }
+</style>
