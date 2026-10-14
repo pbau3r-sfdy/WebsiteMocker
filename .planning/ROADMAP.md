@@ -96,7 +96,7 @@ Plans:
 ### Phase 10: Analytics
 
 **Goal**: Operator can switch on cookie-free Plausible analytics per site on a single subscription, with sandbox traffic isolated from production, privacy obligations enforced, and `sfdy-alt-clean-reskin-2` measured end to end
-**Depends on**: Nothing (independent of Phase 9; may run in parallel)
+**Depends on**: Nothing for planning; execution of the reskin-2 wiring follows Phase 11.1 (privacy section, job removal)
 **Requirements**: ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06, ANLY-07, ANLY-08, ANLY-09
 **Success Criteria** (what must be TRUE):
 
