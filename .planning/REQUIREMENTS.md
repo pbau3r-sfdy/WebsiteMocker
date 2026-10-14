@@ -62,7 +62,7 @@
 - [x] **CUT-01** (amended 2026-10-14: a "Coming soon" Careers page at `/jobs` with Nav/Footer links is allowed until the first real postings): `sfdy-alt-clean-reskin-2` has no jobs pages, jobs content entries, `JobRow` component or jobs links in Nav/Footer, and builds cleanly; the job files stay recoverable from git history (satisfied by RETL-04, Phase 11.1)
 - [ ] **CUT-02**: No internal-review page or text (`/open-points`, "internal review only") ships in a production build of `reskin-2`
 - [ ] **CUT-03**: Impressum and privacy pages of `reskin-2` are reviewed for production, including the Plausible section if analytics is on — including a consent banner and Data Protection Notice update once analytics is switched on
-- [ ] **CUT-04**: `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5 or higher) and `/wm-preflight` passes
+- [x] **CUT-04**: `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5 or higher) and `/wm-preflight` passes
 - [ ] **CUT-05**: Contributor content pushed to the production repo's `content/` reaches the new site (the dispatch slug in the production repo's `content-ci.yml` is corrected, or the site is renamed), and the unused `content/jobs/` folder is handled
 - [ ] **CUT-06**: `/wm-publish` deploys `reskin-2` to www.starflight-dynamics.com; the live site, CNAME and `robots.txt` are verified; the `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
 - [ ] **CUT-07**: As the final step of the cutover, after all sequences are tested and `reskin-2` is deployed as the live site, the live `/wm-design-seed` run (DSYNC-11) is executed so the deployed site becomes the Claude Design reference and replaces the initial website design. Target project (new, or update of "Starflight Dynamics Design System") and the exact path list are chosen and approved by the operator at that time; no deletes, no `uploads/`. Operator request 2026-10-14
@@ -137,7 +137,7 @@
 | CUT-01 | Phase 12 | Complete (Phase 11.1, RETL-04); amended 2026-10-14: a "Coming soon" Careers page and its Nav/Footer links are allowed until the first real postings |
 | CUT-02 | Phase 12 | Pending |
 | CUT-03 | Phase 12 | Pending |
-| CUT-04 | Phase 12 | Pending |
+| CUT-04 | Phase 12 | Complete |
 | CUT-05 | Phase 12 | Pending |
 | CUT-06 | Phase 12 | Pending |
 | CUT-07 | Phase 12 | Pending |

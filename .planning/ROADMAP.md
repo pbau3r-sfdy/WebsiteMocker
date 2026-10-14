@@ -172,7 +172,7 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 12-01-PLAN.md — Remove archived sites/sfdy, rename reskin-2 to sfdy, fix living references, harnesses and lockfile (CUT-01, CUT-04)
+- [x] 12-01-PLAN.md — Remove archived sites/sfdy, rename reskin-2 to sfdy, fix living references, harnesses and lockfile (CUT-01, CUT-04)
 - [ ] 12-02-PLAN.md — Gate open-points, pill, Tbd, noindex on production build; .nojekyll; verify-phase-12 harness (CUT-02)
 - [ ] 12-03-PLAN.md — Production identity, single prod-repo owner, sync jobs guard, legal checklist, preflight (CUT-03, CUT-04, CUT-05)
 - [ ] 12-04-PLAN.md — Operator gates A and B: push origin, prod repo dispatch slug, live sync test (CUT-05)
@@ -200,4 +200,4 @@ Plans:
 | 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
 | 10. Analytics | v1.2 | 5/5 | Complete   | 2026-10-14 |
 | 11. Open Drops | v1.2 | 0/TBD | Not started | - |
-| 12. SFDY Cutover | v1.2 | 0/TBD | Not started | - |
+| 12. SFDY Cutover | v1.2 | 1/6 | In Progress|  |
