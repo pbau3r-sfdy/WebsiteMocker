@@ -8,16 +8,17 @@ WebsiteMocker is a skill-driven Astro monorepo that serves as the professional s
 
 A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching; WebsiteMocker handles ingestion, wiring, brand consistency, and deployment automatically.
 
-## Current Milestone: v1.2 — Claude Design Sync, Analytics, Open Drops
+## Current Milestone: v1.2 — Claude Design Connectivity, Analytics, Open Drops
 
-**Goal:** Let Claude Design projects feed sites directly (no drag-and-drop), measure sites with Plausible on a single SaaS subscription, and share confidential early drafts as unguessable, trackable, withdrawable "open drop" pages — all on the existing static GitHub Pages stack.
+**Goal:** Give every site (existing, new or revamp) an optional, ad hoc connection to Claude Design with or without a design system; offer optional per-site Plausible analytics on one SaaS subscription (on for Starflight Dynamics only for now); and share confidential early drafts as unguessable, trackable, withdrawable "open drop" pages — all on the existing static GitHub Pages stack.
 
 **Target features:**
-- **Claude Design Sync (Phase 9):** spike the DesignSync limits; `design` block in `wiring.json`; `/wm-design-pull` stages files and hands off to `ingest-artifact.mjs --mode section`; tokens map to `brand.doc_tokens`; JSX rendered to static HTML via Playwright; Crestworks pilot (DSYNC)
-- **Analytics (Phase 10):** one Plausible SaaS subscription; provider config, events (downloads, outbound links, forms, 404), privacy-policy snippet, `/wm-wire` step, Stats API dashboard tile (ANLY)
-- **Open Drops (Phase 11):** `/d/<random-id>/` pages whose Markdown body is the data, optional PDF attachments, `expires`/`withdraw`, noindex + no-referrer, tracked by Plausible, verify script (DROP)
-- **Backlog:** Locked Drops (encrypted, key in URL fragment, soft expiry) as Phase 12 (LOCK)
+- **Claude Design Connectivity (Phase 9):** spike first; optional `design` block in `wiring.json` (design system, artifact link or local export); ad hoc `/wm-design-pull [slug]`; gitignored staging + `design.lock.json`; divergence guard for hand edits; token mapping to `brand.doc_tokens`; ingest via `--mode section`; optional seeding of a design system from a site; proven on SFDY's design system and one source without a design system (DSYNC)
+- **Analytics (Phase 10):** optional per site, off by default, one Plausible SaaS subscription; event contract (downloads, outbound links, forms, 404), sanitised tracking mode, privacy-policy gate, `/wm-wire` step, local-only Stats API tile; switched on for `sfdy-alt-clean` only (ANLY)
+- **Open Drops (Phase 11):** `/d/<random-id>/` pages whose Markdown body is the data, optional PDF attachments, mandatory `expires`/`withdraw`, noindex + no-referrer, tracked by Plausible, verify script; adopted on `sfdy-alt-clean` after verification on a sandbox slug (DROP)
+- **Backlog:** Locked Drops (encrypted, key in URL fragment, soft expiry) as backlog Phase 999.1 (LOCK)
 - **Parked (not a phase):** self-hosted Plausible; rejected: Cloudflare Worker edge enforcement, vault master-secret token scheme
+- **Operator decision pending:** Plausible plan (Starter / Growth / Business); the Stats tile and drop label property need Business
 
 **Constraints for this milestone:** no second paid service; lightweight; confidential-not-secret data; GitHub Pages only (no custom headers).
 

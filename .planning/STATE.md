@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Claude Design Sync, Analytics, Open Drops
-status: planning
+status: ready_to_plan
 last_updated: "2026-10-14T09:17:48.724Z"
 last_activity: 2026-10-14
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,17 +17,17 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-08-23)
+See: .planning/PROJECT.md (updated 2026-10-14)
 
 **Core value:** A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching
-**Current focus:** Milestone v1.1 complete — Doc Generation, Archive Ingestion & Documentation Expansion
+**Current focus:** Milestone v1.2 — Phase 9 (Claude Design Connectivity) and Phase 10 (Analytics) ready to plan; Phase 11 (Open Drops) follows Phase 10
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 9 of 11 (Claude Design Connectivity) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-10-14 — Milestone v1.2 started
+Status: Roadmap created, ready to plan Phase 9
+Last activity: 2026-10-14 — v1.2 roadmap created (Phases 9-11)
 
 ## Performance Metrics
 
@@ -57,7 +57,9 @@ Carried from v1.0:
 
 ### Blockers/Concerns
 
-*(none — milestone v1.1 complete)*
+- sfdy-alt-clean has uncommitted work in progress; commit or park it before Phases 10 and 11 touch its config and content schema
+- Phase 9 DSYNC-11 (seeding) is gated on the DSYNC-01 spike and may be split off
+- Plausible Business plan needed for Stats API tile and custom properties (operator decision after trial)
 
 ## Deferred Items
 
@@ -73,4 +75,4 @@ Resume file: None
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- Run /gsd-plan-phase 9 (spike first) and/or /gsd-plan-phase 10; they are independent and may run in parallel

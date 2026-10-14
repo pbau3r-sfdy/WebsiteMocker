@@ -50,7 +50,7 @@
 
 ## Future Requirements (backlog, not in this milestone)
 
-- **LOCK-01..**: Locked Drops (Phase 12) — local CLI encrypts with a random AES-GCM key; only ciphertext is committed under a random filename; key in the URL fragment (`/d/#<id>.<key>`) with an optional generated passphrase; expiry bound into key derivation and checked against UTC from the `Date` header; soft expiry only; unlock page; `/wm-drop` extension. Constraint to keep now: analytics must never record URL fragments
+- **LOCK-01..**: Locked Drops (backlog Phase 999.1) — local CLI encrypts with a random AES-GCM key; only ciphertext is committed under a random filename; key in the URL fragment (`/d/#<id>.<key>`) with an optional generated passphrase; expiry bound into key derivation and checked against UTC from the `Date` header; soft expiry only; unlock page; `/wm-drop` extension. Constraint to keep now: analytics must never record URL fragments
 - Self-hosted Plausible (runbook only; the existing `host` switch makes cutover a config change) — parked in `PARKED.md`
 - Analytics rollout to further sites; drops rollout to further sites
 - Per-recipient drop ids and "opened" tracking; scheduled auto-publish for expiry
@@ -76,9 +76,40 @@
 
 ## Traceability
 
-| REQ-ID | Phase | Notes |
-|--------|-------|-------|
-| DSYNC-01..13 | Phase 9 | Claude Design Connectivity (framework-wide) |
-| ANLY-01..09 | Phase 10 | Analytics (optional per site; SFDY only now) |
-| DROP-01..10 | Phase 11 | Open Drops (SFDY pilot) |
-| LOCK-01.. | backlog | Locked Drops (Phase 12) |
+| REQ-ID | Phase | Status |
+|--------|-------|--------|
+| DSYNC-01 | Phase 9 | Pending |
+| DSYNC-02 | Phase 9 | Pending |
+| DSYNC-03 | Phase 9 | Pending |
+| DSYNC-04 | Phase 9 | Pending |
+| DSYNC-05 | Phase 9 | Pending |
+| DSYNC-06 | Phase 9 | Pending |
+| DSYNC-07 | Phase 9 | Pending |
+| DSYNC-08 | Phase 9 | Pending |
+| DSYNC-09 | Phase 9 | Pending |
+| DSYNC-10 | Phase 9 | Pending |
+| DSYNC-11 | Phase 9 | Pending |
+| DSYNC-12 | Phase 9 | Pending |
+| DSYNC-13 | Phase 9 | Pending |
+| ANLY-01 | Phase 10 | Pending |
+| ANLY-02 | Phase 10 | Pending |
+| ANLY-03 | Phase 10 | Pending |
+| ANLY-04 | Phase 10 | Pending |
+| ANLY-05 | Phase 10 | Pending |
+| ANLY-06 | Phase 10 | Pending |
+| ANLY-07 | Phase 10 | Pending |
+| ANLY-08 | Phase 10 | Pending |
+| ANLY-09 | Phase 10 | Pending |
+| DROP-01 | Phase 11 | Pending |
+| DROP-02 | Phase 11 | Pending |
+| DROP-03 | Phase 11 | Pending |
+| DROP-04 | Phase 11 | Pending |
+| DROP-05 | Phase 11 | Pending |
+| DROP-06 | Phase 11 | Pending |
+| DROP-07 | Phase 11 | Pending |
+| DROP-08 | Phase 11 | Pending |
+| DROP-09 | Phase 11 | Pending |
+| DROP-10 | Phase 11 | Pending |
+| LOCK-01.. | Phase 999.1 (backlog) | Not in milestone |
+
+**Coverage:** 32/32 v1.2 requirements mapped (DSYNC 13, ANLY 9, DROP 10); no orphans, no duplicates
