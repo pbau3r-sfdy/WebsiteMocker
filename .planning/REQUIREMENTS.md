@@ -60,7 +60,7 @@
 ## SFDY Cutover (Phase 12) — draft, to be refined in discuss/plan
 
 - [x] **CUT-01** (amended 2026-10-14: a "Coming soon" Careers page at `/jobs` with Nav/Footer links is allowed until the first real postings): `sfdy-alt-clean-reskin-2` has no jobs pages, jobs content entries, `JobRow` component or jobs links in Nav/Footer, and builds cleanly; the job files stay recoverable from git history (satisfied by RETL-04, Phase 11.1)
-- [ ] **CUT-02**: No internal-review page or text (`/open-points`, "internal review only") ships in a production build of `reskin-2`
+- [x] **CUT-02**: No internal-review page or text (`/open-points`, "internal review only") ships in a production build of `reskin-2`
 - [ ] **CUT-03**: Impressum and privacy pages of `reskin-2` are reviewed for production, including the Plausible section if analytics is on — including a consent banner and Data Protection Notice update once analytics is switched on
 - [x] **CUT-04**: `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5 or higher) and `/wm-preflight` passes
 - [ ] **CUT-05**: Contributor content pushed to the production repo's `content/` reaches the new site (the dispatch slug in the production repo's `content-ci.yml` is corrected, or the site is renamed), and the unused `content/jobs/` folder is handled
@@ -135,7 +135,7 @@
 | RETL-04 | Phase 11.1 | Complete |
 | RETL-05 | Phase 11.1 | Complete |
 | CUT-01 | Phase 12 | Complete (Phase 11.1, RETL-04); amended 2026-10-14: a "Coming soon" Careers page and its Nav/Footer links are allowed until the first real postings |
-| CUT-02 | Phase 12 | Pending |
+| CUT-02 | Phase 12 | Complete |
 | CUT-03 | Phase 12 | Pending |
 | CUT-04 | Phase 12 | Complete |
 | CUT-05 | Phase 12 | Pending |
