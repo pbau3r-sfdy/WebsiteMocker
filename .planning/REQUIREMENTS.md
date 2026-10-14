@@ -20,7 +20,7 @@
 - [x] **DSYNC-09**: Staged website templates/UI-kit sections hand off to `ingest-artifact.mjs --mode section`; JSX components are rendered to static HTML locally (render path chosen by DSYNC-01)
 - [x] **DSYNC-10**: `/wm-new-site` and `/wm-instantiate` offer an optional, skippable design-connection step so new sites and revamps start from a design system or an artifact when one exists
 - [ ] **DSYNC-11**: Operator can seed or update a design-system project from a site's brand tokens and logos (`create_project`, then an operator-reviewed `finalize_plan` and `write_files`, incremental and never a wholesale replace) so a site without a design system can get one; scope gated on DSYNC-01
-- [ ] **DSYNC-12**: Both paths are proven: pulling SFDY's "Starflight Dynamics Design System" into `sfdy-alt-clean-reskin-2`, and ingesting one source without a design system (artifact link or local export); both sites build
+- [x] **DSYNC-12**: Both paths are proven: pulling SFDY's "Starflight Dynamics Design System" into `sfdy-alt-clean-reskin-2`, and ingesting one source without a design system (artifact link or local export); both sites build
 - [x] **DSYNC-13**: A fixture-based `verify-phase-09.sh` harness covers staging, lock file, diff, divergence guard, sanitising and token mapping without calling DesignSync
 
 ## Analytics, optional per site, on one Plausible subscription (Phase 10)
@@ -98,7 +98,7 @@
 | DSYNC-09 | Phase 9 | Complete |
 | DSYNC-10 | Phase 9 | Complete |
 | DSYNC-11 | Phase 9 | Pending |
-| DSYNC-12 | Phase 9 | Pending |
+| DSYNC-12 | Phase 9 | Complete |
 | DSYNC-13 | Phase 9 | Complete |
 | ANLY-01 | Phase 10 | Pending |
 | ANLY-02 | Phase 10 | Pending |

@@ -84,7 +84,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 09-08-PLAN.md — Pilots: SFDY design system into reskin-2, TELEX one-pager zip export into new sandbox slug `design-pilot`; both build (DSYNC-12)
+- [x] 09-08-PLAN.md — Pilots: SFDY design system into reskin-2, TELEX one-pager zip export into new sandbox slug `design-pilot`; both build (DSYNC-12)
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
@@ -155,7 +155,7 @@ Plans:
 | 6. Doc Pipeline | v1.1 | 3/3 | Complete | 2026-08-24 |
 | 7. Archive Module | v1.1 | 2/2 | Complete | 2026-08-25 |
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
-| 9. Claude Design Connectivity | v1.2 | 7/9 | In Progress|  |
+| 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
 | 10. Analytics | v1.2 | 0/TBD | Not started | - |
 | 11. Open Drops | v1.2 | 0/TBD | Not started | - |
 | 12. SFDY Cutover | v1.2 | 0/TBD | Not started | - |
