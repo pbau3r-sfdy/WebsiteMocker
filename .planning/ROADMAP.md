@@ -56,7 +56,17 @@ Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Pha
   3. A pull stages files in a gitignored folder, records `design.lock.json`, and a re-pull reports added/changed/removed files (with dry-run); oversized or syntactically invalid files fail loudly instead of being staged truncated
   4. Ingest refuses to overwrite a hand-edited section without explicit per-section confirmation, pulled content is sanitised, and tokens land in `brand.doc_tokens` with an unmapped-token report while `validate-brand.mjs` passes
   5. Both paths are proven: SFDY's design system pulls into `sfdy-alt-clean-reskin-2`, and one source without a design system (artifact link or local export) ingests; both sites build, and `verify-phase-09.sh` passes using fixtures only
-**Plans**: TBD
+**Plans**: 9 plans
+Plans:
+- [ ] 09-01-PLAN.md — Gating spike (DSYNC-01): gitignore `_staging/`, probe DesignSync, artifact link, export, JSX render, section merge; operator-confirmed Scope Decisions SD-01..SD-10 in 09-SPIKE.md
+- [ ] 09-02-PLAN.md — `design` block validator + design-connect, `design.lock.json` lib, design-stage verifier/diff with dry-run and loud failure (DSYNC-02, 04, 05)
+- [ ] 09-03-PLAN.md — Allowlist sanitiser with report; token mapping into `brand.doc_tokens` with unmapped report and Layout proposal; repo-relative validate-brand (DSYNC-07, 08)
+- [ ] 09-04-PLAN.md — Isolated JSX-to-HTML render via SD-06 path, package checkpoint before react install (DSYNC-09)
+- [ ] 09-05-PLAN.md — `ingest-artifact.mjs` `--input`/`--accept` + hash-at-ingest divergence guard; design-ingest orchestrator (DSYNC-06, 09)
+- [ ] 09-06-PLAN.md — `/wm-design-pull` skill; optional design step in `/wm-new-site` and `/wm-instantiate` (DSYNC-03, 10)
+- [ ] 09-07-PLAN.md — Fixture-only `verify-phase-09.sh` harness (DSYNC-13)
+- [ ] 09-08-PLAN.md — Pilots: SFDY design system into reskin-2, non-design-system source into SD-10 slug; both build (DSYNC-12)
+- [ ] 09-09-PLAN.md — Seed/update a design-system project from site tokens and logos, operator-approved path lists; droppable per SD-09 (DSYNC-11)
 **UI hint**: yes
 
 ### Phase 10: Analytics
@@ -112,7 +122,7 @@ Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Pha
 | 6. Doc Pipeline | v1.1 | 3/3 | Complete | 2026-08-24 |
 | 7. Archive Module | v1.1 | 2/2 | Complete | 2026-08-25 |
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
-| 9. Claude Design Connectivity | v1.2 | 0/TBD | Not started | - |
+| 9. Claude Design Connectivity | v1.2 | 0/9 | Planned | - |
 | 10. Analytics | v1.2 | 0/TBD | Not started | - |
 | 11. Open Drops | v1.2 | 0/TBD | Not started | - |
 | 12. SFDY Cutover | v1.2 | 0/TBD | Not started | - |
