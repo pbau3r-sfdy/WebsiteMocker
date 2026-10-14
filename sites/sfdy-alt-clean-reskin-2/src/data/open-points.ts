@@ -8,16 +8,7 @@ export interface OpenPoint {
   where: { label: string; path: string }[]; // path without base, anchor added automatically
 }
 
-export const OPEN_POINTS: OpenPoint[] = [
-  {
-    id: 'job-listings', title: 'Real job listings',
-    detail: 'All 30 positions are placeholders (dummy content). Replace them with the real openings.',
-    where: [
-      { label: 'Careers · banner', path: '/jobs' },
-      { label: 'Position page · banner', path: '/jobs/jedi-master' },
-    ],
-  },
-];
+export const OPEN_POINTS: OpenPoint[] = [];
 
 /** Ideas to leverage later. Not open points: nothing on the site depends on them, so they are
     listed on /open-points without a yellow marker and not counted. */
