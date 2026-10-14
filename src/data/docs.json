@@ -1,0 +1,27 @@
+[
+  {
+    "file": "index.html",
+    "title": "WebsiteMocker Operator Manual",
+    "product": "WebsiteMocker",
+    "kind": "Operator manual",
+    "summary": "How to build, publish and maintain branded websites with WebsiteMocker, without writing code."
+  },
+  {
+    "file": "marketing-bridge-manual.html",
+    "title": "MarketingBridge Operator Manual",
+    "product": "MarketingBridge",
+    "kind": "MCP server",
+    "version": "v0.5.0",
+    "repo": "pbau3r-sfdy/marketing-bridge",
+    "source": "_captures/marketing-bridge/docs/operator-manual.html",
+    "summary": "Local MCP server that connects Claude Desktop to 13 marketing and CRM services: installation, configuration, authentication, safety rules and the tool reference."
+  },
+  {
+    "file": "inboxcurer-manual.html",
+    "title": "InboxCurer User Manual",
+    "product": "InboxCurer",
+    "kind": "CLI tool",
+    "version": "v1.0",
+    "summary": "AI-assisted email processing for Gmail and Outlook: classifies, files, prunes and surfaces actionable emails, with rules first and Claude as fallback."
+  }
+]

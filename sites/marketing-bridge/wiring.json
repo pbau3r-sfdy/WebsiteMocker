@@ -1,6 +1,7 @@
 {
   "slug": "marketing-bridge",
   "name": "MarketingBridge",
+  "kind": "docs",
   "stage": 1,
   "skip_ci": true,
   "prod_repo": "pbau3r-sfdy/marketing-bridge",
@@ -18,5 +19,5 @@
       "--accent":       "#00FB92"
     }
   },
-  "notes": "MarketingBridge operator documentation site. Docs-only — no Astro build."
+  "notes": "MCP server, not a website. Kept only for /wm-gen-docs (prod_repo + doc_tokens); the dashboard lists it under Documentation."
 }

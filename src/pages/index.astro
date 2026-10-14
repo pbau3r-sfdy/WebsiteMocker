@@ -1,6 +1,8 @@
 ---
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, resolve } from 'path';
+import Console from '../layouts/Console.astro';
+import AnalyticsTile from '../components/AnalyticsTile.astro';
 
 // ── Perf data helpers ─────────────────────────────────────────────
 function loadPerf(slug) {
@@ -16,26 +18,29 @@ function loadPerf(slug) {
   } catch { return null; }
 }
 
+// Brand palette only: green good, cyan middling, magenta poor.
 function scoreColor(n) {
-  if (n >= 90) return '#00FB92';
-  if (n >= 50) return '#00FDFF';
-  return '#ef4444';
+  if (n >= 90) return 'var(--sfdy-green)';
+  if (n >= 50) return 'var(--sfdy-cyan)';
+  return 'var(--sfdy-magenta)';
 }
 
 function cwvColor(status) {
-  if (status === 'good')              return '#00FB92';
-  if (status === 'needs-improvement') return '#00FDFF';
-  if (status === 'poor')              return '#ef4444';
-  return 'var(--dim)';
+  if (status === 'good')              return 'var(--sfdy-green)';
+  if (status === 'needs-improvement') return 'var(--sfdy-cyan)';
+  if (status === 'poor')              return 'var(--sfdy-magenta)';
+  return 'var(--text-muted)';
 }
 
 function trendLabel(curr, prev) {
   if (prev === null || prev === undefined) return null;
   const d = curr - prev;
-  if (d > 0) return { text: `↑${d}`, color: '#22c55e' };
-  if (d < 0) return { text: `↓${Math.abs(d)}`, color: '#ef4444' };
-  return { text: '→', color: 'var(--dim)' };
+  if (d > 0) return { text: `↑${d}`, color: 'var(--sfdy-green)' };
+  if (d < 0) return { text: `↓${Math.abs(d)}`, color: 'var(--sfdy-magenta)' };
+  return { text: '→', color: 'var(--text-muted)' };
 }
+
+const titleCase = slug => slug.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
 
 // ── Read all sites from sites/*/wiring.json ───────────────────────
 const sitesDir = resolve('sites');
@@ -61,6 +66,10 @@ if (existsSync(sitesDir)) {
   }
 }
 
+// Docs-only entries (kind: "docs") keep a wiring.json for /wm-gen-docs but are
+// not websites — they are listed on the Documentation page instead.
+sites = sites.filter(s => s.kind !== 'docs');
+
 // Sort: highest stage first, then alphabetical
 sites.sort((a, b) => (b.stage ?? 0) - (a.stage ?? 0) || a._slug.localeCompare(b._slug));
 
@@ -83,15 +92,15 @@ const allSitesStaged = [
   ...archivedSites.map(s => ({ ...s, _section: 'archived' })),
 ];
 
-// ── Stage metadata ────────────────────────────────────────────────
+// ── Stage metadata (tone = Design System badge tone) ──────────────
 const STAGES = [
-  { n: 0, label: 'Captured',      color: 'rgba(255,255,255,.25)', bg: 'rgba(255,255,255,.03)' },
-  { n: 1, label: 'Instantiated',  color: '#5b6dff',               bg: 'rgba(91,109,255,.10)' },
-  { n: 2, label: 'Content Ready', color: '#5b8eed',               bg: 'rgba(91,142,237,.10)' },
-  { n: 3, label: 'Wired',         color: '#9b72cf',               bg: 'rgba(155,114,207,.10)' },
-  { n: 4, label: 'Legal OK',      color: '#00FDFF',               bg: 'rgba(0,253,255,.07)' },
-  { n: 5, label: 'Prod Ready',    color: '#00FB92',               bg: 'rgba(0,251,146,.07)' },
-  { n: 6, label: 'Live',          color: '#00FB92',               bg: 'rgba(0,251,146,.12)' },
+  { n: 0, label: 'Captured',      tone: 'neutral' },
+  { n: 1, label: 'Instantiated',  tone: 'neutral' },
+  { n: 2, label: 'Content Ready', tone: 'plain'   },
+  { n: 3, label: 'Wired',         tone: 'info'    },
+  { n: 4, label: 'Legal OK',      tone: 'info'    },
+  { n: 5, label: 'Prod Ready',    tone: 'active'  },
+  { n: 6, label: 'Live',          tone: 'solid'   },
 ];
 
 function stageMeta(n) {
@@ -99,331 +108,50 @@ function stageMeta(n) {
 }
 
 function wiringSummary(site) {
-  const items = [];
-  const s = site.newsletter?.status;
-  items.push(s === 'configured' ? '✉ Newsletter ✓' : '✉ Newsletter —');
-  const f = site.forms?.contact?.status;
-  items.push(f === 'configured' ? '⊟ Forms ✓' : '⊟ Forms —');
-  const so = site.socials?.status;
-  items.push(so === 'configured' ? '⊕ Socials ✓' : '⊕ Socials —');
-  return items;
+  return [
+    { label: 'Newsletter', ok: site.newsletter?.status === 'configured' },
+    { label: 'Forms',      ok: site.forms?.contact?.status === 'configured' },
+    { label: 'Socials',    ok: site.socials?.status === 'configured' },
+  ];
 }
 
+function nextStep(site) {
+  const n = site.stage ?? 0;
+  if (n < 5) return '/wm-wire';
+  if (n === 5) return '/wm-publish';
+  return null;
+}
+
+const anyPerf = activeSites.some(s => s._perf);
 const buildDate = new Date().toISOString().slice(0, 10);
 ---
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WebsiteMocker — Dashboard</title>
-  <style>
-    /* ── SFDY Design System ──────────────────────────────────────── */
-    :root {
-      --bg:      #000000;
-      --surface: #06070A;
-      --s2:      #0D1017;
-      --border:  rgba(255,255,255,.10);
-      --text:    #FFFFFF;
-      --muted:   rgba(255,255,255,.65);
-      --dim:     rgba(255,255,255,.30);
-      --accent:  #00FB92;
-      --adim:    rgba(0,251,146,.08);
-      --blue:    #0432FF;
-      --cyan:    #00FDFF;
-      --radius:  3px;
-      --mono:    "IBM Plex Mono","SF Mono","Fira Code","Consolas",monospace;
-      --sans:    "Avenir Next","Mulish",system-ui,-apple-system,sans-serif;
-      --beam:    linear-gradient(180deg,#0432FF 0%,#00FDFF 33%,#00FB92 65%,#00FB92 100%);
-    }
-    /* Single-theme commitment — SFDY is always dark */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: var(--sans);
-           font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    a { color: inherit; text-decoration: none; }
+<Console title="Websites" active="websites">
+  <Fragment slot="tools">
+    <button id="apply-btn" class="btn primary apply-trigger" style="display:none" title="Pending triage — click to get the apply command">
+      Apply<span id="apply-count-badge">0</span>
+    </button>
+    <span class="mono tools-meta">Built {buildDate}</span>
+  </Fragment>
 
-    /* header */
-    .header {
-      background: #000;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      padding: 0 2rem 0 0;
-      height: 72px;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    /* 7px vertical beam strip on the left edge */
-    .header-beam {
-      width: 7px;
-      flex-shrink: 0;
-      align-self: stretch;
-      background: var(--beam);
-    }
-    .header-sep {
-      width: 1px;
-      height: 24px;
-      background: rgba(255,255,255,.14);
-      flex-shrink: 0;
-    }
-    .logo {
-      font-family: var(--sans);
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--text);
-    }
-    .logo-accent { color: var(--accent); }
-    .header-meta { font-family: var(--mono); font-size: 11px; color: var(--dim); margin-left: auto; }
-    .header-meta span { color: var(--muted); }
-
-    /* main */
-    .main { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2.5rem 6rem; }
-
-    /* pipeline */
-    .pipeline-strip {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0;
-      margin-bottom: 3rem;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,.10);
-      overflow: hidden;
-    }
-    .ps-stage {
-      padding: .9rem .5rem;
-      text-align: center;
-      border-right: 1px solid rgba(255,255,255,.08);
-      cursor: default;
-    }
-    .ps-stage:last-child {
-      border-right: none;
-      border: 1px solid rgba(0,251,146,.25);
-      background: rgba(0,251,146,.04);
-    }
-    .ps-num  { font-family: var(--mono); font-size: 18px; font-weight: 700; margin-bottom: .25rem; }
-    .ps-label { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
-    .ps-count { font-family: var(--mono); font-size: 12px; font-weight: 700; margin-top: .2rem; }
-
-    /* section header */
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-    }
-    .section-head h2 {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--text);
-    }
-    .section-head .count { font-family: var(--mono); font-size: 11px; color: var(--dim); }
-
-    /* site card */
-    .site-card {
-      background: #080B0F;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 0;
-      margin-bottom: .5rem;
-      transition: border-color .15s;
-    }
-    .site-card:hover { border-color: rgba(255,255,255,.25); }
-    .card-main {
-      display: grid;
-      grid-template-columns: 180px 140px 1fr auto;
-      gap: 1rem;
-      padding: 1rem 1.25rem;
-      align-items: center;
-    }
-    .site-name { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); }
-    .site-url  { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-top: .2rem; word-break: break-all; }
-    .stage-badge {
-      display: inline-flex; align-items: center; gap: .35rem;
-      font-family: var(--mono); font-size: 11px; font-weight: 600;
-      padding: .25rem .65rem; border-radius: 20px; white-space: nowrap;
-    }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .wiring-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .chip {
-      font-size: 10px; color: var(--dim);
-      padding: .15rem .45rem; border: 1px solid var(--border); border-radius: 3px;
-    }
-    .chip.ok { color: var(--muted); border-color: var(--dim); }
-    .chip.template-chip { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
-    .card-actions { display: flex; gap: .5rem; align-items: center; }
-    .btn {
-      font-family: var(--mono); font-size: 11px;
-      padding: .3rem .7rem; border: 1px solid var(--border);
-      border-radius: var(--radius); color: var(--muted);
-      background: transparent; cursor: pointer;
-      white-space: nowrap; transition: color .15s, border-color .15s;
-    }
-    .btn:hover   { color: var(--text); border-color: var(--dim); }
-    .btn.primary { color: var(--accent); border-color: var(--accent); }
-    .btn.primary:hover { background: var(--adim); }
-    .btn.live    { color: var(--accent); border-color: var(--accent); }
-    .btn.live:hover { background: var(--adim); }
-    .btn.restore:hover { color: #22c55e; border-color: #22c55e; }
-    .btn.rename-btn:hover  { color: #a78bfa; border-color: #a78bfa; }
-    .btn.delete-btn:hover  { color: #ef4444; border-color: #ef4444; }
-
-    /* perf row */
-    .card-perf {
-      display: flex; align-items: center; gap: 1.5rem;
-      padding: .55rem 1.25rem; border-top: 1px solid var(--border);
-      background: var(--s2); border-radius: 0 0 var(--radius) var(--radius);
-      flex-wrap: wrap;
-    }
-    .perf-scores { display: flex; gap: 1rem; align-items: center; }
-    .perf-score  { font-family: var(--mono); font-size: 11px; }
-    .perf-score-label { color: var(--dim); font-size: 10px; margin-right: .25rem; }
-    .perf-score-value { font-weight: 700; }
-    .perf-sep { width: 1px; height: 14px; background: var(--border); flex-shrink: 0; }
-    .perf-cwv  { display: flex; gap: .75rem; font-family: var(--mono); font-size: 11px; }
-    .perf-cwv-item { display: flex; align-items: center; gap: .25rem; }
-    .perf-cwv-label { color: var(--dim); font-size: 10px; }
-    .perf-meta  { margin-left: auto; font-size: 10px; color: var(--dim); white-space: nowrap; }
-    .perf-trend { font-family: var(--mono); font-size: 11px; font-weight: 700; }
-    .perf-empty {
-      padding: .45rem 1.25rem; border-top: 1px solid var(--border);
-      background: var(--s2); border-radius: 0 0 var(--radius) var(--radius);
-      font-size: 10px; color: var(--dim); font-family: var(--mono);
-    }
-
-    /* ── Section drawers (templates + archive) ── */
-    .section-drawer { margin-top: 2.5rem; border-top: 1px solid var(--border); }
-    #archive-section { border-top: 1px solid rgba(239,68,68,.35); }
-    #archive-section {
-      border: 1px solid rgba(239,68,68,.35);
-      border-radius: 0;
-      padding: 0 1rem;
-      background: rgba(239,68,68,.03);
-      margin-top: 2.5rem;
-    }
-    #archive-section .section-toggle { color: rgba(239,68,68,.6); }
-    #archive-section .section-toggle:hover { color: rgba(239,68,68,.85); }
-    #archive-section .section-badge { border-color: rgba(239,68,68,.3); color: rgba(239,68,68,.6); background: rgba(239,68,68,.06); }
-    .section-toggle {
-      display: flex; align-items: center; gap: .6rem;
-      width: 100%; background: none; border: none;
-      padding: .9rem 0; cursor: pointer; text-align: left;
-      color: var(--dim); font-family: var(--sans);
-      font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
-    }
-    .section-toggle:hover { color: var(--muted); }
-    .section-chevron { font-size: 9px; transition: transform .18s; display: inline-block; }
-    .section-drawer.open .section-chevron { transform: rotate(90deg); }
-    .section-badge {
-      font-family: var(--mono); font-size: 10px;
-      padding: .1rem .45rem; background: var(--s2);
-      border: 1px solid var(--border); border-radius: 20px; color: var(--dim);
-    }
-    .section-body { display: none; padding-bottom: 3rem; }
-    .section-drawer.open .section-body { display: block; }
-    .section-hint {
-      font-size: 11px; color: var(--dim);
-      margin-bottom: 1.25rem; line-height: 1.8;
-    }
-    .section-hint code {
-      font-family: var(--mono); font-size: 10px;
-      background: var(--s2); border: 1px solid var(--border);
-      padding: .1em .4em; border-radius: 3px;
-    }
-    /* archived cards look slightly dimmed */
-    #archive-list .site-card { opacity: .65; transition: opacity .15s; }
-    #archive-list .site-card:hover { opacity: 1; }
-
-    /* toast */
-    .wm-toast {
-      position: fixed; bottom: 2rem; left: 50%;
-      transform: translateX(-50%) translateY(.5rem);
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: .55rem 1.1rem;
-      font-family: var(--mono); font-size: 11px; color: var(--muted);
-      opacity: 0; transition: opacity .18s, transform .18s;
-      pointer-events: none; z-index: 200; white-space: nowrap;
-    }
-    .wm-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    /* apply-changes overlay */
-    .apply-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,.5);
-      z-index: 300; display: none; align-items: center; justify-content: center;
-      pointer-events: none;
-    }
-    .apply-overlay.open { display: flex; pointer-events: auto; }
-    .apply-panel {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.75rem 2rem;
-      max-width: 640px; width: 92%; max-height: 90vh; overflow-y: auto;
-    }
-    .apply-panel h3 { font-family: var(--mono); font-size: 13px; font-weight: 700; margin-bottom: 1rem; }
-    .apply-changes-list { font-size: 11px; color: var(--muted); margin-bottom: 1.25rem; line-height: 2; }
-    .apply-changes-list strong { color: var(--text); }
-    .apply-cmd-block {
-      font-family: var(--mono); font-size: 11px;
-      background: var(--s2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: .85rem 1rem;
-      white-space: pre; overflow-x: auto; display: block;
-      color: var(--text); margin-bottom: .75rem;
-    }
-    .apply-hint { font-size: 10px; color: var(--dim); margin-bottom: 1.5rem; line-height: 1.7; }
-    .apply-hint code { font-family: var(--mono); }
-    .apply-actions { display: flex; gap: .75rem; justify-content: flex-end; }
-    .btn.apply-trigger { gap: .4rem; }
-    #apply-count-badge {
-      display: inline-flex; align-items: center; justify-content: center;
-      font-family: var(--mono); font-size: 10px; font-weight: 700;
-      min-width: 16px; height: 16px; padding: 0 4px;
-      background: var(--accent); color: #000; border-radius: 20px;
-      margin-left: .3rem;
-    }
-
-    @media (max-width: 700px) {
-      .card-main { grid-template-columns: 1fr auto; }
-      .wiring-chips, .card-actions { display: none; }
-      .pipeline-strip { overflow-x: auto; }
-      .ps-stage { min-width: 80px; }
-      .perf-meta { display: none; }
-    }
-  </style>
-</head>
-<body>
-
-<header class="header">
-  <div class="header-beam" aria-hidden="true"></div>
-  <span class="logo">SFDY &nbsp;<span style="color:rgba(255,255,255,.25);font-weight:400">·</span>&nbsp; WebsiteMocker</span>
-  <div class="header-sep" aria-hidden="true"></div>
-  <button id="apply-btn" class="btn apply-trigger" style="display:none" title="Pending triage — click to get the apply command">
-    Apply<span id="apply-count-badge">0</span>
-  </button>
-  <span class="header-meta">
-    <span id="active-count">{activeSites.length}</span>&nbsp;active &nbsp;·&nbsp; built {buildDate}
-  </span>
-</header>
-
-<main class="main">
+  <header class="page-head">
+    <div class="eyebrow accent">Operator console</div>
+    <h1>Websites</h1>
+    <p>Every site in the sandbox, from first capture to live on its own domain.</p>
+  </header>
 
   <!-- Pipeline strip (counts all sites) -->
-  <div class="pipeline-strip">
+  <section class="pipeline" aria-label="Pipeline">
     {STAGES.map(st => {
       const count = sites.filter(s => (s.stage ?? 0) === st.n).length;
       return (
-        <div class="ps-stage">
-          <div class="ps-num" style={`color:${st.color}`}>{st.n}</div>
-          <div class="ps-label">{st.label}</div>
-          {count > 0 && <div class="ps-count" style={`color:${st.color}`}>{count}</div>}
+        <div class={`ps ${count ? 'has' : ''} ${st.n === 6 ? 'live' : ''}`}>
+          <div class="ps-count">{count}</div>
+          <div class="ps-label"><span class="ps-n">{st.n}</span>{st.label}</div>
         </div>
       );
     })}
-  </div>
+  </section>
 
   <!-- ── Staging: all cards rendered here, JS distributes them ─── -->
   <!-- This is display:none — JS moves each card to its section    -->
@@ -438,190 +166,159 @@ const buildDate = new Date().toISOString().slice(0, 10);
       const trend      = pm && pp ? trendLabel(pm.performance, pp.performance) : null;
       const isArchived = site._section === 'archived';
       const isTemplate = site._section === 'template';
+      const next       = !isArchived && !isTemplate ? nextStep(site) : null;
+      const isLive     = (site.stage ?? 0) === 6 && site.domain;
 
       return (
-        <div class="site-card" data-slug={site._slug} data-section={site._section}>
+        <article class="site-card" data-slug={site._slug} data-section={site._section}>
           <div class="card-main">
-            <div>
-              <div class="site-name">{site.name || site.site || site._slug}</div>
-              <div class="site-url">{sandboxUrl}</div>
-              {site.domain && <div class="site-url" style="color:var(--muted)">{site.domain}</div>}
+            <div class="card-id">
+              <h3 class="site-name">{site.name || titleCase(site._slug)}</h3>
+              <div class="site-meta">
+                {site.domain
+                  ? <a class="domain" href={`https://${site.domain}`} target="_blank" rel="noopener">{site.domain.replace(/^www\./, '')}</a>
+                  : <span class="domain none">No domain</span>}
+                <span class="slug">/{site._slug}</span>
+              </div>
             </div>
-            <span class="stage-badge" style={`color:${st.color};background:${st.bg}`}>
-              <span class="badge-dot" style={`background:${st.color}`}></span>
-              {st.label}
-            </span>
-            <div class="wiring-chips">
-              {isTemplate && <span class="chip template-chip">template</span>}
-              {chips.map(c => (
-                <span class={`chip ${c.endsWith('✓') ? 'ok' : ''}`}>{c}</span>
-              ))}
+
+            <div class="card-state">
+              <span class={`badge ${st.tone}`}><span class="dot"></span>{st.label}</span>
+              {isTemplate && <span class="badge neutral">Template</span>}
             </div>
+
+            <ul class="wiring" aria-label="Wiring">
+              {chips.map(c => <li class={c.ok ? 'ok' : ''}>{c.label}</li>)}
+            </ul>
+
             <div class="card-actions">
               <a href={sandboxUrl} target="_blank" rel="noopener" class="btn">Preview ↗</a>
-              {(site.stage ?? 0) === 6 && site.domain && (
-                <a href={`https://${site.domain}`} target="_blank" rel="noopener" class="btn live">Live ↗</a>
-              )}
-              {!isArchived && (site.stage ?? 0) < 6  && <span class="btn primary">Wire</span>}
-              {!isArchived && (site.stage ?? 0) >= 5 && (site.stage ?? 0) < 6 && <span class="btn primary">Deploy</span>}
-              <button class="btn rename-btn"  data-rename-slug={site._slug}>Rename</button>
-              <button class="btn"           data-archive-slug={site._slug} style={isArchived ? 'display:none' : ''}>Archive</button>
-              <button class="btn restore"   data-restore-slug={site._slug} style={isArchived ? '' : 'display:none'}>Restore</button>
-              <button class="btn delete-btn" data-delete-slug={site._slug} style={isArchived ? '' : 'display:none'}>Delete</button>
+              {isLive && <a href={`https://${site.domain}`} target="_blank" rel="noopener" class="btn primary">Live ↗</a>}
+              <button class="btn quiet rename-btn"  data-rename-slug={site._slug}>Rename</button>
+              <button class="btn quiet"             data-archive-slug={site._slug} style={isArchived ? 'display:none' : ''}>Archive</button>
+              <button class="btn quiet restore"     data-restore-slug={site._slug} style={isArchived ? '' : 'display:none'}>Restore</button>
+              <button class="btn quiet danger delete-btn" data-delete-slug={site._slug} style={isArchived ? '' : 'display:none'}>Delete</button>
             </div>
           </div>
 
-          {/* Perf row — shown for active sites; templates skip the "run perf" nudge */}
-          {pm ? (
-            <div class="card-perf">
-              <div class="perf-scores">
-                {[
-                  { label: 'PERF', val: pm.performance },
-                  { label: 'A11Y', val: pm.accessibility },
-                  { label: 'SEO',  val: pm.seo },
-                  { label: 'BEST', val: pm.best_practices },
-                ].map(({ label, val }) => (
-                  <div class="perf-score">
-                    <span class="perf-score-label">{label}</span>
-                    <span class="perf-score-value" style={`color:${scoreColor(val)}`}>{val}</span>
-                  </div>
-                ))}
-              </div>
-              <div class="perf-sep"></div>
-              <div class="perf-cwv">
-                {pm.lcp && (
-                  <div class="perf-cwv-item">
-                    <span class="perf-cwv-label">LCP</span>
-                    <span style={`color:${cwvColor(pm.lcp_status)}`}>{pm.lcp}</span>
-                  </div>
-                )}
-                {pm.cls && (
-                  <div class="perf-cwv-item">
-                    <span class="perf-cwv-label">CLS</span>
-                    <span style={`color:${cwvColor(pm.cls_status)}`}>{pm.cls}</span>
-                  </div>
-                )}
-                {pm.fcp && (
-                  <div class="perf-cwv-item">
-                    <span class="perf-cwv-label">FCP</span>
-                    <span style="color:var(--muted)">{pm.fcp}</span>
-                  </div>
-                )}
-              </div>
-              {trend && (
-                <>
-                  <div class="perf-sep"></div>
-                  <span class="perf-trend" style={`color:${trend.color}`}>{trend.text}</span>
-                </>
+          {(pm || next) && (
+            <div class="card-foot">
+              {pm && (
+                <div class="perf">
+                  {[
+                    { label: 'Perf', val: pm.performance },
+                    { label: 'A11y', val: pm.accessibility },
+                    { label: 'SEO',  val: pm.seo },
+                    { label: 'Best', val: pm.best_practices },
+                  ].map(({ label, val }) => (
+                    <span class="perf-item"><span class="k">{label}</span><span class="v" style={`color:${scoreColor(val)}`}>{val}</span></span>
+                  ))}
+                  {pm.lcp && <span class="perf-item"><span class="k">LCP</span><span class="v" style={`color:${cwvColor(pm.lcp_status)}`}>{pm.lcp}</span></span>}
+                  {pm.cls && <span class="perf-item"><span class="k">CLS</span><span class="v" style={`color:${cwvColor(pm.cls_status)}`}>{pm.cls}</span></span>}
+                  {pm.fcp && <span class="perf-item"><span class="k">FCP</span><span class="v">{pm.fcp}</span></span>}
+                  {trend && <span class="perf-item"><span class="v" style={`color:${trend.color}`}>{trend.text}</span></span>}
+                  <span class="perf-item when">Mobile · {perf.latest.date}</span>
+                </div>
               )}
-              <div class="perf-meta">mobile · {perf.latest.date}</div>
-            </div>
-          ) : !isTemplate && (
-            <div class="perf-empty">
-              no perf data — run <strong>npm run perf</strong>
+              {next && <span class="next">Next <code>{next} {site._slug}</code></span>}
             </div>
           )}
-        </div>
+          <AnalyticsTile slug={site._slug} />
+        </article>
       );
     })}
   </div>
 
   <!-- ── Active sites ─────────────────────────────────────────────── -->
-  <div>
+  <section class="list-section">
     <div class="section-head">
-      <h2>Sites</h2>
-      <span class="count" id="active-count-sub">{activeSites.length} active</span>
+      <h2 class="eyebrow">Sites</h2>
+      <span class="mono count" id="active-count-sub">{activeSites.length} active</span>
+      {!anyPerf && <span class="mono hint">No performance data yet · run <code>npm run perf</code></span>}
     </div>
-    <div id="main-list">
+    <div id="main-list" class="cards">
       {/* populated by JS from #card-staging */}
     </div>
-  </div>
+    <span id="active-count" hidden>{activeSites.length}</span>
+  </section>
 
   <!-- ── Templates ───────────────────────────────────────────────── -->
-  <div id="template-section" class="section-drawer" style="display:none">
+  <section id="template-section" class="section-drawer" style="display:none">
     <button class="section-toggle" id="template-toggle">
-      <span class="section-chevron">▶</span>
+      <span class="section-chevron" aria-hidden="true">›</span>
       Templates
       <span class="section-badge" id="template-count">{templateSites.length}</span>
     </button>
     <div class="section-body" id="template-body">
       <p class="section-hint">
-        Design captures kept as remix references — not tracked for performance.<br/>
+        Design captures kept as remix references, not tracked for performance.
         Use <code>Archive</code> to retire one, or <code>node _scripts/delete-site.mjs &lt;slug&gt;</code> to remove it entirely.
       </p>
-      <div id="template-list">
+      <div id="template-list" class="cards">
         {/* populated by JS */}
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- ── Archive ──────────────────────────────────────────────────── -->
-  <div id="archive-section" class="section-drawer" style="display:none">
+  <section id="archive-section" class="section-drawer" style="display:none">
     <button class="section-toggle" id="archive-toggle">
-      <span class="section-chevron">▶</span>
+      <span class="section-chevron" aria-hidden="true">›</span>
       Archive
       <span class="section-badge" id="archive-count">0</span>
     </button>
     <div class="section-body" id="archive-body">
       <p class="section-hint">
-        Retired sites. Browser triage only until committed:<br/>
-        <code>node _scripts/archive-site.mjs &lt;slug&gt; "reason"</code><br/>
-        To permanently delete source files:
-        <code>node _scripts/delete-site.mjs &lt;slug&gt;</code>
+        Retired sites. Browser triage only until committed with
+        <code>node _scripts/archive-site.mjs &lt;slug&gt; "reason"</code>.
+        To permanently delete source files: <code>node _scripts/delete-site.mjs &lt;slug&gt;</code>
       </p>
-      <div id="archive-list">
+      <div id="archive-list" class="cards">
         {/* populated by JS */}
+      </div>
+    </div>
+  </section>
+
+  <div class="wm-toast" id="wm-toast" role="status"></div>
+
+  <!-- Rename overlay -->
+  <div class="apply-overlay" id="rename-overlay">
+    <div class="apply-panel" role="dialog" aria-labelledby="rename-title">
+      <div class="eyebrow accent">Rename site</div>
+      <h3 id="rename-title">New slug for <span id="rename-old-label"></span></h3>
+      <p class="apply-hint">Renames the directory, updates wiring.json and astro.config.mjs, and commits.</p>
+      <div class="rename-row">
+        <code class="rename-prefix">node _scripts/rename-site.mjs <span id="rename-old-slug"></span></code>
+        <input id="rename-new-input" type="text" placeholder="new-slug" spellcheck="false" autocomplete="off" />
+      </div>
+      <code class="apply-cmd-block" id="rename-cmd"></code>
+      <p class="apply-hint">Copy the command, run it in your terminal, then push.</p>
+      <div class="apply-actions">
+        <button class="btn quiet" id="rename-close">Close</button>
+        <button class="btn primary" id="rename-copy">Copy command</button>
       </div>
     </div>
   </div>
 
-</main>
-
-<div class="wm-toast" id="wm-toast"></div>
-
-<!-- Rename overlay -->
-<div class="apply-overlay" id="rename-overlay">
-  <div class="apply-panel">
-    <h3>✏️ Rename site</h3>
-    <p style="margin:.25rem 0 .75rem;color:var(--dim);font-size:.85rem">
-      Enter a new slug for <strong id="rename-old-label"></strong>.<br/>
-      This renames the directory, updates wiring.json and astro.config.mjs, and commits.
-    </p>
-    <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.75rem">
-      <code style="white-space:nowrap">node _scripts/rename-site.mjs</code>
-      <code id="rename-old-slug" style="white-space:nowrap"></code>
-      <input id="rename-new-input" type="text" placeholder="new-slug"
-        style="flex:1;background:var(--surface);border:1px solid var(--dim);color:var(--text);
-               padding:.35rem .6rem;border-radius:4px;font-family:monospace;font-size:.9rem"/>
-    </div>
-    <code class="apply-cmd-block" id="rename-cmd" style="word-break:break-all"></code>
-    <p class="apply-hint" style="margin-top:.5rem">
-      Copy the command above and run it in your terminal, then push.
-    </p>
-    <div class="apply-actions">
-      <button class="btn" id="rename-close">Close</button>
-      <button class="btn primary" id="rename-copy">Copy command</button>
+  <!-- Apply-changes overlay -->
+  <div class="apply-overlay" id="apply-overlay">
+    <div class="apply-panel" role="dialog" aria-labelledby="apply-title">
+      <div class="eyebrow accent">Pending triage</div>
+      <h3 id="apply-title">Apply changes</h3>
+      <div class="apply-changes-list" id="apply-changes-list"></div>
+      <code class="apply-cmd-block" id="apply-cmd"></code>
+      <p class="apply-hint">
+        Copy the command above, paste it into your terminal, then
+        <code>git add -A &amp;&amp; git commit -m "chore: apply dashboard triage"</code> and
+        <code>git push</code>. The sandbox rebuilds automatically.
+      </p>
+      <div class="apply-actions">
+        <button class="btn quiet" id="apply-close">Close</button>
+        <button class="btn primary" id="apply-copy">Copy command</button>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- Apply-changes overlay -->
-<div class="apply-overlay" id="apply-overlay">
-  <div class="apply-panel">
-    <h3>↯ Pending triage changes</h3>
-    <div class="apply-changes-list" id="apply-changes-list"></div>
-    <code class="apply-cmd-block" id="apply-cmd"></code>
-    <p class="apply-hint">
-      Copy the command above, paste it into your terminal, then:<br/>
-      <code>git add -A &amp;&amp; git commit -m "chore: apply dashboard triage"</code><br/>
-      <code>git push</code> &nbsp;→&nbsp; sandbox rebuilds automatically.
-    </p>
-    <div class="apply-actions">
-      <button class="btn" id="apply-close">Close</button>
-      <button class="btn primary" id="apply-copy">Copy command</button>
-    </div>
-  </div>
-</div>
+</Console>
 
 <script>
 (function () {
@@ -839,13 +536,13 @@ const buildDate = new Date().toISOString().slice(0, 10);
     if (listEl) {
       const lines = [
         ...pendingArchive.map(({ slug, reason }) =>
-          `⊘ Archive <strong>${slug}</strong>${reason ? ` <span style="color:var(--dim)">— ${reason}</span>` : ''}`),
+          `Archive <strong>${slug}</strong>${reason ? ` <span style="color:var(--text-muted)">— ${reason}</span>` : ''}`),
         ...pendingDelete.map(slug =>
-          `✗ Delete&nbsp;&nbsp;<strong>${slug}</strong>`),
+          `Delete&nbsp;&nbsp;<strong>${slug}</strong>`),
       ];
       listEl.innerHTML = lines.length
         ? lines.map(l => `<div>${l}</div>`).join('')
-        : '<div style="color:var(--dim)">No pending changes.</div>';
+        : '<div style="color:var(--text-muted)">No pending changes.</div>';
     }
   }
 
@@ -897,5 +594,200 @@ const buildDate = new Date().toISOString().slice(0, 10);
 })();
 </script>
 
-</body>
-</html>
+<style>
+  .tools-meta { color: var(--text-muted); }
+  #apply-count-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0;
+    min-width: 16px; height: 16px; padding: 0 4px; margin-left: 4px;
+    background: var(--accent); color: #000; border-radius: 999px;
+  }
+
+  /* Pipeline */
+  .pipeline {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle);
+    margin-bottom: 72px;
+  }
+  .ps { background: var(--bg-base); padding: 22px 18px 18px; }
+  .ps-count {
+    font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1;
+    color: rgba(255,255,255,.18);
+  }
+  .ps.has .ps-count { color: var(--text-primary); }
+  .ps.live.has { background: var(--surface-1); box-shadow: inset 0 -2px 0 var(--accent); }
+  .ps.live.has .ps-count { color: var(--accent); }
+  .ps-label {
+    margin-top: 12px;
+    font-family: var(--font-display); font-weight: 700; font-size: 10px;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--text-muted);
+    display: flex; gap: 8px; align-items: baseline;
+  }
+  .ps.has .ps-label { color: var(--text-secondary); }
+  .ps-n { font-family: var(--font-mono); font-weight: 400; letter-spacing: 0; color: var(--text-muted); }
+
+  /* Section head */
+  .section-head {
+    display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap;
+    padding-bottom: 14px; border-bottom: 1px solid var(--border-strong);
+  }
+  .section-head h2 { color: var(--text-primary); }
+  .section-head .count { color: var(--accent); }
+  .section-head .hint { margin-left: auto; color: var(--text-muted); text-transform: none; letter-spacing: .02em; }
+  .section-head .hint code { color: var(--text-secondary); }
+
+  /* Site cards — rows separated by hairlines, as on the careers list */
+  .cards { display: flex; flex-direction: column; }
+  .site-card {
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background .2s var(--ease);
+  }
+  .site-card:hover { background: var(--surface-1); }
+  .card-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) 150px minmax(0, 1fr) auto;
+    gap: 24px; align-items: center;
+    padding: 22px 16px;
+  }
+  .site-name {
+    font-family: var(--font-display); font-weight: 700; font-size: 17px;
+    letter-spacing: .04em; text-transform: uppercase; line-height: 1.2;
+  }
+  .site-meta { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--font-mono); font-size: 12px; }
+  .domain { color: var(--info); }
+  .domain:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .domain.none { color: var(--text-muted); }
+  .slug { color: var(--text-muted); }
+  .card-state { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .wiring { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .wiring li {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+  }
+  .wiring li::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.35);
+  }
+  .wiring li.ok { color: var(--text-secondary); }
+  .wiring li.ok::before { background: var(--accent); border-color: var(--accent); }
+
+  .card-actions { display: flex; gap: 6px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+
+  .card-foot {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px;
+    padding: 0 16px 18px;
+    font-family: var(--font-mono); font-size: 11px;
+  }
+  .perf { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .perf-item { display: inline-flex; gap: 6px; }
+  .perf-item .k { color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; }
+  .perf-item .v { color: var(--text-secondary); font-weight: 500; }
+  .perf-item.when { color: var(--text-muted); }
+  .next { color: var(--text-muted); text-transform: uppercase; letter-spacing: .12em; font-size: 10px; }
+  .next code { margin-left: 6px; text-transform: none; letter-spacing: 0; font-size: 11px; color: var(--accent); }
+  .badge.plain { color: var(--text-secondary); }
+
+  /* Drawers */
+  .list-section { margin-bottom: 8px; }
+  .section-drawer { margin-top: 48px; border-top: 1px solid var(--border-subtle); }
+  .section-toggle {
+    display: flex; align-items: center; gap: 12px; width: 100%;
+    background: none; border: 0; padding: 18px 0; cursor: pointer; text-align: left;
+    font-family: var(--font-display); font-weight: 700; font-size: 11px;
+    letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--text-soft);
+    transition: color .2s var(--ease);
+  }
+  .section-toggle:hover { color: var(--text-primary); }
+  .section-chevron { font-size: 16px; line-height: 1; letter-spacing: 0; transition: transform .2s var(--ease); display: inline-block; }
+  .section-drawer.open .section-chevron { transform: rotate(90deg); }
+  .section-badge {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 400; letter-spacing: 0;
+    padding: 3px 8px; border: 1px solid var(--border-subtle); border-radius: 999px; color: var(--text-muted);
+  }
+  .section-body { display: none; padding-bottom: 24px; }
+  .section-drawer.open .section-body { display: block; }
+  .section-hint {
+    max-width: 760px; margin-bottom: 16px;
+    font-size: 13px; line-height: 1.75; color: var(--text-muted);
+  }
+  .section-hint code {
+    font-size: 11px; color: var(--text-secondary);
+    background: var(--surface-2); border: 1px solid var(--border-faint); padding: 1px 6px;
+  }
+  .section-body .cards { border-top: 1px solid var(--border-subtle); }
+
+  /* Archive — magenta is the attention colour; used sparingly */
+  #archive-section { border-top-color: var(--attention-line); }
+  #archive-section .section-toggle { color: var(--attention); }
+  #archive-section .section-badge { color: var(--attention); border-color: var(--attention-line); }
+  #archive-list .site-card { opacity: .6; transition: opacity .2s var(--ease), background .2s var(--ease); }
+  #archive-list .site-card:hover { opacity: 1; }
+
+  /* Toast */
+  .wm-toast {
+    position: fixed; bottom: 32px; left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: var(--surface-2); border: 1px solid var(--border-accent);
+    padding: 10px 18px; z-index: 200; white-space: nowrap;
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-primary);
+    opacity: 0; pointer-events: none; transition: opacity .2s var(--ease), transform .2s var(--ease);
+  }
+  .wm-toast:global(.show) { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Overlays */
+  .apply-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,.72); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+  }
+  .apply-overlay:global(.open) { display: flex; }
+  .apply-panel {
+    position: relative;
+    width: min(640px, calc(100% - 32px)); max-height: 90vh; overflow-y: auto;
+    background: var(--surface-1); border: 1px solid var(--border-subtle);
+    padding: 32px;
+  }
+  .apply-panel::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--beam); }
+  .apply-panel h3 {
+    margin: 10px 0 12px;
+    font-family: var(--font-display); font-weight: 700; font-size: 22px;
+    letter-spacing: .04em; text-transform: uppercase;
+  }
+  .apply-panel h3 span { color: var(--accent); }
+  .apply-changes-list { margin-bottom: 18px; font-family: var(--font-mono); font-size: 12px; line-height: 2; color: var(--text-secondary); }
+  .apply-changes-list :global(strong) { color: var(--text-primary); font-weight: 500; }
+  .apply-cmd-block {
+    display: block; margin-bottom: 14px; padding: 14px 16px;
+    font-size: 12px; line-height: 1.6; white-space: pre; overflow-x: auto;
+    background: #000; border: 1px solid var(--border-subtle); color: var(--accent);
+  }
+  .apply-cmd-block:empty { display: none; }
+  .apply-hint { margin-bottom: 18px; font-size: 13px; line-height: 1.7; color: var(--text-muted); }
+  .apply-hint code { color: var(--text-secondary); }
+  .apply-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .rename-row { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  .rename-prefix { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  #rename-new-input {
+    flex: 1; min-width: 160px;
+    background: #000; border: 1px solid var(--border-strong); color: var(--text-primary);
+    padding: 9px 12px; font-family: var(--font-mono); font-size: 13px;
+  }
+  #rename-new-input:focus { outline: none; border-color: var(--accent); }
+
+  @media (max-width: 1000px) {
+    .card-main { grid-template-columns: minmax(0, 1fr) auto; }
+    .wiring { grid-column: 1 / -1; order: 3; }
+    .card-actions { grid-column: 1 / -1; order: 4; justify-content: flex-start; }
+  }
+  @media (max-width: 720px) {
+    .pipeline { display: flex; overflow-x: auto; scrollbar-width: none; margin-bottom: 48px; margin-right: calc(-1 * var(--gutter)); }
+    .ps { flex: 0 0 104px; }
+    .ps { padding: 16px 12px 14px; }
+    .ps-count { font-size: 28px; }
+    .ps-label { font-size: 9px; letter-spacing: .1em; flex-direction: column; gap: 2px; }
+    .card-main { padding: 18px 4px; gap: 14px; }
+    .card-foot { padding: 0 4px 16px; }
+    .section-head .hint { margin-left: 0; }
+  }
+</style>

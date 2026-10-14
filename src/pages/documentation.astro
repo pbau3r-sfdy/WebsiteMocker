@@ -1,0 +1,136 @@
+---
+import { readdirSync, statSync, existsSync } from 'fs';
+import { execSync } from 'child_process';
+import { join, resolve } from 'path';
+import Console from '../layouts/Console.astro';
+import registry from '../data/docs.json';
+
+// Documents are static HTML files in public/docs/. Registered entries carry a
+// title and summary; any unregistered file still shows up with a fallback.
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const docsDir = resolve('public/docs');
+const files = existsSync(docsDir) ? readdirSync(docsDir).filter(f => f.endsWith('.html')) : [];
+
+function updated(file, source) {
+  // Last commit date of the page (or of its source, if it was copied from elsewhere).
+  for (const p of [`public/docs/${file}`, source].filter(Boolean)) {
+    try {
+      const d = execSync(`git log -1 --format=%cs -- "${p}"`, { encoding: 'utf-8' }).trim();
+      if (d) return d;
+    } catch {}
+  }
+  return statSync(join(docsDir, file)).mtime.toISOString().slice(0, 10);
+}
+
+const docs = files
+  .map(file => {
+    const meta = registry.find(r => r.file === file) ?? {
+      title: file.replace(/\.html$/, '').replace(/[-_]+/g, ' '),
+      product: 'Unsorted',
+      kind: 'Document',
+      summary: 'Not registered yet. Add an entry to src/data/docs.json.',
+    };
+    return {
+      ...meta,
+      file,
+      href: `${b}/docs/${file}`,
+      size: (statSync(join(docsDir, file)).size / 1048576).toFixed(1) + ' MB',
+      date: updated(file, meta.source),
+    };
+  })
+  .sort((a, b) => registry.findIndex(r => r.file === a.file) - registry.findIndex(r => r.file === b.file));
+---
+
+<Console title="Documentation" active="documentation">
+  <header class="page-head">
+    <div class="eyebrow accent">Operator console</div>
+    <h1>Documentation</h1>
+    <p>Manuals for WebsiteMocker and the tools around it, published as standalone SFDY-branded pages.</p>
+  </header>
+
+  <section>
+    <div class="section-head">
+      <h2 class="eyebrow">Manuals</h2>
+      <span class="mono count">{docs.length} documents</span>
+    </div>
+
+    <ul class="docs">
+      {docs.map(d => (
+        <li>
+          <a class="doc" href={d.href} target="_blank" rel="noopener">
+            <div class="doc-head">
+              <span class="badge neutral">{d.kind}</span>
+              {d.version && <span class="mono ver">{d.version}</span>}
+            </div>
+            <h3>{d.title}</h3>
+            <p>{d.summary}</p>
+            <div class="doc-meta">
+              <span>Updated {d.date}</span>
+              <span>{d.size}</span>
+              {d.repo && <span>{d.repo}</span>}
+              <span class="open">Open ↗</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="note">
+      To add a manual, export it from Claude Design as a standalone HTML file, place it in
+      <code>public/docs/</code> and register a title and summary in <code>src/data/docs.json</code>.
+      Product documentation that also ships to a production repo goes through <code>/wm-gen-docs</code>.
+    </p>
+  </section>
+</Console>
+
+<style>
+  .section-head {
+    display: flex; align-items: baseline; gap: 20px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--border-strong);
+  }
+  .section-head h2 { color: var(--text-primary); }
+  .section-head .count { color: var(--accent); }
+
+  .docs {
+    list-style: none; margin-top: 32px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle);
+  }
+  .docs li { background: var(--bg-base); display: flex; }
+  .doc {
+    position: relative; flex: 1;
+    display: flex; flex-direction: column; gap: 14px;
+    padding: 28px;
+    transition: background .2s var(--ease);
+  }
+  .doc::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--beam); opacity: 0; transition: opacity .2s var(--ease);
+  }
+  .doc:hover { background: var(--surface-1); }
+  .doc:hover::before { opacity: 1; }
+  .doc-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .ver { color: var(--text-muted); text-transform: none; }
+  .doc h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 20px; line-height: 1.2;
+    letter-spacing: .04em; text-transform: uppercase;
+  }
+  .doc p { font-size: 14px; line-height: 1.65; color: var(--text-secondary); flex: 1; }
+  .doc-meta {
+    display: flex; flex-wrap: wrap; gap: 6px 16px; padding-top: 14px;
+    border-top: 1px solid var(--border-faint);
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+  }
+  .doc-meta .open { margin-left: auto; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; font-size: 10px; }
+
+  .note { margin-top: 32px; max-width: 760px; font-size: 13px; line-height: 1.75; color: var(--text-muted); }
+  .note code {
+    font-size: 11px; color: var(--text-secondary);
+    background: var(--surface-2); border: 1px solid var(--border-faint); padding: 1px 6px;
+  }
+
+  @media (max-width: 720px) {
+    .docs { grid-template-columns: 1fr; }
+    .doc { padding: 22px 18px; }
+  }
+</style>
