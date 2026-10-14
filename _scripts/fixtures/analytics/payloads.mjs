@@ -48,4 +48,43 @@ export const VECTORS = [
   kept(S, 'short mixed segment kept', 'https://e.com/news/Q3-2026'),
   { name: '404 path prop: email masked', cfg: S, input: { n: '404', u: 'https://e.com/jane@example.com', p: { path: '/jane@example.com' } }, expect: { n: '404', u: 'https://e.com/_ID_', p: { path: '/_ID_' } } },
   { name: '404 path prop: coarse first segment kept', cfg: S, input: { n: '404', u: 'https://e.com/old', p: { path: '/old' } }, expect: { n: '404', u: 'https://e.com/old', p: { path: '/old' } } },
+  // Phase 11 drop whitelist (D-07)
+  ...dropVectors(),
 ];
+
+function dropVectors() {
+  const D = { sanitise: true, exclude: [], eventNames: {}, base: '/', drops: true };
+  const DP = { ...D, dropProps: true };
+  const DB = { ...D, base: '/WebsiteMocker/fx' };
+  const U = 'https://e.com/d/' + HEX + '/';
+  const M = 'https://e.com/d/_ID_/';
+  const ev = (cfg, name, n, u, p, exp) => ({ name, cfg, input: p === undefined ? { n, u } : { n, u, p }, expect: exp });
+  return [
+    ev(D, 'drop: pageview kept and masked', 'pageview', U, undefined, { n: 'pageview', u: M }),
+    { name: 'drop: pageview referrer reduced', cfg: D, input: { n: 'pageview', u: U, r: 'https://ref.com/d/' + HEX + '/?q=1' }, expect: { n: 'pageview', u: M, r: 'https://ref.com' } },
+    ev(D, 'drop: Drop Download props removed', 'Drop Download', U, { url: U + 'secret-offer.pdf' }, { n: 'Drop Download', u: M }),
+    ev(D, 'drop: Drop Download JSON-string props removed', 'Drop Download', U, JSON.stringify({ url: U + 'x.pdf' }), { n: 'Drop Download', u: M }),
+    ev(D, 'drop: Drop Download label ignored when props off', 'Drop Download', U, { label: 'secret' }, { n: 'Drop Download', u: M }),
+    ev(DP, 'drop: Drop Download keeps only label when props on', 'Drop Download', U, { label: 'q3-deck', url: U + 'x.pdf', other: 'y' }, { n: 'Drop Download', u: M, p: { label: 'q3-deck' } }),
+    ev(DP, 'drop: Drop Download label masked when id-like', 'Drop Download', U, { label: HEX }, { n: 'Drop Download', u: M, p: { label: '_ID_' } }),
+    ev(DP, 'drop: Drop Download without label drops props', 'Drop Download', U, { url: U + 'x.pdf' }, { n: 'Drop Download', u: M }),
+    ev(D, 'drop: File Download dropped', 'File Download', U, { url: U + 'x.pdf' }, null),
+    ev(D, 'drop: Outbound Link dropped', 'Outbound Link: Click', U, { url: 'https://evil.example/x' }, null),
+    ev(D, 'drop: Form Submission dropped', 'Form: Submission', U, undefined, null),
+    ev(D, 'drop: unknown custom event dropped', 'Whatever', U, undefined, null),
+    ev(D, 'drop: 404 kept, path prop masked', '404', 'https://e.com/d/' + HEX + '/missing', { path: '/d/' + HEX + '/missing' }, { n: '404', u: M + 'missing', p: { path: '/d/_ID_/missing' } }),
+    ev(DB, 'drop: sandbox base-prefixed path matches', 'File Download', SBX + '/WebsiteMocker/fx/d/' + HEX + '/', undefined, null),
+    ev(D, 'drop: uppercase hex matches', 'File Download', 'https://e.com/d/' + HEX.toUpperCase() + '/', undefined, null),
+    ev(D, 'drop: percent-encoded segment matches', 'File Download', 'https://e.com/%64/' + HEX + '/', undefined, null),
+    ev(D, 'drop: dot segments resolve', 'File Download', 'https://e.com/x/../d/' + HEX + '/', undefined, null),
+    ev(D, 'drop: query and fragment ignored for matching', 'File Download', U + '?a=1#f', undefined, null),
+    ev(D, 'drop: no trailing slash matches', 'File Download', 'https://e.com/d/' + HEX, undefined, null),
+    ev(D, 'drop: /d/ alone is not a drop page', 'File Download', 'https://e.com/d/', undefined, { n: 'File Download', u: 'https://e.com/d/' }),
+    ev(D, 'drop: /d/short/ is not a drop page', 'File Download', 'https://e.com/d/short/', undefined, { n: 'File Download', u: 'https://e.com/d/short/' }),
+    ev(D, 'drop: /data/<hex>/ is not a drop page', 'File Download', 'https://e.com/data/' + HEX + '/', undefined, { n: 'File Download', u: 'https://e.com/data/_ID_/' }),
+    ev(D, 'drop: 31-hex is not a drop page', 'File Download', 'https://e.com/d/' + HEX.slice(1) + '/', undefined, { n: 'File Download', u: 'https://e.com/d/' + HEX.slice(1) + '/' }),
+    ev(D, 'drops site: File Download kept on non-drop page', 'File Download', 'https://e.com/news/x', { url: 'https://e.com/a.pdf' }, { n: 'File Download', u: 'https://e.com/news/x', p: { url: 'https://e.com/a.pdf' } }),
+    ev(D, 'drops site: outbound kept on non-drop page', 'Outbound Link: Click', 'https://e.com/news/x', { url: 'https://o.example/' }, { n: 'Outbound Link: Click', u: 'https://e.com/news/x', p: { url: 'https://o.example/' } }),
+    ev(S, 'no drops cfg: File Download kept on drop-shaped path', 'File Download', U, undefined, { n: 'File Download', u: M }),
+  ];
+}

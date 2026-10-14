@@ -1,6 +1,6 @@
 // Runs the emitted head-inline snippet in a vm with a stub window/document and applies the
 // resulting transformRequest to one event. Usage:
-//   node eval-snippet.mjs <wiring.json> <base> <site> <eventUrl> [eventName]
+//   node eval-snippet.mjs <wiring.json> <base> <site> <eventUrl> [eventName] [propsJson] [referrer]
 // Prints the transformed payload as JSON ("null" when the event is dropped).
 import { mkdtempSync, copyFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -9,7 +9,7 @@ import { pathToFileURL } from 'node:url';
 import vm from 'node:vm';
 import plausible from '../../plausible.mjs';
 
-const [wiringPath, base, site, eventUrl, eventName = 'pageview'] = process.argv.slice(2);
+const [wiringPath, base, site, eventUrl, eventName = 'pageview', propsJson, referrer] = process.argv.slice(2);
 const dir = mkdtempSync(join(tmpdir(), 'wm-anly-'));
 try {
   copyFileSync(resolve(wiringPath), join(dir, 'wiring.json'));
@@ -24,7 +24,10 @@ try {
   const window = {};
   const document = { createElement: () => ({ dataset: {} }), head: { appendChild() {} } };
   vm.runInNewContext(scripts[0], { window, document });
-  const out = window.plausible.o.transformRequest({ n: eventName, u: eventUrl });
+  const input = { n: eventName, u: eventUrl };
+  if (propsJson) input.p = JSON.parse(propsJson);
+  if (referrer) input.r = referrer;
+  const out = window.plausible.o.transformRequest(input);
   console.log(JSON.stringify(out));
 } catch (e) {
   console.log('ERROR ' + e.message);

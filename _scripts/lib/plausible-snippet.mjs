@@ -165,9 +165,13 @@ function norm(s){
   });
   return '/'+out.join('/');
 }
-function excluded(path){
+function pagePath(path){
   var p=norm(path),b=cfg.base?norm(cfg.base):'/';
   if(b!=='/'&&(p===b||p.indexOf(b+'/')===0))p=p.slice(b.length)||'/';
+  return p;
+}
+function excluded(path){
+  var p=pagePath(path);
   var ex=cfg.exclude||[];
   for(var k=0;k<ex.length;k++){
     var e=norm(ex[k]);
@@ -175,6 +179,7 @@ function excluded(path){
   }
   return false;
 }
+var DROP=/^\/d\/[0-9a-f]{32}(\/|$)/;
 return function(p){
   if(!p)return p;
   var map=cfg.eventNames||{};
@@ -185,6 +190,17 @@ return function(p){
     var path=u.replace(SCHEME,''),q=path.indexOf('?');
     if(q>=0)path=path.slice(0,q);
     if(excluded(path))return null;
+    if(cfg.drops&&DROP.test(pagePath(path))){
+      if(p.n==='Drop Download'){
+        var dl=null;
+        if(cfg.dropProps&&p.p!==undefined&&p.p!==null){
+          var dp=p.p,ds=typeof dp==='string';
+          if(ds){try{dp=JSON.parse(dp);}catch(e){dp=null;}}
+          if(dp&&typeof dp==='object'&&typeof dp.label==='string'){dl={label:clean(dp.label)};}
+        }
+        if(dl)p.p=dl;else delete p.p;
+      }else if(p.n!=='pageview'&&p.n!=='404')return null;
+    }
     p.u=clean(p.u);
   }
   if(typeof p.r==='string'){
@@ -230,6 +246,10 @@ export function buildSnippet(identity, wiring, { base = '/', slug = '' } = {}) {
       eventNames: a.eventNames ?? {},
       base,
     };
+    if (wiring.drops?.enabled === true) {
+      cfg.drops = true;
+      if (a.props === true) cfg.dropProps = true;
+    }
     const parts = [
       `outboundLinks:${events.outboundLinks !== false}`,
       `fileDownloads:${events.fileDownloads !== false}`,
