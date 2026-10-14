@@ -1,0 +1,70 @@
+---
+// Page — extracted from Claude Design artifact 2026-10-14
+---
+
+<section class="page" data-screen-label="01 Recto" style="box-sizing:border-box;display:flex;flex-direction:column;padding:0;color:#000;font-family:var(--font-body);font-size:8.5pt;line-height:1.5;background:#fff">
+  <div style="flex:0 0 auto;position:relative;background:#000;color:#fff;padding:9mm 16mm 8mm 18mm;display:flex;flex-direction:column;gap:6mm;overflow:hidden">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:7px;background:linear-gradient(180deg,#0432FF 0%,#00FDFF 33%,#00FB92 65%,#00FB92 100%)"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10mm">
+      <img src="assets/sfdy-white.png" alt="Starflight Dynamics" style="height:9.5mm;width:auto;display:block">
+      <div style="display:flex;align-items:center;gap:3mm">
+        <img src="assets/flags/eu.svg" alt="European Union" style="height:9.5mm;width:auto;display:block">
+        <div style="display:flex;flex-direction:column;font-family:var(--font-display);text-transform:uppercase;line-height:1.2">
+          <span style="font-size:6.2pt;letter-spacing:.22em;color:rgba(255,255,255,.66)">Proposal filed under the</span>
+          <span style="font-size:9pt;font-weight:700;letter-spacing:.12em">European Defence Fund</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8mm">
+      <div style="display:flex;flex-direction:column;gap:3mm">
+        <sc-if value="{{ isGeneric }}" hint-placeholder-val="{{ true }}"><div style="font-family:var(--font-display);font-size:8pt;letter-spacing:.34em;text-transform:uppercase;color:#00FB92">Project One-Pager</div></sc-if>
+        <sc-if value="{{ isDe }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:2.6mm"><img src="assets/flags/de.svg" alt="Germany" style="height:3.6mm;width:auto;display:block;outline:1px solid rgba(255,255,255,.25)"><span style="font-family:var(--font-display);font-size:8pt;letter-spacing:.34em;text-transform:uppercase;color:#00FB92">Project One-Pager · Germany</span></div></sc-if>
+        <sc-if value="{{ isFr }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:2.6mm"><img src="assets/flags/fr.svg" alt="France" style="height:3.6mm;width:auto;display:block;outline:1px solid rgba(255,255,255,.25)"><span style="font-family:var(--font-display);font-size:8pt;letter-spacing:.34em;text-transform:uppercase;color:#00FB92">Project One-Pager · France</span></div></sc-if>
+        <sc-if value="{{ isLt }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:2.6mm"><img src="assets/flags/lt.svg" alt="Lithuania" style="height:3.6mm;width:auto;display:block;outline:1px solid rgba(255,255,255,.25)"><span style="font-family:var(--font-display);font-size:8pt;letter-spacing:.34em;text-transform:uppercase;color:#00FB92">Project One-Pager · Lithuania</span></div></sc-if>
+        <sc-if value="{{ isEu }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:2.6mm"><img src="assets/flags/eu.svg" alt="European Union" style="height:3.6mm;width:auto;display:block;outline:1px solid rgba(255,255,255,.25)"><span style="font-family:var(--font-display);font-size:8pt;letter-spacing:.34em;text-transform:uppercase;color:#00FB92">Project One-Pager · EU</span></div></sc-if>
+        <h1 style="font-family:var(--font-display);font-weight:800;font-size:54pt;line-height:.88;letter-spacing:.06em;text-transform:uppercase;margin:0;color:#fff">TELEX</h1>
+        <div style="font-family:var(--font-display);font-weight:300;font-size:12.5pt;letter-spacing:.02em;color:rgba(255,255,255,.88)">Telemetry Listening &#x26; Exploitation</div>
+      </div>
+      <img src="assets/telex-emblem-v4.png" alt="TELEX project emblem" style="height:40mm;width:auto;display:block;flex:0 0 auto;margin:-4mm -4mm -3mm 0">
+    </div>
+  </div>
+
+  <div style="flex:0 0 auto;display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));border-bottom:1px solid #e2e2e2;margin:0 16mm 0 18mm">
+    <div style="display:flex;flex-direction:column;gap:.8mm;padding:2.6mm 4mm;border-left:1px solid #e2e2e2"><span style="font-family:var(--font-display);font-size:6.4pt;letter-spacing:.24em;text-transform:uppercase;color:#666">Call</span><span style="font-size:8.6pt;line-height:1.35;color:#000;">EDF-2026-LS-DA-SME-NT, non-thematic development actions by SMEs</span></div>
+    <div style="display:flex;flex-direction:column;gap:.8mm;padding:2.6mm 4mm;border-left:1px solid #e2e2e2"><span style="font-family:var(--font-display);font-size:6.4pt;letter-spacing:.24em;text-transform:uppercase;color:#666">Proposal</span><span style="font-size:8.6pt;line-height:1.35;color:#000;">Filed</span></div>
+    <div style="display:flex;flex-direction:column;gap:.8mm;padding:2.6mm 4mm;border-left:1px solid #e2e2e2"><span style="font-family:var(--font-display);font-size:6.4pt;letter-spacing:.24em;text-transform:uppercase;color:#666">Duration</span><span style="font-size:8.6pt;line-height:1.35;font-family:var(--font-mono);color:#000;">24 months</span></div>
+    <div style="display:flex;flex-direction:column;gap:.8mm;padding:2.6mm 4mm;border-left:1px solid #e2e2e2"><span style="font-family:var(--font-display);font-size:6.4pt;letter-spacing:.24em;text-transform:uppercase;color:#666">EU contribution</span><span style="font-size:8.6pt;line-height:1.35;font-family:var(--font-mono);color:#000;">€6.0 M <span style="color:#666">(€5,994,670.95)</span></span></div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;gap:6mm;padding:7mm 16mm 5mm 18mm">
+    <p style="margin:0;font-family:var(--font-display);font-weight:300;font-size:12pt;line-height:1.42;color:#000;text-wrap:pretty"><span style="font-weight:700">TELEX (Telemetry Listening &#x26; Exploitation) gives Europe its first manoeuvrable, reversible electronic-warfare capability in orbit.</span> The proposal was filed under the European Defence Fund 2026 call for SME development actions (EDF-2026-LS-DA-SME-NT), backed by the Ministries of Defence of Italy, Luxembourg and Ukraine.</p>
+
+    <div style="display:grid;grid-template-columns:30mm minmax(0,1fr);gap:6mm;border-top:1px solid #000;padding-top:3.4mm">
+      <div style="display:flex;flex-direction:column;gap:1.2mm"><span style="font-family:var(--font-mono);font-size:8pt;color:#0432FF">01</span><h2 style="font-family:var(--font-display);font-weight:700;font-size:12pt;line-height:1.2;text-transform:none;letter-spacing:0;color:#000;margin:0;text-wrap:balance">Why it matters</h2></div>
+      <div style="display:flex;flex-direction:column;gap:2.6mm">
+        <p style="margin:0;color:#222;text-wrap:pretty">Russia's ground operations depend on space. Persona (Kosmos-2506) provides optical reconnaissance, the Liana constellation (Lotos-S1) locates emitters, and Russia launched the first 16 satellites of its own LEO broadband network, Rassvet, in March 2026, with service planned from 2027. Ground-to-space jamming has been routine since 2022. European space assets must be protected, and counter-space deterrence is needed.</p>
+        <p style="margin:0;color:#222;text-wrap:pretty">Europe has the building blocks (proximity operations, wideband RF receivers, edge AI) but no integrated capability to deny an adversary satellite in orbit. TELEX closes that gap with effects that are reversible and create no debris.</p></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:30mm minmax(0,1fr);gap:6mm;border-top:1px solid #000;padding-top:3.4mm">
+      <div style="display:flex;flex-direction:column;gap:1.2mm"><span style="font-family:var(--font-mono);font-size:8pt;color:#0432FF">02</span><h2 style="font-family:var(--font-display);font-weight:700;font-size:12pt;line-height:1.2;text-transform:none;letter-spacing:0;color:#000;margin:0;text-wrap:balance">The capability</h2></div>
+      <div style="display:flex;flex-direction:column;gap:2.6mm">
+        <p style="margin:0;color:#222;text-wrap:pretty">A small, highly mobile spacecraft relocates close to an adversary asset and reversibly denies its telemetry and telecommand links. Proximity gives a far stronger electromagnetic effect than any terrestrial jamming, and a persistent platform can stay on target or move to the next one. It combines three technologies:</p>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3mm">
+          <div style="display:flex;flex-direction:column;gap:1.4mm;padding:3mm 3.4mm 3.4mm;background:#f4f5f7;border-top:2px solid #00FB92"><span style="font-family:var(--font-display);font-weight:700;font-size:7.4pt;letter-spacing:.16em;text-transform:uppercase;color:#000">Agile platform</span><span style="color:#222;line-height:1.48">A dual-mode, water-propellant Microwave Electrothermal Thruster (MET) provides both efficient transfer and high-thrust tactical repositioning, sized for multi-target LEO missions.</span></div>
+          <div style="display:flex;flex-direction:column;gap:1.4mm;padding:3mm 3.4mm 3.4mm;background:#f4f5f7;border-top:2px solid #00FB92"><span style="font-family:var(--font-display);font-weight:700;font-size:7.4pt;letter-spacing:.16em;text-transform:uppercase;color:#000">RF payload</span><span style="color:#222;line-height:1.48">A wideband receiver and effector captures a target's uplink and downlink, then classifies the signals on board.</span></div>
+          <div style="display:flex;flex-direction:column;gap:1.4mm;padding:3mm 3.4mm 3.4mm;background:#f4f5f7;border-top:2px solid #00FB92"><span style="font-family:var(--font-display);font-weight:700;font-size:7.4pt;letter-spacing:.16em;text-transform:uppercase;color:#000">Cognitive EW</span><span style="color:#222;line-height:1.48">Embedded, continuously adaptive AI tracks a changing signal environment and protects the spacecraft against jamming and model pollution.</span></div>
+        </div>
+        <p style="margin:0;color:#222;text-wrap:pretty">Over 24 months, the project takes the platform to PDR level (TRL4) and the payload to engineering-model testing (TRL5–6). The software is tested on representative ground environments and, where possible, in orbit. The aim is a solution ready for field deployment right after the action.</p></div>
+    </div>
+    <div style="flex:1"></div>
+  </div>
+
+  <div style="flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;font-size:7pt;color:#666;margin:0 16mm 0 18mm;padding:2mm 0 7mm;border-top:1px solid #ddd">
+    <span>© 2026 — Starflight Dynamics GmbH · HRB 282254</span><span style="font-family:var(--font-mono)">{{ docId }}</span><span>Page 1 / 2</span>
+  </div>
+</section>
+
+<style>
+
+</style>

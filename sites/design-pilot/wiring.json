@@ -1,0 +1,59 @@
+{
+  "site": "design-pilot",
+  "stage": 1,
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/design-pilot",
+  "last_deploy": null,
+  "newsletter": {
+    "service": null,
+    "endpoint": null,
+    "status": null
+  },
+  "socials": {
+    "twitter": null,
+    "linkedin": null,
+    "instagram": null,
+    "status": null
+  },
+  "forms": {
+    "contact": {
+      "service": null,
+      "id": null,
+      "status": null
+    },
+    "newsletter_signup": {
+      "service": null,
+      "status": null
+    }
+  },
+  "analytics": {
+    "status": "skipped"
+  },
+  "legal": {
+    "impressum": "incomplete",
+    "privacy": "incomplete"
+  },
+  "robots": "disallow",
+  "notes": "Throwaway sandbox for the Phase 9 non-design-system pilot. Never published.",
+  "design": {
+    "source": "local",
+    "path": "_staging/design/inbox"
+  },
+  "brand": {
+    "doc_tokens": {
+      "--sfdy-blue": "#0432FF",
+      "--sfdy-cyan": "#00FDFF",
+      "--sfdy-green": "#00FB92",
+      "--sfdy-magenta": "#FF008A",
+      "--sfdy-black": "#000000",
+      "--sfdy-white": "#FFFFFF",
+      "--ink-950": "#000000",
+      "--ink-900": "#06070A",
+      "--ink-800": "#101319",
+      "--bg-base": "#000000",
+      "--surface-1": "#06070A",
+      "--surface-2": "#101319",
+      "--text-primary": "#FFFFFF",
+      "--accent": "#00FB92"
+    }
+  }
+}

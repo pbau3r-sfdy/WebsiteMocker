@@ -1,0 +1,23 @@
+{
+  "site":    "design-pilot",
+  "updated": "2026-10-14",
+  "brand": {
+    "names":   ["Design Pilot"],
+    "handles": { "twitter": null, "instagram": null, "linkedin": null },
+    "avoid":   []
+  },
+  "primary":   [],
+  "secondary": [],
+  "hashtags": {
+    "twitter":   [],
+    "linkedin":  [],
+    "instagram": []
+  },
+  "seo": {
+    "meta_description": "Design Pilot — placeholder tagline. Update via /wm-update-hero.",
+    "keywords":         []
+  },
+  "people":    [],
+  "partners":  [],
+  "locations": []
+}

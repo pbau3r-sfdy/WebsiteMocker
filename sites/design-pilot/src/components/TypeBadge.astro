@@ -1,0 +1,32 @@
+---
+export interface Props {
+  type: 'full-time' | 'part-time' | 'contract';
+}
+
+const { type } = Astro.props;
+
+const labels: Record<string, string> = {
+  'full-time': 'FULL-TIME',
+  'part-time': 'PART-TIME',
+  'contract':  'CONTRACT',
+};
+
+const label = labels[type] ?? type.toUpperCase();
+---
+
+<span class="badge">{label}</span>
+
+<style>
+  .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border: 1px solid var(--border-strong);
+    font-size: 11px;
+    font-weight: 300;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: transparent;
+  }
+</style>

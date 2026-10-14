@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "source": {
+    "type": "local",
+    "id": "_staging/design/inbox",
+    "name": null
+  },
+  "pulledAt": "2026-10-14T11:34:43.175Z",
+  "revision": null,
+  "files": {
+    "TELEX_A03_source/TELEX One-Pager EU A03.dc.html": {
+      "sha256": "e34ebe1dd1555b5e729164f2dd298494d20dd9cc37d290741e60c0821bedfb44",
+      "bytes": 35448
+    },
+    "TELEX_A03_source/TELEX One-Pager France A03.dc.html": {
+      "sha256": "8faccf1c9a7c29839a9f00caab0004da72e7fc12aed4f428f5fa1c8af1a46115",
+      "bytes": 35448
+    },
+    "TELEX_A03_source/TELEX One-Pager Generic A03.dc.html": {
+      "sha256": "c7bbf3ef8bac22f4485cf0314c3fc014cf8cdace733c90eb68af2fc3fd6e5220",
+      "bytes": 35453
+    },
+    "TELEX_A03_source/TELEX One-Pager Germany A03.dc.html": {
+      "sha256": "0354c10bf9cb4fa7b618725476a6b0bb6dfcf5a8ba79a0b135457578c8416eb0",
+      "bytes": 35448
+    },
+    "TELEX_A03_source/TELEX One-Pager Lithuania A03.dc.html": {
+      "sha256": "28f5b6b1bcb14cc81b74eb43eaf8d6049df7f907731c0b36621aaf016d39580f",
+      "bytes": 35448
+    },
+    "TELEX_A03_source/TELEX-OnePager.dc.html": {
+      "sha256": "a426f61cb557cfa97c6a854b886c3e8f9081b590ad92f63cfc08cdf3a03a6ce1",
+      "bytes": 35751
+    },
+    "TELEX_A03_source/_ds/starflight-dynamics-design-system-baa6f65c-d546-41fc-b2bd-d81d7c6da089/_ds_bundle.js": {
+      "sha256": "4e96f93f603236601338463e01b0b7c946c428e563dba3d94f2fdc236d9d0842",
+      "bytes": 32081
+    },
+    "TELEX_A03_source/_ds/starflight-dynamics-design-system-baa6f65c-d546-41fc-b2bd-d81d7c6da089/styles.css": {
+      "sha256": "8784d388ff8de33f41f7fd66e1abd1d31739b504ee93bae9517dfe57b7fade3b",
+      "bytes": 406
+    },
+    "TELEX_A03_source/_ds/starflight-dynamics-design-system-baa6f65c-d546-41fc-b2bd-d81d7c6da089/tokens/base.css": {
+      "sha256": "8f91b6bea81432ae6b74c943a1a93753f24ebb3bcf8ac54991ac366f3e08771d",
+      "bytes": 1408
+    },
+    "TELEX_A03_source/_ds/starflight-dynamics-design-system-baa6f65c-d546-41fc-b2bd-d81d7c6da089/tokens/colors.css": {
+      "sha256": "a5403d1ade3de5da238699ea335d7712ae40c206e11bfdbb53e425242a9df101",
+      "bytes": 2706
+    },
+    "TELEX_A03_source/_ds/starflight-dynamics-design-system-baa6f65c-d546-41fc-b2bd-d81d7c6da089/tokens/effects.css": {
+      "sha256": "b67315766f8ed55be550fa3019352885065c0c7e3b74e9775645ddc8c27f5531",
+      "bytes": 1393
+    },
+    "TELEX_A03_source/_ds/starflight-dynamics-design-system-baa6f65c-d546-41fc-b2bd-d81d7c6da089/tokens/fonts.css": {
+      "sha256": "7c12341c9c8a375a71569a2508605cdefc7eaf48d61a4f2a54f5939d97f8a166",
+      "bytes": 3060
+    },
+    "TELEX_A03_source/_ds/starflight-dynamics-design-system-baa6f65c-d546-41fc-b2bd-d81d7c6da089/tokens/spacing.css": {
+      "sha256": "8dde9381bea4047cbb5c9e962f8e2a914338533875d367df41e6726454bde1af",
+      "bytes": 910
+    },
+    "TELEX_A03_source/_ds/starflight-dynamics-design-system-baa6f65c-d546-41fc-b2bd-d81d7c6da089/tokens/typography.css": {
+      "sha256": "b74a98c90363b4ab0a0b323d2520ed8ea7e022e451d09771a1b6a447bb6ea4d7",
+      "bytes": 2033
+    },
+    "TELEX_A03_source/assets/flags/de.svg": {
+      "sha256": "17a16c1b43bd9d14aab8574924f1d2011b13c7550e8d499d8f90cbd77f8eb829",
+      "bytes": 8012
+    },
+    "TELEX_A03_source/assets/flags/eu.svg": {
+      "sha256": "aab30b71b7031352efee6acb36617bc19fa578edcde84ec1efb4672cb8b4667e",
+      "bytes": 9140
+    },
+    "TELEX_A03_source/assets/flags/fr.svg": {
+      "sha256": "6e855cf77e9fe3000dbf31bc7cb19b0f0a1fb88e27c8807bb37ee4c4061218c3",
+      "bytes": 8022
+    },
+    "TELEX_A03_source/assets/flags/it.svg": {
+      "sha256": "a9978cdf6ee471fc47c27ca537bbf50a33b6c0cea5c897fc8e44ec3c4887ed68",
+      "bytes": 8080
+    },
+    "TELEX_A03_source/assets/flags/lt.svg": {
+      "sha256": "59bf1fb2e46997a2291e835962f085333390ace2b47a24d0d1ebcd779219908a",
+      "bytes": 8230
+    },
+    "TELEX_A03_source/assets/flags/lu.svg": {
+      "sha256": "533d54a61f0de0fb56c19ff2f4ff07c6a8f5a1dcfd8bbf170237278a8d333655",
+      "bytes": 8016
+    },
+    "TELEX_A03_source/assets/flags/ua.svg": {
+      "sha256": "dbd09cc115a7eb41362e75be904c3001d8169e8cd1d17a1225f7be100e6653f5",
+      "bytes": 8017
+    },
+    "TELEX_A03_source/doc-page.js": {
+      "sha256": "f52ae9c02fca7ab44c37f3ff363194fdf81caa20ae63e2fe1f518ed21133185e",
+      "bytes": 38579
+    },
+    "TELEX_A03_source/support.js": {
+      "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe",
+      "bytes": 69150
+    }
+  },
+  "components": {
+    "Page": {
+      "from": "_staging/design/design-pilot/sanitised/TELEX_A03_source/TELEX One-Pager EU A03.dc.html#page",
+      "sha256": "f49ce7afb6b8f73742e53fabba3b08c0ae8ac357b5060dfd58384012af70311f"
+    }
+  },
+  "tokens": null
+}
