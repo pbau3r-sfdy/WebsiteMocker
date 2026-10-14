@@ -91,6 +91,11 @@ const filesDir  = join(stageRoot, 'files');
 const files2Dir = join(stageRoot, 'files2');
 const inboxDir  = join(ROOT, '_staging', 'design', 'inbox');
 
+// Binary assets are never staged as text (SD-02): they are skipped with a report line,
+// so the 256 KiB text cap does not apply to them.
+const BINARY_EXT = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif', '.ico', '.woff', '.woff2', '.otf', '.ttf', '.eot', '.pdf', '.zip', '.mp4', '.mov', '.webm', '.mp3']);
+const isBinaryPath = (rel) => BINARY_EXT.has(extname(rel).toLowerCase());
+
 // ── 2. Local import (SD-05) ───────────────────────────────────────────────────
 function checkZip(zipPath) {
   let zip;
@@ -106,7 +111,7 @@ function checkZip(zipPath) {
       if (target !== filesDir && !target.startsWith(filesDir + sep)) fail(`zip entry resolves outside staging: ${name}`);
     }
     if (((e.header.attr >>> 16) & 0o170000) === 0o120000) fail(`zip entry is a symlink: ${e.entryName}`);
-    if (!e.isDirectory && e.header.size >= SIZE_LIMIT) {
+    if (!e.isDirectory && e.header.size >= SIZE_LIMIT && !isBinaryPath(e.entryName)) {
       fail(`zip entry too large (${e.header.size} >= ${SIZE_LIMIT}): ${e.entryName}`);
     }
   }
@@ -219,17 +224,17 @@ const buffers = new Map();
 for (const rel of kept) {
   const buf = readFileSync(join(filesDir, rel));
   buffers.set(rel, buf);
-  if (buf.length >= SIZE_LIMIT) fail(`${rel} is ${buf.length} bytes, at or above ${SIZE_LIMIT}: likely truncated at the 256 KiB cap`);
+  if (buf.length >= SIZE_LIMIT && !isBinaryPath(rel)) fail(`${rel} is ${buf.length} bytes, at or above ${SIZE_LIMIT}: likely truncated at the 256 KiB cap`);
   const ls = listed.get(rel);
   if (typeof ls === 'number' && ls !== buf.length) fail(`${rel}: listing says ${ls} bytes, staged ${buf.length}`);
 }
 
 // ── 6. Syntax checks (async, before any write) ────────────────────────────────
-const isBinary = (buf) => buf.subarray(0, 8000).includes(0);
+const isBinary = (buf, rel = '') => isBinaryPath(rel) || buf.subarray(0, 8000).includes(0);
 const nextFiles = {};
 for (const rel of kept) {
   const buf = buffers.get(rel);
-  if (isBinary(buf)) { info(`skipped, binary: ${rel} (place manually, SD-02)`); continue; }
+  if (isBinary(buf, rel)) { info(`skipped, binary: ${rel} (place manually, SD-02)`); continue; }
   const src = buf.toString('utf8');
   const ext = extname(rel).toLowerCase();
   if (ext === '.css') {

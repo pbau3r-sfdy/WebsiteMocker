@@ -2,7 +2,7 @@
 /**
  * design-ingest.mjs: staged design content -> sanitise -> render (JSX) -> section ingest (DSYNC-09).
  *
- * Usage: node _scripts/design-ingest.mjs <slug> [--sections a,b] [--accept A,B] [--dry-run]
+ * Usage: node _scripts/design-ingest.mjs <slug> [--sections a,b] [--page <path-substring>] [--accept A,B] [--dry-run]
  *
  * Reads  _staging/design/<slug>/files/        (written by the pull step)
  * Writes _staging/design/<slug>/rendered/     (JSX rendered to HTML)
@@ -26,7 +26,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = process.env.WM_ROOT ? resolve(process.env.WM_ROOT) : join(HERE, '..');
 const INGEST = join(HERE, 'ingest-artifact.mjs');
 
-const USAGE = 'Usage: node _scripts/design-ingest.mjs <slug> [--sections a,b] [--accept A,B] [--dry-run]';
+const USAGE = 'Usage: node _scripts/design-ingest.mjs <slug> [--sections a,b] [--page <path-substring>] [--accept A,B] [--dry-run]';
 const die = (m) => { console.error(' x ' + m); process.exit(1); };
 
 const args = process.argv.slice(2);
@@ -35,6 +35,7 @@ const option = (n) => { const i = args.indexOf(n); if (i === -1 || !args[i + 1])
 const DRY = flag('--dry-run');
 const sectionsArg = option('--sections');
 const acceptArg = option('--accept');
+const pageArg = option('--page');
 const slug = args[0];
 if (!slug || !/^[a-z0-9-]+$/.test(slug)) die(USAGE);
 
@@ -69,7 +70,8 @@ const allowHosts = block?.allowHosts ?? [];
 const all = walk(files).map((p) => ({ abs: p, rel: relative(files, p).split('\\').join('/') }));
 const designSystem = block?.source === 'design-system';
 const htmlCands = all.filter((f) => f.rel.endsWith('.html') &&
-  (!designSystem || /^(templates|ui_kits)\/website\//.test(f.rel)));
+  (!designSystem || /^(templates|ui_kits)\/website\//.test(f.rel)) &&
+  (!pageArg || f.rel.includes(pageArg)));
 const jsxCands = all.filter((f) => /^components\/.+\.jsx$/.test(f.rel) &&
   /export\s+default/.test(readFileSync(f.abs, 'utf8')));
 
@@ -148,8 +150,15 @@ for (const s of sanitised) {
     continue;
   }
   const sections = JSON.parse(out).sections ?? [];
+  const seenHere = new Set();
   for (const sec of sections) {
     if (wanted.length && !wanted.some((w) => w.toLowerCase() === sec.name.toLowerCase())) continue;
+    // Sections are addressed by name, so a second section with the same name in one page is unreachable.
+    if (seenHere.has(sec.name)) {
+      console.warn(`  ! ${s.rel}: more than one section named "${sec.name}"; only the first is ingested (give the others distinct ids or classes in the source)`);
+      continue;
+    }
+    seenHere.add(sec.name);
     plan.push({ file: s, section: sec.name, component: pascal(sec.name) });
   }
 }
@@ -159,7 +168,8 @@ for (const p of plan) byName.set(p.component, [...(byName.get(p.component) ?? []
 const collisions = [...byName].filter(([, f]) => f.length > 1);
 if (collisions.length) {
   die('component name collision, nothing written: ' +
-    collisions.map(([n, f]) => `${n} (${f.join(', ')})`).join('; '));
+    collisions.map(([n, f]) => `${n} (${f.join(', ')})`).join('; ') +
+    '. Several pages define the same section names: choose one with --page <path-substring>.');
 }
 if (plan.length === 0) die('no sections to ingest' + (wanted.length ? ` matching ${wanted.join(',')}` : ''));
 
