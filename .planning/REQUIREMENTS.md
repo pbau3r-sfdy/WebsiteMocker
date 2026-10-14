@@ -25,11 +25,11 @@
 
 ## Analytics, optional per site, on one Plausible subscription (Phase 10)
 
-- [ ] **ANLY-01**: A shared `isSandbox` helper (`_scripts/lib/env.mjs`) is the single sandbox/production test used by `plausible.mjs` and later integrations
-- [ ] **ANLY-02**: `plausible.mjs` emits the current per-site script format when `analytics.scriptId` is set, falls back to the legacy snippet otherwise, and turns on outbound-link, file-download and form-submission events from `wiring.json`; a site without `analytics.status: configured` emits nothing
-- [ ] **ANLY-03**: Builds assert that the resolved Plausible domain matches the build kind (sandbox vs production) so sandbox traffic can never land in a production site
-- [ ] **ANLY-04**: An event contract is documented and implemented: `Download`, `Outbound Link: Click`, `Form`, and `404` (fired from `404.astro` with the path as a prop), with low-cardinality props (`site`, `content_type`) and a goals/props registration checklist
-- [ ] **ANLY-05**: A sanitised tracking mode keeps path secrets out of Plausible (page URL override or exclusion); hash-based tracking is never used; secrets never appear in path, query or fragment
+- [x] **ANLY-01**: A shared `isSandbox` helper (`_scripts/lib/env.mjs`) is the single sandbox/production test used by `plausible.mjs` and later integrations
+- [x] **ANLY-02**: `plausible.mjs` emits the current per-site script format when `analytics.scriptId` is set, falls back to the legacy snippet otherwise, and turns on outbound-link, file-download and form-submission events from `wiring.json`; a site without `analytics.status: configured` emits nothing
+- [x] **ANLY-03**: Builds assert that the resolved Plausible domain matches the build kind (sandbox vs production) so sandbox traffic can never land in a production site
+- [x] **ANLY-04**: An event contract is documented and implemented: `Download`, `Outbound Link: Click`, `Form`, and `404` (fired from `404.astro` with the path as a prop), with low-cardinality props (`site`, `content_type`) and a goals/props registration checklist
+- [x] **ANLY-05**: A sanitised tracking mode keeps path secrets out of Plausible (page URL override or exclusion); hash-based tracking is never used; secrets never appear in path, query or fragment
 - [ ] **ANLY-06**: `/wm-wire` has an optional analytics step (scriptId, goals checklist, privacy-policy snippet), and preflight/publish refuse to switch analytics on for a live site whose privacy policy lacks the Plausible section
 - [ ] **ANLY-07**: `fetch-analytics-data.mjs` calls Stats API v2 and writes aggregates only (no paths, referrers or drop rows) to a gitignored `_data/<slug>/analytics.json`; the API key lives only in the vault or a CI secret; the dashboard tile is local-only and labelled approximate, as of a date (conditional on the Business plan)
 - [ ] **ANLY-08**: A `verify-phase-10.sh` harness covers snippet output for sandbox, production and unconfigured sites, the domain assertion, the 404 event and the sanitised mode
@@ -109,11 +109,11 @@
 | DSYNC-11 | Phase 9 | Built (script + skill, fixture-tested); live seeding run deferred by operator 2026-10-14 |
 | DSYNC-12 | Phase 9 | Complete |
 | DSYNC-13 | Phase 9 | Complete |
-| ANLY-01 | Phase 10 | Pending |
-| ANLY-02 | Phase 10 | Pending |
-| ANLY-03 | Phase 10 | Pending |
-| ANLY-04 | Phase 10 | Pending |
-| ANLY-05 | Phase 10 | Pending |
+| ANLY-01 | Phase 10 | Complete |
+| ANLY-02 | Phase 10 | Complete |
+| ANLY-03 | Phase 10 | Complete |
+| ANLY-04 | Phase 10 | Complete |
+| ANLY-05 | Phase 10 | Complete |
 | ANLY-06 | Phase 10 | Pending |
 | ANLY-07 | Phase 10 | Pending |
 | ANLY-08 | Phase 10 | Pending |
