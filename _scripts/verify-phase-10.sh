@@ -214,6 +214,12 @@ if want gate; then
   g gate-sandbox --live;  check "gate-sandbox --live fails (1)" "$(rcis 1)"
   g gate-off;             check "gate-off not applicable (0)" "$(rcis 0)"
   g no-such-slug;         check "unknown slug exits 2" "$(rcis 2)"
+  g gate-comment-only;    check "gate: Plausible/Web analytics only in comments fails (1)" "$(rcis 1)"
+  g gate-jsx-comment;     check "gate: JSX-commented section fails (1)" "$(rcis 1)"
+  g gate-md-frontmatter;  check "gate: markdown frontmatter only (no heading) fails (1)" "$(rcis 1)"
+  g gate-notracking;      check "gate: 'no cross-site tracking' / 'no tracking pixels' wording passes (0)" "$(rcis 0)"
+  g gate-md-ok;           check "gate: markdown '## Web analytics' page passes (0)" "$(rcis 0)"
+  g gate-subdir;          check "gate: privacy page in a subdirectory is found (0)" "$(rcis 0)"
 fi
 
 # ── fetch (WR-03, offline: every case fails before any request is made) ───────────

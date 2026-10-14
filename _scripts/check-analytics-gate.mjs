@@ -6,11 +6,12 @@
  * Exit:  0 pass or not applicable, 1 gate failure, 2 usage error / unknown slug.
  *
  * A site with analytics configured that is live (--live, stage >= 5, or a domain
- * set) must have a privacy page naming Plausible with a "Web analytics" section
- * and no "no analytics" statement. WM_ROOT overrides the repo root (test harness).
+ * set) must have a privacy page (any depth under src/pages) naming Plausible, with a
+ * "Web analytics" heading/section, and no "no analytics" statement. Comments,
+ * markdown frontmatter and script/style blocks are ignored. WM_ROOT overrides the repo root (test harness).
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = process.env.WM_ROOT || join(fileURLToPath(import.meta.url), '..', '..');
@@ -50,9 +51,20 @@ if (!isLive) {
 }
 
 const pagesDir = join(ROOT, 'sites', slug, 'src', 'pages');
-const candidates = existsSync(pagesDir)
-  ? readdirSync(pagesDir).filter((f) => /^(privacy|datenschutz)/.test(f) && /\.(astro|md)$/.test(f))
-  : [];
+
+// Privacy pages: privacy*/datenschutz* files anywhere under src/pages, or any file
+// below a privacy*/datenschutz* directory.
+const PRIV = /^(privacy|datenschutz)/i;
+function walk(dir, inPriv = false) {
+  const out = [];
+  for (const d of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, d.name);
+    if (d.isDirectory()) out.push(...walk(full, inPriv || PRIV.test(d.name)));
+    else if (/\.(astro|md|mdx)$/.test(d.name) && (inPriv || PRIV.test(d.name))) out.push(full);
+  }
+  return out;
+}
+const candidates = existsSync(pagesDir) ? walk(pagesDir).sort() : [];
 
 const fail = (msg) => {
   console.error(`\n✖  ${slug}: ${msg}`);
@@ -60,20 +72,43 @@ const fail = (msg) => {
 };
 
 if (candidates.length === 0) {
-  fail(`analytics is configured but no privacy page (privacy*/datenschutz* .astro/.md) exists in ${pagesDir}`);
+  fail(`analytics is configured but no privacy page (privacy*/datenschutz* .astro/.md/.mdx) exists under ${pagesDir}`);
 }
 
-const texts = candidates.map((f) => ({ f, t: readFileSync(join(pagesDir, f), 'utf-8') }));
-const NO_ANALYTICS = /\b(no|without)\s+(web\s+)?(analytics|tracking)\b|does not use (any )?(analytics|tracking)|keine\s+(web)?analyse/i;
+// Only what a reader can see counts: drop YAML frontmatter of .md/.mdx files, HTML and
+// JSX comments, JS comments, <script>/<style> blocks. (.astro frontmatter is code that
+// holds the section data, so its strings stay; only its comments go.)
+function visible(file, raw) {
+  let t = raw.replace(/\r\n/g, '\n');
+  if (/\.mdx?$/.test(file)) t = t.replace(/^---\n[\s\S]*?\n---\n?/, '');
+  t = t
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/\{\s*\/\*[\s\S]*?\*\/\s*\}/g, ' ')
+    .replace(/\/\*[\s\S]*?\*\//g, ' ')
+    .replace(/(^|\s)\/\/[^\n]*/g, '$1')
+    .replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, ' ');
+  return t;
+}
 
-for (const { f, t } of texts) {
-  if (NO_ANALYTICS.test(t)) fail(`${f} still states that no analytics/tracking is used`);
+// An explicit claim that no analytics is used; "no cookies", "does not track you across
+// websites" and "no tracking" inside other sentences must not match.
+const NO_ANALYTICS = /\b(?:do(?:es)?\s+not|don't|never)\s+(?:use|run|employ|operate)\s+(?:any\s+)?(?:web\s+)?analytics\b|\bno\s+(?:web\s+)?analytics\s+(?:is|are)\s+(?:used|in use|employed)\b|\b(?:uses?|using|with)\s+no\s+(?:web\s+)?analytics\b|\bkeine\s+(?:web)?analyse(?:tools?)?\b/i;
+const HEADING = /(^|\n)\s{0,3}#{1,6}\s*web analytics\b|<h[1-6][^>]*>\s*web analytics\b|['"`]\s*web analytics\s*['"`]/i;
+
+const docs = candidates.map((f) => {
+  const t = visible(f, readFileSync(f, 'utf-8'));
+  return { f: relative(pagesDir, f), t, text: t.replace(/<[^>]+>/g, ' ') };
+});
+
+for (const { f, text } of docs) {
+  if (NO_ANALYTICS.test(text)) fail(`${f} still states that no analytics/tracking is used`);
 }
-if (!texts.some(({ t }) => /plausible/i.test(t))) {
-  fail(`no privacy page (${candidates.join(', ')}) names Plausible`);
+const names = candidates.map((f) => relative(pagesDir, f)).join(', ');
+if (!docs.some(({ text }) => /plausible/i.test(text))) {
+  fail(`no privacy page (${names}) names Plausible in its visible text`);
 }
-if (!texts.some(({ t }) => /web analytics/i.test(t))) {
-  fail(`no privacy page (${candidates.join(', ')}) contains the 'Web analytics' section`);
+if (!docs.some(({ t, text }) => HEADING.test(t) && /plausible/i.test(text))) {
+  fail(`no privacy page (${names}) has a 'Web analytics' heading/section that also names Plausible`);
 }
 
 console.log(`✔  ${slug}: privacy policy contains the Plausible 'Web analytics' section`);
