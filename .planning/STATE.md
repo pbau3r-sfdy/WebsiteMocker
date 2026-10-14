@@ -66,35 +66,4 @@ Carried from v1.0:
 
 ## Deferred Items
 
-| Category | Item | Status | Deferred At |
-|----------|------|--------|-------------|
-| *(none)* | | | |
-| Phase 09 P03 | 1 session | 2 tasks | 9 files |
-| Phase 09 P05 | 20min | 2 tasks | 5 files |
-| Phase 11 P01 | 35min | 3 tasks | 9 files |
-| Phase 11 P04 | 30min | 3 tasks | 11 files |
-| Phase 11 P05 | 25min | 3 tasks | 6 files |
-
-## Session Continuity
-
-Last session: 2026-10-14T19:16:28.443Z
-Stopped at: Completed 11-05-PLAN.md
-Resume file: None
-
-## Operator Next Steps
-
-- Start the next milestone with /gsd-new-milestone
-
-### Roadmap Evolution
-
-- Phase 12 added: SFDY Cutover (publish sfdy-alt-clean-reskin-2 as the live site) — 2026-10-14
-- Phase 11.1 inserted after Phase 11: Retool reskin-2 before Phase 12 cutover (review feedback: drop Systems from In-Space Power Projection, remove X/Instagram/Facebook footer links, consent banner and privacy notice when analytics is on, hero sentence, further designs) (URGENT)
-
-## Deferred Items
-
-Items acknowledged and deferred at milestone close on 2026-10-14:
-
-| Category | Item | Status |
-|----------|------|--------|
-| verification | Phase 09 (09-VERIFICATION.md): hands-on run of the interactive /wm-design-pull flow; the live seed item was closed by Phase 12 plan 06 | human_needed |
-| verification | Phase 11.1 (11.1-VERIFICATION.md): operator decisions made (Applications section and Careers mailbox kept; legal checklist accepted); a lawyer's review of the Plausible privacy wording was not done | human_needed |
+None at close of v1.2. Two verification items flagged `human_needed` (Phase 09 /wm-design-pull flow, Phase 11.1 privacy and contact decisions) were accepted by the operator on 2026-10-14.

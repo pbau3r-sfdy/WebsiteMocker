@@ -14,7 +14,7 @@
 - **Retool (Phase 11.1) and cutover (Phase 12):** the renamed baseline `sfdy` replaced the old site on www.starflight-dynamics.com with a backup branch, internal pages gated out of production, a fixed contributor sync, and 24 live checks green.
 - **Harnesses:** fixture and live verification scripts for phases 9 to 12 (phase 11 alone: 395 checks).
 
-Known deferred items at close: 2 (see STATE.md Deferred Items).
+Known deferred items at close: 0 (two verification items accepted by the operator).
 
 ---
 
