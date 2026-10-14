@@ -35,7 +35,7 @@ Full archive: [v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md) · phase records: [v
 ### 📋 v1.2 Claude Design Connectivity, Analytics, Open Drops (Planned)
 
 - [x] **Phase 9: Claude Design Connectivity** - Optional, ad hoc pull of design sources (design system, local export zip; artifact-link route dropped per SD-04) into any site, gated by a DesignSync spike. Completed 2026-10-14; DSYNC-11 live seeding run deferred
-- [ ] **Phase 10: Analytics** - Optional per-site Plausible analytics on one subscription, with an event contract, privacy gating and a sanitised tracking mode; on for `sfdy-alt-clean-reskin-2` only (and www.starflight-dynamics.com after the Phase 12 cutover)
+- [x] **Phase 10: Analytics** - Optional per-site Plausible analytics on one subscription, with an event contract, privacy gating and a sanitised tracking mode; on for `sfdy-alt-clean-reskin-2` only (and www.starflight-dynamics.com after the Phase 12 cutover) (completed 2026-10-14)
 - [ ] **Phase 11: Open Drops** - Unguessable, expiring, withdrawable, trackable `/d/<id>/` pages for confidential-not-secret drafts; adopted on `sfdy-alt-clean-reskin-2`
 - [ ] **Phase 12: SFDY Cutover** - Publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com (strip jobs, remove internal pages, fix contributor sync, publish)
 
@@ -121,7 +121,7 @@ Plans:
 
 **Wave 3** *(blocked on 10-04 and on Phase 11.1 having landed)*
 
-- [ ] 10-05-PLAN.md — Wire reskin-2 (pa- tag, D-02 sandbox debug opt-in, 404 page), operator live debug checkpoint, event-name decision (ANLY-09, 04)
+- [x] 10-05-PLAN.md — Wire reskin-2 (pa- tag, D-02 sandbox debug opt-in, 404 page), operator live debug checkpoint, event-name decision (ANLY-09, 04)
 
 ### Phase 11: Open Drops
 
@@ -189,6 +189,6 @@ Plans:
 | 7. Archive Module | v1.1 | 2/2 | Complete | 2026-08-25 |
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
 | 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
-| 10. Analytics | v1.2 | 4/5 | In Progress|  |
+| 10. Analytics | v1.2 | 5/5 | Complete   | 2026-10-14 |
 | 11. Open Drops | v1.2 | 0/TBD | Not started | - |
 | 12. SFDY Cutover | v1.2 | 0/TBD | Not started | - |
