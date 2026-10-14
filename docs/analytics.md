@@ -55,7 +55,7 @@ Observed tracker names: pending (10-05 debug session).
 
 ## Sanitised mode (ANLY-05)
 
-Fragments are always stripped. With `sanitise` (default), query strings are dropped, 32-hex and 40+ character token segments become `_ID_`, and props and referrer are scrubbed. `analytics.exclude` drops matching events. Hash-based routing is never used.
+Fragments are always stripped. With `sanitise` (default), query strings are dropped, 32-hex and 40+ character token segments become `_ID_`, and props and referrer are scrubbed. `analytics.exclude` drops matching events. Hash-based routing (hash-based URLs) is never used.
 
 ## Goals and props checklist (Plausible UI)
 
