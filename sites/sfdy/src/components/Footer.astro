@@ -1,5 +1,6 @@
 ---
 import { OPEN_POINTS } from '../data/open-points';
+import { SHOW_INTERNAL } from '../data/internal';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const pages = [
   ['Home', '/'], ['About', '/about'], ['Capabilities', '/capabilities'], ['Careers', '/jobs'], ['News', '/news'],
@@ -30,7 +31,7 @@ const socials = [
   </div>
   <div class="wrap copy mono">
     <span>© {new Date().getFullYear()} Starflight Dynamics GmbH</span>
-    {OPEN_POINTS.length > 0 && <a href={`${b}/open-points`} class="open">{OPEN_POINTS.length} open point{OPEN_POINTS.length > 1 ? 's' : ''} →</a>}
+    {SHOW_INTERNAL && OPEN_POINTS.length > 0 && <a href={`${b}/open-points`} class="open">{OPEN_POINTS.length} open point{OPEN_POINTS.length > 1 ? 's' : ''} →</a>}
   </div>
 </footer>
 

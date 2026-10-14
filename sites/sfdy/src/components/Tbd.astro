@@ -1,12 +1,16 @@
 ---
 /** Open point that must be resolved before launch. Renders in high-visibility yellow;
     the layout counts every marker and shows a jump-to pill. `id` refers to one or more
-    entries in src/data/open-points.ts (listed on /open-points); `block` for a full-width note. */
+    entries in src/data/open-points.ts (listed on /open-points); `block` for a full-width note.
+    Production builds (SHOW_INTERNAL false) render the slot as plain text. */
 import { pointById } from '../data/open-points';
+import { SHOW_INTERNAL } from '../data/internal';
 interface Props { id: string | string[]; block?: boolean; }
 const { id, block = false } = Astro.props;
 const ids = Array.isArray(id) ? id : [id];
-const titles = ids.map(i => pointById(i).title).join(' · ');
+const titles = SHOW_INTERNAL ? ids.map(i => pointById(i).title).join(' · ') : '';
 const Tag = block ? 'div' : 'mark';
 ---
-<Tag id={`tbd-${ids[0]}`} class:list={['tbd', { block }]} data-points={ids.join(' ')} title={`To be resolved: ${titles}`}><slot /></Tag>
+{SHOW_INTERNAL
+  ? <Tag id={`tbd-${ids[0]}`} class:list={['tbd', { block }]} data-points={ids.join(' ')} title={`To be resolved: ${titles}`}><slot /></Tag>
+  : <slot />}
