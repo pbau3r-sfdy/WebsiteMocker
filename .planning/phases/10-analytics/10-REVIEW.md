@@ -7,13 +7,26 @@ findings:
   warning: 6
   info: 3
   total: 10
-status: issues_found
+status: fixed
+resolved:
+  - CR-01
+  - WR-01
+  - WR-02
+  - WR-03
+  - WR-04
+  - WR-05
+  - IN-01
+  - IN-02
+  - IN-03
+not_code:
+  - WR-06   # sandboxUsesProdId stays on (documented); remove at the Phase 12 cutover
+fixed_at: 2026-10-14
 ---
 
 # Phase 10 Code Review
 
 Reviewed: `_scripts/lib/env.mjs`, `_scripts/lib/plausible-snippet.mjs`, `_scripts/plausible.mjs`, `_scripts/check-analytics-gate.mjs`, `_scripts/fetch-analytics-data.mjs`, `_scripts/verify-phase-10.sh`, `src/components/AnalyticsTile.astro`, `sites/sfdy-alt-clean-reskin-2/src/pages/404.astro`.
-Advisory only. Nothing fixed yet.
+Fixed 2026-10-14 (see 10-REVIEW-FIX commits `fix(10): ...`). WR-06 is intentionally left as documented.
 
 ## CR-01 (blocker): `exclude` never matches in sandbox builds
 `plausible-snippet.mjs:111-114` (TRANSFORM_FACTORY_SRC) compares the raw `location.pathname` with `indexOf(ex[k])===0`. Sandbox builds are served under `/WebsiteMocker/<slug>/`, so an exclude such as `/preview/` never matches and those events reach production Plausible (live reskin-2 uses `sandboxUsesProdId`). Also no segment boundary (`/preview` swallows `/previews`) and no normalisation (`//preview/`, percent-encoding). Fix: pass `base` into the transform config, strip it, collapse slashes, decode, match on a segment boundary; add a sandbox-base vector to `payloads.mjs`.
