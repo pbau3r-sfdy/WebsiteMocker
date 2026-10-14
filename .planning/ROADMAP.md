@@ -98,7 +98,7 @@ Plans:
 **Goal**: Operator can switch on cookie-free Plausible analytics per site on a single subscription, with sandbox traffic isolated from production, privacy obligations enforced, and `sfdy-alt-clean-reskin-2` measured end to end
 **Depends on**: Nothing for planning; execution of the reskin-2 wiring follows Phase 11.1 (privacy section, job removal)
 **Requirements**: ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06, ANLY-07, ANLY-08, ANLY-09
-**Note:** When analytics is switched on for reskin-2 / starflight-dynamics.com, add a consent banner and update the Data Protection Notice (reviewer feedback 2026-10-14; CUT-03). Phase 10 D-04 currently decides no banner (cookie-free Plausible); confirm with the legal reviewer.
+**Note:** When analytics is switched on for reskin-2 / starflight-dynamics.com, add a consent banner and update the Data Protection Notice (reviewer feedback 2026-10-14; CUT-03). Operator decision 2026-10-14 (D-04 confirmed): no banner, because Plausible sets no cookies; the Data Protection Notice has the Web analytics section. The legal reviewer's banner feedback was not separately confirmed.
 **Success Criteria** (what must be TRUE):
 
   1. A site without `analytics.status: configured` emits no analytics script; a configured site emits the per-site script (or legacy fallback) and enabled outbound-link, download and form events, and sandbox and production builds are told apart by one shared `isSandbox` helper
@@ -155,7 +155,7 @@ Plans:
 **Depends on**: Nothing (may run before or after Phases 9-11; does not wait on analytics)
 **Requirements**: CUT-01, CUT-02, CUT-03, CUT-04, CUT-05, CUT-06
 **Note:** CUT-01 is satisfied by Phase 11.1 (RETL-04); no jobs removal work in this phase.
-**Note:** When analytics is switched on for reskin-2 / starflight-dynamics.com, add a consent banner and update the Data Protection Notice (reviewer feedback 2026-10-14; CUT-03). Phase 10 D-04 currently decides no banner (cookie-free Plausible); confirm with the legal reviewer.
+**Note:** When analytics is switched on for reskin-2 / starflight-dynamics.com, add a consent banner and update the Data Protection Notice (reviewer feedback 2026-10-14; CUT-03). Operator decision 2026-10-14 (D-04 confirmed): no banner, because Plausible sets no cookies; the Data Protection Notice has the Web analytics section. The legal reviewer's banner feedback was not separately confirmed.
 **Success Criteria** (what must be TRUE):
 
   1. `reskin-2` has no jobs pages, jobs content entries, `JobRow` or Nav/Footer jobs links, and builds cleanly; the 31 job files remain recoverable from git history (done in Phase 11.1, RETL-04)
@@ -166,7 +166,7 @@ Plans:
 
 **Notes from Phase 10**:
   - Remove `analytics.sandboxUsesProdId` from `sites/sfdy-alt-clean-reskin-2/wiring.json` at cutover (D-02 debug opt-in; `/wm-preflight` warns while it is set), rebuild, then consider a Plausible hostname allowlist for starflight-dynamics.com
-  - Confirm the no-consent-banner decision (Phase 10 D-04) with the legal reviewer before publishing
+  - No-consent-banner decision (Phase 10 D-04) confirmed by the operator 2026-10-14 (no cookies set)
 
 **Plans**: TBD
 
