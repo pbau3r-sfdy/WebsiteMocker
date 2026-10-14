@@ -56,3 +56,11 @@ Pages rebuilds in about a minute. Then also revert the bookkeeping: set `stage` 
 - Task 3 (operator confirms the Plausible pageview from the real domain) is done by the orchestrator via Chrome and will be appended here.
 
 ## Self-Check: PASSED
+
+## Task 3: operator confirmation (2026-10-14)
+
+Operator confirmed in chat that the live site and tracking work ("it works"). Claude in Chrome was not connected during the session, so the Plausible realtime view was not checked by Claude; the live harness (24 passed) and outside-in checks cover pages, robots, CNAME, .nojekyll, CSS and the Plausible snippet.
+
+## Deferred to the end of the phase
+
+Plan 12-06 (design seed, CUT-07 / DSYNC-11) is parked by operator decision until the remaining milestone work is done. It needs `/design-login` first (DesignSync authorization had lapsed) and the two operator approvals described in the plan.
