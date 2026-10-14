@@ -225,7 +225,7 @@ if want notfound; then
     check "404.astro exists" 0
     OUT=$(cat "$P404")
     check "404.astro calls plausible('404'" "$(has "plausible('404'")"
-    check "404.astro sends path: location.pathname" "$(has 'path: location.pathname')"
+    check "404.astro does not send the full location.pathname" "$(hasnt 'path: location.pathname')"
     check "404.astro guards window.plausible" "$(has 'window.plausible')"
   else
     check "404.astro exists (created by plan 10-05)" 1
@@ -234,6 +234,32 @@ if want notfound; then
     import { VECTORS } from '$FX/payloads.mjs';
     process.exit(VECTORS.some(v => v.name.startsWith('404')) ? 0 : 1)"
   check "404 path vector exists" "$(rcis 0)"
+  if [ -f "$P404" ]; then
+    # Behavioural: run the page's inline script against a stub window/location.
+    run node --input-type=module -e "
+      import { readFileSync } from 'node:fs';
+      const src = readFileSync('$P404', 'utf8');
+      const m = /<script is:inline[^>]*>([\\s\\S]*?)<\\/script>/.exec(src);
+      if (!m) { console.log('FAIL no inline script'); process.exit(0); }
+      const t = (base, pathname, withPlausible = true) => {
+        const calls = [];
+        const w = withPlausible ? { plausible: (...a) => calls.push(a) } : {};
+        new Function('window', 'location', 'base', m[1])(w, { pathname }, base);
+        return JSON.stringify(calls);
+      };
+      const eq = (name, got, exp) => console.log((got === JSON.stringify(exp) ? 'PASS ' : 'FAIL ') + name + (got === JSON.stringify(exp) ? '' : ' got ' + got));
+      eq('404 script: first segment only, base stripped', t('/WebsiteMocker/fx', '/WebsiteMocker/fx/a/b/c'), [['404', { props: { path: '/a' } }]]);
+      eq('404 script: deeper segments dropped', t('', '/jane@example.com/secret/x'), [['404', { props: { path: '/jane@example.com' } }]]);
+      eq('404 script: root path', t('', '/'), [['404', { props: { path: '/' } }]]);
+      eq('404 script: no plausible is a no-op', t('', '/x', false), []);
+    "
+    while IFS= read -r line; do
+      case "$line" in
+        "PASS "*) check "${line#PASS }" 0 ;;
+        "FAIL "*) check "${line#FAIL }" 1 ;;
+      esac
+    done <<< "$OUT"
+  fi
   B="$REPO/dist/sfdy-alt-clean-reskin-2/404.html"
   if [ -f "$B" ]; then
     OUT=$(cat "$B"); check "built 404.html contains plausible('404'" "$(has "plausible('404'")"

@@ -29,7 +29,7 @@ ANLY-03 identity violations fail the build with `[plausible] ANLY-03:`.
 
 ## Build kinds
 
-- **Production** (base `/`): reports to `scriptId`, or to `analytics.domain` (default `wiring.domain` without `www.`).
+- **Production** (base `/`): reports to `scriptId`, or to `analytics.domain` (default `wiring.domain` without `www.`). The Astro `site` (SITE_URL) must be set and its hostname (without `www.`) must equal that domain, otherwise the build fails with ANLY-03.
 - **Sandbox** (base `/WebsiteMocker/<slug>`): sites with a `scriptId` emit nothing unless `sandboxScriptId` or `sandboxUsesProdId` is set. Legacy sites without `scriptId` keep reporting to `pbau3r-sfdy.github.io` (documented exception).
 - `astro dev` and localhost never report.
 
@@ -47,7 +47,7 @@ Removal: At the Phase 12 cutover, delete analytics.sandboxUsesProdId from sites/
 | `Outbound Link: Click` | init `outboundLinks` | `url` | Sanitised |
 | `File Download` | init `fileDownloads` | `url` | Tracker built-in name, observed live and adopted (10-05) |
 | `Form: Submission` | init `formSubmissions` | none | Tracker built-in name, observed live and adopted (10-05). web3forms posts cross-origin, so this event is best effort |
-| `404` | manual call in the site's `404.astro`: `plausible('404', { props: { path: location.pathname } })` | `path` | Path sanitised by `transformRequest` |
+| `404` | manual call in the site's `404.astro`: `plausible('404', { props: { path: '/' + firstSegment } })` | `path` | Coarse: only the first path segment after the base (max 40 chars), never the full URL, then sanitised by `transformRequest` |
 
 Custom props `site` and `content_type` (values: home, news, blog, announcements, press, drop, page) are sent only when `analytics.props` is true (Business plan, D-03). Otherwise no custom props are sent.
 
@@ -55,7 +55,7 @@ Observed tracker names (2026-10-14, live sandbox debug session): outbound = `Out
 
 ## Sanitised mode (ANLY-05)
 
-Fragments are always stripped. With `sanitise` (default), query strings are dropped, 32-hex and 40+ character token segments become `_ID_`, and props and referrer are scrubbed. `analytics.exclude` drops matching events. Hash-based routing (hash-based URLs) is never used.
+Fragments are always stripped. With `sanitise` (default), query strings are dropped, path segments that look like identifiers become `_ID_` (32-hex, dashed UUIDs, 40+ character tokens, 24+ character mixed-case tokens containing a digit, and any segment containing `@`, also when percent-encoded), and props and referrer are scrubbed. `analytics.exclude` (array of paths starting with `/`) drops matching events: the site base (e.g. `/WebsiteMocker/<slug>`) is stripped, slashes and dot segments are collapsed, the path is percent-decoded and compared case-insensitively on a segment boundary (`/preview/` matches `/preview` and `/preview/x`, not `/previews`). Hash-based routing (hash-based URLs) is never used.
 
 ## Goals and props checklist (Plausible UI)
 

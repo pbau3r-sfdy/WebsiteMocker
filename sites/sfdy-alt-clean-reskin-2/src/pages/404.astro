@@ -17,8 +17,13 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <Footer />
 
-  <script is:inline>
-    window.plausible && window.plausible('404', { props: { path: location.pathname } });
+  <script is:inline define:vars={{ base: b }}>
+    // Coarse on purpose (WR-01): only the first path segment after the base, so a
+    // mistyped or guessed URL (ids, emails) never reaches Plausible as a full path.
+    var p = location.pathname;
+    if (base && p.indexOf(base) === 0) p = p.slice(base.length);
+    var seg = p.split('/').filter(Boolean)[0] || '';
+    window.plausible && window.plausible('404', { props: { path: '/' + seg.slice(0, 40) } });
   </script>
 </Layout>
 
