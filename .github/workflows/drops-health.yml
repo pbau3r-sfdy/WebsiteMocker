@@ -1,0 +1,92 @@
+# Drops health: nightly token and expiry watch (Phase 11, D-04, D-06).
+# This workflow only warns. It never publishes and never auto-republishes (D-04).
+# A non-zero exit fails the run and GitHub's failure notification emails the
+# operator; keep Actions email notifications switched on.
+# Scheduled workflows in public repos are disabled after 60 days without repository
+# activity: re-enable manually if that happens.
+# Token expiry date and the renewal checklist live in docs/drops.md.
+name: Drops health
+
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: drops-health
+  cancel-in-progress: false
+
+jobs:
+  token:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Token check
+        run: node _scripts/check-drops-token.mjs
+        env:
+          GH_TOKEN: ${{ secrets.WM_PUBLISH_PAT }}
+
+  expiry:
+    needs: token
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Checkout private drops
+        uses: actions/checkout@v7
+        with:
+          repository: pbau3r-sfdy/drops
+          token: ${{ secrets.WM_PUBLISH_PAT }}
+          path: _drops
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install qpdf
+        run: sudo apt-get update -qq && sudo apt-get install -y qpdf
+
+      - name: Compute drops-enabled live sites
+        id: sites
+        run: |
+          node -e "
+            const fs = require('fs');
+            const out = [];
+            for (const d of fs.readdirSync('sites')) {
+              let w;
+              try { w = JSON.parse(fs.readFileSync('sites/' + d + '/wiring.json', 'utf8')); } catch (e) { continue; }
+              if (w.drops && w.drops.enabled === true && w.stage === 6 && /^[a-z0-9-]+\$/.test(d)) out.push(d);
+            }
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'slugs=' + out.join(' ') + '\n');
+            console.log('drops-enabled live sites: ' + out.length);
+          "
+
+      - name: Drops expiry check
+        run: |
+          for slug in $SLUGS; do
+            node _scripts/drop.mjs check "$slug" --ci --live --strict
+          done
+        env:
+          SLUGS: ${{ steps.sites.outputs.slugs }}
+          DROPS_DIR: ${{ github.workspace }}/_drops
+          GITHUB_TOKEN: ${{ github.token }}
