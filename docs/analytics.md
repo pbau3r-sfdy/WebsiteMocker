@@ -45,13 +45,13 @@ Removal: At the Phase 12 cutover, delete analytics.sandboxUsesProdId from sites/
 |---|---|---|---|
 | `pageview` | automatic | none | Sanitised URL |
 | `Outbound Link: Click` | init `outboundLinks` | `url` | Sanitised |
-| `Download` | init `fileDownloads` | `url` | The tracker's built-in name is believed to be `File Download`; it is mapped to `Download` via `analytics.eventNames`, or the contract adopts the observed name (decided in plan 10-05 after network observation) |
-| `Form` | init `formSubmissions` | none | Built-in name believed to be `Form: Submission`; same caveat. web3forms posts cross-origin, so this event is best effort |
+| `File Download` | init `fileDownloads` | `url` | Tracker built-in name, observed live and adopted (10-05) |
+| `Form: Submission` | init `formSubmissions` | none | Tracker built-in name, observed live and adopted (10-05). web3forms posts cross-origin, so this event is best effort |
 | `404` | manual call in the site's `404.astro`: `plausible('404', { props: { path: location.pathname } })` | `path` | Path sanitised by `transformRequest` |
 
 Custom props `site` and `content_type` (values: home, news, blog, announcements, press, drop, page) are sent only when `analytics.props` is true (Business plan, D-03). Otherwise no custom props are sent.
 
-Observed tracker names: pending (10-05 debug session).
+Observed tracker names (2026-10-14, live sandbox debug session): outbound = `Outbound Link: Click`, download = `File Download`, form = `Form: Submission`, 404 = `404`. Decision: ADOPT. ANLY-04 names amended by operator decision on 2026-10-14; no `analytics.eventNames` remap is configured. The `?token`/`#secret` stripping is verified by the fixture harness only, not live.
 
 ## Sanitised mode (ANLY-05)
 
@@ -61,7 +61,7 @@ Fragments are always stripped. With `sanitise` (default), query strings are drop
 
 1. Confirm the site starflight-dynamics.com exists in Plausible (registered without `www.`).
 2. After the first deployed pageview, confirm the dashboard detects the script.
-3. Create custom-event goals with exact, case-sensitive names: `Download`, `Outbound Link: Click`, `Form`, `404` (or the observed names if the contract adopts them). Goals are not backfilled.
+3. Create custom-event goals with exact, case-sensitive names: `Outbound Link: Click`, `File Download`, `Form: Submission`, `404` (observed names, adopted). Reminder: delete any unused candidate goals (`Download`, `Form`) if they were created. Goals are not backfilled.
 4. Business plan only: register custom props `site` and `content_type` and set `analytics.props` to true.
 5. Sign the Plausible DPA.
 6. Confirm the privacy policy has the "Web analytics" section (gate: `node _scripts/check-analytics-gate.mjs <slug> --live`).
