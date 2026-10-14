@@ -36,7 +36,7 @@ Full archive: [v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md) · phase records: [v
 
 - [x] **Phase 9: Claude Design Connectivity** - Optional, ad hoc pull of design sources (design system, local export zip; artifact-link route dropped per SD-04) into any site, gated by a DesignSync spike. Completed 2026-10-14; DSYNC-11 live seeding run deferred
 - [x] **Phase 10: Analytics** - Optional per-site Plausible analytics on one subscription, with an event contract, privacy gating and a sanitised tracking mode; on for `sfdy-alt-clean-reskin-2` only (and www.starflight-dynamics.com after the Phase 12 cutover) (completed 2026-10-14)
-- [ ] **Phase 11: Open Drops** - Unguessable, expiring, withdrawable, trackable `/d/<id>/` pages for confidential-not-secret drafts; adopted on `sfdy-alt-clean-reskin-2`
+- [ ] **Phase 11: Open Drops** - Unguessable, expiring, withdrawable, trackable `/d/<id>/` pages for confidential-not-secret drafts; adopted on `sfdy`
 - [ ] **Phase 12: SFDY Cutover** - Publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com (strip jobs, remove internal pages, fix contributor sync, publish)
 
 Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Phase 10. Phase 12 is independent and may run at any point.
@@ -134,9 +134,27 @@ Plans:
   2. On a site with `drops.enabled`, an active drop renders at `/d/<id>/` with neutral title, no Open Graph tags, noindex and no-referrer, and no sitemap, RSS, dashboard, robots or inbound-link exposure; expired and withdrawn drops are not built, and sandbox builds contain no `/d/` unless `DROPS_PREVIEW=1`
   3. PDF attachments are emitted into `dist/d/<id>/` with metadata stripped (the build fails if the stripping tool is missing), and drop views and downloads appear in Plausible without the id in any path or property
   4. `/wm-preflight` and `/wm-publish` warn about expired, soon-expiring and expiry-less drops, secret-looking content, and list drops about to be published; documentation states drops are for confidential-not-secret material and that withdrawal is unlisting only
-  5. The feature is built and verified on `sfdy-alt-clean-reskin-2` (the SFDY baseline); `verify-phase-11.sh` passes in static mode, and live mode confirms 200 for active and 404 for withdrawn/expired drops
+  5. The feature is built and verified on `sfdy` (the live SFDY baseline); `verify-phase-11.sh` passes in static mode, and live mode confirms 200 for active and 404 for withdrawn/expired drops
 
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+**Wave 1**
+
+- [ ] 11-01-PLAN.md — Pure libs (drops-core, drops-collection gating, qpdf PDF strip), fixtures with relative dates, `verify-phase-11.sh` dispatcher with `lib` and `pdf` sections, Q6 dev-preview spike (DROP-01, 05, 09)
+
+**Wave 2** *(blocked on 11-01)*
+
+- [ ] 11-02-PLAN.md — Astro integration `_scripts/drops.mjs`, `_core` route + standalone DropLayout, `sfdy` adoption, sandbox/production gating, sync-content deny, `build` and `sandbox` harness sections (DROP-01, 03, 04, 05, 09)
+- [ ] 11-04-PLAN.md — `drop.mjs` CLI (new|list|withdraw|expire|check), `/wm-drop` skill, preflight/publish/deploy skill edits, `docs/drops.md`, `cli` and `docs` sections (DROP-02, 07, 08, 09, 10)
+
+**Wave 3** *(blocked on 11-02, 11-04)*
+
+- [ ] 11-03-PLAN.md — Plausible drop whitelist in the shared transform, `Drop Download` hook, vectors, analytics docs, `track` section (DROP-06, 09)
+- [ ] 11-05-PLAN.md — `publish.yml` private drops checkout + qpdf + redacted build, `drops-health.yml` nightly token/expiry watch, `ci` and opt-in `live` sections (DROP-04, 05, 07, 08, 09)
+
+**Wave 4** *(blocked on 11-03, 11-05; operator gates G1-G6)*
+
+- [ ] 11-06-PLAN.md — Create private repo, extend token, push, Plausible goal, test drop publish then withdraw + republish 404 proof, first health run (DROP-02, 03, 04, 05, 06, 08, 09, 10)
 
 ### Phase 11.1: Retool sfdy-alt-clean-reskin-2 before cutover: review feedback and further design changes (INSERTED)
 
