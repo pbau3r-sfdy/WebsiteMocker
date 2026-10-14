@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Claude Design Sync, Analytics, Open Drops
 status: executing
-stopped_at: Completed 11.1-01-PLAN.md
-last_updated: "2026-10-14T13:04:18.751Z"
+stopped_at: Completed 11.1-02-PLAN.md
+last_updated: "2026-10-14T13:05:27.177Z"
 last_activity: 2026-10-14
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 16
-  completed_plans: 14
-  percent: 17
+  completed_plans: 15
+  percent: 33
 ---
 
 # Project State
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-10-14)
 ## Current Position
 
 Phase: 11.1 (retool sfdy-alt-clean-reskin-2) — EXECUTING
-Plan: 1 of 2 complete (11.1-02 pending)
-Status: Executing
+Plan: 2 of 2 complete (11.1-01, 11.1-02 done); Phase 10 at 4/5 (10-05 pending, unblocked by 11.1)
+Status: Phase 11.1 plans complete; awaiting verification
 Last activity: 2026-10-14
 
 ## Performance Metrics
@@ -50,6 +50,7 @@ Carried from v1.0:
 - 02-01: Schema library pattern — _core/src/content.config.ts exports Zod objects only; each site wires defineCollection/glob itself
 - 02-01: z.coerce.date() on all date fields — accepts ISO strings from GitHub web UI without breaking CI
 - INGEST-05 scope: CDN fonts → Layout.astro inject (not local copy)
+- 11.1-02: Careers email kept inline in contact.astro; About CTA keeps one solid Contact button; CUT-01 satisfied by RETL-04
 - No auto-publish on content push (D-A6) — operator review before live; content sync ≠ deploy
 
 ### Pending Todos
@@ -72,7 +73,7 @@ Carried from v1.0:
 
 ## Session Continuity
 
-Last session: 2026-10-14T13:04:18.746Z
+Last session: 2026-10-14T13:05:27.171Z
 Stopped at: Completed 11.1-01-PLAN.md
 Resume file: None
 
