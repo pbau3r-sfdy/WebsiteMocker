@@ -2,8 +2,8 @@
 
 **Settled decisions (2026-10-14):**
 - Design connectivity is a framework-wide capability for any site (existing, future, revamp), with or without a Claude Design design system. It is optional per site and used ad hoc.
-- Analytics is a framework capability, optional per site, off by default; switched on now only for Starflight Dynamics (`sfdy-alt-clean`, www.starflight-dynamics.com). The shared sandbox site is an optional second target.
-- Open Drops are a framework capability (`drops.enabled` opt-in per site); adopted now only on `sfdy-alt-clean`, built and verified on a sandbox slug (`sfdy-alt-clean-reskin-2`) first.
+- Analytics is a framework capability, optional per site, off by default; wired now only for the SFDY baseline `sfdy-alt-clean-reskin-2` (shared sandbox site until the Phase 12 cutover, then www.starflight-dynamics.com).
+- Open Drops are a framework capability (`drops.enabled` opt-in per site); adopted now only on the SFDY baseline `sfdy-alt-clean-reskin-2`.
 - Drop source is committed and documented as "confidential, not secret"; expiry is warn-only plus manual publish (no auto-publish, D-A6); drops are not built in sandbox.
 - Astro stays on 5.x. No second paid service, no server.
 
@@ -20,7 +20,7 @@
 - [ ] **DSYNC-09**: Staged website templates/UI-kit sections hand off to `ingest-artifact.mjs --mode section`; JSX components are rendered to static HTML locally (render path chosen by DSYNC-01)
 - [ ] **DSYNC-10**: `/wm-new-site` and `/wm-instantiate` offer an optional, skippable design-connection step so new sites and revamps start from a design system or an artifact when one exists
 - [ ] **DSYNC-11**: Operator can seed or update a design-system project from a site's brand tokens and logos (`create_project`, then an operator-reviewed `finalize_plan` and `write_files`, incremental and never a wholesale replace) so a site without a design system can get one; scope gated on DSYNC-01
-- [ ] **DSYNC-12**: Both paths are proven: pulling SFDY's "Starflight Dynamics Design System" into a sandbox slug first and then `sfdy-alt-clean`, and ingesting one source without a design system (artifact link or local export); both sites build
+- [ ] **DSYNC-12**: Both paths are proven: pulling SFDY's "Starflight Dynamics Design System" into `sfdy-alt-clean-reskin-2`, and ingesting one source without a design system (artifact link or local export); both sites build
 - [ ] **DSYNC-13**: A fixture-based `verify-phase-09.sh` harness covers staging, lock file, diff, divergence guard, sanitising and token mapping without calling DesignSync
 
 ## Analytics, optional per site, on one Plausible subscription (Phase 10)
@@ -33,13 +33,13 @@
 - [ ] **ANLY-06**: `/wm-wire` has an optional analytics step (scriptId, goals checklist, privacy-policy snippet), and preflight/publish refuse to switch analytics on for a live site whose privacy policy lacks the Plausible section
 - [ ] **ANLY-07**: `fetch-analytics-data.mjs` calls Stats API v2 and writes aggregates only (no paths, referrers or drop rows) to a gitignored `_data/<slug>/analytics.json`; the API key lives only in the vault or a CI secret; the dashboard tile is local-only and labelled approximate, as of a date (conditional on the Business plan)
 - [ ] **ANLY-08**: A `verify-phase-10.sh` harness covers snippet output for sandbox, production and unconfigured sites, the domain assertion, the 404 event and the sanitised mode
-- [ ] **ANLY-09**: Analytics is switched on end to end for `sfdy-alt-clean` only (www.starflight-dynamics.com, shared sandbox site optional) and events appear in Plausible; all other sites stay unconfigured
+- [ ] **ANLY-09**: Analytics is wired end to end for `sfdy-alt-clean-reskin-2` only (shared sandbox site until the Phase 12 cutover, then www.starflight-dynamics.com) and events appear in Plausible; all other sites stay unconfigured
 
 ## Open Drops (Phase 11)
 
 - [ ] **DROP-01**: A `drops` content collection defines each drop: 32-hex id from `crypto.randomBytes(16)`, title, human `label`, mandatory `expires` (ISO with offset, with a maximum horizon), optional PDF attachments, and a Markdown body that is the data
 - [ ] **DROP-02**: Operator can run `node _scripts/drop.mjs new|list|withdraw|expire` to create, list (with expiry status), remove and sweep drops
-- [ ] **DROP-03**: A shared `/d/<id>/` route and `DropLayout` in `_core` render a drop with a neutral title, no Open Graph tags and no links to other drops or site listings; a site opts in with `drops.enabled` in `wiring.json`; `sfdy-alt-clean` adopts it, built and verified on a sandbox slug first
+- [ ] **DROP-03**: A shared `/d/<id>/` route and `DropLayout` in `_core` render a drop with a neutral title, no Open Graph tags and no links to other drops or site listings; a site opts in with `drops.enabled` in `wiring.json`; `sfdy-alt-clean-reskin-2` adopts it
 - [ ] **DROP-04**: `_scripts/drops.mjs` filters expired and withdrawn drops at build, adds `noindex,nofollow,noarchive` and `no-referrer` meta tags, keeps drops out of sitemap, RSS, dashboard and content-sync, adds no `robots.txt` entry, and builds no drops for sandbox (`/WebsiteMocker` base) unless `DROPS_PREVIEW=1`
 - [ ] **DROP-05**: PDF attachments are emitted into `dist/d/<id>/` after filtering (never from `public/`), with metadata stripped; the build fails if the stripping tool is unavailable
 - [ ] **DROP-06**: Drop views and attachment downloads are tracked through the Phase 10 sanitised mode and a `Drop Download` event grouped by `label` (when custom properties are available); the id never appears in any analytics path or property
@@ -47,6 +47,15 @@
 - [ ] **DROP-08**: Withdrawal removes the drop from source; documentation states that withdrawal is unlisting only (git history, CDN and web archives may retain copies) and the live URL is checked for a 404 after the next publish
 - [ ] **DROP-09**: A `verify-phase-11.sh` harness has a static mode (id appears only in its own `dist/d/<id>/`, no sitemap/robots/inbound link, noindex and no-referrer present, expired/withdrawn drops absent, sandbox build has no `/d/`) and a live mode (200 for active, 404 for withdrawn/expired), and prints what it cannot verify (HTTP headers)
 - [ ] **DROP-10**: Operator can create and manage drops through a `/wm-drop` skill; its documentation states that drops are for confidential-but-not-secret material and not for export-controlled or classified data
+
+## SFDY Cutover (Phase 12) — draft, to be refined in discuss/plan
+
+- [ ] **CUT-01**: `sfdy-alt-clean-reskin-2` has no jobs pages, jobs content entries, `JobRow` component or jobs links in Nav/Footer, and builds cleanly; the job files stay recoverable from git history
+- [ ] **CUT-02**: No internal-review page or text (`/open-points`, "internal review only") ships in a production build of `reskin-2`
+- [ ] **CUT-03**: Impressum and privacy pages of `reskin-2` are reviewed for production, including the Plausible section if analytics is on
+- [ ] **CUT-04**: `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5 or higher) and `/wm-preflight` passes
+- [ ] **CUT-05**: Contributor content pushed to the production repo's `content/` reaches the new site (the dispatch slug in the production repo's `content-ci.yml` is corrected, or the site is renamed), and the unused `content/jobs/` folder is handled
+- [ ] **CUT-06**: `/wm-publish` deploys `reskin-2` to www.starflight-dynamics.com; the live site, CNAME and `robots.txt` are verified; the `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
 
 ## Future Requirements (backlog, not in this milestone)
 
@@ -72,7 +81,7 @@
 
 - **Plausible plan:** official docs state custom properties and the Stats API are Business-plan features (600 requests/hour per key). Plausible's home page lists Starter $9 (1 site), Growth $14 (up to 3 sites), Business $19 (up to 10 sites) for up to 10k monthly pageviews, with a 30-day trial without a card (the pricing page itself returned 404; prices unverified there). Production-only fits Starter; production plus the shared sandbox site needs Growth; Business is needed only for custom properties (drop `label`) and the Stats API tile (ANLY-07, DROP-06 label grouping). Suggested: start the trial and decide when it ends.
 - **Operator actions (not code):** create the Plausible account and site, sign the DPA, add the Plausible text to the SFDY privacy policy before switching analytics on.
-- **Sequencing:** `sfdy-alt-clean` has uncommitted work in progress (Footer, Nav, `content.config.ts`, layout, jobs). Phases 10 and 11 touch its config and content schema, so that work is committed or parked first.
+- **Baseline (2026-10-14):** `sfdy-alt-clean-reskin-2` is the SFDY baseline; `sfdy`, `sfdy-alt-clean`, `sfdy-alt-clean-reskin` and `sfdy-alt-clean-variant` are archived. The live www.starflight-dynamics.com keeps serving its last published build until the Phase 12 cutover.
 
 ## Traceability
 
@@ -110,6 +119,12 @@
 | DROP-08 | Phase 11 | Pending |
 | DROP-09 | Phase 11 | Pending |
 | DROP-10 | Phase 11 | Pending |
+| CUT-01 | Phase 12 | Pending |
+| CUT-02 | Phase 12 | Pending |
+| CUT-03 | Phase 12 | Pending |
+| CUT-04 | Phase 12 | Pending |
+| CUT-05 | Phase 12 | Pending |
+| CUT-06 | Phase 12 | Pending |
 | LOCK-01.. | Phase 999.1 (backlog) | Not in milestone |
 
 **Coverage:** 32/32 v1.2 requirements mapped (DSYNC 13, ANLY 9, DROP 10); no orphans, no duplicates

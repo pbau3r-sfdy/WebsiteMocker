@@ -77,3 +77,7 @@ Resume file: .planning/phases/09-claude-design-connectivity/09-CONTEXT.md
 ## Operator Next Steps
 
 - Run /gsd-plan-phase 9 (spike first) and/or /gsd-plan-phase 10; they are independent and may run in parallel
+
+### Roadmap Evolution
+
+- Phase 12 added: SFDY Cutover (publish sfdy-alt-clean-reskin-2 as the live site) — 2026-10-14

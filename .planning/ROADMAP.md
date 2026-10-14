@@ -35,10 +35,11 @@ Full archive: [v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md) · phase records: [v
 ### 📋 v1.2 Claude Design Connectivity, Analytics, Open Drops (Planned)
 
 - [ ] **Phase 9: Claude Design Connectivity** - Optional, ad hoc pull of design sources (design system, artifact link, local export) into any site, gated by a DesignSync spike
-- [ ] **Phase 10: Analytics** - Optional per-site Plausible analytics on one subscription, with an event contract, privacy gating and a sanitised tracking mode; on for `sfdy-alt-clean` only
-- [ ] **Phase 11: Open Drops** - Unguessable, expiring, withdrawable, trackable `/d/<id>/` pages for confidential-not-secret drafts; adopted on `sfdy-alt-clean`
+- [ ] **Phase 10: Analytics** - Optional per-site Plausible analytics on one subscription, with an event contract, privacy gating and a sanitised tracking mode; on for `sfdy-alt-clean-reskin-2` only (and www.starflight-dynamics.com after the Phase 12 cutover)
+- [ ] **Phase 11: Open Drops** - Unguessable, expiring, withdrawable, trackable `/d/<id>/` pages for confidential-not-secret drafts; adopted on `sfdy-alt-clean-reskin-2`
+- [ ] **Phase 12: SFDY Cutover** - Publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com (strip jobs, remove internal pages, fix contributor sync, publish)
 
-Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Phase 10.
+Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Phase 10. Phase 12 is independent and may run at any point.
 
 ## Phase Details
 
@@ -54,12 +55,12 @@ Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Pha
   2. Operator can run `/wm-design-pull [slug]` on a site with a `design` block, or pick a design-system project, artifact link or local export interactively for a site without one; a site with no block has no design connection
   3. A pull stages files in a gitignored folder, records `design.lock.json`, and a re-pull reports added/changed/removed files (with dry-run); oversized or syntactically invalid files fail loudly instead of being staged truncated
   4. Ingest refuses to overwrite a hand-edited section without explicit per-section confirmation, pulled content is sanitised, and tokens land in `brand.doc_tokens` with an unmapped-token report while `validate-brand.mjs` passes
-  5. Both paths are proven: SFDY's design system pulls into a sandbox slug and then `sfdy-alt-clean`, and one source without a design system (artifact link or local export) ingests; both sites build, and `verify-phase-09.sh` passes using fixtures only
+  5. Both paths are proven: SFDY's design system pulls into `sfdy-alt-clean-reskin-2`, and one source without a design system (artifact link or local export) ingests; both sites build, and `verify-phase-09.sh` passes using fixtures only
 **Plans**: TBD
 **UI hint**: yes
 
 ### Phase 10: Analytics
-**Goal**: Operator can switch on cookie-free Plausible analytics per site on a single subscription, with sandbox traffic isolated from production, privacy obligations enforced, and `sfdy-alt-clean` measured end to end
+**Goal**: Operator can switch on cookie-free Plausible analytics per site on a single subscription, with sandbox traffic isolated from production, privacy obligations enforced, and `sfdy-alt-clean-reskin-2` measured end to end
 **Depends on**: Nothing (independent of Phase 9; may run in parallel)
 **Requirements**: ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06, ANLY-07, ANLY-08, ANLY-09
 **Success Criteria** (what must be TRUE):
@@ -67,7 +68,7 @@ Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Pha
   2. A build fails if the resolved Plausible domain does not match the build kind, so sandbox traffic cannot land in a production site
   3. `Download`, `Outbound Link: Click`, `Form` and `404` events fire per the documented event contract, and the sanitised tracking mode keeps path secrets and URL fragments out of Plausible
   4. `/wm-wire` offers an optional analytics step, and preflight/publish refuse to turn analytics on for a live site whose privacy policy lacks the Plausible section
-  5. Analytics is live on `sfdy-alt-clean` only and events appear in Plausible; the aggregates-only dashboard tile (Business plan) is local-only and labelled approximate; `verify-phase-10.sh` passes
+  5. Analytics is wired on `sfdy-alt-clean-reskin-2` only (shared sandbox site until the cutover, then www.starflight-dynamics.com) and events appear in Plausible; the aggregates-only dashboard tile (Business plan) is local-only and labelled approximate; `verify-phase-10.sh` passes
 **Plans**: TBD
 
 ### Phase 11: Open Drops
@@ -79,7 +80,19 @@ Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Pha
   2. On a site with `drops.enabled`, an active drop renders at `/d/<id>/` with neutral title, no Open Graph tags, noindex and no-referrer, and no sitemap, RSS, dashboard, robots or inbound-link exposure; expired and withdrawn drops are not built, and sandbox builds contain no `/d/` unless `DROPS_PREVIEW=1`
   3. PDF attachments are emitted into `dist/d/<id>/` with metadata stripped (the build fails if the stripping tool is missing), and drop views and downloads appear in Plausible without the id in any path or property
   4. `/wm-preflight` and `/wm-publish` warn about expired, soon-expiring and expiry-less drops, secret-looking content, and list drops about to be published; documentation states drops are for confidential-not-secret material and that withdrawal is unlisting only
-  5. The feature is built and verified on `sfdy-alt-clean-reskin-2` first, then adopted on `sfdy-alt-clean`; `verify-phase-11.sh` passes in static mode, and live mode confirms 200 for active and 404 for withdrawn/expired drops
+  5. The feature is built and verified on `sfdy-alt-clean-reskin-2` (the SFDY baseline); `verify-phase-11.sh` passes in static mode, and live mode confirms 200 for active and 404 for withdrawn/expired drops
+**Plans**: TBD
+
+### Phase 12: SFDY Cutover
+**Goal**: Operator can publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com without breaking contributor content sync, leaking internal pages, or losing the old build's maintainability
+**Depends on**: Nothing (may run before or after Phases 9-11; does not wait on analytics)
+**Requirements**: CUT-01, CUT-02, CUT-03, CUT-04, CUT-05, CUT-06
+**Success Criteria** (what must be TRUE):
+  1. `reskin-2` has no jobs pages, jobs content entries, `JobRow` or Nav/Footer jobs links, and builds cleanly; the 31 job files remain recoverable from git history
+  2. No internal-review page or text (`/open-points`, "internal review only") appears in a production build; impressum and privacy pages are reviewed (including Plausible text if analytics is on)
+  3. `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5+) and `/wm-preflight` passes
+  4. A contributor push to the production repo's `content/` reaches the new site's content folder (the dispatch slug in the production repo's `content-ci.yml` is corrected or the site is renamed), and the unused `content/jobs/` folder is handled
+  5. `/wm-publish` deploys `reskin-2`; the live site, CNAME and `robots.txt` are verified; `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
 **Plans**: TBD
 
 ## Backlog
@@ -102,3 +115,4 @@ Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Pha
 | 9. Claude Design Connectivity | v1.2 | 0/TBD | Not started | - |
 | 10. Analytics | v1.2 | 0/TBD | Not started | - |
 | 11. Open Drops | v1.2 | 0/TBD | Not started | - |
+| 12. SFDY Cutover | v1.2 | 0/TBD | Not started | - |
