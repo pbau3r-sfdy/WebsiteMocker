@@ -71,7 +71,7 @@ Plans:
 
 - [x] 09-02-PLAN.md — `design` block validator + design-connect, `design.lock.json` lib, design-stage verifier/diff with dry-run and loud failure, zip inbox import, public-safe DESIGN.md/DESIGNER.md markers (DSYNC-02, 04, 05; SD-05, SD-11)
 - [x] 09-03-PLAN.md — Allowlist sanitiser with report; token mapping into `brand.doc_tokens` with unmapped report and Layout proposal; repo-relative validate-brand (DSYNC-07, 08)
-- [ ] 09-04-PLAN.md — Isolated JSX-to-HTML render via SD-06 path, package checkpoint before react install (DSYNC-09)
+- [x] 09-04-PLAN.md — Isolated JSX-to-HTML render via SD-06 path, package checkpoint before react install (DSYNC-09)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -155,7 +155,7 @@ Plans:
 | 6. Doc Pipeline | v1.1 | 3/3 | Complete | 2026-08-24 |
 | 7. Archive Module | v1.1 | 2/2 | Complete | 2026-08-25 |
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
-| 9. Claude Design Connectivity | v1.2 | 3/9 | In Progress|  |
+| 9. Claude Design Connectivity | v1.2 | 4/9 | In Progress|  |
 | 10. Analytics | v1.2 | 0/TBD | Not started | - |
 | 11. Open Drops | v1.2 | 0/TBD | Not started | - |
 | 12. SFDY Cutover | v1.2 | 0/TBD | Not started | - |
