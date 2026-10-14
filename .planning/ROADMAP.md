@@ -169,7 +169,15 @@ Plans:
   - Remove `analytics.sandboxUsesProdId` from `sites/sfdy-alt-clean-reskin-2/wiring.json` at cutover (D-02 debug opt-in; `/wm-preflight` warns while it is set), rebuild, then consider a Plausible hostname allowlist for starflight-dynamics.com
   - No-consent-banner decision (Phase 10 D-04) confirmed by the operator 2026-10-14 (no cookies set)
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — Remove archived sites/sfdy, rename reskin-2 to sfdy, fix living references, harnesses and lockfile (CUT-01, CUT-04)
+- [ ] 12-02-PLAN.md — Gate open-points, pill, Tbd, noindex on production build; .nojekyll; verify-phase-12 harness (CUT-02)
+- [ ] 12-03-PLAN.md — Production identity, single prod-repo owner, sync jobs guard, legal checklist, preflight (CUT-03, CUT-04, CUT-05)
+- [ ] 12-04-PLAN.md — Operator gates A and B: push origin, prod repo dispatch slug, live sync test (CUT-05)
+- [ ] 12-05-PLAN.md — Operator gate C: gh-pages backup, publish, live verification, go-live bookkeeping (CUT-06, CUT-04)
+- [ ] 12-06-PLAN.md — Operator gate D: design seed into existing project, close DSYNC-11 and Phase 9 (CUT-07)
 
 ## Backlog
 
