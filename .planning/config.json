@@ -9,11 +9,12 @@
     "research": true,
     "plan_check": true,
     "verifier": true,
-    "nyquist_validation": false,
+    "nyquist_validation": true,
     "auto_advance": false,
     "cross_ai_execution": true,
     "cross_ai_command": "/Users/pbau3r/DevWorks/MCPBindings/HelperBridge/.venv/bin/hb-codex-cross-ai",
-    "cross_ai_timeout": 600
+    "cross_ai_timeout": 600,
+    "_auto_chain_active": false
   },
   "ship": {
     "pr_body_sections": [
