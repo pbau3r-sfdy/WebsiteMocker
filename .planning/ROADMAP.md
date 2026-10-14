@@ -112,7 +112,7 @@ Plans:
 
 - [x] 10-01-PLAN.md — `isSandbox` helper, pa- per-site snippet with event flags and legacy fallback, ANLY-03 identity assertion, sanitising transformRequest (ANLY-01, 02, 03, 04, 05)
 - [x] 10-02-PLAN.md — Privacy gate script in publish.yml, /wm-preflight, /wm-publish; /wm-wire analytics step; event contract and goals checklist in docs/analytics.md (ANLY-06, 04)
-- [ ] 10-03-PLAN.md — Stats API v2 aggregates fetcher, gitignored `_data/*/analytics.json`, local-only approximate dashboard tile, off by default (ANLY-07)
+- [x] 10-03-PLAN.md — Stats API v2 aggregates fetcher, gitignored `_data/*/analytics.json`, local-only approximate dashboard tile, off by default (ANLY-07)
 
 **Wave 2** *(blocked on 10-01, 10-02)*
 
@@ -186,6 +186,6 @@ Plans:
 | 7. Archive Module | v1.1 | 2/2 | Complete | 2026-08-25 |
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
 | 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
-| 10. Analytics | v1.2 | 2/5 | In Progress|  |
+| 10. Analytics | v1.2 | 3/5 | In Progress|  |
 | 11. Open Drops | v1.2 | 0/TBD | Not started | - |
 | 12. SFDY Cutover | v1.2 | 0/TBD | Not started | - |
