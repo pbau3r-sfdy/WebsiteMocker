@@ -42,15 +42,18 @@ import {
   existsSync, mkdirSync, cpSync, copyFileSync,
   readdirSync, readFileSync, writeFileSync, rmSync,
 } from 'fs';
-import { join, basename, dirname }           from 'path';
+import { join, basename, dirname, resolve, relative } from 'path';
 import { fileURLToPath }                     from 'url';
+import * as csstree from 'css-tree';
+import { readLock, writeLock, emptyLock, checkComponent, recordComponent } from './lib/design-lock.mjs';
 import { fromHtml } from 'hast-util-from-html';
 import { toHtml }   from 'hast-util-to-html';
 import AdmZip          from 'adm-zip';           // docs mode — zip extraction
 import TurndownService  from 'turndown';           // docs mode — GFM export
 
 // ── Resolve repo root ─────────────────────────────────────────────────────────
-const ROOT = join(fileURLToPath(import.meta.url), '..', '..');
+// WM_ROOT overrides the repo root (used by fixtures and tests).
+const ROOT = process.env.WM_ROOT ? resolve(process.env.WM_ROOT) : join(fileURLToPath(import.meta.url), '..', '..');
 
 // ── Log helpers (defined early so they are available during validation) ────────
 const log  = (...a) => console.log(...a);
@@ -78,11 +81,20 @@ const DRY_RUN     = flag('--dry-run');
 const analyzeOnly = flag('--analyze');
 const modeArg     = option('--mode');
 const sectionArg  = option('--section');
+const inputArg    = option('--input');
+const acceptArg   = option('--accept');
+const ACCEPT      = new Set((acceptArg ?? '').split(',').map(x => x.trim()).filter(Boolean));
+const SKIPPED     = [];
 const slugArg     = args[0];
+
+// Artifact path: --input when given, else the historic captures location.
+function artifactPathFor(slug) {
+  return inputArg ? resolve(inputArg) : join(ROOT, '_captures', slug, 'raw', 'artifact.html');
+}
 
 const dry = (...a) => DRY_RUN && console.log('  [dry]', ...a);
 
-const USAGE = 'Usage: node _scripts/ingest-artifact.mjs <slug> [--analyze] [--mode docs|full|section] [--section <name>] [--name <n>] [--format md] [--target-repo org/repo] [--commit] [--force] [--dry-run]';
+const USAGE = 'Usage: node _scripts/ingest-artifact.mjs <slug> [--analyze] [--mode docs|full|section] [--section <name>] [--input <path>] [--accept <Name,Name>] [--name <n>] [--format md] [--target-repo org/repo] [--commit] [--force] [--dry-run]';
 
 if (!slugArg || !/^[a-z0-9-]+$/.test(slugArg)) {
   fail(USAGE);
@@ -132,15 +144,33 @@ function walkTree(node, callback) {
   }
 }
 
+// ── HELPER: findSectionNodes (SD-07) ─────────────────────────────────────────
+// Section-like elements that are direct body children, or nested inside wrapper
+// elements (div, custom tags such as x-dc) up to depth 4 below body. A matched
+// section is not searched further. Direct children keep their historic order.
+const SECTION_TAGS = ['section', 'nav', 'footer', 'header', 'main'];
+function findSectionNodes(tree) {
+  const htmlNode = tree.children.find(n => n.tagName === 'html');
+  const bodyNode = htmlNode?.children.find(n => n.tagName === 'body');
+  if (!bodyNode) return [];
+  const found = [];
+  const visit = (node, depth) => {
+    for (const c of node.children ?? []) {
+      if (c.type !== 'element') continue;
+      if (SECTION_TAGS.includes(c.tagName)) { found.push(c); continue; }
+      if (['script', 'style', 'template'].includes(c.tagName)) continue;
+      if (depth < 4) visit(c, depth + 1);
+    }
+  };
+  visit(bodyNode, 1);
+  return found;
+}
+
 // ── HELPER: extractSections ───────────────────────────────────────────────────
 // Returns array of { name, tag, id, classes } for top-level body section elements.
 function extractSections(htmlString) {
   const tree     = fromHtml(htmlString);
-  const htmlNode = tree.children.find(n => n.tagName === 'html');
-  const bodyNode = htmlNode?.children.find(n => n.tagName === 'body');
-  const nodes    = bodyNode?.children.filter(
-    n => n.type === 'element' && ['section', 'nav', 'footer', 'header', 'main'].includes(n.tagName)
-  ) ?? [];
+  const nodes    = findSectionNodes(tree);
   return nodes.map(node => {
     const name = node.properties?.id
       || node.properties?.className?.[0]
@@ -358,20 +388,20 @@ function runDocsMode(slug, siteDir, opts) {
 
   // c. ARTIFACT DETECTION
   const rawDir       = join(ROOT, '_captures', slug, 'raw');
-  const artifactPath = join(rawDir, 'artifact.html');
+  const artifactPath = artifactPathFor(slug);
   let   htmlPath     = null;
   let   extractedDir = null; // set when a zip is extracted (for cleanup in step g)
 
   if (existsSync(artifactPath)) {
     htmlPath = artifactPath;
-    ok('using artifact.html');
+    ok(`using ${basename(artifactPath)}`);
   } else {
     let zipFiles = [];
     if (existsSync(rawDir)) {
       zipFiles = readdirSync(rawDir).filter(f => f.endsWith('.zip'));
     }
     if (zipFiles.length === 0) {
-      fail(`No artifact found at _captures/${slug}/raw/artifact.html and no .zip file in _captures/${slug}/raw/ — stage the artifact first`);
+      fail(`No artifact found at ${relative(ROOT, artifactPath)} and no .zip file in _captures/${slug}/raw/ — stage the artifact first`);
     }
 
     const zipPath = join(rawDir, zipFiles[0]);
@@ -533,9 +563,9 @@ Next steps:
 // ═══════════════════════════════════════════════════════════════════════════════
 
 if (analyzeOnly) {
-  const artifactPath = join(ROOT, '_captures', slug, 'raw', 'artifact.html');
+  const artifactPath = artifactPathFor(slug);
   if (!existsSync(artifactPath)) {
-    fail(`No artifact found at _captures/${slug}/raw/artifact.html — paste HTML and re-run /wm-ingest`);
+    fail(`No artifact found at ${artifactPath} — paste HTML and re-run /wm-ingest`);
   }
 
   const htmlString  = readFileSync(artifactPath, 'utf-8');
@@ -594,36 +624,54 @@ if (modeArg === 'docs') {
 // ── HELPER: extractScopedCSS ──────────────────────────────────────────────────
 // Returns only the CSS rules whose selector contains the section's class or id.
 // Excludes global-only rules (:root, html, body, *).
-// Uses simple split-on-} approach as specified (MVP — does not handle nested @media).
+// css-tree based (SD-07): keeps @media/@supports blocks that contain a matching rule.
 function extractScopedCSS(cssText, sectionClass, sectionId) {
   if (!cssText) return '';
-  if (/@media\s/.test(cssText)) {
-    warn('Artifact contains @media blocks — responsive rules are not extracted by this MVP parser. Add them manually to the component <style>.');
-  }
-  const rules = [];
-  const blocks = cssText.split('}');
-  for (const block of blocks) {
-    const braceIdx = block.indexOf('{');
-    if (braceIdx === -1) continue;
-    const selector    = block.slice(0, braceIdx).trim();
-    const declarations = block.slice(braceIdx + 1).trim();
-    if (!selector || !declarations) continue;
-    // Exclude stand-alone global rules
-    if (/^(:root|html|body|\*)$/.test(selector)) continue;
-    const matchesClass = sectionClass && selector.includes(`.${sectionClass}`);
-    const matchesId    = sectionId    && selector.includes(`#${sectionId}`);
-    if (matchesClass || matchesId) {
-      rules.push(`${selector} {\n  ${declarations.replace(/\s+/g, ' ').trim()}\n}`);
-    }
-  }
-  const raw = rules.join('\n');
+  const matches = (selector) =>
+    (sectionClass && selector.includes(`.${sectionClass}`)) ||
+    (sectionId && selector.includes(`#${sectionId}`));
+  const globalOnly = /^(:root|html|body|\*)$/;
+  const gen = (n) => csstree.generate(n);
+  const ruleCss = (rule) => {
+    if (rule.prelude.type !== 'SelectorList') return null;
+    const kept = [];
+    rule.prelude.children.forEach((sel) => {
+      const text = gen(sel).trim();
+      if (!globalOnly.test(text) && matches(text)) kept.push(text);
+    });
+    if (kept.length === 0) return null;
+    const decls = gen(rule.block).replace(/^\{|\}$/g, '').replace(/\s+/g, ' ').trim();
+    if (!decls) return null;
+    return `${kept.join(', ')} {\n  ${decls}\n}`;
+  };
+  let ast;
+  try { ast = csstree.parse(cssText, { positions: false }); }
+  catch { warn('Could not parse artifact CSS — no scoped CSS extracted.'); return ''; }
+  const out = [];
+  const walkList = (list, indent) => {
+    const parts = [];
+    list.forEach((node) => {
+      if (node.type === 'Rule') {
+        const r = ruleCss(node);
+        if (r) parts.push(r);
+      } else if (node.type === 'Atrule' && node.block && ['media', 'supports'].includes(node.name)) {
+        const inner = walkList(node.block.children, indent);
+        if (inner.length) {
+          const body = inner.map(x => x.split('\n').map(l => '  ' + l).join('\n')).join('\n');
+          parts.push(`@${node.name} ${gen(node.prelude)} {\n${body}\n}`);
+        }
+      }
+    });
+    return parts;
+  };
+  out.push(...walkList(ast.children, 0));
+  const raw = out.join('\n');
   // Rewrite local absolute url() paths to BASE_URL template literal pattern.
   // Skip external (http/https) and embedded (data:) URIs — only absolute local paths starting with /.
-  const rewritten = raw.replace(
+  return raw.replace(
     /url\(['"]?(\/[^'")]+)['"]?\)/g,
     (_match, path) => `url(\`\${b}${path}\`)`
   );
-  return rewritten;
 }
 
 // ── HELPER: rewriteLocalPaths ─────────────────────────────────────────────────
@@ -715,12 +763,10 @@ function writeSectionMode(slug, sectionName, sections, cssText, siteDir, date) {
   }
 
   // 2. Re-parse artifact HTML from disk and locate the matching element node
-  const artifactPath = join(ROOT, '_captures', slug, 'raw', 'artifact.html');
+  const artifactPath = artifactPathFor(slug);
   const htmlString   = readFileSync(artifactPath, 'utf-8');
   const tree         = fromHtml(htmlString);
-  const htmlNode     = tree.children.find(n => n.tagName === 'html');
-  const bodyNode     = htmlNode?.children.find(n => n.tagName === 'body');
-  const sectionNode  = bodyNode?.children.find(n => {
+  const sectionNode  = findSectionNodes(tree).find(n => {
     if (n.type !== 'element') return false;
     if (n.tagName !== section.tag) return false;
     const nodeId    = n.properties?.id             || null;
@@ -743,7 +789,7 @@ function writeSectionMode(slug, sectionName, sections, cssText, siteDir, date) {
   const scopedCSS = extractScopedCSS(cssText, section.classes[0] || null, section.id || null);
 
   // 5. Convert linked stylesheets
-  sectionHtml = convertLinkedStylesheets(sectionHtml, join(ROOT, '_captures', slug, 'raw'));
+  sectionHtml = convertLinkedStylesheets(sectionHtml, dirname(artifactPathFor(slug)));
 
   // 6. Handle base64 images → public/images/<slug>/
   const publicImagesDir = join(siteDir, 'public', 'images', slug);
@@ -774,11 +820,45 @@ function writeSectionMode(slug, sectionName, sections, cssText, siteDir, date) {
   // 10. Component output path — ONLY src/components/, never src/pages/
   const componentPath = join(siteDir, 'src', 'components', `${componentName}.astro`);
 
-  // 11. Write (or dry-run)
+  // 11. Divergence guard (D-05, D-06, DSYNC-06): hash at ingest vs design.lock.json
+  const lock       = readLock(siteDir) ?? emptyLock(null);
+  const current    = existsSync(componentPath) ? readFileSync(componentPath, 'utf-8') : null;
+  const state      = checkComponent(lock, componentName, current);
+  const incomingPath = join(siteDir, 'src', 'components', `${componentName}.incoming.astro`); // SD-08
+  if ((state === 'edited' || state === 'untracked') && !ACCEPT.has(componentName)) {
+    SKIPPED.push(componentName);
+    const why = state === 'edited' ? 'edited by hand' : 'no lock entry';
+    if (DRY_RUN) {
+      dry(`would skip ${componentName} (${why})`);
+      return;
+    }
+    const cur = new Set(current.split('\n'));
+    const inc = new Set(component.split('\n'));
+    const onlyCur = current.split('\n').filter(l => !inc.has(l));
+    const onlyInc = component.split('\n').filter(l => !cur.has(l));
+    const summary = [
+      `Incoming version of ${componentName}; existing component was skipped (${why}).`,
+      `Lines only in current: ${onlyCur.length}; only in incoming: ${onlyInc.length}.`,
+      ...onlyCur.slice(0, 40).map(l => `- ${l}`),
+      ...onlyInc.slice(0, 40).map(l => `+ ${l}`),
+    ].map(l => '// ' + l.replace(/\r?\n/g, ' ')).join('\n');
+    const marked = component.startsWith('---\n')
+      ? `---\n${summary}\n` + component.slice(4)
+      : `---\n${summary}\n---\n${component}`;
+    writeFileSync(incomingPath, marked, 'utf-8');
+    warn(`Section "${componentName}" skipped (${why}); incoming written to src/components/${componentName}.incoming.astro. Re-run with --accept ${componentName} to overwrite.`);
+    return;
+  }
+
+  // 12. Write (or dry-run)
   if (!DRY_RUN) {
     mkdirSync(join(siteDir, 'src', 'components'), { recursive: true });
     writeFileSync(componentPath, component, 'utf-8');
     ok(`wrote ${componentName}.astro`);
+    const fromRel = relative(ROOT, artifactPath);
+    recordComponent(lock, componentName, `${fromRel.startsWith('..') ? basename(artifactPath) : fromRel}#${sectionName}`, component);
+    writeLock(siteDir, lock);
+    if (existsSync(incomingPath)) rmSync(incomingPath);
   } else {
     dry(`would write ${componentName}.astro`);
   }
@@ -794,9 +874,9 @@ function writeSectionMode(slug, sectionName, sections, cssText, siteDir, date) {
 // FULL-SITE WRITE FLOW
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const artifactPath = join(ROOT, '_captures', slug, 'raw', 'artifact.html');
+const artifactPath = artifactPathFor(slug);
 if (!existsSync(artifactPath)) {
-  fail(`No artifact found at _captures/${slug}/raw/artifact.html — paste HTML and re-run /wm-ingest`);
+  fail(`No artifact found at ${artifactPath} — paste HTML and re-run /wm-ingest`);
 }
 
 // ── INGEST-02: astro.config.mjs env var check — inject if absent ──────────────
@@ -841,6 +921,10 @@ if (!DRY_RUN) {
 if (modeArg === 'section') {
   const sections = extractSections(htmlString);
   writeSectionMode(slug, sectionArg, sections, cssText, siteDir, date);
+  if (SKIPPED.length > 0) {
+    log(`Skipped (hand-edited): ${SKIPPED.join(', ')}. Re-run with --accept <Name> after operator confirmation.`);
+    process.exit(3);
+  }
   process.exit(0);
 }
 
@@ -865,7 +949,7 @@ for (const node of sectionNodes) {
   const scopedCSS  = extractScopedCSS(cssText, sectionClass, sectionId);
 
   // Convert local <link rel="stylesheet"> to inline <style>
-  sectionHtml = convertLinkedStylesheets(sectionHtml, join(ROOT, '_captures', slug, 'raw'));
+  sectionHtml = convertLinkedStylesheets(sectionHtml, dirname(artifactPath));
 
   // Decode base64 images → public/images/<slug>/
   let localBase64Idx = 0;
