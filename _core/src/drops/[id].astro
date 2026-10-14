@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content';
+import { statusOf } from '../../../_scripts/lib/drops-core.mjs';
+import DropLayout from '../layouts/DropLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('drops');
+  return entries
+    .filter((e) => {
+      const s = statusOf(e.data);
+      return s === 'active' || s === 'soon';
+    })
+    .map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+// eslint-disable-next-line no-undef
+const cfg = __DROPS_CONFIG__;
+const attachments = (entry.data.attachments || []).map((name: string) => ({ name, href: `./${name}` }));
+---
+<DropLayout title={entry.data.title} attachments={attachments} accent={cfg.accent}>
+  <Content />
+</DropLayout>

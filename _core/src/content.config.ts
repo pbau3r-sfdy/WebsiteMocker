@@ -43,3 +43,13 @@ export const blogSchema = z.object({
   image:   z.string().optional(),
   tags:    z.array(z.string()).optional(),
 });
+
+/** Open Drops (Phase 11): front matter of a private drop; loaded by _scripts/lib/drops-collection.mjs. */
+export const dropsSchema = z.object({
+  id:          z.string().regex(/^[0-9a-f]{32}$/),
+  title:       z.string().min(1),
+  label:       z.string(),
+  created:     z.string(),
+  expires:     z.string(),
+  attachments: z.array(z.string()).default([]),
+});

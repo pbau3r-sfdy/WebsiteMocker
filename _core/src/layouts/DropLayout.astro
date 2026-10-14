@@ -1,0 +1,43 @@
+---
+// Standalone neutral layout for Open Drops. No site layout, nav, footer, og/twitter,
+// canonical or description. Only the drop's own attachments are linked.
+interface Props {
+  title: string;
+  attachments?: { name: string; href: string }[];
+  accent?: string;
+}
+const { title, attachments = [], accent = '#00FB92' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Shared document</title>
+    <style define:vars={{ accent }}>
+      body { margin: 0; background: #0c0e10; color: #e6e8ea; font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+      main { max-width: 42rem; margin: 0 auto; padding: 4rem 1.25rem; }
+      h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 1.5rem; }
+      a { color: var(--accent); }
+      ul.attachments { list-style: none; padding: 0; margin: 2rem 0 0; }
+      ul.attachments li { margin: 0.5rem 0; }
+      .muted { color: #8a9096; font-size: 0.8rem; margin-top: 3rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>{title}</h1>
+      <slot />
+      {attachments.length > 0 && (
+        <ul class="attachments">
+          {attachments.map((a) => (
+            <li><a href={a.href} data-drop-download>{a.name}</a></li>
+          ))}
+        </ul>
+      )}
+      <p class="muted">Shared document - not for further distribution</p>
+    </main>
+  </body>
+</html>
