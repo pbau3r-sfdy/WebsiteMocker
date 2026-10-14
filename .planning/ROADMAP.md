@@ -34,7 +34,7 @@ Full archive: [v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md) · phase records: [v
 
 ### 📋 v1.2 Claude Design Connectivity, Analytics, Open Drops (Planned)
 
-- [ ] **Phase 9: Claude Design Connectivity** - Optional, ad hoc pull of design sources (design system, artifact link, local export) into any site, gated by a DesignSync spike
+- [x] **Phase 9: Claude Design Connectivity** - Optional, ad hoc pull of design sources (design system, local export zip; artifact-link route dropped per SD-04) into any site, gated by a DesignSync spike. Completed 2026-10-14; DSYNC-11 live seeding run deferred
 - [ ] **Phase 10: Analytics** - Optional per-site Plausible analytics on one subscription, with an event contract, privacy gating and a sanitised tracking mode; on for `sfdy-alt-clean-reskin-2` only (and www.starflight-dynamics.com after the Phase 12 cutover)
 - [ ] **Phase 11: Open Drops** - Unguessable, expiring, withdrawable, trackable `/d/<id>/` pages for confidential-not-secret drafts; adopted on `sfdy-alt-clean-reskin-2`
 - [ ] **Phase 12: SFDY Cutover** - Publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com (strip jobs, remove internal pages, fix contributor sync, publish)
@@ -49,6 +49,7 @@ Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Pha
 **Depends on**: Nothing (independent of Phase 10; may run in parallel)
 **Requirements**: DSYNC-01, DSYNC-02, DSYNC-03, DSYNC-04, DSYNC-05, DSYNC-06, DSYNC-07, DSYNC-08, DSYNC-09, DSYNC-10, DSYNC-11, DSYNC-12, DSYNC-13
 **Sequencing notes**:
+  - Update 2026-10-14: the spike (SD-04) dropped the published-artifact link route: shared links return a Cloudflare 403 and the design source sits in a sandboxed iframe. Wherever this phase says "artifact link", read "local export zip dropped into `_staging/design/inbox/`".
 
   - The first plan is the gating spike (DSYNC-01). Its report fixes the scope of DSYNC-03..12, including the JSX render path and merge semantics.
   - DSYNC-11 (seeding a design-system project from site brand tokens and logos) is gated on the spike and may be split off into its own phase if the spike shows it is too large.
