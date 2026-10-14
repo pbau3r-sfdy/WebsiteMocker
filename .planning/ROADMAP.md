@@ -145,7 +145,7 @@ Plans:
 **Wave 2** *(blocked on 11-01)*
 
 - [x] 11-02-PLAN.md — Astro integration `_scripts/drops.mjs`, `_core` route + standalone DropLayout, `sfdy` adoption, sandbox/production gating, sync-content deny, `build` and `sandbox` harness sections (DROP-01, 03, 04, 05, 09)
-- [ ] 11-04-PLAN.md — `drop.mjs` CLI (new|list|withdraw|expire|check), `/wm-drop` skill, preflight/publish/deploy skill edits, `docs/drops.md`, `cli` and `docs` sections (DROP-02, 07, 08, 09, 10)
+- [x] 11-04-PLAN.md — `drop.mjs` CLI (new|list|withdraw|expire|check), `/wm-drop` skill, preflight/publish/deploy skill edits, `docs/drops.md`, `cli` and `docs` sections (DROP-02, 07, 08, 09, 10)
 
 **Wave 3** *(blocked on 11-02, 11-04)*
 
@@ -217,5 +217,5 @@ Plans:
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
 | 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
 | 10. Analytics | v1.2 | 5/5 | Complete   | 2026-10-14 |
-| 11. Open Drops | v1.2 | 2/6 | In Progress|  |
+| 11. Open Drops | v1.2 | 3/6 | In Progress|  |
 | 12. SFDY Cutover | v1.2 | 5/6 | In Progress|  |
