@@ -1,0 +1,8 @@
+{
+  "slug": "fx",
+  "domain": "www.example.com",
+  "analytics": {
+    "service": "plausible",
+    "status": "configured"
+  }
+}

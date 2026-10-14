@@ -1,0 +1,9 @@
+{
+  "slug": "gate-off",
+  "stage": 6,
+  "domain": "off.example",
+  "analytics": {
+    "service": "plausible",
+    "status": "skipped"
+  }
+}

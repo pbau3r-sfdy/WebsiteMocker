@@ -1,0 +1,10 @@
+{
+  "slug": "gate-noanalytics",
+  "stage": 5,
+  "domain": "no.example",
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-FIXTUREprod01"
+  }
+}

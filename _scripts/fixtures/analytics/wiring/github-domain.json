@@ -1,0 +1,8 @@
+{
+  "slug": "fx",
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "domain": "foo.github.io"
+  }
+}

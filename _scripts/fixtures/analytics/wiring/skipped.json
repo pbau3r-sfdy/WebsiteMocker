@@ -1,0 +1,9 @@
+{
+  "slug": "fx",
+  "analytics": {
+    "service": "plausible",
+    "status": "skipped",
+    "scriptId": "pa-FIXTUREprod01",
+    "domain": "example.com"
+  }
+}

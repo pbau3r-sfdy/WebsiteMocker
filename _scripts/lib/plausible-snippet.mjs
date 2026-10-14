@@ -35,11 +35,11 @@ export function resolveIdentity(wiring, { sandbox }) {
 
   for (const key of ['scriptId', 'sandboxScriptId']) {
     if (a[key] !== undefined && !(typeof a[key] === 'string' && ID_RE.test(a[key]))) {
-      throw fail(`analytics.${key} must be a pa-… token, got ${JSON.stringify(a[key])}`);
+      throw fail(`analytics.${key} must be a pa-… token (value not echoed)`);
     }
   }
   if (a.host !== undefined && !(typeof a.host === 'string' && HOST_RE.test(a.host))) {
-    throw fail(`analytics.host must be an https origin, got ${JSON.stringify(a.host)}`);
+    throw fail(`analytics.host must be an https origin (value not echoed)`);
   }
   if (a.sandbox === false && a.sandboxUsesProdId === true) {
     throw fail('analytics.sandbox is false but sandboxUsesProdId is true (contradictory)');

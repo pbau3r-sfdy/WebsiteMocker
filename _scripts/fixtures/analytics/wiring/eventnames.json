@@ -1,0 +1,16 @@
+{
+  "slug": "fx",
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-FIXTUREprod01",
+    "domain": "example.com",
+    "eventNames": {
+      "File Download": "Download",
+      "Form: Submission": "Form"
+    },
+    "exclude": [
+      "/private/"
+    ]
+  }
+}

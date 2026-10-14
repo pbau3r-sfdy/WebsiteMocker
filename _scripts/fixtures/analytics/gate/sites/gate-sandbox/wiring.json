@@ -1,0 +1,9 @@
+{
+  "slug": "gate-sandbox",
+  "stage": 2,
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-FIXTUREprod01"
+  }
+}

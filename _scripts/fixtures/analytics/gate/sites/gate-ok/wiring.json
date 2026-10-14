@@ -1,0 +1,10 @@
+{
+  "slug": "gate-ok",
+  "stage": 5,
+  "domain": "ok.example",
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-FIXTUREprod01"
+  }
+}

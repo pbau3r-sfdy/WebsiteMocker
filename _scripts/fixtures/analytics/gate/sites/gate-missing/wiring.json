@@ -1,0 +1,10 @@
+{
+  "slug": "gate-missing",
+  "stage": 5,
+  "domain": "missing.example",
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-FIXTUREprod01"
+  }
+}
