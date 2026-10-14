@@ -98,6 +98,7 @@ Plans:
 **Goal**: Operator can switch on cookie-free Plausible analytics per site on a single subscription, with sandbox traffic isolated from production, privacy obligations enforced, and `sfdy-alt-clean-reskin-2` measured end to end
 **Depends on**: Nothing for planning; execution of the reskin-2 wiring follows Phase 11.1 (privacy section, job removal)
 **Requirements**: ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06, ANLY-07, ANLY-08, ANLY-09
+**Note:** When analytics is switched on for reskin-2 / starflight-dynamics.com, add a consent banner and update the Data Protection Notice (reviewer feedback 2026-10-14; CUT-03). Phase 10 D-04 currently decides no banner (cookie-free Plausible); confirm with the legal reviewer.
 **Success Criteria** (what must be TRUE):
 
   1. A site without `analytics.status: configured` emits no analytics script; a configured site emits the per-site script (or legacy fallback) and enabled outbound-link, download and form events, and sandbox and production builds are told apart by one shared `isSandbox` helper
@@ -153,9 +154,11 @@ Plans:
 **Goal**: Operator can publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com without breaking contributor content sync, leaking internal pages, or losing the old build's maintainability
 **Depends on**: Nothing (may run before or after Phases 9-11; does not wait on analytics)
 **Requirements**: CUT-01, CUT-02, CUT-03, CUT-04, CUT-05, CUT-06
+**Note:** CUT-01 is satisfied by Phase 11.1 (RETL-04); no jobs removal work in this phase.
+**Note:** When analytics is switched on for reskin-2 / starflight-dynamics.com, add a consent banner and update the Data Protection Notice (reviewer feedback 2026-10-14; CUT-03). Phase 10 D-04 currently decides no banner (cookie-free Plausible); confirm with the legal reviewer.
 **Success Criteria** (what must be TRUE):
 
-  1. `reskin-2` has no jobs pages, jobs content entries, `JobRow` or Nav/Footer jobs links, and builds cleanly; the 31 job files remain recoverable from git history
+  1. `reskin-2` has no jobs pages, jobs content entries, `JobRow` or Nav/Footer jobs links, and builds cleanly; the 31 job files remain recoverable from git history (done in Phase 11.1, RETL-04)
   2. No internal-review page or text (`/open-points`, "internal review only") appears in a production build; impressum and privacy pages are reviewed (including Plausible text if analytics is on)
   3. `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5+) and `/wm-preflight` passes
   4. A contributor push to the production repo's `content/` reaches the new site's content folder (the dispatch slug in the production repo's `content-ci.yml` is corrected or the site is renamed), and the unused `content/jobs/` folder is handled

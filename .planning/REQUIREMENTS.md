@@ -59,9 +59,9 @@
 
 ## SFDY Cutover (Phase 12) — draft, to be refined in discuss/plan
 
-- [ ] **CUT-01**: `sfdy-alt-clean-reskin-2` has no jobs pages, jobs content entries, `JobRow` component or jobs links in Nav/Footer, and builds cleanly; the job files stay recoverable from git history
+- [x] **CUT-01**: `sfdy-alt-clean-reskin-2` has no jobs pages, jobs content entries, `JobRow` component or jobs links in Nav/Footer, and builds cleanly; the job files stay recoverable from git history (satisfied by RETL-04, Phase 11.1)
 - [ ] **CUT-02**: No internal-review page or text (`/open-points`, "internal review only") ships in a production build of `reskin-2`
-- [ ] **CUT-03**: Impressum and privacy pages of `reskin-2` are reviewed for production, including the Plausible section if analytics is on
+- [ ] **CUT-03**: Impressum and privacy pages of `reskin-2` are reviewed for production, including the Plausible section if analytics is on — including a consent banner and Data Protection Notice update once analytics is switched on
 - [ ] **CUT-04**: `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5 or higher) and `/wm-preflight` passes
 - [ ] **CUT-05**: Contributor content pushed to the production repo's `content/` reaches the new site (the dispatch slug in the production repo's `content-ci.yml` is corrected, or the site is renamed), and the unused `content/jobs/` folder is handled
 - [ ] **CUT-06**: `/wm-publish` deploys `reskin-2` to www.starflight-dynamics.com; the live site, CNAME and `robots.txt` are verified; the `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
@@ -133,7 +133,7 @@
 | RETL-03 | Phase 11.1 | Complete |
 | RETL-04 | Phase 11.1 | Pending |
 | RETL-05 | Phase 11.1 | Complete |
-| CUT-01 | Phase 12 (satisfied by RETL-04 in Phase 11.1) | Pending |
+| CUT-01 | Phase 12 | Complete (Phase 11.1, RETL-04) |
 | CUT-02 | Phase 12 | Pending |
 | CUT-03 | Phase 12 | Pending |
 | CUT-04 | Phase 12 | Pending |
