@@ -155,6 +155,17 @@ sec_sync() {
   check "init-prod-repo.mjs has no hard-coded sfdy-alt-clean" "$(grep -q 'sfdy-alt-clean' _scripts/init-prod-repo.mjs && echo 1 || echo 0)"
 }
 
+sec_sync_live() {
+  echo; echo "== sync-live =="
+  Y=$(gh api repos/pbau3r-sfdy/starflight-dynamics/contents/.github/workflows/content-ci.yml --jq .content 2>/dev/null | base64 -d 2>/dev/null)
+  check "live content-ci.yml dispatches slug sfdy" "$(echo "$Y" | grep -q '"slug": "sfdy"' && echo 0 || echo 1)"
+  check "live content-ci.yml free of sfdy-alt-clean" "$(echo "$Y" | grep -q 'sfdy-alt-clean' && echo 1 || echo 0)"
+  check "content-ci template keeps {{SLUG}}" "$(grep -q '{{SLUG}}' _templates/.github/workflows/content-ci.yml && echo 0 || echo 1)"
+  check "no sync test file in sites/sfdy content" "$(git ls-files $SITE/src/content | grep -q zz-sync-test && echo 1 || echo 0)"
+  P=$(gh api repos/pbau3r-sfdy/starflight-dynamics/contents/content/news/zz-sync-test.md 2>&1 || true)
+  check "no sync test file in prod repo" "$(echo "$P" | grep -q 'Not Found' && echo 0 || echo 1)"
+}
+
 skip() { echo; echo "== $1 =="; echo "  SKIP (not implemented yet)"; }
 
 case "${1:-all}" in
@@ -165,7 +176,8 @@ case "${1:-all}" in
   sandbox) sec_sandbox ;;
   ident) sec_ident ;;
   sync) sec_sync ;;
-  sync-live|live) skip "$1" ;;
+  sync-live) sec_sync_live ;;
+  live) skip "$1" ;;
   all) sec_rename; sec_old; sec_gate; sec_prod; sec_sandbox; sec_ident; sec_sync ;;
   *) echo "usage: $0 [rename|old|gate|prod|sandbox|ident|sync|sync-live|live|all]" >&2; exit 2 ;;
 esac
