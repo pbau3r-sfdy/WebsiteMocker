@@ -316,13 +316,13 @@ Follow `verify-phase-09.sh`: `set -euo pipefail`, `check()/skip()/want()`, mktem
 | A7 | `/WebsiteMocker` prefix boundary edge case | Pattern 1 | Negligible |
 | A8 | `.gitignore` lacks `_data` ignore (grep returned nothing) | Pattern 5 | Could commit analytics aggregates; verify with `git check-ignore` |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **`Download` vs built-in event name** (ANLY-04 text vs tracker). Recommendation: observe, then either amend the contract or remap in `transformRequest`; decide in the plan after the debug session, not before.
-2. **Sandbox default vs ANLY-02 "legacy fallback":** the D-02 default (emit nothing) applies to `scriptId` sites; legacy sites keep shared-domain behaviour. Flag to operator.
-3. **Plausible plan:** Business decision pending; `analytics.props` and the tile stay off. Pricing is from aggregators (LOW).
-4. **No-banner confirmation** with the legal reviewer (D-04). Note: REQUIREMENTS.md line 58 says "add a consent banner" for Phase 10/12 while D-04 says do not build one; D-04 (later, operator decision) wins; record the contradiction.
-5. **Privacy gate detection rule:** string match on heading `Web analytics` plus `Plausible` is brittle but sufficient; confirm 11.1 lands with that literal heading.
+1. **`Download` vs built-in event name** (ANLY-04 text vs tracker). Recommendation: observe, then either amend the contract or remap in `transformRequest`; decide in the plan after the debug session, not before. RESOLVED: plan 10-01 builds the optional `analytics.eventNames` remap; the 10-05 checkpoint decides adopt vs remap.
+2. **Sandbox default vs ANLY-02 "legacy fallback":** the D-02 default (emit nothing) applies to `scriptId` sites; legacy sites keep shared-domain behaviour. Flag to operator. RESOLVED: implemented in plan 10-01 and flagged in the plan summary.
+3. **Plausible plan:** Business decision pending; `analytics.props` and the tile stay off. Pricing is from aggregators (LOW). RESOLVED: deferred per CONTEXT D-03 / Deferred Ideas; plan 10-03 keeps props and the tile off by default.
+4. **No-banner confirmation** with the legal reviewer (D-04). Note: REQUIREMENTS.md line 58 says "add a consent banner" for Phase 10/12 while D-04 says do not build one; D-04 (later, operator decision) wins; record the contradiction. RESOLVED: D-04 wins; plan 10-02 adds a superseded note to REQUIREMENTS line 58 and records legal-reviewer confirmation as an open item in docs/analytics.md (deferred per CONTEXT D-04).
+5. **Privacy gate detection rule:** string match on heading `Web analytics` plus `Plausible` is brittle but sufficient; confirm 11.1 lands with that literal heading. RESOLVED: plan 10-05 Task 1 precondition checks the literal heading from Phase 11.1 before editing.
 
 ## Environment Availability
 
