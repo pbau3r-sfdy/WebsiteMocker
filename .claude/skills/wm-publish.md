@@ -9,7 +9,7 @@ Build and publish a stage-5 site to its production GitHub Pages URL.
    - `domain` — if missing, stop with: "Error: domain not set in `sites/<slug>/wiring.json`"
    - `prod_repo` — if missing, stop with: "Error: prod_repo not set in `sites/<slug>/wiring.json`"
 
-2. **Run `/wm-preflight <slug>`** — present the full preflight output. If any item is FAIL, stop and list the failures. Do not proceed to Step 3 until all FAIL items are resolved.
+2. **Run `/wm-preflight <slug>`** — present the full preflight output. If any item is FAIL, stop and list the failures. Do not proceed to Step 3 until all FAIL items are resolved. This includes the analytics privacy gate (`node _scripts/check-analytics-gate.mjs <slug> --live`); the publish workflow runs the same gate and fails before building if it does not pass.
 
 3. **Trigger the publish workflow**:
    ```bash

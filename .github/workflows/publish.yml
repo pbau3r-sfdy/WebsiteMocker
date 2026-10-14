@@ -67,6 +67,12 @@ jobs:
         env:
           SLUG: ${{ inputs.slug }}
 
+      - name: Analytics privacy gate (ANLY-06)
+        # WR-01: slug is passed via env var, not interpolated into the shell string
+        run: node _scripts/check-analytics-gate.mjs "$SLUG" --live
+        env:
+          SLUG: ${{ inputs.slug }}
+
       - name: Build site
         # WR-01: slug is passed via env var, not interpolated into the shell string
         run: node _scripts/build-single.mjs "$SLUG"

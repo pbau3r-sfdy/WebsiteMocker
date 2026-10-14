@@ -22,14 +22,14 @@ For the specified site (`sites/<slug>/`), check each item and report PASS / FAIL
 - [ ] Newsletter endpoint is not the Formspree placeholder
 - [ ] Contact form ID is set (for stage ≥ 3)
 - [ ] Socials configured or explicitly skipped (for stage ≥ 3)
-- [ ] Analytics is optional (skipped is fine); if `analytics.service === "plausible"`, `astro.config.mjs` lists `plausible()`
+- [ ] Analytics is optional (skipped is fine); if `analytics.service === "plausible"`, `astro.config.mjs` lists `plausible()`; if `analytics.scriptId` is set, `analytics.sandboxUsesProdId` must be absent or false for a production publish (WARN otherwise; remove it at cutover, D-02)
 
 ### Legal (for stage ≥ 4)
 - [ ] `imprint.astro` contains no `—` placeholder lines
 - [ ] `privacy.astro` `last_updated` date is within 12 months
 - [ ] `legal.impressum === "complete"` in `wiring.json`
 - [ ] `legal.privacy === "complete"` in `wiring.json`
-- [ ] If analytics is configured, the privacy policy names Plausible and contains no "no analytics" statement
+- [ ] Analytics privacy gate passes: `node _scripts/check-analytics-gate.mjs <slug> --live` exits 0 (FAIL if it exits 1: analytics must not go live without the Plausible 'Web analytics' privacy section, ANLY-06)
 
 ### Keywords
 - [ ] `keywords.json` has at least 3 primary keywords
