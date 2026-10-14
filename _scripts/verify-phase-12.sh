@@ -166,6 +166,50 @@ sec_sync_live() {
   check "no sync test file in prod repo" "$(echo "$P" | grep -q 'Not Found' && echo 0 || echo 1)"
 }
 
+sec_live() {
+  echo; echo "== live =="
+  REPO_P=repos/pbau3r-sfdy/starflight-dynamics
+  code() { curl -s -o /dev/null -w '%{http_code}' "$1"; }
+  for pg in "" about capabilities contact privacy-policy imprint jobs news press; do
+    pu="$PROD_URL/$pg"; [ -n "$pg" ] && pu="$pu/"
+    check "GET /$pg is 200" "$([ "$(code "$pu")" = 200 ] && echo 0 || echo 1)"
+  done
+  N=$(curl -s "$PROD_URL/nonexistent-xyz"); check "nonexistent path is 404" "$([ "$(code "$PROD_URL/nonexistent-xyz")" = 404 ] && echo 0 || echo 1)"
+  check "404 page has the 404 event" "$(echo "$N" | grep -q "plausible('404'\|plausible(\"404\"" && echo 0 || echo 1)"
+  R=$(curl -s "$PROD_URL/robots.txt")
+  check "robots.txt has Allow: /" "$(echo "$R" | grep -q 'Allow: /' && echo 0 || echo 1)"
+  check "robots.txt has no Disallow: /" "$(echo "$R" | grep -qE 'Disallow: /[[:space:]]*$' && echo 1 || echo 0)"
+  # CDN (max-age=600) may serve a stale page: retry the home page checks.
+  H=""; OKH=1
+  for i in 1 2 3 4 5 6; do
+    H=$(curl -s -H 'Cache-Control: no-cache' "$PROD_URL/?v=$RANDOM")
+    if echo "$H" | grep -q 'plausible.io/js/pa-' && ! echo "$H" | grep -qiE 'noindex|open-points|internal review'; then OKH=0; break; fi
+    sleep 15
+  done
+  check "home: no noindex/open-points/internal review, has production Plausible script" "$OKH"
+  CSS=$(echo "$H" | grep -o '/_astro/[^"'"'"' )]*\.css' | head -1)
+  check "_astro css returns 200" "$([ -n "$CSS" ] && [ "$(code "$PROD_URL$CSS")" = 200 ] && echo 0 || echo 1)"
+  check "http redirects to https" "$(curl -sI http://www.starflight-dynamics.com/ | grep -i '^location:' | grep -qi 'https://' && echo 0 || echo 1)"
+  A=$(curl -sI -o /dev/null -w '%{http_code} %{redirect_url}' https://starflight-dynamics.com/ 2>/dev/null)
+  echo "  INFO  apex redirect (A4): $A"
+  PG=$(gh api $REPO_P/pages 2>/dev/null)
+  check "pages cname www.starflight-dynamics.com" "$([ "$(echo "$PG" | jq -r .cname)" = www.starflight-dynamics.com ] && echo 0 || echo 1)"
+  check "pages https_enforced" "$([ "$(echo "$PG" | jq -r .https_enforced)" = true ] && echo 0 || echo 1)"
+  T=$(gh api "$REPO_P/git/trees/gh-pages" --jq '.tree[].path' 2>/dev/null)
+  check "gh-pages tree has CNAME" "$(echo "$T" | grep -qx CNAME && echo 0 || echo 1)"
+  check "gh-pages tree has .nojekyll" "$(echo "$T" | grep -qx .nojekyll && echo 0 || echo 1)"
+  check "gh-pages tree has no open-points" "$(echo "$T" | grep -q open-points && echo 1 || echo 0)"
+  BB=${BACKUP_BRANCH:-$(cat .planning/phases/12-sfdy-cutover/.backup-branch 2>/dev/null)}
+  BS=$(gh api "$REPO_P/branches/$BB" --jq .commit.sha 2>/dev/null)
+  check "backup branch sha equals BACKUP_SHA" "$([ -n "${BACKUP_SHA:-}" ] && [ -n "$BS" ] && [ "$BS" = "$BACKUP_SHA" ] && echo 0 || echo 1)"
+  W=$SITE/wiring.json
+  LD=$(jq -r .last_deploy $W)
+  check "wiring stage is 6" "$([ "$(jq -r .stage $W)" = 6 ] && echo 0 || echo 1)"
+  OKD=1
+  for d in "$(date -u +%Y-%m-%d)" "$(date +%Y-%m-%d)" "$(date -u -v-1d +%Y-%m-%d 2>/dev/null || date -u -d yesterday +%Y-%m-%d)"; do [ "$LD" = "$d" ] && OKD=0; done
+  check "wiring last_deploy is today or one day earlier" "$OKD"
+}
+
 skip() { echo; echo "== $1 =="; echo "  SKIP (not implemented yet)"; }
 
 case "${1:-all}" in
@@ -177,7 +221,7 @@ case "${1:-all}" in
   ident) sec_ident ;;
   sync) sec_sync ;;
   sync-live) sec_sync_live ;;
-  live) skip "$1" ;;
+  live) sec_live ;;
   all) sec_rename; sec_old; sec_gate; sec_prod; sec_sandbox; sec_ident; sec_sync ;;
   *) echo "usage: $0 [rename|old|gate|prod|sandbox|ident|sync|sync-live|live|all]" >&2; exit 2 ;;
 esac

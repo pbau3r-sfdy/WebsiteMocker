@@ -69,7 +69,7 @@ git add -A && git commit -m "chore: delete <slug>"
 |---|---|---|---|
 | `sfdy-alt-clean` | Starflight Dynamics GmbH | — (archived, replaced by `sfdy`) | — |
 | `sfdy-alt-clean-reskin` | Starflight Dynamics GmbH | — (internal review, sandbox only) | — |
-| `sfdy` | Starflight Dynamics GmbH | `pbau3r-sfdy/starflight-dynamics` | www.starflight-dynamics.com |
+| `sfdy` | Starflight Dynamics GmbH | `pbau3r-sfdy/starflight-dynamics` | www.starflight-dynamics.com (stage 6, live, 2026-10-14) |
 | `mogwai-systems` | MOGWAI / Starflight Dynamics GmbH | `pbau3r-sfdy/mogwai-systems` | mogwai-systems.com |
 | `parrot-capital` | Parrot Capital UG | `pbau3r-sfdy/parrot-capital` | parrot-capital.com |
 | `crestworks` | — | `pbau3r-sfdy/crestworks` | crestworks.co |
@@ -221,7 +221,7 @@ WebsiteMocker/
 │   └── init-prod-repo.mjs ← bootstrap a production repo for contributors
 ├── _templates/          ← production repo bundle (CONTRIBUTING.md, issue templates, content-ci.yml)
 ├── sites/
-│   ├── sfdy/            ← Starflight Dynamics (production baseline, stage 5 until published)
+│   ├── sfdy/            ← Starflight Dynamics (stage 6, live, 2026-10-14)
 │   ├── parrot-capital/  ← Parrot Capital UG (stage 4, production-bound)
 │   ├── orbint/          ← design template only
 │   ├── hypersonica/     ← design template only
