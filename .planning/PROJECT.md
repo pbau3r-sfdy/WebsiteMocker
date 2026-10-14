@@ -8,33 +8,19 @@ WebsiteMocker is a skill-driven Astro monorepo that serves as the professional s
 
 A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching; WebsiteMocker handles ingestion, wiring, brand consistency, and deployment automatically.
 
-## Current Milestone: v1.2 — Claude Design Connectivity, Analytics, Open Drops
+## Next Milestone Goals
 
-**Goal:** Give every site (existing, new or revamp) an optional, ad hoc connection to Claude Design with or without a design system; offer optional per-site Plausible analytics on one SaaS subscription (on for Starflight Dynamics only for now); and share confidential early drafts as unguessable, trackable, withdrawable "open drop" pages — all on the existing static GitHub Pages stack.
-
-**Target features:**
-- **Claude Design Connectivity (Phase 9):** spike first; optional `design` block in `wiring.json` (design system, artifact link or local export); ad hoc `/wm-design-pull [slug]`; gitignored staging + `design.lock.json`; divergence guard for hand edits; token mapping to `brand.doc_tokens`; ingest via `--mode section`; optional seeding of a design system from a site; proven on SFDY's design system and one source without a design system (DSYNC)
-- **Analytics (Phase 10):** optional per site, off by default, one Plausible SaaS subscription; event contract (downloads, outbound links, forms, 404), sanitised tracking mode, privacy-policy gate, `/wm-wire` step, local-only Stats API tile; switched on for `sfdy-alt-clean` only (ANLY)
-- **Open Drops (Phase 11):** `/d/<random-id>/` pages whose Markdown body is the data, optional PDF attachments, mandatory `expires`/`withdraw`, noindex + no-referrer, tracked by Plausible, verify script; adopted on `sfdy-alt-clean` after verification on a sandbox slug (DROP)
-- **Backlog:** Locked Drops (encrypted, key in URL fragment, soft expiry) as backlog Phase 999.1 (LOCK)
-- **Parked (not a phase):** self-hosted Plausible; rejected: Cloudflare Worker edge enforcement, vault master-secret token scheme
-- **Operator decision pending:** Plausible plan (Starter / Growth / Business); the Stats tile and drop label property need Business
-
-**Constraints for this milestone:** no second paid service; lightweight; confidential-not-secret data; GitHub Pages only (no custom headers).
+Not yet defined; start with `/gsd-new-milestone`. Candidates: real job postings and a restored careers collection, Locked Drops (backlog 999.1), cleanup of the other reskin variants, self-hosted Plausible (parked).
 
 ## Current State
 
-**Version:** v1.1 shipped (completed 2026-08-25, archived 2026-10-14); v1.2 in definition  
+**Version:** v1.2 shipped (2026-10-14)  
 **Stack:** Astro 5 (content collections + loader API) + Node.js scripts + GitHub Actions  
-**Active sites:** sfdy-alt-clean, mogwai-systems, parrot-capital (stage 2–4); crestworks (stage 6)  
+**Live:** www.starflight-dynamics.com is the `sfdy` baseline (stage 6), published from `pbau3r-sfdy/starflight-dynamics`; analytics on (Plausible, hostname allowlist on); Open Drops live via the private repo `pbau3r-sfdy/drops` (token `WM_PUBLISH_PAT` expires 2027-08-20)  
+**Active sites:** sfdy (live), mogwai-systems, parrot-capital (stage 2–4); crestworks (stage 6)  
 **Production repos:** pbau3r-sfdy/{starflight-dynamics, mogwai-systems, parrot-capital, crestworks}
 
-All v1.0 milestone goals delivered:
-- ✅ One-command production deploy (`/wm-publish`) with validation gates
-- ✅ Astro 5 Content Layer API across all active sites (4 collection types)
-- ✅ `brand` block in wiring.json with content skill enforcement
-- ✅ Two-tier contributor model (direct push for .md, GitHub Issues for rest)
-- ✅ Claude Design artifact ingestion without manual file surgery
+v1.2 delivered: the live Starflight Dynamics site, cookie-free analytics, confidential drops, and a link to Claude Design. v1.0 and v1.1 goals (production deploy, content system, brand consistency, collaboration, ingestion, doc generation) still hold.
 
 ## Requirements
 
@@ -62,9 +48,15 @@ All v1.0 milestone goals delivered:
 - ✓ **ARCH-01–05** — `archive-browse.mjs` + `/wm-archive-browse`: CDX timeline, inspection links, `--sweep`, `--capture` handoff — v1.1
 - ✓ **DEXP-04–06, HSK-01–03** — verification records corrected/added, crestworks content routes, `_core` accent token and env-var config — v1.1
 
+*v1.2 (shipped 2026-10-14):*
+- ✓ **DSYNC-01–13** — Claude Design connectivity: `design` block, `/wm-design-pull`, `/wm-design-seed` (live seed run: website UI kit) — v1.2
+- ✓ **ANLY-01–09** — Optional Plausible analytics: event contract, sanitised mode, privacy gate, live on `sfdy` — v1.2
+- ✓ **DROP-01–10** — Open Drops: unguessable expiring `/d/<id>/` pages, `/wm-drop`, CI and nightly health check — v1.2
+- ✓ **RETL-01–05, CUT-01–07** — Retool and cutover of the renamed baseline `sfdy` to www.starflight-dynamics.com — v1.2
+
 ### Active
 
-*(none yet — v1.2 requirements are defined by `/gsd-new-milestone`)*
+*(none yet — define with `/gsd-new-milestone`)*
 
 ### Out of Scope
 
@@ -99,6 +91,9 @@ All v1.0 milestone goals delivered:
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
+| Open Drops built from a private repo; ids masked in analytics; withdrawal is unlisting only | Confidential-not-secret on GitHub Pages without custom headers | ✓ Shipped v1.2 |
+| One baseline site `sfdy` is both production and testbed | No fork between sandbox and live; publish builds with `SITE_BASE=/` | ✓ Shipped v1.2 |
+| Design seed adds the live site as a UI kit instead of overwriting tokens | Design-system tokens and assets were richer than the site's | ✓ Shipped v1.2 |
 | Astro content collections for all content types | Type-safe, co-located, zero deps, consistent rendering | ✓ Shipped v1.0 |
 | `brand` block lives in `wiring.json` | Dashboard already reads wiring.json; one source of truth | ✓ Shipped v1.0 |
 | Ingest reads HTML/CSS artifact directly (no Figma) | Claude Design outputs HTML/CSS; Figma conversion adds a step | ✓ Shipped v1.0 |
@@ -127,4 +122,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-14 — milestone v1.2 started*
+*Last updated: 2026-10-14 after v1.2 milestone*

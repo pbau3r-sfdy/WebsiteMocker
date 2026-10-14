@@ -1,5 +1,23 @@
 # Milestones
 
+## v1.2 Claude Design Sync, Analytics, Open Drops (Shipped: 2026-10-14)
+
+**Phases completed:** 5 phases (9, 10, 11, 11.1, 12), 28 plans | **Tag:** v1.2
+
+**Delivered:** The Starflight Dynamics site went live at www.starflight-dynamics.com with cookie-free analytics, secret "drops", and a connection to Claude Design.
+
+**Key accomplishments:**
+
+- **Claude Design connectivity (Phase 9):** optional `design` block in `wiring.json`, ad hoc `/wm-design-pull` (staged, locked, guarded against overwriting hand edits), and `/wm-design-seed`. The live seed added the website as a UI kit (32 new files) to the existing design system, leaving tokens, logos and fonts untouched.
+- **Cookie-free analytics (Phase 10):** Plausible as an Astro integration with an event contract, sanitising request transform, privacy-policy gate and per-site identity assertion. Live goals: Outbound Link: Click, File Download, Form: Submission, 404, Drop Download. Hostname allowlist enabled at close.
+- **Open Drops (Phase 11):** unguessable, expiring, withdrawable `/d/<id>/` pages from a private repo, with qpdf-stripped PDFs, noindex and no-referrer, masked analytics, a nightly token and expiry health check, and a live-proven publish, withdraw and 404 cycle.
+- **Retool (Phase 11.1) and cutover (Phase 12):** the renamed baseline `sfdy` replaced the old site on www.starflight-dynamics.com with a backup branch, internal pages gated out of production, a fixed contributor sync, and 24 live checks green.
+- **Harnesses:** fixture and live verification scripts for phases 9 to 12 (phase 11 alone: 395 checks).
+
+Known deferred items at close: 2 (see STATE.md Deferred Items).
+
+---
+
 ## v1.1 — Doc Generation, Archive Ingestion & Documentation Expansion
 
 **Completed:** 2026-08-25 | **Archived:** 2026-10-14 | **Tag:** v1.1

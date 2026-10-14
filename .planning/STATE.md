@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Claude Design Sync, Analytics, Open Drops
-status: executing
-stopped_at: Completed 11-05-PLAN.md
-last_updated: "2026-10-14T19:16:28.448Z"
-last_activity: 2026-10-14
+status: Awaiting next milestone
+stopped_at: Milestone v1.2 closed
+last_updated: "2026-10-14T21:38:48.863Z"
+last_activity: 2026-10-14 — Milestone v1.2 completed and archived
 progress:
-  total_phases: 6
-  completed_phases: 3
+  total_phases: 5
+  completed_phases: 5
   total_plans: 28
-  completed_plans: 26
-  percent: 50
+  completed_plans: 28
+  percent: 100
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-10-14)
 
 ## Current Position
 
-Phase: 11 (open-drops) — EXECUTING
-Plan: 6 of 6
-Status: Ready to execute
-Last activity: 2026-10-14
+Phase: Milestone v1.2 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-10-14 — Milestone v1.2 completed and archived
 
 ## Performance Metrics
 
@@ -83,9 +83,18 @@ Resume file: None
 
 ## Operator Next Steps
 
-- Run /gsd-plan-phase 9 (spike first) and/or /gsd-plan-phase 10; they are independent and may run in parallel
+- Start the next milestone with /gsd-new-milestone
 
 ### Roadmap Evolution
 
 - Phase 12 added: SFDY Cutover (publish sfdy-alt-clean-reskin-2 as the live site) — 2026-10-14
 - Phase 11.1 inserted after Phase 11: Retool reskin-2 before Phase 12 cutover (review feedback: drop Systems from In-Space Power Projection, remove X/Instagram/Facebook footer links, consent banner and privacy notice when analytics is on, hero sentence, further designs) (URGENT)
+
+## Deferred Items
+
+Items acknowledged and deferred at milestone close on 2026-10-14:
+
+| Category | Item | Status |
+|----------|------|--------|
+| verification | Phase 09 (09-VERIFICATION.md): hands-on run of the interactive /wm-design-pull flow; the live seed item was closed by Phase 12 plan 06 | human_needed |
+| verification | Phase 11.1 (11.1-VERIFICATION.md): operator decisions made (Applications section and Careers mailbox kept; legal checklist accepted); a lawyer's review of the Plausible privacy wording was not done | human_needed |
