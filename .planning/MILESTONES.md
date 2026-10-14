@@ -1,5 +1,27 @@
 # Milestones
 
+## v1.1 — Doc Generation, Archive Ingestion & Documentation Expansion
+
+**Completed:** 2026-08-25 | **Archived:** 2026-10-14 | **Tag:** v1.1
+**Scope:** 3 phases (6–8), 11 plans, 17 requirements (DOCS-01–06, ARCH-01–05, DEXP-04–06, HSK-01–03)
+
+**Summary:** Extended WebsiteMocker from a site builder into a design-output pipeline: branded HTML documents from Claude Design artifacts, Wayback Machine history browsing with capture handoff, and closure of the v1.0 tech debt.
+
+**Archive:** [v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md) | [v1.1-REQUIREMENTS.md](milestones/v1.1-REQUIREMENTS.md) | [v1.1-phases/](milestones/v1.1-phases/)
+
+**Accomplishments:**
+
+- ✅ `/wm-gen-docs` + `ingest-artifact.mjs --mode docs` — brand-token-injected, self-contained HTML (bare file or Claude Design zip) committed to any `pbau3r-sfdy/*` repo's `docs/` via one `gh api` call; optional GFM export
+- ✅ `archive-browse.mjs` + `/wm-archive-browse` — Wayback CDX timeline, toolbar-stripped inspection links, `--sweep` coverage audit, `--capture` handoff to `capture-site.mjs`
+- ✅ crestworks now has jobs, announcements and blog routes; `_core` uses `--accent` and the SITE_URL/SITE_BASE pattern
+- ✅ Stale `02-VERIFICATION.md` corrected (68-check harness); Nyquist VALIDATION.md for phases 4 and 5; 54/54 harness checks for phase 8
+
+**Human verification (Phase 6) signed off 2026-10-14:** end-to-end `/wm-gen-docs` commit to parrot-capital and visual brand-token render both passed (see `06-VERIFICATION.md`).
+
+**Known observation:** the doc-generation confirm summary shows tokens already present in an artifact's compact single-line `:root` as `(new) → value` rather than `before → after`.
+
+---
+
 ## v1.0 — MVP: WebsiteMocker Upgrade
 
 **Shipped:** 2026-08-21 | **Tag:** v1.0  
@@ -11,6 +33,7 @@
 **Archive:** [v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md) | [v1.0-REQUIREMENTS.md](milestones/v1.0-REQUIREMENTS.md)
 
 **Accomplishments:**
+
 - ✅ `/wm-publish <slug>` — single command deploys any stage-5 site to GitHub Pages with CNAME, robots.txt Allow, and wiring.json auto-update
 - ✅ Astro 5 Content Layer API across all active sites (sfdy-alt-clean, mogwai-systems, parrot-capital, crestworks) — 4 collection types: news, jobs, announcements, blog
 - ✅ `brand` block in wiring.json with interactive `/wm-wire` setup + enforcement in all 4 content skills
@@ -18,6 +41,7 @@
 - ✅ `ingest-artifact.mjs` — full-site + section mode, Google Fonts auto-injection, astro.config env-var injection, CSS url() rewriting
 
 **Tech debt carried forward:**
+
 - 02-VERIFICATION.md stale (CR-01 fix in 05e614a not reflected in doc)
 - Phases 4 + 5 Nyquist VALIDATION.md missing
 - crestworks: stage 6 but only news/ routes (needs template flag or content migration)

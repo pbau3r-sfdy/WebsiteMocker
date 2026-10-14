@@ -1,9 +1,10 @@
 ---
 phase: 06-doc-pipeline
 verified: 2026-08-24T00:00:00Z
-status: human_needed
+status: passed
 score: 10/10 must-haves verified
 overrides_applied: 0
+human_verification_resolved: 2026-10-14
 human_verification:
   - test: "Run /wm-gen-docs end-to-end against a real production repo — paste an HTML artifact, confirm the D-06 summary, type y, and verify the committed file appears at github.com/<org>/<repo>/blob/main/docs/index.html"
     expected: "gh api PUT succeeds, file appears in the target repo's docs/ folder, brand tokens are visually applied in the HTML"
@@ -17,7 +18,7 @@ human_verification:
 
 **Phase Goal:** Deliver a complete doc pipeline — operator runs /wm-gen-docs, gets branded HTML committed to the target production repo's docs/ folder. No Astro build required.
 **Verified:** 2026-08-24T00:00:00Z
-**Status:** human_needed
+**Status:** passed (human checks signed off 2026-10-14)
 **Re-verification:** No — initial verification
 
 ## Goal Achievement
@@ -124,3 +125,14 @@ No gaps. All 10 must-have truths are verified, all 4 required artifacts exist an
 
 _Verified: 2026-08-24T00:00:00Z_
 _Verifier: Claude (gsd-verifier)_
+
+## Human Verification Sign-off (2026-10-14)
+
+Both manual checks were run against `pbau3r-sfdy/parrot-capital` (test artifact with deliberately off-brand `:root` values, `--name wm-gen-docs-verify`, temporary `brand.doc_tokens` in wiring.json):
+
+1. **End-to-end commit — PASS.** `--commit` created `docs/wm-gen-docs-verify.html` on `main` (commit 0c5bd83); raw file on GitHub was byte-identical to the staged local file. The `404` printed during the SHA lookup is the expected "file does not exist yet" path.
+2. **Visual brand tokens — PASS.** Rendered in Chrome: artifact `--accent #ff00ff` / white background became `#8E1520` / `#FCF4ED`; computed styles matched `doc_tokens`, swatch and heading rule rendered burgundy.
+
+Cleanup: test file deleted from the repo (commit 35073f8), wiring.json change reverted, staged `_captures/parrot-capital/{raw,docs}` removed.
+
+Observation (non-blocking): the confirm summary shows tokens already present in the artifact's `:root` as `(new) → value` instead of `before → after`, so the before value is not detected for a compact single-line `:root{...}` block.

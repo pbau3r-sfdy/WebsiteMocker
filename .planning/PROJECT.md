@@ -8,19 +8,13 @@ WebsiteMocker is a skill-driven Astro monorepo that serves as the professional s
 
 A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching; WebsiteMocker handles ingestion, wiring, brand consistency, and deployment automatically.
 
-## Current Milestone: v1.1 — Doc Generation, Archive Ingestion & Documentation Expansion
+## Next Milestone Goals
 
-**Goal:** Extend WebsiteMocker from a site builder into a full design-output pipeline — generating branded HTML documents from Claude Design artifacts, surfacing historical design artifacts from the Wayback Machine, and shipping operator manuals for all active codebases.
-
-**Target features:**
-- Doc pipeline: `--mode docs` + zip extraction on ingest-artifact.mjs, brand-token injection, `/wm-gen-docs` skill, gh CLI commit, cross-repo `--target-repo` flag, optional GFM export (DOCS-01–06)
-- Archive module: `archive-browse.mjs` CDX client, Wayback inspection links, `--sweep` mode, `--capture` handoff to capture-site.mjs, `/wm-archive-browse` skill (ARCH-01–05)
-- Cleanup & verification: fix stale 02-VERIFICATION.md; Nyquist VALIDATION.md for phases 4 + 5; crestworks content routes; `_core` token fixes #17, #18 (DEXP-04–06, HSK-01–03)
-- *Note: publishing operator manuals (WebsiteMocker, Raise Engine, Inbox Curer) are operator tasks using `/wm-gen-docs` — not WebsiteMocker implementation work*
+**v1.2 — Claude Design Sync, Analytics, Open Drops** (planning): pull Claude Design design-system projects directly into sites, run Plausible analytics on one SaaS subscription, and publish unguessable "open drop" pages for confidential early drafts.
 
 ## Current State
 
-**Version:** v1.1 — planning (v1.0 shipped 2026-08-21)  
+**Version:** v1.1 shipped (completed 2026-08-25, archived 2026-10-14); v1.2 planning  
 **Stack:** Astro 5 (content collections + loader API) + Node.js scripts + GitHub Actions  
 **Active sites:** sfdy-alt-clean, mogwai-systems, parrot-capital (stage 2–4); crestworks (stage 6)  
 **Production repos:** pbau3r-sfdy/{starflight-dynamics, mogwai-systems, parrot-capital, crestworks}
@@ -53,34 +47,14 @@ All v1.0 milestone goals delivered:
 - ✓ **COLLAB-01–05** — Contributor templates + content-ci.yml + content-sync.yml + /wm-init-collab — v1.0
 - ✓ **INGEST-01–07** — /wm-ingest skill + ingest-artifact.mjs (full-site + section mode) — v1.0
 
+*v1.1 (completed 2026-08-25):*
+- ✓ **DOCS-01–06** — `/wm-gen-docs` + `ingest-artifact.mjs --mode docs`: brand-token-injected HTML, zip extraction, `gh api` commit, `--target-repo`, GFM export — v1.1
+- ✓ **ARCH-01–05** — `archive-browse.mjs` + `/wm-archive-browse`: CDX timeline, inspection links, `--sweep`, `--capture` handoff — v1.1
+- ✓ **DEXP-04–06, HSK-01–03** — verification records corrected/added, crestworks content routes, `_core` accent token and env-var config — v1.1
+
 ### Active
 
-*v1.1 (in progress — 2026-08-23):*
-
-**Doc Pipeline**
-- [ ] **DOCS-01** — `--mode docs` on ingest-artifact.mjs: standalone self-contained HTML output, no Astro build step
-- [ ] **DOCS-02** — Brand-token injection: override artifact `:root` vars from wiring.json before serialising
-- [ ] **DOCS-03** — `/wm-gen-docs <slug>` skill: paste artifact → brand tokens → commit to `docs/` in prod_repo
-- [ ] **DOCS-04** — gh CLI commit step: `gh api` PUT to `docs/index.html`, no PR, no CI
-- [ ] **DOCS-05** — `--target-repo org/repo` flag: push docs to any repo (Raise Engine, Inbox Curer)
-- [ ] **DOCS-06** — GFM Markdown export option (`--format md`) alongside HTML
-
-**Archive Module**
-- [ ] **ARCH-01** — `archive-browse.mjs`: Wayback CDX API client, snapshot timeline grouped by year/month
-- [ ] **ARCH-02** — Formatted output with clickable toolbar-stripped Wayback inspection links
-- [ ] **ARCH-03** — `--sweep` mode: CDX coverage audit across all wiring.json domains
-- [ ] **ARCH-04** — `--capture <timestamp>`: handoff to capture-site.mjs via toolbar-stripped Wayback URL
-- [ ] **ARCH-05** — `/wm-archive-browse [slug|domain]` skill: browse → inspect → optionally capture
-
-**Verification & Records**
-- [ ] **DEXP-04** — Fix stale 02-VERIFICATION.md (CR-01 entry; code fixed in 05e614a)
-- [ ] **DEXP-05** — Add Nyquist VALIDATION.md for phase 4 (Collaboration Infrastructure)
-- [ ] **DEXP-06** — Add Nyquist VALIDATION.md for phase 5 (Design Artifact Ingestion)
-
-**Housekeeping**
-- [ ] **HSK-01** — crestworks: complete jobs, announcements, blog content routes (currently news-only)
-- [ ] **HSK-02** — `_core` newsletter button: replace hardcoded `#384AD3` with `--accent` token (#18)
-- [ ] **HSK-03** — `_core/astro.config.mjs`: adopt SITE_URL/SITE_BASE env-var pattern (#17)
+*(none yet — v1.2 requirements are defined by `/gsd-new-milestone`)*
 
 ### Out of Scope
 
@@ -143,4 +117,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-08-23 — milestone v1.1 started*
+*Last updated: 2026-10-14 after v1.1 milestone*

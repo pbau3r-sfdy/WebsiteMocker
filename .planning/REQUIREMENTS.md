@@ -2,32 +2,32 @@
 
 ## Doc Pipeline
 
-- [ ] **DOCS-01**: Operator can run `ingest-artifact.mjs <slug> --mode docs` with either a bare HTML file or a Claude Design `.zip` export in `_captures/<slug>/raw/`; if a zip is supplied the script unpacks it, detects the entry HTML, and proceeds automatically — no Astro build step required
-- [ ] **DOCS-02**: The generated HTML document automatically inherits the site's brand colours and typography from `wiring.json`, with no manual CSS editing
-- [ ] **DOCS-03**: Operator can run `/wm-gen-docs <slug>` to go from pasted artifact to a committed HTML file in the site's `prod_repo docs/` folder in one command
-- [ ] **DOCS-04**: Operator can commit a generated doc to any GitHub repo's `docs/` folder via a single `gh api` call — no PR, no CI trigger
-- [ ] **DOCS-05**: Operator can target any `pbau3r-sfdy/*` repo for doc publishing with `--target-repo org/repo`, overriding the site's `prod_repo`
-- [ ] **DOCS-06**: Operator can export a GFM Markdown version of a generated doc alongside the HTML for GitHub Wiki targets
+- [x] **DOCS-01**: Operator can run `ingest-artifact.mjs <slug> --mode docs` with either a bare HTML file or a Claude Design `.zip` export in `_captures/<slug>/raw/`; if a zip is supplied the script unpacks it, detects the entry HTML, and proceeds automatically — no Astro build step required
+- [x] **DOCS-02**: The generated HTML document automatically inherits the site's brand colours and typography from `wiring.json`, with no manual CSS editing
+- [x] **DOCS-03**: Operator can run `/wm-gen-docs <slug>` to go from pasted artifact to a committed HTML file in the site's `prod_repo docs/` folder in one command
+- [x] **DOCS-04**: Operator can commit a generated doc to any GitHub repo's `docs/` folder via a single `gh api` call — no PR, no CI trigger
+- [x] **DOCS-05**: Operator can target any `pbau3r-sfdy/*` repo for doc publishing with `--target-repo org/repo`, overriding the site's `prod_repo`
+- [x] **DOCS-06**: Operator can export a GFM Markdown version of a generated doc alongside the HTML for GitHub Wiki targets
 
 ## Archive Module
 
-- [ ] **ARCH-01**: Operator can run `archive-browse.mjs <slug|domain>` to see a timeline of all Wayback Machine snapshots for a domain, grouped by year/month
-- [ ] **ARCH-02**: Each snapshot row includes a clickable, toolbar-stripped Wayback URL the operator can open to inspect the historical design in a browser
-- [ ] **ARCH-03**: Operator can run `archive-browse.mjs --sweep` to see archive coverage (snapshot count, date range) across all domains in `wiring.json`
-- [ ] **ARCH-04**: Operator can pass `--capture <timestamp>` to hand off a selected snapshot to `capture-site.mjs`, extracting its design DNA into `_captures/<slug>-<timestamp>/`
-- [ ] **ARCH-05**: Operator can use `/wm-archive-browse [slug|domain]` for an interactive flow: browse timeline → inspect links → optionally capture a selected snapshot
+- [x] **ARCH-01**: Operator can run `archive-browse.mjs <slug|domain>` to see a timeline of all Wayback Machine snapshots for a domain, grouped by year/month
+- [x] **ARCH-02**: Each snapshot row includes a clickable, toolbar-stripped Wayback URL the operator can open to inspect the historical design in a browser
+- [x] **ARCH-03**: Operator can run `archive-browse.mjs --sweep` to see archive coverage (snapshot count, date range) across all domains in `wiring.json`
+- [x] **ARCH-04**: Operator can pass `--capture <timestamp>` to hand off a selected snapshot to `capture-site.mjs`, extracting its design DNA into `_captures/<slug>-<timestamp>/`
+- [x] **ARCH-05**: Operator can use `/wm-archive-browse [slug|domain]` for an interactive flow: browse timeline → inspect links → optionally capture a selected snapshot
 
 ## Verification & Records
 
-- [ ] **DEXP-04**: `02-VERIFICATION.md` accurately reflects the current codebase state (stale CR-01 entry corrected — fix shipped in 05e614a)
-- [ ] **DEXP-05**: Phase 4 (Collaboration Infrastructure) has a Nyquist VALIDATION.md documenting what was verified in that phase
-- [ ] **DEXP-06**: Phase 5 (Design Artifact Ingestion) has a Nyquist VALIDATION.md documenting what was verified in that phase
+- [x] **DEXP-04**: `02-VERIFICATION.md` accurately reflects the current codebase state (stale CR-01 entry corrected — fix shipped in 05e614a)
+- [x] **DEXP-05**: Phase 4 (Collaboration Infrastructure) has a Nyquist VALIDATION.md documenting what was verified in that phase
+- [x] **DEXP-06**: Phase 5 (Design Artifact Ingestion) has a Nyquist VALIDATION.md documenting what was verified in that phase
 
 ## Housekeeping
 
-- [ ] **HSK-01**: crestworks site has functioning jobs, announcements, and blog content routes — consistent with all other active sites
-- [ ] **HSK-02**: `_core` newsletter button uses `var(--accent)` everywhere; hardcoded `#384AD3` is removed (GitHub issue #18)
-- [ ] **HSK-03**: `_core/astro.config.mjs` adopts the SITE_URL/SITE_BASE env-var pattern, matching every active site (GitHub issue #17)
+- [x] **HSK-01**: crestworks site has functioning jobs, announcements, and blog content routes — consistent with all other active sites
+- [x] **HSK-02**: `_core` newsletter button uses `var(--accent)` everywhere; hardcoded `#384AD3` is removed (GitHub issue #18)
+- [x] **HSK-03**: `_core/astro.config.mjs` adopts the SITE_URL/SITE_BASE env-var pattern, matching every active site (GitHub issue #17)
 
 ---
 
