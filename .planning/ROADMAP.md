@@ -69,7 +69,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 09-02-PLAN.md — `design` block validator + design-connect, `design.lock.json` lib, design-stage verifier/diff with dry-run and loud failure (DSYNC-02, 04, 05)
+- [ ] 09-02-PLAN.md — `design` block validator + design-connect, `design.lock.json` lib, design-stage verifier/diff with dry-run and loud failure, zip inbox import, public-safe DESIGN.md/DESIGNER.md markers (DSYNC-02, 04, 05; SD-05, SD-11)
 - [ ] 09-03-PLAN.md — Allowlist sanitiser with report; token mapping into `brand.doc_tokens` with unmapped report and Layout proposal; repo-relative validate-brand (DSYNC-07, 08)
 - [ ] 09-04-PLAN.md — Isolated JSX-to-HTML render via SD-06 path, package checkpoint before react install (DSYNC-09)
 
@@ -84,7 +84,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 09-08-PLAN.md — Pilots: SFDY design system into reskin-2, non-design-system source into SD-10 slug; both build (DSYNC-12)
+- [ ] 09-08-PLAN.md — Pilots: SFDY design system into reskin-2, TELEX one-pager zip export into new sandbox slug `design-pilot`; both build (DSYNC-12)
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
