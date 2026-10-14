@@ -61,7 +61,11 @@ but no asset was downloaded, add a comment `<!-- TODO: replace with real image -
 
 Set `stage: 1`, `capture: "<capture-slug>"`, note key differences in `notes`.
 
-### 8. Verify and report
+### 8. Connect a Claude Design source (optional)
+
+Ask: "Connect a Claude Design source? design system / local export zip / skip". Skip: do nothing (no `design` block, no DESIGN.md) and continue. Otherwise run `/wm-design-pull <new-slug>`, which saves the choice with `node _scripts/design-connect.mjs` (this also writes `sites/<new-slug>/DESIGN.md` and updates `DESIGNER.md`, SD-11) and pulls. Commit those two files with explicit paths. For a revamp, the design source may replace the capture's tokens; tokens still go only to `brand.doc_tokens` with a Layout proposal (D-07).
+
+### 9. Verify and report
 
 ```bash
 cd sites/<new-slug> && npm run build

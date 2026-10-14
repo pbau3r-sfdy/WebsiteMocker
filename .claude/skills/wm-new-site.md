@@ -28,15 +28,18 @@ Create a new site in the WebsiteMocker monorepo from the `_core/` template.
 
 5. **Update `wiring.json`** — confirm `stage: 1`, fill in any known values.
 
-6. **Commit**:
+6. **Connect a Claude Design source (optional)** — ask: "Connect a Claude Design source? design system / local export zip / skip". Skip: do nothing (no `design` block, no DESIGN.md; the site has no design connection) and continue. Otherwise run `/wm-design-pull <slug>`, which saves the choice with `node _scripts/design-connect.mjs` (this also writes `sites/<slug>/DESIGN.md` and updates `DESIGNER.md`, SD-11) and pulls. Stage `sites/<slug>/DESIGN.md` and `DESIGNER.md` in the commit step when they were written.
+
+7. **Commit**:
    ```bash
    cd /path/to/WebsiteMocker
    git add sites/<slug>
    git commit -m "feat: scaffold site <slug>"
    git push
    ```
+   `_staging/` is never committed. Add `DESIGNER.md` explicitly when step 6 wrote it.
 
-7. **Report** what was created and what to do next (`/wm-update-hero`, `/wm-init-keywords`, `/wm-wire`).
+8. **Report** what was created and what to do next (`/wm-update-hero`, `/wm-init-keywords`, `/wm-wire`). Include "Design source: <name or 'none (run /wm-design-pull later)'>".
 
 ## Notes
 - The new site's sandbox URL will be: `https://pbau3r-sfdy.github.io/WebsiteMocker/<slug>`
