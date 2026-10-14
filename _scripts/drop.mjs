@@ -219,7 +219,7 @@ function cmdList(flags) {
     return;
   }
   for (const r of rows) {
-    console.log(CI ? `${r.site}  ${r.short}  ${r.status}` : `${r.site}  ${r.short}  ${r.label || '-'}  ${r.expires || '-'}  ${r.status}`);
+    console.log(CI ? `${r.site}  ${r.short}  ${r.status}` : `${r.site}  ${r.short}  ${r.label || '-'}  ${r.expires || '-'}  ${r.status}`); // local-only (label never printed in CI)
   }
   if (!rows.length) console.log('No drops.');
 }
