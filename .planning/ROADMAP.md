@@ -128,10 +128,11 @@ Plans:
 **Goal:** `sfdy-alt-clean-reskin-2` carries the reviewer's wording and footer fixes, the hero closing sentence, and no job postings, ready for the Phase 12 cutover
 **Requirements**: RETL-01, RETL-02, RETL-03, RETL-04
 **Depends on:** Phase 11 (ordering only; no code dependency)
-**Plans:** 0 plans
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 11.1 to break down)
+- [ ] 11.1-01-PLAN.md — Positioning audit, hero sentence commit, footer socials LinkedIn only (RETL-01..03)
+- [ ] 11.1-02-PLAN.md — Remove job postings via git rm, record CUT-01 overlap and consent-banner note (RETL-04)
 
 ### Phase 12: SFDY Cutover
 
