@@ -65,6 +65,7 @@
 - [ ] **CUT-04**: `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5 or higher) and `/wm-preflight` passes
 - [ ] **CUT-05**: Contributor content pushed to the production repo's `content/` reaches the new site (the dispatch slug in the production repo's `content-ci.yml` is corrected, or the site is renamed), and the unused `content/jobs/` folder is handled
 - [ ] **CUT-06**: `/wm-publish` deploys `reskin-2` to www.starflight-dynamics.com; the live site, CNAME and `robots.txt` are verified; the `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
+- [ ] **CUT-07**: As the final step of the cutover, after all sequences are tested and `reskin-2` is deployed as the live site, the live `/wm-design-seed` run (DSYNC-11) is executed so the deployed site becomes the Claude Design reference and replaces the initial website design. Target project (new, or update of "Starflight Dynamics Design System") and the exact path list are chosen and approved by the operator at that time; no deletes, no `uploads/`. Operator request 2026-10-14
 
 ## Future Requirements (backlog, not in this milestone)
 
@@ -106,7 +107,7 @@
 | DSYNC-08 | Phase 9 | Complete |
 | DSYNC-09 | Phase 9 | Complete |
 | DSYNC-10 | Phase 9 | Complete |
-| DSYNC-11 | Phase 9 | Built (script + skill, fixture-tested); live seeding run deferred by operator 2026-10-14 |
+| DSYNC-11 | Phase 9 | Built (script + skill, fixture-tested); live seeding run moved to the end of the Phase 12 cutover (CUT-07), operator 2026-10-14 |
 | DSYNC-12 | Phase 9 | Complete |
 | DSYNC-13 | Phase 9 | Complete |
 | ANLY-01 | Phase 10 | Complete |
@@ -139,6 +140,7 @@
 | CUT-04 | Phase 12 | Pending |
 | CUT-05 | Phase 12 | Pending |
 | CUT-06 | Phase 12 | Pending |
+| CUT-07 | Phase 12 | Pending |
 | LOCK-01.. | Phase 999.1 (backlog) | Not in milestone |
 
 **Coverage:** 32/32 v1.2 requirements mapped (DSYNC 13, ANLY 9, DROP 10); no orphans, no duplicates

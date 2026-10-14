@@ -153,7 +153,7 @@ Plans:
 
 **Goal**: Operator can publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com without breaking contributor content sync, leaking internal pages, or losing the old build's maintainability
 **Depends on**: Nothing (may run before or after Phases 9-11; does not wait on analytics)
-**Requirements**: CUT-01, CUT-02, CUT-03, CUT-04, CUT-05, CUT-06
+**Requirements**: CUT-01, CUT-02, CUT-03, CUT-04, CUT-05, CUT-06, CUT-07
 **Note:** CUT-01 is satisfied by Phase 11.1 (RETL-04); no jobs removal work in this phase.
 **Note:** When analytics is switched on for reskin-2 / starflight-dynamics.com, add a consent banner and update the Data Protection Notice (reviewer feedback 2026-10-14; CUT-03). Operator decision 2026-10-14 (D-04 confirmed): no banner, because Plausible sets no cookies; the Data Protection Notice has the Web analytics section. The legal reviewer's banner feedback was not separately confirmed.
 **Success Criteria** (what must be TRUE):
@@ -163,6 +163,7 @@ Plans:
   3. `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5+) and `/wm-preflight` passes
   4. A contributor push to the production repo's `content/` reaches the new site's content folder (the dispatch slug in the production repo's `content-ci.yml` is corrected or the site is renamed), and the unused `content/jobs/` folder is handled
   5. `/wm-publish` deploys `reskin-2`; the live site, CNAME and `robots.txt` are verified; `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
+  6. Last step, only after every sequence is tested and the site is deployed (CUT-07): the live `/wm-design-seed` run (DSYNC-11) pushes the deployed site's brand tokens and logos into Claude Design, so the live site becomes the design system's reference and replaces the initial website design. Operator approves the exact path list and the `finalize_plan` call; no deletes, no `uploads/`
 
 **Notes from Phase 10**:
   - Remove `analytics.sandboxUsesProdId` from `sites/sfdy-alt-clean-reskin-2/wiring.json` at cutover (D-02 debug opt-in; `/wm-preflight` warns while it is set), rebuild, then consider a Plausible hostname allowlist for starflight-dynamics.com
