@@ -6,7 +6,10 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
   <a href={`${b}/`} aria-label="Starflight Dynamics home" class="logo">
     <img src={`${b}/images/logo.png`} alt="Starflight Dynamics" />
   </a>
-  <a href={`${b}/contact`} class="link">CONTACT</a>
+  <div class="links">
+    <a href={`${b}/jobs`} class="link">CAREERS</a>
+    <a href={`${b}/contact`} class="link">CONTACT</a>
+  </div>
 </nav>
 
 <style>
@@ -23,6 +26,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border-subtle);
   }
+  .links { display: flex; gap: 32px; }
   .logo img { height: 30px; width: auto; }
   .link {
     font-size: 11px;
