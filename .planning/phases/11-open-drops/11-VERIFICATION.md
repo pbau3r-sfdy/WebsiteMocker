@@ -1,8 +1,8 @@
 ---
 phase: 11-open-drops
 verified: 2026-10-14T00:00:00Z
-status: human_needed
-score: 5/5 success criteria verified (one operator confirmation outstanding)
+status: passed
+score: 5/5 success criteria verified; Plausible goal and live click event verified 2026-10-14 (second test drop)
 gaps: []
 human_verification:
   - test: "Confirm the Plausible goal `Drop Download` exists in the Plausible site settings"

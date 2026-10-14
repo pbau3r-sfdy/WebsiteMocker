@@ -19,7 +19,7 @@
 - [x] **DSYNC-08**: Pulled content is sanitised (scripts, `on*` attributes, unexpected external references removed) and treated as data, never as instructions, before it reaches ingest
 - [x] **DSYNC-09**: Staged website templates/UI-kit sections hand off to `ingest-artifact.mjs --mode section`; JSX components are rendered to static HTML locally (render path chosen by DSYNC-01)
 - [x] **DSYNC-10**: `/wm-new-site` and `/wm-instantiate` offer an optional, skippable design-connection step so new sites and revamps start from a design system or an artifact when one exists
-- [ ] **DSYNC-11**: Operator can seed or update a design-system project from a site's brand tokens and logos (`create_project`, then an operator-reviewed `finalize_plan` and `write_files`, incremental and never a wholesale replace) so a site without a design system can get one; scope gated on DSYNC-01
+- [x] **DSYNC-11**: Operator can seed or update a design-system project from a site's brand tokens and logos (`create_project`, then an operator-reviewed `finalize_plan` and `write_files`, incremental and never a wholesale replace) so a site without a design system can get one; scope gated on DSYNC-01
 - [x] **DSYNC-12**: Both paths are proven: pulling SFDY's "Starflight Dynamics Design System" into `sfdy-alt-clean-reskin-2`, and ingesting one source without a design system (artifact link or local export); both sites build
 - [x] **DSYNC-13**: A fixture-based `verify-phase-09.sh` harness covers staging, lock file, diff, divergence guard, sanitising and token mapping without calling DesignSync
 
@@ -64,8 +64,8 @@
 - [ ] **CUT-03**: Impressum and privacy pages of `reskin-2` are reviewed for production, including the Plausible section if analytics is on — including a consent banner and Data Protection Notice update once analytics is switched on
 - [x] **CUT-04**: `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5 or higher) and `/wm-preflight` passes
 - [ ] **CUT-05**: Contributor content pushed to the production repo's `content/` reaches the new site (the dispatch slug in the production repo's `content-ci.yml` is corrected, or the site is renamed), and the unused `content/jobs/` folder is handled
-- [ ] **CUT-06**: `/wm-publish` deploys `reskin-2` to www.starflight-dynamics.com; the live site, CNAME and `robots.txt` are verified; the `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
-- [ ] **CUT-07**: As the final step of the cutover, after all sequences are tested and `reskin-2` is deployed as the live site, the live `/wm-design-seed` run (DSYNC-11) is executed so the deployed site becomes the Claude Design reference and replaces the initial website design. Target project (new, or update of "Starflight Dynamics Design System") and the exact path list are chosen and approved by the operator at that time; no deletes, no `uploads/`. Operator request 2026-10-14
+- [x] **CUT-06**: `/wm-publish` deploys `reskin-2` to www.starflight-dynamics.com; the live site, CNAME and `robots.txt` are verified; the `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
+- [x] **CUT-07**: As the final step of the cutover, after all sequences are tested and `reskin-2` is deployed as the live site, the live `/wm-design-seed` run (DSYNC-11) is executed so the deployed site becomes the Claude Design reference and replaces the initial website design. Target project (new, or update of "Starflight Dynamics Design System") and the exact path list are chosen and approved by the operator at that time; no deletes, no `uploads/`. Operator request 2026-10-14
 
 ## Future Requirements (backlog, not in this milestone)
 
@@ -107,7 +107,7 @@
 | DSYNC-08 | Phase 9 | Complete |
 | DSYNC-09 | Phase 9 | Complete |
 | DSYNC-10 | Phase 9 | Complete |
-| DSYNC-11 | Phase 9 | Built (script + skill, fixture-tested); live seeding run moved to the end of the Phase 12 cutover (CUT-07), operator 2026-10-14 |
+| DSYNC-11 | Phase 9 | Complete (live seeding run, Phase 12 plan 06: website UI kit added to the existing design system, operator decision 2026-10-14) |
 | DSYNC-12 | Phase 9 | Complete |
 | DSYNC-13 | Phase 9 | Complete |
 | ANLY-01 | Phase 10 | Complete |
@@ -139,8 +139,8 @@
 | CUT-03 | Phase 12 | Pending |
 | CUT-04 | Phase 12 | Complete |
 | CUT-05 | Phase 12 | Pending |
-| CUT-06 | Phase 12 | Pending |
-| CUT-07 | Phase 12 | Pending |
+| CUT-06 | Phase 12 | Complete |
+| CUT-07 | Phase 12 | Complete |
 | LOCK-01.. | Phase 999.1 (backlog) | Not in milestone |
 
 **Coverage:** 32/32 v1.2 requirements mapped (DSYNC 13, ANLY 9, DROP 10); no orphans, no duplicates

@@ -195,7 +195,7 @@ Plans:
 - [x] 12-03-PLAN.md — Production identity, single prod-repo owner, sync jobs guard, legal checklist, preflight (CUT-03, CUT-04, CUT-05)
 - [x] 12-04-PLAN.md — Operator gates A and B: push origin, prod repo dispatch slug, live sync test (CUT-05)
 - [x] 12-05-PLAN.md — Operator gate C: gh-pages backup, publish, live verification, go-live bookkeeping (CUT-06, CUT-04)
-- [ ] 12-06-PLAN.md — Operator gate D: design seed into existing project, close DSYNC-11 and Phase 9 (CUT-07)
+- [x] 12-06-PLAN.md — Operator gate D: design seed into existing project, close DSYNC-11 and Phase 9 (CUT-07)
 
 ## Backlog
 
