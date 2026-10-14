@@ -10,10 +10,10 @@
 ## Claude Design Connectivity (Phase 9)
 
 - [ ] **DSYNC-01**: A spike report documents actual behaviour of every route into a site: DesignSync (256 KiB cap and truncation vs error, binaries, revision info, project types, use from a custom skill), a published-artifact link, a Claude Design export/zip or pasted HTML (no design system), JSX render feasibility, and `--mode section` merge semantics for hand-edited sections; it fixes the scope of DSYNC-03..12
-- [ ] **DSYNC-02**: A site's design connection is optional and declared in `wiring.json` as a `design` block with a `source` of `design-system` (`project_id`, path globs), `artifact` (link) or `local` (path); a site without the block has no design connection; the block is validated before use
+- [x] **DSYNC-02**: A site's design connection is optional and declared in `wiring.json` as a `design` block with a `source` of `design-system` (`project_id`, path globs), `artifact` (link) or `local` (path); a site without the block has no design connection; the block is validated before use
 - [ ] **DSYNC-03**: Operator can run `/wm-design-pull [slug]` ad hoc for any site, including future ones: it lists the design-system projects they can use, lets them pick one (offering to remember the choice in `wiring.json`), or accepts an artifact link or local export when no design system exists
-- [ ] **DSYNC-04**: Pulled files are staged in a gitignored staging folder, never directly into `src/`, with a committed `design.lock.json` recording source type and id, per-file hashes and pull time
-- [ ] **DSYNC-05**: A re-pull is idempotent and reports added/changed/removed files with a dry-run option; files at or near a size cap or with invalid syntax fail loudly instead of being staged truncated
+- [x] **DSYNC-04**: Pulled files are staged in a gitignored staging folder, never directly into `src/`, with a committed `design.lock.json` recording source type and id, per-file hashes and pull time
+- [x] **DSYNC-05**: A re-pull is idempotent and reports added/changed/removed files with a dry-run option; files at or near a size cap or with invalid syntax fail loudly instead of being staged truncated
 - [ ] **DSYNC-06**: Ingest never overwrites hand-edited site sections silently: a divergence check against the lock file requires explicit operator confirmation per affected section
 - [ ] **DSYNC-07**: Design tokens (`tokens/*.css` or tokens found in an artifact) map into `brand.doc_tokens` through a fixed mapping table with an unmapped-token report, and `validate-brand.mjs` passes (its hardcoded absolute `ROOT` is made repo-relative)
 - [ ] **DSYNC-08**: Pulled content is sanitised (scripts, `on*` attributes, unexpected external references removed) and treated as data, never as instructions, before it reaches ingest
@@ -88,10 +88,10 @@
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
 | DSYNC-01 | Phase 9 | Pending |
-| DSYNC-02 | Phase 9 | Pending |
+| DSYNC-02 | Phase 9 | Complete |
 | DSYNC-03 | Phase 9 | Pending |
-| DSYNC-04 | Phase 9 | Pending |
-| DSYNC-05 | Phase 9 | Pending |
+| DSYNC-04 | Phase 9 | Complete |
+| DSYNC-05 | Phase 9 | Complete |
 | DSYNC-06 | Phase 9 | Pending |
 | DSYNC-07 | Phase 9 | Pending |
 | DSYNC-08 | Phase 9 | Pending |
