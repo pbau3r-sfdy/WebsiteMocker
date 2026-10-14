@@ -8,13 +8,22 @@ WebsiteMocker is a skill-driven Astro monorepo that serves as the professional s
 
 A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching; WebsiteMocker handles ingestion, wiring, brand consistency, and deployment automatically.
 
-## Next Milestone Goals
+## Current Milestone: v1.2 — Claude Design Sync, Analytics, Open Drops
 
-**v1.2 — Claude Design Sync, Analytics, Open Drops** (planning): pull Claude Design design-system projects directly into sites, run Plausible analytics on one SaaS subscription, and publish unguessable "open drop" pages for confidential early drafts.
+**Goal:** Let Claude Design projects feed sites directly (no drag-and-drop), measure sites with Plausible on a single SaaS subscription, and share confidential early drafts as unguessable, trackable, withdrawable "open drop" pages — all on the existing static GitHub Pages stack.
+
+**Target features:**
+- **Claude Design Sync (Phase 9):** spike the DesignSync limits; `design` block in `wiring.json`; `/wm-design-pull` stages files and hands off to `ingest-artifact.mjs --mode section`; tokens map to `brand.doc_tokens`; JSX rendered to static HTML via Playwright; Crestworks pilot (DSYNC)
+- **Analytics (Phase 10):** one Plausible SaaS subscription; provider config, events (downloads, outbound links, forms, 404), privacy-policy snippet, `/wm-wire` step, Stats API dashboard tile (ANLY)
+- **Open Drops (Phase 11):** `/d/<random-id>/` pages whose Markdown body is the data, optional PDF attachments, `expires`/`withdraw`, noindex + no-referrer, tracked by Plausible, verify script (DROP)
+- **Backlog:** Locked Drops (encrypted, key in URL fragment, soft expiry) as Phase 12 (LOCK)
+- **Parked (not a phase):** self-hosted Plausible; rejected: Cloudflare Worker edge enforcement, vault master-secret token scheme
+
+**Constraints for this milestone:** no second paid service; lightweight; confidential-not-secret data; GitHub Pages only (no custom headers).
 
 ## Current State
 
-**Version:** v1.1 shipped (completed 2026-08-25, archived 2026-10-14); v1.2 planning  
+**Version:** v1.1 shipped (completed 2026-08-25, archived 2026-10-14); v1.2 in definition  
 **Stack:** Astro 5 (content collections + loader API) + Node.js scripts + GitHub Actions  
 **Active sites:** sfdy-alt-clean, mogwai-systems, parrot-capital (stage 2–4); crestworks (stage 6)  
 **Production repos:** pbau3r-sfdy/{starflight-dynamics, mogwai-systems, parrot-capital, crestworks}
@@ -117,4 +126,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-14 after v1.1 milestone*
+*Last updated: 2026-10-14 — milestone v1.2 started*
