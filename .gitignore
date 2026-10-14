@@ -7,3 +7,6 @@ dist/
 .env.*
 !.env.example
 _staging/
+
+# Plausible aggregates (ANLY-07): local only, never committed
+_data/*/analytics.json
