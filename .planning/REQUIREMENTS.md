@@ -53,7 +53,7 @@
 - [x] **RETL-01**: The positioning phrase reads "In-Space Power Projection" without "Systems" everywhere on `sfdy-alt-clean-reskin-2` (pages, data files, meta descriptions)
 - [x] **RETL-02**: The home hero ends with the sentence "We enable European in-space power projection" with the phrase highlighted in the accent colour, and it builds
 - [x] **RETL-03**: All social links (LinkedIn, X, Instagram, Facebook and the rest) stay in the footer and legal pages (operator reversed the reviewer's suggestion 2026-10-14); nothing changes there
-- [ ] **RETL-04**: All job postings are removed (content entries, jobs pages, `JobRow`, Nav/Footer links, collection) with the site building cleanly and the files recoverable from git history; this also satisfies CUT-01
+- [x] **RETL-04**: All job postings are removed (content entries, jobs pages, `JobRow`, Nav/Footer links, collection) with the site building cleanly and the files recoverable from git history; this also satisfies CUT-01
 - [x] **RETL-05**: The privacy policy of `sfdy-alt-clean-reskin-2` has a "Web analytics" section for Plausible (cookie-free, EU-hosted, Art. 6(1)(f) GDPR, right to object) as a draft for operator/legal review; the imprint is unchanged; the tracking tag is not added (Phase 10)
 - Noted for Phase 10/12: when analytics is switched on, add a consent banner and update the Data Protection Notice (CUT-03) (superseded for the banner by Phase 10 D-04: no banner, Plausible is cookie-free; confirmation with the legal reviewer is an open item in docs/analytics.md; the Data Protection Notice update stands via RETL-05/CUT-03)
 
@@ -131,7 +131,7 @@
 | RETL-01 | Phase 11.1 | Complete |
 | RETL-02 | Phase 11.1 | Complete |
 | RETL-03 | Phase 11.1 | Complete |
-| RETL-04 | Phase 11.1 | Pending |
+| RETL-04 | Phase 11.1 | Complete |
 | RETL-05 | Phase 11.1 | Complete |
 | CUT-01 | Phase 12 | Complete (Phase 11.1, RETL-04) |
 | CUT-02 | Phase 12 | Pending |
