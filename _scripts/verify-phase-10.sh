@@ -242,8 +242,8 @@ fi
 # ── notfound ───────────────────────────────────────────────────────────────────
 if want notfound; then
   echo ""
-  echo "── 404 event (reskin-2) ──"
-  P404="$REPO/sites/sfdy-alt-clean-reskin-2/src/pages/404.astro"
+  echo "── 404 event (sfdy) ──"
+  P404="$REPO/sites/sfdy/src/pages/404.astro"
   if [ -f "$P404" ]; then
     check "404.astro exists" 0
     OUT=$(cat "$P404")
@@ -283,11 +283,11 @@ if want notfound; then
       esac
     done <<< "$OUT"
   fi
-  B="$REPO/dist/sfdy-alt-clean-reskin-2/404.html"
+  B="$REPO/dist/sfdy/404.html"
   if [ -f "$B" ]; then
     OUT=$(cat "$B"); check "built 404.html contains plausible('404'" "$(has "plausible('404'")"
   else
-    skip "built 404.html (dist not built)"
+    check "built 404.html exists (build dist/sfdy first)" 1
   fi
 fi
 

@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
-# Phase 11.1 verification: sfdy-alt-clean-reskin-2 retool (RETL-01..05).
+# Phase 11.1 verification: sfdy retool (RETL-01..05; slug via SLUG env).
 # Builds the site with the production base, then asserts on source and built HTML.
 # Usage: bash _scripts/verify-phase-11-1.sh
 set -u
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 cd "$ROOT"
-SITE=sites/sfdy-alt-clean-reskin-2
-DIST=dist/sfdy-alt-clean-reskin-2
+SLUG="${SLUG:-sfdy}"
+SITE=sites/$SLUG
+DIST=dist/$SLUG
 PASS=0; FAIL=0
 check() { if [ "$2" = 0 ]; then PASS=$((PASS+1)); echo "  PASS  $1"; else FAIL=$((FAIL+1)); echo "  FAIL  $1"; fi; }
 inhtml() { grep -qiE -- "$2" "$DIST/$1" && echo 0 || echo 1; }
 nohtml() { grep -qiE -- "$2" "$DIST/$1" && echo 1 || echo 0; }
 
-echo "Phase 11.1: reskin-2 retool — Verification"
+echo "Phase 11.1: sfdy retool — Verification"
 echo "=========================================================="
-SITE_BASE=/ node _scripts/build-single.mjs sfdy-alt-clean-reskin-2 >/dev/null 2>&1
+SITE_BASE=/ node _scripts/build-single.mjs "$SLUG" >/dev/null 2>&1
 check "site builds" "$([ -f "$DIST/index.html" ] && echo 0 || echo 1)"
 
 echo; echo "── RETL-01: no 'Power Projection Systems' ──"
@@ -30,7 +31,9 @@ echo; echo "── RETL-03: socials and imprint unchanged ──"
 for h in 'linkedin.com/company/starflight-dynamics' 'x.com/sfdy_space' 'instagram.com/starflight_dynamics' 'facebook.com/profile.php'; do
   check "footer links $h" "$(inhtml index.html "href=\"https://[a-z.]*$h")"
 done
-git diff --quiet 0d94909^ HEAD -- "$SITE/src/pages/imprint.astro" && R=0 || R=1
+# Blob compare across the slug rename. Plan 12-03 (CUT-03) may legitimately change the imprint;
+# if so, re-baseline this single assertion there.
+git diff --quiet 0d94909^:sites/sfdy-alt-clean-reskin-2/src/pages/imprint.astro HEAD:"$SITE/src/pages/imprint.astro" && R=0 || R=1
 check "imprint.astro unchanged since the retool began" "$R"
 
 echo; echo "── RETL-04: job postings removed ──"
