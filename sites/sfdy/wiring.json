@@ -4,7 +4,7 @@
   "accent": "#00FB92",
   "contact": "mission-control@starflight-dynamics.com",
   "domain": "www.starflight-dynamics.com",
-  "stage": 5,
+  "stage": 6,
   "prod_repo": "pbau3r-sfdy/starflight-dynamics",
   "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/sfdy",
   "newsletter": {
@@ -82,5 +82,6 @@
       "components/core/Beam.jsx",
       "components/core/Button.jsx"
     ]
-  }
+  },
+  "last_deploy": "2026-10-14"
 }
