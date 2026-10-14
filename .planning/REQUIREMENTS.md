@@ -39,8 +39,8 @@
 
 - [x] **DROP-01**: A `drops` content collection defines each drop: 32-hex id from `crypto.randomBytes(16)`, title, human `label`, mandatory `expires` (ISO with offset, with a maximum horizon), optional PDF attachments, and a Markdown body that is the data
 - [ ] **DROP-02**: Operator can run `node _scripts/drop.mjs new|list|withdraw|expire` to create, list (with expiry status), remove and sweep drops, plus the read-only `check` subcommand used by preflight, publish and the nightly health job
-- [ ] **DROP-03**: A shared `/d/<id>/` route and `DropLayout` in `_core` render a drop with a neutral title, no Open Graph tags and no links to other drops or site listings; a site opts in with `drops.enabled` in `wiring.json`; `sfdy` adopts it
-- [ ] **DROP-04**: `_scripts/drops.mjs` filters expired and withdrawn drops at build, adds `noindex,nofollow,noarchive` and `no-referrer` meta tags, keeps drops out of sitemap, RSS, dashboard and content-sync, adds no `robots.txt` entry, and builds no drops for sandbox (`/WebsiteMocker` base) unless `DROPS_PREVIEW=1`
+- [x] **DROP-03**: A shared `/d/<id>/` route and `DropLayout` in `_core` render a drop with a neutral title, no Open Graph tags and no links to other drops or site listings; a site opts in with `drops.enabled` in `wiring.json`; `sfdy` adopts it
+- [x] **DROP-04**: `_scripts/drops.mjs` filters expired and withdrawn drops at build, adds `noindex,nofollow,noarchive` and `no-referrer` meta tags, keeps drops out of sitemap, RSS, dashboard and content-sync, adds no `robots.txt` entry, and builds no drops for sandbox (`/WebsiteMocker` base) unless `DROPS_PREVIEW=1`
 - [x] **DROP-05**: PDF attachments are emitted into `dist/d/<id>/` after filtering (never from `public/`), with metadata stripped; the build fails if the stripping tool is unavailable
 - [ ] **DROP-06**: Drop views report as a masked `/d/` pageview and attachment downloads as a plain `Drop Download` goal through the Phase 10 sanitised mode; grouping by `label` applies only when custom properties are enabled (`analytics.props`); the id never appears in any analytics path or property
 - [ ] **DROP-07**: `/wm-preflight` and `/wm-publish` warn about expired, soon-expiring and expiry-less drops and about secret-looking content, and list the drops about to be published
@@ -121,8 +121,8 @@
 | ANLY-09 | Phase 10 | Complete |
 | DROP-01 | Phase 11 | Complete |
 | DROP-02 | Phase 11 | Pending |
-| DROP-03 | Phase 11 | Pending |
-| DROP-04 | Phase 11 | Pending |
+| DROP-03 | Phase 11 | Complete |
+| DROP-04 | Phase 11 | Complete |
 | DROP-05 | Phase 11 | Complete |
 | DROP-06 | Phase 11 | Pending |
 | DROP-07 | Phase 11 | Pending |
