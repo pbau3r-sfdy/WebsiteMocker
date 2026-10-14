@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import PageHero from '../../components/PageHero.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout title="Careers" description="Open positions at Starflight Dynamics are coming soon.">
+  <Nav active="careers" />
+
+  <PageHero eyebrow="Careers" narrow={false} pad="64px" lede="Our open positions go live in the coming days.">Coming soon</PageHero>
+
+  <section class="body">
+    <div class="wrap">
+      <p>We are publishing our first open positions in the coming days. Until then, you can write to us directly and we will get back to you.</p>
+      <p class="mail"><a href="mailto:join-the-crew@starflight-dynamics.com">join-the-crew@starflight-dynamics.com</a></p>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .body { padding: 0 var(--gutter) 96px; }
+  .wrap { max-width: 960px; display: flex; flex-direction: column; gap: 16px; }
+  p { max-width: 62ch; font-size: 17px; line-height: 1.7; font-weight: 300; color: rgba(255,255,255,.80); text-wrap: pretty; }
+  .mail a { font-weight: 700; color: var(--accent); overflow-wrap: anywhere; }
+</style>

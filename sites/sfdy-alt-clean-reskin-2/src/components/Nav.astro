@@ -1,12 +1,13 @@
 ---
 // Site navigation. `active` highlights the current section; `overlay` keeps the
 // bar transparent over a hero image until the page scrolls.
-interface Props { active?: 'about' | 'capabilities' | 'news' | 'contact' | ''; overlay?: boolean; }
+interface Props { active?: 'about' | 'capabilities' | 'careers' | 'news' | 'contact' | ''; overlay?: boolean; }
 const { active = '', overlay = false } = Astro.props;
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const links = [
   { key: 'about',        label: 'ABOUT',        href: `${b}/about` },
   { key: 'capabilities', label: 'CAPABILITIES', href: `${b}/capabilities` },
+  { key: 'careers',      label: 'CAREERS',      href: `${b}/jobs` },
   { key: 'news',         label: 'NEWS',         href: `${b}/news` },
   { key: 'contact',      label: 'CONTACT',      href: `${b}/contact` },
 ];
