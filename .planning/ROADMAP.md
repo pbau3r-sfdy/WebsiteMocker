@@ -131,7 +131,7 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 11.1-01-PLAN.md — Positioning audit, hero sentence commit, footer socials LinkedIn only (RETL-01..03)
+- [ ] 11.1-01-PLAN.md — Positioning check, hero sentence commit, socials kept, draft Plausible privacy section (RETL-01, 02, 03, 05)
 - [ ] 11.1-02-PLAN.md — Remove job postings via git rm, record CUT-01 overlap and consent-banner note (RETL-04)
 
 ### Phase 12: SFDY Cutover
