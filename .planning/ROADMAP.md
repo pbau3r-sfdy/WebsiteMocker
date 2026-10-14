@@ -106,7 +106,21 @@ Plans:
   4. `/wm-wire` offers an optional analytics step, and preflight/publish refuse to turn analytics on for a live site whose privacy policy lacks the Plausible section
   5. Analytics is wired on `sfdy-alt-clean-reskin-2` only (shared sandbox site until the cutover, then www.starflight-dynamics.com) and events appear in Plausible; the aggregates-only dashboard tile (Business plan) is local-only and labelled approximate; `verify-phase-10.sh` passes
 
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+**Wave 1**
+
+- [ ] 10-01-PLAN.md — `isSandbox` helper, pa- per-site snippet with event flags and legacy fallback, ANLY-03 identity assertion, sanitising transformRequest (ANLY-01, 02, 03, 04, 05)
+- [ ] 10-02-PLAN.md — Privacy gate script in publish.yml, /wm-preflight, /wm-publish; /wm-wire analytics step; event contract and goals checklist in docs/analytics.md (ANLY-06, 04)
+- [ ] 10-03-PLAN.md — Stats API v2 aggregates fetcher, gitignored `_data/*/analytics.json`, local-only approximate dashboard tile, off by default (ANLY-07)
+
+**Wave 2** *(blocked on 10-01, 10-02)*
+
+- [ ] 10-04-PLAN.md — `verify-phase-10.sh` fixture harness (ANLY-08)
+
+**Wave 3** *(blocked on 10-04 and on Phase 11.1 having landed)*
+
+- [ ] 10-05-PLAN.md — Wire reskin-2 (pa- tag, D-02 sandbox debug opt-in, 404 page), operator live debug checkpoint, event-name decision (ANLY-09, 04)
 
 ### Phase 11: Open Drops
 
@@ -146,6 +160,10 @@ Plans:
   3. `reskin-2` carries the production identity in `wiring.json` (`prod_repo`, `domain`, stage 5+) and `/wm-preflight` passes
   4. A contributor push to the production repo's `content/` reaches the new site's content folder (the dispatch slug in the production repo's `content-ci.yml` is corrected or the site is renamed), and the unused `content/jobs/` folder is handled
   5. `/wm-publish` deploys `reskin-2`; the live site, CNAME and `robots.txt` are verified; `CLAUDE.md` ownership table and `wiring.json` (stage 6, `last_deploy`) are updated
+
+**Notes from Phase 10**:
+  - Remove `analytics.sandboxUsesProdId` from `sites/sfdy-alt-clean-reskin-2/wiring.json` at cutover (D-02 debug opt-in; `/wm-preflight` warns while it is set), rebuild, then consider a Plausible hostname allowlist for starflight-dynamics.com
+  - Confirm the no-consent-banner decision (Phase 10 D-04) with the legal reviewer before publishing
 
 **Plans**: TBD
 
