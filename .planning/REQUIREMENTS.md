@@ -97,7 +97,7 @@
 | DSYNC-08 | Phase 9 | Complete |
 | DSYNC-09 | Phase 9 | Complete |
 | DSYNC-10 | Phase 9 | Complete |
-| DSYNC-11 | Phase 9 | Pending |
+| DSYNC-11 | Phase 9 | Built (script + skill, fixture-tested); live seeding run deferred by operator 2026-10-14 |
 | DSYNC-12 | Phase 9 | Complete |
 | DSYNC-13 | Phase 9 | Complete |
 | ANLY-01 | Phase 10 | Pending |

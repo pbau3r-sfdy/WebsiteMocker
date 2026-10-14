@@ -88,7 +88,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 09-09-PLAN.md — Seed/update a design-system project from site tokens and logos, operator-approved path lists; droppable per SD-09 (DSYNC-11)
+- [ ] 09-09-PLAN.md — Seed/update a design-system project from site tokens and logos, operator-approved path lists; droppable per SD-09 (DSYNC-11). Script and skill built; live seeding run deferred by operator 2026-10-14
 
 **UI hint**: yes
 
