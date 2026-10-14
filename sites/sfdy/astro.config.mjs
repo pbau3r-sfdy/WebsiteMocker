@@ -3,7 +3,7 @@ import plausible from '../../_scripts/plausible.mjs';
 
 export default defineConfig({
   site: process.env.SITE_URL || 'https://www.starflight-dynamics.com',
-  base: process.env.SITE_BASE || '/WebsiteMocker/sfdy-alt-clean-reskin-2',
+  base: process.env.SITE_BASE || '/WebsiteMocker/sfdy',
   output: 'static',
   integrations: [plausible()],
 });

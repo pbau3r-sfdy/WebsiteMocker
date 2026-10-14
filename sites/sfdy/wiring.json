@@ -1,10 +1,10 @@
 {
-  "slug": "sfdy-alt-clean-reskin-2",
+  "slug": "sfdy",
   "name": "Starflight Dynamics (Reskin 2)",
   "accent": "#00FB92",
   "contact": "mission-control@starflight-dynamics.com",
   "stage": 2,
-  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/sfdy-alt-clean-reskin-2",
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/sfdy",
   "newsletter": {
     "service": "mailchimp",
     "audience_id": "88bca13b57",
