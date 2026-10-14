@@ -52,7 +52,7 @@ With Plausible sanitised mode a drop view is reported as the masked path `/d/_ID
 - **Nightly health (`drops-health.yml`).** It checks that the token is valid, that its expiry is not near (fails when fewer than 14 days remain), that it can read WebsiteMocker, the production repo and `pbau3r-sfdy/drops`, and that `pbau3r-sfdy/drops` is private.
 - **What it cannot check.** The write scope is unverifiable by the check: a read-only probe cannot prove write permission. The first failing publish or content sync is the signal.
 
-Token expiry date: not yet recorded (operator fills at gate G2)
+Token expiry date: 2027-08-20
 
 Renewal checklist:
 
