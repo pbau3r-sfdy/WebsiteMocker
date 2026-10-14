@@ -15,8 +15,8 @@
 - [x] **DSYNC-04**: Pulled files are staged in a gitignored staging folder, never directly into `src/`, with a committed `design.lock.json` recording source type and id, per-file hashes and pull time
 - [x] **DSYNC-05**: A re-pull is idempotent and reports added/changed/removed files with a dry-run option; files at or near a size cap or with invalid syntax fail loudly instead of being staged truncated
 - [ ] **DSYNC-06**: Ingest never overwrites hand-edited site sections silently: a divergence check against the lock file requires explicit operator confirmation per affected section
-- [ ] **DSYNC-07**: Design tokens (`tokens/*.css` or tokens found in an artifact) map into `brand.doc_tokens` through a fixed mapping table with an unmapped-token report, and `validate-brand.mjs` passes (its hardcoded absolute `ROOT` is made repo-relative)
-- [ ] **DSYNC-08**: Pulled content is sanitised (scripts, `on*` attributes, unexpected external references removed) and treated as data, never as instructions, before it reaches ingest
+- [x] **DSYNC-07**: Design tokens (`tokens/*.css` or tokens found in an artifact) map into `brand.doc_tokens` through a fixed mapping table with an unmapped-token report, and `validate-brand.mjs` passes (its hardcoded absolute `ROOT` is made repo-relative)
+- [x] **DSYNC-08**: Pulled content is sanitised (scripts, `on*` attributes, unexpected external references removed) and treated as data, never as instructions, before it reaches ingest
 - [ ] **DSYNC-09**: Staged website templates/UI-kit sections hand off to `ingest-artifact.mjs --mode section`; JSX components are rendered to static HTML locally (render path chosen by DSYNC-01)
 - [ ] **DSYNC-10**: `/wm-new-site` and `/wm-instantiate` offer an optional, skippable design-connection step so new sites and revamps start from a design system or an artifact when one exists
 - [ ] **DSYNC-11**: Operator can seed or update a design-system project from a site's brand tokens and logos (`create_project`, then an operator-reviewed `finalize_plan` and `write_files`, incremental and never a wholesale replace) so a site without a design system can get one; scope gated on DSYNC-01
@@ -93,8 +93,8 @@
 | DSYNC-04 | Phase 9 | Complete |
 | DSYNC-05 | Phase 9 | Complete |
 | DSYNC-06 | Phase 9 | Pending |
-| DSYNC-07 | Phase 9 | Pending |
-| DSYNC-08 | Phase 9 | Pending |
+| DSYNC-07 | Phase 9 | Complete |
+| DSYNC-08 | Phase 9 | Complete |
 | DSYNC-09 | Phase 9 | Pending |
 | DSYNC-10 | Phase 9 | Pending |
 | DSYNC-11 | Phase 9 | Pending |
