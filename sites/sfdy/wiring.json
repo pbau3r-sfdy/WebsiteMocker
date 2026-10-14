@@ -84,5 +84,7 @@
     ]
   },
   "last_deploy": "2026-10-14",
-  "drops": { "enabled": true }
+  "drops": {
+    "enabled": true
+  }
 }
