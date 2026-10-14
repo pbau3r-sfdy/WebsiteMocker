@@ -19,8 +19,8 @@ Operator decision (2026-10-14), after the dry run: the existing design-system pr
 
 Frozen-docs note: phases 9, 10 and 11.1 planning docs keep the old name `sfdy-alt-clean-reskin-2`.
 
-## Still open (not closed here)
-- CUT-03: the legal checklist (12-LEGAL-CHECKLIST.md) is handed over; operator or lawyer sign-off pending.
-- CUT-05: the contributor dispatch reaches `content-sync`; a live file copy into `sites/sfdy/src/content/` was only fixture-tested.
+## Closed by the operator (2026-10-14)
+- CUT-03: legal checklist handed over, accepted.
+- CUT-05: dispatch verified live; the file copy into `sites/sfdy/src/content/` was fixture-tested only, accepted as sufficient.
 
 ## Self-Check: PASSED
