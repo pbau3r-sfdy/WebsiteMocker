@@ -36,7 +36,7 @@ Full archive: [v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md) · phase records: [v
 
 - [x] **Phase 9: Claude Design Connectivity** - Optional, ad hoc pull of design sources (design system, local export zip; artifact-link route dropped per SD-04) into any site, gated by a DesignSync spike. Completed 2026-10-14; DSYNC-11 live seeding run deferred
 - [x] **Phase 10: Analytics** - Optional per-site Plausible analytics on one subscription, with an event contract, privacy gating and a sanitised tracking mode; on for `sfdy-alt-clean-reskin-2` only (and www.starflight-dynamics.com after the Phase 12 cutover) (completed 2026-10-14)
-- [ ] **Phase 11: Open Drops** - Unguessable, expiring, withdrawable, trackable `/d/<id>/` pages for confidential-not-secret drafts; adopted on `sfdy`
+- [x] **Phase 11: Open Drops** - Unguessable, expiring, withdrawable, trackable `/d/<id>/` pages for confidential-not-secret drafts; adopted on `sfdy`
 - [ ] **Phase 12: SFDY Cutover** - Publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com (strip jobs, remove internal pages, fix contributor sync, publish)
 
 Phases 9 and 10 are independent and may run in parallel. Phase 11 depends on Phase 10. Phase 12 is independent and may run at any point.
@@ -154,7 +154,7 @@ Plans:
 
 **Wave 4** *(blocked on 11-03, 11-05; operator gates G1-G6)*
 
-- [ ] 11-06-PLAN.md — Create private repo, extend token, push, Plausible goal, test drop publish then withdraw + republish 404 proof, first health run (DROP-02, 03, 04, 05, 06, 08, 09, 10)
+- [x] 11-06-PLAN.md — Create private repo, extend token, push, Plausible goal, test drop publish then withdraw + republish 404 proof, first health run (DROP-02, 03, 04, 05, 06, 08, 09, 10)
 
 ### Phase 11.1: Retool sfdy-alt-clean-reskin-2 before cutover: review feedback and further design changes (INSERTED)
 
@@ -217,5 +217,5 @@ Plans:
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
 | 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
 | 10. Analytics | v1.2 | 5/5 | Complete   | 2026-10-14 |
-| 11. Open Drops | v1.2 | 5/6 | In Progress|  |
+| 11. Open Drops | v1.2 | 6/6 | Complete   | 2026-10-14 |
 | 12. SFDY Cutover | v1.2 | 5/6 | In Progress|  |
