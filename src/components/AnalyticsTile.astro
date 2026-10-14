@@ -5,16 +5,33 @@
  * _data/<slug>/analytics.json (written by _scripts/fetch-analytics-data.mjs).
  */
 import { existsSync, readFileSync } from 'fs';
-import { join, resolve } from 'path';
+import { join, dirname, resolve } from 'path';
 
 const { slug } = Astro.props;
-const inCI = Boolean(process.env.GITHUB_ACTIONS || process.env.CI);
+
+// CI is detected by value: the string "false" or "0" must not count as CI.
+const truthy = (v) => ['1', 'true', 'yes'].includes(String(v ?? '').trim().toLowerCase());
+const inCI = truthy(process.env.GITHUB_ACTIONS) || truthy(process.env.CI);
+
+// Repo root, independent of the cwd the build was started from: WM_ROOT, else the
+// nearest ancestor of cwd that holds both _scripts/ and sites/, else cwd.
+function repoRoot() {
+  if (process.env.WM_ROOT) return resolve(process.env.WM_ROOT);
+  for (let d = process.cwd(); ; d = dirname(d)) {
+    if (existsSync(join(d, '_scripts')) && existsSync(join(d, 'sites'))) return d;
+    if (dirname(d) === d) return process.cwd();
+  }
+}
 
 let data = null;
-if (!inCI) {
-  const file = join(resolve('_data'), slug, 'analytics.json');
+if (!inCI && typeof slug === 'string' && /^[a-z0-9-]+$/.test(slug)) {
+  const file = join(repoRoot(), '_data', slug, 'analytics.json');
   if (existsSync(file)) {
-    try { data = JSON.parse(readFileSync(file, 'utf8')); } catch { data = null; }
+    try {
+      data = JSON.parse(readFileSync(file, 'utf8'));
+    } catch (e) {
+      console.warn(`AnalyticsTile: cannot parse ${file}: ${e.message}`);
+    }
   }
 }
 const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-GB') : '–');
