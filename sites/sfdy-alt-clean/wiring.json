@@ -1,11 +1,9 @@
 {
   "slug": "sfdy-alt-clean",
   "name": "Starflight Dynamics",
-  "domain": "www.starflight-dynamics.com",
   "accent": "#00FB92",
   "contact": "mission-control@starflight-dynamics.com",
   "stage": 6,
-  "prod_repo": "pbau3r-sfdy/starflight-dynamics",
   "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/sfdy-alt-clean",
   "last_deploy": "2026-08-08",
   "newsletter": {
@@ -53,9 +51,9 @@
     }
   },
   "capture": "sfdy",
-  "notes": "Live at https://www.starflight-dynamics.com — redesign replacing sfdy. Prod repo: pbau3r-sfdy/starflight-dynamics.",
+  "notes": "Historical reference: the previous live redesign of starflight-dynamics.com, replaced by sfdy.",
   "archived": true,
   "archived_at": "2026-10-14",
-  "archive_reason": "Superseded 2026-10-14: the renamed sfdy site is the SFDY baseline. Live site at www.starflight-dynamics.com keeps serving its last published build until sfdy is published; restore with --restore to republish.",
+  "archive_reason": "Replaced by sfdy at the 2026-10 cutover; kept as a historical reference.",
   "skip_ci": true
 }

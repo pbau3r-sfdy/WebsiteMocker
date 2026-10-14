@@ -67,9 +67,9 @@ git add -A && git commit -m "chore: delete <slug>"
 
 | Slug | Owner | Production repo | Domain |
 |---|---|---|---|
-| `sfdy-alt-clean` | Starflight Dynamics GmbH | `pbau3r-sfdy/starflight-dynamics` | starflight-dynamics.com |
+| `sfdy-alt-clean` | Starflight Dynamics GmbH | — (archived, replaced by `sfdy`) | — |
 | `sfdy-alt-clean-reskin` | Starflight Dynamics GmbH | — (internal review, sandbox only) | — |
-| `sfdy` | Starflight Dynamics GmbH | — (set in plan 03; sandbox baseline) | — |
+| `sfdy` | Starflight Dynamics GmbH | `pbau3r-sfdy/starflight-dynamics` | www.starflight-dynamics.com |
 | `mogwai-systems` | MOGWAI / Starflight Dynamics GmbH | `pbau3r-sfdy/mogwai-systems` | mogwai-systems.com |
 | `parrot-capital` | Parrot Capital UG | `pbau3r-sfdy/parrot-capital` | parrot-capital.com |
 | `crestworks` | — | `pbau3r-sfdy/crestworks` | crestworks.co |
@@ -91,7 +91,7 @@ Cookie-free Plausible Analytics is built into the framework as an Astro integrat
 ```
 
 - **scriptId sites** set `"scriptId": "pa-…"` (the per-site tag id); identity mismatches fail the build (`[plausible] ANLY-03:`). **Production builds** (`/wm-publish`, base `/`) report to that script, or to `analytics.domain` / `wiring.domain` without `www.` on legacy sites.
-- **Sandbox builds** (base `/WebsiteMocker/<slug>`): scriptId sites emit nothing unless `sandboxScriptId` (separate site) or the loud debug opt-in `sandboxUsesProdId` is set. Legacy sites still report to `pbau3r-sfdy.github.io`; `"sandbox": false` skips the preview. **Remove `sandboxUsesProdId` at the Phase 12 cutover.**
+- **Sandbox builds** (base `/WebsiteMocker/<slug>`): scriptId sites emit nothing unless `sandboxScriptId` (separate site) or the loud debug opt-in `sandboxUsesProdId` is set. Legacy sites still report to `pbau3r-sfdy.github.io`; `"sandbox": false` skips the preview. `sandboxUsesProdId` was removed from `sfdy` at the Phase 12 cutover.
 - `"host"` points to a self-hosted instance (default `https://plausible.io`). `astro dev` never loads the script.
 - Privacy gate: `node _scripts/check-analytics-gate.mjs <slug> --live` fails when a live site lacks the Plausible "Web analytics" privacy section (runs in `/wm-preflight` and `publish.yml`).
 - Event contract, schema and goals checklist: `docs/analytics.md`.
@@ -221,7 +221,7 @@ WebsiteMocker/
 │   └── init-prod-repo.mjs ← bootstrap a production repo for contributors
 ├── _templates/          ← production repo bundle (CONTRIBUTING.md, issue templates, content-ci.yml)
 ├── sites/
-│   ├── sfdy/            ← Starflight Dynamics (stage 2, production-bound)
+│   ├── sfdy/            ← Starflight Dynamics (production baseline, stage 5 until published)
 │   ├── parrot-capital/  ← Parrot Capital UG (stage 4, production-bound)
 │   ├── orbint/          ← design template only
 │   ├── hypersonica/     ← design template only

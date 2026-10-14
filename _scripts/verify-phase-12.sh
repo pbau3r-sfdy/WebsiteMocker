@@ -112,6 +112,22 @@ sec_sandbox() {
   check "sandbox build keeps tbd-pill" "$(grep -q tbd-pill $DIST/index.html && echo 0 || echo 1)"
 }
 
+sec_ident() {
+  echo; echo "== ident =="
+  W=$SITE/wiring.json
+  check "prod_repo is pbau3r-sfdy/starflight-dynamics" "$([ "$(jq -r .prod_repo $W)" = "pbau3r-sfdy/starflight-dynamics" ] && echo 0 || echo 1)"
+  check "domain is www.starflight-dynamics.com" "$([ "$(jq -r .domain $W)" = "www.starflight-dynamics.com" ] && echo 0 || echo 1)"
+  check "stage >= 5" "$([ "$(jq -r .stage $W)" -ge 5 ] && echo 0 || echo 1)"
+  check "name is Starflight Dynamics" "$([ "$(jq -r .name $W)" = "Starflight Dynamics" ] && echo 0 || echo 1)"
+  check "sandboxUsesProdId absent" "$([ "$(jq -r '.analytics.sandboxUsesProdId // "absent"' $W)" = "absent" ] && echo 0 || echo 1)"
+  check "sfdy is the only owner of the prod repo" "$([ "$(grep -l '"prod_repo": "pbau3r-sfdy/starflight-dynamics"' sites/*/wiring.json)" = "$W" ] && echo 0 || echo 1)"
+  check "sfdy is the only owner of the domain" "$([ "$(grep -l '"domain": "www.starflight-dynamics.com"' sites/*/wiring.json)" = "$W" ] && echo 0 || echo 1)"
+  check "sfdy-alt-clean has no prod_repo/domain" "$(jq -e '(.prod_repo // .domain) == null and .archived == true' sites/sfdy-alt-clean/wiring.json >/dev/null && echo 0 || echo 1)"
+  check "no hand-set last_deploy while stage < 6" "$(jq -e 'if .stage < 6 then (.last_deploy == null) else true end' $W >/dev/null && echo 0 || echo 1)"
+  node _scripts/check-analytics-gate.mjs $SLUG --live >/dev/null 2>&1; check "check-analytics-gate sfdy --live" "$?"
+  node _scripts/validate-brand.mjs >/dev/null 2>&1; check "validate-brand" "$?"
+}
+
 skip() { echo; echo "== $1 =="; echo "  SKIP (not implemented yet)"; }
 
 case "${1:-all}" in
@@ -120,8 +136,9 @@ case "${1:-all}" in
   gate) sec_gate ;;
   prod) sec_prod ;;
   sandbox) sec_sandbox ;;
-  ident|sync|sync-live|live) skip "$1" ;;
-  all) sec_rename; sec_old; sec_gate; sec_prod; sec_sandbox; skip ident; skip sync ;;
+  ident) sec_ident ;;
+  sync|sync-live|live) skip "$1" ;;
+  all) sec_rename; sec_old; sec_gate; sec_prod; sec_sandbox; sec_ident; skip sync ;;
   *) echo "usage: $0 [rename|old|gate|prod|sandbox|ident|sync|sync-live|live|all]" >&2; exit 2 ;;
 esac
 

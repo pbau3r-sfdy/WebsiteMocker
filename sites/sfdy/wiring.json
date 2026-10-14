@@ -1,9 +1,11 @@
 {
   "slug": "sfdy",
-  "name": "Starflight Dynamics (Reskin 2)",
+  "name": "Starflight Dynamics",
   "accent": "#00FB92",
   "contact": "mission-control@starflight-dynamics.com",
-  "stage": 2,
+  "domain": "www.starflight-dynamics.com",
+  "stage": 5,
+  "prod_repo": "pbau3r-sfdy/starflight-dynamics",
   "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/sfdy",
   "newsletter": {
     "service": "mailchimp",
@@ -37,7 +39,6 @@
     "status": "configured",
     "scriptId": "pa-h84OFEpVhPIHGnzKLeThr",
     "domain": "starflight-dynamics.com",
-    "sandboxUsesProdId": true,
     "events": {
       "outboundLinks": true,
       "fileDownloads": true,
@@ -69,7 +70,7 @@
     }
   },
   "capture": "sfdy",
-  "notes": "Reskin 2: copy of sfdy-alt-clean-reskin with the Increment 2 positioning texts (W1–W12, 12 Oct 2026). Internal review only, no production path. Open points in yellow.",
+  "notes": "Production baseline and sandbox testbed (D-04), published as a single site to pbau3r-sfdy/starflight-dynamics. Increment 2 positioning texts (W1-W12, 12 Oct 2026). Jobs collection restorable from commit 7943369^. Open points in yellow (sandbox only).",
   "design": {
     "source": "design-system",
     "project_id": "baa6f65c-d546-41fc-b2bd-d81d7c6da089",

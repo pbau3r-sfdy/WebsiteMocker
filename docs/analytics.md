@@ -37,7 +37,7 @@ ANLY-03 identity violations fail the build with `[plausible] ANLY-03:`.
 
 `analytics.sandboxUsesProdId: true` makes a sandbox build report into the production Plausible site (starflight-dynamics.com). Every such build prints a warning. Sandbox pageviews appear with paths `/WebsiteMocker/sfdy/...`; filter them with Page contains `/WebsiteMocker`.
 
-Removal: At the Phase 12 cutover, delete analytics.sandboxUsesProdId from sites/sfdy/wiring.json, rebuild, and only then consider enabling a Plausible hostname allowlist (Shields) for starflight-dynamics.com.
+Removal: done at the Phase 12 cutover (`analytics.sandboxUsesProdId` deleted from sites/sfdy/wiring.json). Only now consider enabling a Plausible hostname allowlist (Shields) for starflight-dynamics.com.
 
 ## Event contract (ANLY-04)
 

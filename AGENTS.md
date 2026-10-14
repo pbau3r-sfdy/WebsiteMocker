@@ -51,8 +51,8 @@ WebsiteMocker/
 │   └── init-prod-repo.mjs ← bootstrap a production repo for contributors
 ├── _templates/          ← production repo bundle (CONTRIBUTING.md, issue templates, content-ci.yml)
 ├── sites/
-│   ├── sfdy-alt-clean/  ← Stage 2, has content collections
-│   ├── sfdy/            ← Stage 2, has content collections
+│   ├── sfdy-alt-clean/  ← Archived (replaced by sfdy)
+│   ├── sfdy/            ← Production baseline, stage 5 until published, has content collections
 │   ├── mogwai-systems/  ← Stage 3, NO content collections yet (scaffold in Phase 2)
 │   ├── parrot-capital/  ← Stage 4, NO content collections yet (scaffold in Phase 2)
 │   ├── crestworks/      ← Stage 6, live, has content collections
