@@ -5,8 +5,11 @@ interface Props {
   title: string;
   attachments?: { name: string; href: string }[];
   accent?: string;
+  props?: boolean;
+  label?: string;
 }
-const { title, attachments = [], accent = '#00FB92' } = Astro.props;
+const { title, attachments = [], accent = '#00FB92', props = false, label = '' } = Astro.props;
+const withLabel = props === true && label !== '';
 ---
 <!doctype html>
 <html lang="en">
@@ -33,11 +36,20 @@ const { title, attachments = [], accent = '#00FB92' } = Astro.props;
       {attachments.length > 0 && (
         <ul class="attachments">
           {attachments.map((a) => (
-            <li><a href={a.href} data-drop-download>{a.name}</a></li>
+            <li><a href={a.href} data-drop-download data-drop-label={withLabel ? label : undefined}>{a.name}</a></li>
           ))}
         </ul>
       )}
       <p class="muted">Shared document - not for further distribution</p>
     </main>
+    <script is:inline>
+      document.addEventListener('click', function (e) {
+        var t = e.target && e.target.closest ? e.target.closest('a[data-drop-download]') : null;
+        if (!t || !window.plausible) return;
+        var l = t.getAttribute('data-drop-label');
+        if (l) window.plausible('Drop Download', { props: { label: l } });
+        else window.plausible('Drop Download');
+      });
+    </script>
   </body>
 </html>

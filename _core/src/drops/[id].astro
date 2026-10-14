@@ -19,6 +19,6 @@ const { Content } = await render(entry);
 const cfg = __DROPS_CONFIG__;
 const attachments = (entry.data.attachments || []).map((name: string) => ({ name, href: `./${name}` }));
 ---
-<DropLayout title={entry.data.title} attachments={attachments} accent={cfg.accent}>
+<DropLayout title={entry.data.title} attachments={attachments} accent={cfg.accent} props={cfg.props === true} label={entry.data.label}>
   <Content />
 </DropLayout>
