@@ -10,3 +10,6 @@ _staging/
 
 # Plausible aggregates (ANLY-07): local only, never committed
 _data/*/analytics.json
+
+# Private drops clone, local only; the /wm-deploy skill runs git add -A
+_drops/

@@ -83,5 +83,6 @@
       "components/core/Button.jsx"
     ]
   },
-  "last_deploy": "2026-10-14"
+  "last_deploy": "2026-10-14",
+  "drops": { "enabled": true }
 }
