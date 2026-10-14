@@ -41,17 +41,21 @@
     "avoid": [],
     "voice": "",
     "doc_tokens": {
-      "--sfdy-blue":    "#0432FF",
-      "--sfdy-cyan":    "#00FDFF",
-      "--sfdy-green":   "#00FB92",
+      "--sfdy-blue": "#0432FF",
+      "--sfdy-cyan": "#00FDFF",
+      "--sfdy-green": "#00FB92",
       "--sfdy-magenta": "#FF008A",
-      "--bg-base":      "#000000",
-      "--surface-1":    "#06070A",
-      "--surface-2":    "#101319",
+      "--bg-base": "#000000",
+      "--surface-1": "#06070A",
+      "--surface-2": "#101319",
       "--text-primary": "#FFFFFF",
-      "--accent":       "#00FB92"
+      "--accent": "#00FB92"
     }
   },
   "capture": "sfdy",
-  "notes": "Live at https://www.starflight-dynamics.com — redesign replacing sfdy. Prod repo: pbau3r-sfdy/starflight-dynamics."
+  "notes": "Live at https://www.starflight-dynamics.com — redesign replacing sfdy. Prod repo: pbau3r-sfdy/starflight-dynamics.",
+  "archived": true,
+  "archived_at": "2026-10-14",
+  "archive_reason": "Superseded 2026-10-14: sfdy-alt-clean-reskin-2 is the SFDY baseline. Live site at www.starflight-dynamics.com keeps serving its last published build until reskin-2 is published; restore with --restore to republish.",
+  "skip_ci": true
 }
