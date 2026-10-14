@@ -8,7 +8,7 @@ sec_docs() {
   for s in "confidential-but-not-secret" "export-controlled" "unlisting only" "Token expiry date:" "gh-pages backup" "14 days" "write scope" "gh-pages-old-2026-08" "WM_PUBLISH_PAT" "Drop Download"; do
     check "docs/drops.md states: $s" "$(grep -qF -- "$s" "$D" && echo 0 || echo 1)"
   done
-  check "docs/drops.md has the exact token expiry line" "$(grep -qxF 'Token expiry date: not yet recorded (operator fills at gate G2)' "$D" && echo 0 || echo 1)"
+  check "docs/drops.md has a recorded token expiry line (ISO date, none, or the placeholder)" "$(grep -Eq '^Token expiry date: (20[0-9]{2}-[0-9]{2}-[0-9]{2}|none.*|not yet recorded.*)$' "$D" && echo 0 || echo 1)"
 
   check "CLAUDE.md lists /wm-drop" "$(grep -qF '/wm-drop' CLAUDE.md && echo 0 || echo 1)"
   check "AGENTS.md lists /wm-drop" "$(grep -qF '/wm-drop' AGENTS.md && echo 0 || echo 1)"
