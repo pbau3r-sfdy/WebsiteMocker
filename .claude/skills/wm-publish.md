@@ -11,6 +11,12 @@ Build and publish a stage-5 site to its production GitHub Pages URL.
 
 2. **Run `/wm-preflight <slug>`** — present the full preflight output. If any item is FAIL, stop and list the failures. Do not proceed to Step 3 until all FAIL items are resolved. This includes the analytics privacy gate (`node _scripts/check-analytics-gate.mjs <slug> --live`); the publish workflow runs the same gate and fails before building if it does not pass.
 
+   If `drops.enabled` is set in `wiring.json`, also surface the drops check:
+   ```bash
+   node _scripts/drop.mjs check <slug> --live
+   ```
+   Present the list of drops about to be published and the `--live` counts (will go live, will disappear), using 8-char id prefixes only. The operator must confirm the list before Step 3. FAIL items stop the publish.
+
 3. **Trigger the publish workflow**:
    ```bash
    gh workflow run publish.yml --field slug=<slug>
@@ -70,7 +76,16 @@ Build and publish a stage-5 site to its production GitHub Pages URL.
    wiring.json has been automatically updated to stage: 6.
    ```
 
-6. **On failure** — if `gh run watch` exits non-zero, print:
+6. **Post-publish 404 check for withdrawn or expired drops** — only when ids were withdrawn or expired since the last publish. Poll each removed URL until it answers HTTP 404; the CDN serves `max-age` 600 s, so retry up to six times, 15 s apart (same approach as the Phase 12 live section):
+   ```bash
+   for i in 1 2 3 4 5 6; do
+     code=$(curl -s -o /dev/null -w '%{http_code}' "https://<domain>/d/<id>/")
+     [ "$code" = 404 ] && break; sleep 15
+   done
+   ```
+   Report only 4-char id prefixes and the result. Remind the operator that withdrawal is unlisting only.
+
+7. **On failure** — if `gh run watch` exits non-zero, print:
    ```
    Publish failed. Inspect the workflow log:
    gh run view "$RUN_ID" --log-failed
@@ -78,6 +93,8 @@ Build and publish a stage-5 site to its production GitHub Pages URL.
    Do not update wiring.json manually — the workflow only commits back on success.
 
 ## Notes
+- NEVER create a NEW gh-pages backup branch (or any copy of the public gh-pages tree) once drops exist: a backup would keep withdrawn drops publicly visible. The Phase 12 backup recipe is valid for the pre-drops state only. The existing pre-drops backup branch `gh-pages-old-2026-08` is allowed and must NOT be deleted
+- `publish.yml` reads the private drops repo `pbau3r-sfdy/drops` with `WM_PUBLISH_PAT`; the nightly `drops-health` job checks that token
 - Only works for sites at stage 5 (all preflight checks must pass before triggering)
 - `WM_PUBLISH_PAT` must be stored as a repo-level Actions secret before this skill can succeed
 - Check workflow status anytime: `gh run list --workflow publish.yml --limit 5`

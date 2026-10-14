@@ -31,6 +31,11 @@ For the specified site (`sites/<slug>/`), check each item and report PASS / FAIL
 - [ ] `legal.privacy === "complete"` in `wiring.json`
 - [ ] Analytics privacy gate passes: `node _scripts/check-analytics-gate.mjs <slug> --live` exits 0 (FAIL if it exits 1: analytics must not go live without the Plausible 'Web analytics' privacy section, ANLY-06)
 
+### Drops (only if `drops.enabled` in wiring.json)
+- [ ] `node _scripts/drop.mjs check <slug>` exits 0. FAIL on invalid, expiry-less or over-horizon drops, and on missing `qpdf` when PDFs exist
+- [ ] WARN on expired drops still in the source, soon-expiring drops (7 days), secret-looking drop content, and a local drops clone with uncommitted or unpushed changes
+- [ ] List the drops about to be published (8-char id prefixes only, never paste full ids)
+
 ### Keywords
 - [ ] `keywords.json` has at least 3 primary keywords
 - [ ] Hashtag arrays are non-empty

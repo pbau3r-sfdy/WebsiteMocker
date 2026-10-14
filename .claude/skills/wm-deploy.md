@@ -6,7 +6,7 @@ Build and push to GitHub Pages (sandbox deployment).
 
 1. **Confirm** which site to deploy (or "all" for full build).
 
-2. **Build**:
+2. **Build** (first `unset DROPS_PREVIEW`; never export `DROPS_DIR` for a deploy build, so no drop can reach the sandbox):
    - Single site: `cd sites/<slug> && npm run build`
    - All: `node _scripts/build-all.js`
 
@@ -24,6 +24,7 @@ Build and push to GitHub Pages (sandbox deployment).
 6. **Report** the sandbox URL and that GitHub Actions is now running the deploy (~60–90 seconds to go live).
 
 ## Notes
+- `_drops/` (the private drops clone) is gitignored because this skill runs `git add -A`; never force-add it
 - GitHub Actions handles the actual Pages deploy — this skill just pushes the trigger commit
 - Sandbox URL format: `https://pbau3r-sfdy.github.io/WebsiteMocker/<slug>`
 - Check Actions status: `gh run list --limit 5`

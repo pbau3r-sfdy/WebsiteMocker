@@ -64,3 +64,7 @@ Operator confirmed in chat that the live site and tracking work ("it works"). Cl
 ## Deferred to the end of the phase
 
 Plan 12-06 (design seed, CUT-07 / DSYNC-11) is parked by operator decision until the remaining milestone work is done. It needs `/design-login` first (DesignSync authorization had lapsed) and the two operator approvals described in the plan.
+
+## Rollback note after Phase 11 (Open Drops)
+
+The backup-branch recipe above applies to the pre-drops state only. Once drops exist, never create a NEW gh-pages backup branch and never restore a backup that contains withdrawn drops, because it would resurrect them (see `docs/drops.md`). The existing pre-drops backup `gh-pages-old-2026-08` is allowed and must not be deleted.

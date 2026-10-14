@@ -97,6 +97,14 @@ Cookie-free Plausible Analytics is built into the framework as an Astro integrat
 - Event contract, schema and goals checklist: `docs/analytics.md`.
 - Before switching it on for a live site, add Plausible to that site's privacy policy (see `/wm-wire`).
 
+## Open Drops
+
+Optional per site: confidential-but-not-secret pages at an unguessable `/d/<id>/` URL, switched on with `"drops": { "enabled": true }` in `wiring.json` (today `sfdy`). Not for export-controlled or classified data; withdrawal is unlisting only. Full details: `docs/drops.md`.
+
+- Source lives in the private repo `pbau3r-sfdy/drops`, cloned to the gitignored `_drops/`. Operate it with `/wm-drop` (`node _scripts/drop.mjs`). Builds read drops only when `DROPS_DIR` is set explicitly; `DROPS_PREVIEW=1` enables a local sandbox preview and must never be set on CI.
+- One token, `WM_PUBLISH_PAT`, writes the site and reads the confidential drafts.
+- Never create a NEW gh-pages backup branch once drops exist (it would keep withdrawn drops visible). The existing pre-drops backup `gh-pages-old-2026-08` stays; do not delete it.
+
 ## Production deployment model
 
 ```
@@ -172,6 +180,7 @@ node _scripts/init-prod-repo.mjs <slug> --confirm # execute
 | `/wm-ingest` | Ingest a Claude Design HTML/CSS artifact into an existing site as routed Astro components |
 | `/wm-design-pull` | Pull a Claude Design design system or a local export zip into a site (staged, locked, guarded; writes DESIGN.md) |
 | `/wm-design-seed` | Seed or incrementally update a Claude Design design-system project from a site's brand tokens and logos (operator-approved path list) |
+| `/wm-drop` | Create, list, check, withdraw and expire Open Drops (confidential-but-not-secret pages at an unguessable `/d/<id>/` URL) |
 | `/wm-gen-docs` | Generate a branded HTML document from a Claude Design artifact and commit it to the production repo's `docs/` folder |
 
 ### Content (inherited from `_core/.claude/skills/`)
@@ -214,6 +223,7 @@ npm install   # picks up new workspace
 ```
 WebsiteMocker/
 ├── _captures/           ← design DNA library (capture.json + screenshots + assets)
+├── _drops/              ← private drops clone (gitignored, local only)
 ├── _core/               ← base template (all sites inherit)
 ├── _scripts/
 │   ├── build-all.js     ← builds dashboard + all sites

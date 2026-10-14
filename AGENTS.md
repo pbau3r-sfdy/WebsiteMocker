@@ -44,6 +44,7 @@ Key work:
 ```
 WebsiteMocker/
 ├── _captures/           ← design DNA library
+├── _drops/              ← private drops clone (gitignored, local only)
 ├── _core/               ← base template (all sites inherit)
 ├── _scripts/
 │   ├── build-all.js     ← builds dashboard + all sites (do NOT use in publish.yml)
@@ -95,6 +96,13 @@ WebsiteMocker/
 - Migration: `src/content/config.ts` → `src/content.config.ts`; `post.render()` → `render(entry)` from `astro:content`; `z.date()` → `z.coerce.date()`
 - Canonical schema will live in `_core/src/content.config.ts`
 - `mogwai-systems` and `parrot-capital` have no `src/content/` at all — scaffold before adding any content
+
+### Open Drops (Phase 11)
+- Skill: `/wm-drop` (`node _scripts/drop.mjs new|list|withdraw|expire|check`); destructive commands are dry-run unless `--confirm`
+- Enabled per site with `"drops": { "enabled": true }` in `wiring.json`; source is the private repo `pbau3r-sfdy/drops`, cloned to the gitignored `_drops/`
+- Builds read drops only when `DROPS_DIR` is set explicitly; `DROPS_PREVIEW=1` is a local sandbox preview and must never be set on CI
+- Confidential-but-not-secret only; withdrawal is unlisting only. One token (`WM_PUBLISH_PAT`) writes the site and reads the confidential drafts. See `docs/drops.md`
+- Never create a NEW gh-pages backup branch once drops exist; the existing pre-drops backup `gh-pages-old-2026-08` stays and must not be deleted
 
 ### Org name
 - The production GitHub org is `pbau3r-sfdy`. Production repos live at `github.com/pbau3r-sfdy/`.
