@@ -1,0 +1,36 @@
+---
+/**
+ * AnalyticsTile (ANLY-07): local-only, approximate Plausible aggregates.
+ * Renders nothing in CI builds (the public sandbox dashboard) or without
+ * _data/<slug>/analytics.json (written by _scripts/fetch-analytics-data.mjs).
+ */
+import { existsSync, readFileSync } from 'fs';
+import { join, resolve } from 'path';
+
+const { slug } = Astro.props;
+const inCI = Boolean(process.env.GITHUB_ACTIONS || process.env.CI);
+
+let data = null;
+if (!inCI) {
+  const file = join(resolve('_data'), slug, 'analytics.json');
+  if (existsSync(file)) {
+    try { data = JSON.parse(readFileSync(file, 'utf8')); } catch { data = null; }
+  }
+}
+const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-GB') : '–');
+---
+{data?.totals && (
+  <div class="perf analytics">
+    <span class="perf-item"><span class="k">Visitors</span><span class="v">{fmt(data.totals.visitors)}</span></span>
+    <span class="perf-item"><span class="k">Pageviews</span><span class="v">{fmt(data.totals.pageviews)}</span></span>
+    <span class="perf-item when">Plausible · approx. · 30 days · as of {data.fetched}</span>
+  </div>
+)}
+
+<style>
+  .perf { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .perf-item { display: inline-flex; gap: 6px; }
+  .perf-item .k { color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; }
+  .perf-item .v { color: var(--text-secondary); font-weight: 500; }
+  .perf-item.when { color: var(--text-muted); }
+</style>
