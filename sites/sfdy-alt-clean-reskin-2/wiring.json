@@ -46,9 +46,26 @@
       "--surface-1": "#06070A",
       "--surface-2": "#101319",
       "--text-primary": "#FFFFFF",
-      "--accent": "#00FB92"
+      "--accent": "#00FB92",
+      "--sfdy-black": "#000000",
+      "--sfdy-white": "#FFFFFF",
+      "--ink-950": "#000000",
+      "--ink-900": "#06070A",
+      "--ink-800": "#101319"
     }
   },
   "capture": "sfdy",
-  "notes": "Reskin 2: copy of sfdy-alt-clean-reskin with the Increment 2 positioning texts (W1–W12, 12 Oct 2026). Internal review only, no production path. Open points in yellow."
+  "notes": "Reskin 2: copy of sfdy-alt-clean-reskin with the Increment 2 positioning texts (W1–W12, 12 Oct 2026). Internal review only, no production path. Open points in yellow.",
+  "design": {
+    "source": "design-system",
+    "project_id": "baa6f65c-d546-41fc-b2bd-d81d7c6da089",
+    "name": "Starflight Dynamics Design System",
+    "globs": [
+      "tokens/**",
+      "styles.css",
+      "ui_kits/website/index.html",
+      "components/core/Beam.jsx",
+      "components/core/Button.jsx"
+    ]
+  }
 }

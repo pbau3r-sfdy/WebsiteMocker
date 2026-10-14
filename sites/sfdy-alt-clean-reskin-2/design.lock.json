@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "source": {
+    "type": "design-system",
+    "id": "baa6f65c-d546-41fc-b2bd-d81d7c6da089",
+    "name": "Starflight Dynamics Design System"
+  },
+  "pulledAt": "2026-10-14T11:51:25.489Z",
+  "revision": null,
+  "files": {
+    "components/core/Beam.jsx": {
+      "sha256": "55cf1bbd9394b2e4cd80a055de3a02bc8d9ac039866eac0ab97d7ba42d7980b6",
+      "bytes": 699
+    },
+    "components/core/Button.jsx": {
+      "sha256": "06f9b856e729e687bb1ed57a813180b0fcc5bb2a011b3d57ba9ab42e426d230d",
+      "bytes": 2506
+    },
+    "styles.css": {
+      "sha256": "8784d388ff8de33f41f7fd66e1abd1d31739b504ee93bae9517dfe57b7fade3b",
+      "bytes": 406
+    },
+    "tokens/base.css": {
+      "sha256": "8f91b6bea81432ae6b74c943a1a93753f24ebb3bcf8ac54991ac366f3e08771d",
+      "bytes": 1408
+    },
+    "tokens/colors.css": {
+      "sha256": "a5403d1ade3de5da238699ea335d7712ae40c206e11bfdbb53e425242a9df101",
+      "bytes": 2706
+    },
+    "tokens/effects.css": {
+      "sha256": "b67315766f8ed55be550fa3019352885065c0c7e3b74e9775645ddc8c27f5531",
+      "bytes": 1393
+    },
+    "tokens/fonts.css": {
+      "sha256": "7c12341c9c8a375a71569a2508605cdefc7eaf48d61a4f2a54f5939d97f8a166",
+      "bytes": 3060
+    },
+    "tokens/spacing.css": {
+      "sha256": "8dde9381bea4047cbb5c9e962f8e2a914338533875d367df41e6726454bde1af",
+      "bytes": 910
+    },
+    "tokens/typography.css": {
+      "sha256": "b74a98c90363b4ab0a0b323d2520ed8ea7e022e451d09771a1b6a447bb6ea4d7",
+      "bytes": 2033
+    },
+    "ui_kits/website/index.html": {
+      "sha256": "6d6692bedef69d620996f5c1fb25f4ad1d9e44fe67094de1e485957e59ac39ab",
+      "bytes": 10685
+    }
+  },
+  "components": {
+    "Band": {
+      "from": "_staging/design/sfdy-alt-clean-reskin-2/sanitised/ui_kits/website/index.html#band",
+      "sha256": "7a2e0f52d5c076f734d6c6ceff02881eb7e2c1bf69424a992626e2ced3e08bba"
+    },
+    "Hero": {
+      "from": "_staging/design/sfdy-alt-clean-reskin-2/sanitised/ui_kits/website/index.html#hero",
+      "sha256": "2a886ed76b4de76fd03b5bc4bb1273f49e5ae7988206907a087d232629f9f1d7"
+    },
+    "News": {
+      "from": "_staging/design/sfdy-alt-clean-reskin-2/sanitised/ui_kits/website/index.html#news",
+      "sha256": "84ff60db53645911767654e08f4b46f036e83e5a1b04b7792033096f8429043f"
+    },
+    "Partners": {
+      "from": "_staging/design/sfdy-alt-clean-reskin-2/sanitised/ui_kits/website/index.html#partners",
+      "sha256": "1c07652ec889ae0f134ddd5c3f88b50bcfab172791c0ee8703ddc37cc99f3cd0"
+    }
+  },
+  "tokens": null
+}
