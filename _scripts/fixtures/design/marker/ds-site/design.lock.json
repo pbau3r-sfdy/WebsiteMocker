@@ -1,0 +1,1 @@
+{ "version": 1, "source": { "type": "design-system", "id": "x", "name": "x" }, "pulledAt": null, "revision": null, "files": {}, "components": { "Hero": { "from": "components/Hero.jsx", "sha256": "0000" } }, "tokens": null }
