@@ -1,0 +1,12 @@
+{
+  "name": "Fixture Design",
+  "slug": "fixture-design",
+  "stage": 1,
+  "brand": {
+    "doc_tokens": {
+      "--fx-accent": "#00FB92",
+      "--fx-bg": "#000000",
+      "--fx-text": "#FFFFFF"
+    }
+  }
+}
