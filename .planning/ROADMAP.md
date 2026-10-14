@@ -116,7 +116,7 @@ Plans:
 
 **Wave 2** *(blocked on 10-01, 10-02)*
 
-- [ ] 10-04-PLAN.md — `verify-phase-10.sh` fixture harness (ANLY-08)
+- [x] 10-04-PLAN.md — `verify-phase-10.sh` fixture harness (ANLY-08)
 
 **Wave 3** *(blocked on 10-04 and on Phase 11.1 having landed)*
 
@@ -186,6 +186,6 @@ Plans:
 | 7. Archive Module | v1.1 | 2/2 | Complete | 2026-08-25 |
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
 | 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
-| 10. Analytics | v1.2 | 3/5 | In Progress|  |
+| 10. Analytics | v1.2 | 4/5 | In Progress|  |
 | 11. Open Drops | v1.2 | 0/TBD | Not started | - |
 | 12. SFDY Cutover | v1.2 | 0/TBD | Not started | - |
