@@ -36,10 +36,15 @@ Walks through each service in sequence and updates `wiring.json` and source file
    Ask: "Configure now, skip for later, or mark as not needed?"
    - The site's `astro.config.mjs` must list `integrations: [plausible()]` (from `_scripts/plausible.mjs`); add it if missing
    - Set in `wiring.json`: `"analytics": { "service": "plausible", "status": "configured" }`
-   - Optional keys: `domain` (production, defaults to `wiring.domain` without `www.`), `sandbox: false` (do not track the preview), `host` (self-hosted instance URL)
-   - The production domain must be added as a site in the Plausible account; sandbox previews all report to `pbau3r-sfdy.github.io` (filter by path)
-   - Add a Plausible section to the privacy policy (cookie-free, no personal data, legal basis Art. 6 (1) (f) GDPR, processor Plausible Insights OÜ, Estonia, EU hosting) and remove any "no analytics" statement
-   - Nothing is injected in `astro dev`; check `dist/index.html` for `dataset.domain` after a build
+   - Ask for the Plausible script ID (the `pa-…` part of the site's tag URL); store as `analytics.scriptId`. Never paste the snippet into a layout
+   - Ask for the production Plausible site name (`analytics.domain`, without `www.`; defaults to `wiring.domain`)
+   - Ask whether to track sandbox previews (default no; `sandboxScriptId` for a separate sandbox site, or the loud `sandboxUsesProdId` debug opt-in, D-02; remove the latter at cutover). `sandbox: false` skips the preview
+   - Events default on (`events.outboundLinks`, `events.fileDownloads`, `events.formSubmissions`), `sanitise` on; `props` only on the Plausible Business plan; `host` for a self-hosted instance
+   - Walk through the goals and props checklist in `docs/analytics.md`
+   - Insert the privacy-policy "Web analytics" section (cookie-free, no personal data, Plausible Insights OÜ, Estonia, EU hosting, Art. 6 (1) (f) GDPR, right to object Art. 21 GDPR) and remove any "no analytics" statement
+   - Run `node _scripts/check-analytics-gate.mjs <slug> --live`; it must exit 0
+   - No consent banner is added (D-04): Plausible sets no cookies
+   - Nothing is injected in `astro dev`; after a production build check `dist/<slug>/index.html` for `plausible.init` and the `pa-` id (the old `dataset.domain` check applies to legacy sites only)
 
 ### Domain
    - Ask: production domain (e.g. `starflight-dynamics.com`)
