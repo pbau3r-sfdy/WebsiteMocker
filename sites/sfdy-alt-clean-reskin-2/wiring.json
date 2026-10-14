@@ -32,6 +32,20 @@
     "impressum": "complete",
     "privacy": "complete"
   },
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-h84OFEpVhPIHGnzKLeThr",
+    "domain": "starflight-dynamics.com",
+    "sandboxUsesProdId": true,
+    "events": {
+      "outboundLinks": true,
+      "fileDownloads": true,
+      "formSubmissions": true
+    },
+    "sanitise": true,
+    "props": false
+  },
   "brand": {
     "hashtags": [],
     "vocabulary": [],
