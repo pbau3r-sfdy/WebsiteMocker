@@ -128,6 +128,33 @@ sec_ident() {
   node _scripts/validate-brand.mjs >/dev/null 2>&1; check "validate-brand" "$?"
 }
 
+sec_sync() {
+  echo; echo "== sync =="
+  S=_scripts/sync-content.sh
+  FX=_staging/phase12/sync-fixture
+  rm -rf "$FX"; mkdir -p "$FX/wm/sites/sfdy/src/content/news" "$FX/wm/sites/sfdy/src/content/blog" "$FX/prod/content/news" "$FX/prod/content/blog" "$FX/prod/content/jobs"
+  echo a > "$FX/prod/content/news/a.md"; echo b > "$FX/prod/content/blog/b.md"; echo j > "$FX/prod/content/jobs/j.md"
+  echo x > "$FX/prod/content/news/.gitkeep"; echo y > "$FX/prod/content/news/n.txt"
+  echo s > "$FX/outside.md"; ln -s ../../../outside.md "$FX/prod/content/news/link.md"
+  echo keep > "$FX/wm/sites/sfdy/src/content/news/existing.md"
+  [ -f $S ]; check "sync-content.sh exists" "$?"
+  OUT=$(bash $S sfdy "$FX/prod" "$FX/wm" 2>&1); check "sync run exits 0" "$?"
+  D=$FX/wm/sites/sfdy/src/content
+  check "news/a.md copied" "$([ -f $D/news/a.md ] && echo 0 || echo 1)"
+  check "blog/b.md copied" "$([ -f $D/blog/b.md ] && echo 0 || echo 1)"
+  check "jobs/j.md skipped (no collection)" "$([ ! -e $D/jobs/j.md ] && echo 0 || echo 1)"
+  check "skip log line printed" "$(echo "$OUT" | grep -qF 'skipped (no jobs collection in sfdy): jobs/j.md' && echo 0 || echo 1)"
+  check ".gitkeep, .txt and symlink ignored" "$([ ! -e $D/news/.gitkeep ] && [ ! -e $D/news/n.txt ] && [ ! -e $D/news/link.md ] && echo 0 || echo 1)"
+  check "additive: existing file kept" "$([ -f $D/news/existing.md ] && echo 0 || echo 1)"
+  mkdir -p $D/jobs; bash $S sfdy "$FX/prod" "$FX/wm" >/dev/null 2>&1
+  check "jobs copied once collection dir exists" "$([ -f $D/jobs/j.md ] && echo 0 || echo 1)"
+  bash $S 'Bad/Slug' "$FX/prod" "$FX/wm" >/dev/null 2>&1; check "bad slug rejected" "$([ $? != 0 ] && echo 0 || echo 1)"
+  bash $S '../x' "$FX/prod" "$FX/wm" >/dev/null 2>&1; check "traversal slug rejected" "$([ $? != 0 ] && echo 0 || echo 1)"
+  check "workflow calls sync-content.sh" "$(grep -q sync-content.sh .github/workflows/content-sync.yml && echo 0 || echo 1)"
+  check "content-ci template keeps {{SLUG}}" "$(grep -q '{{SLUG}}' _templates/.github/workflows/content-ci.yml && echo 0 || echo 1)"
+  check "init-prod-repo.mjs has no hard-coded sfdy-alt-clean" "$(grep -q 'sfdy-alt-clean' _scripts/init-prod-repo.mjs && echo 1 || echo 0)"
+}
+
 skip() { echo; echo "== $1 =="; echo "  SKIP (not implemented yet)"; }
 
 case "${1:-all}" in
@@ -137,8 +164,9 @@ case "${1:-all}" in
   prod) sec_prod ;;
   sandbox) sec_sandbox ;;
   ident) sec_ident ;;
-  sync|sync-live|live) skip "$1" ;;
-  all) sec_rename; sec_old; sec_gate; sec_prod; sec_sandbox; sec_ident; skip sync ;;
+  sync) sec_sync ;;
+  sync-live|live) skip "$1" ;;
+  all) sec_rename; sec_old; sec_gate; sec_prod; sec_sandbox; sec_ident; sec_sync ;;
   *) echo "usage: $0 [rename|old|gate|prod|sandbox|ident|sync|sync-live|live|all]" >&2; exit 2 ;;
 esac
 

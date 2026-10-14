@@ -111,14 +111,8 @@ jobs:
             echo "No content/ directory in ${PROD_REPO} — nothing to sync"
             exit 0
           fi
-          # Additive sync (D-A4) — deletions in the production repo are NOT propagated
-          while IFS= read -r -d '' srcfile; do
-            relpath="${srcfile#/tmp/prod-content/content/}"
-            destfile="sites/${SLUG}/src/content/${relpath}"
-            mkdir -p "$(dirname "$destfile")"
-            cp "$srcfile" "$destfile"
-            echo "  synced: $relpath"
-          done < <(find /tmp/prod-content/content -type f -name '*.md' -print0)
+          # Additive sync (D-A4); jobs/other dirs without a collection are skipped (D-07)
+          bash _scripts/sync-content.sh "$SLUG" /tmp/prod-content
 
       - name: Commit to WebsiteMocker main
         env:
