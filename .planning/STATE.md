@@ -4,13 +4,13 @@ milestone: v1.2
 milestone_name: Claude Design Sync, Analytics, Open Drops
 status: executing
 stopped_at: Phase 11 context gathered
-last_updated: "2026-10-14T16:11:47.292Z"
-last_activity: 2026-10-14 -- Completed 12-05 (backup, publish, live verification, go-live)
+last_updated: "2026-10-14T19:01:40.556Z"
+last_activity: 2026-10-14
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 22
-  completed_plans: 21
+  total_plans: 28
+  completed_plans: 22
   percent: 50
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-10-14)
 
 **Core value:** A new branded website — from captured reference or Claude Design artifact to live GitHub Pages URL — should require zero manual stitching
-**Current focus:** Phase 12 — sfdy-cutover
+**Current focus:** Phase 11 — open-drops
 
 ## Current Position
 
-Phase: 12 (sfdy-cutover) — EXECUTING
-Plan: 5 of 6 complete (next: 12-06; open: WM_PUBLISH_PAT rejected at content-sync Checkout; sfdy live 2026-10-14)
-Status: Executing Phase 12
-Last activity: 2026-10-14 -- Completed 12-05 (backup, publish, live verification, go-live)
+Phase: 11 (open-drops) — EXECUTING
+Plan: 2 of 6
+Status: Ready to execute
+Last activity: 2026-10-14
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Carried from v1.0:
 - INGEST-05 scope: CDN fonts → Layout.astro inject (not local copy)
 - 11.1-02: Careers email kept inline in contact.astro; About CTA keeps one solid Contact button; CUT-01 satisfied by RETL-04
 - No auto-publish on content push (D-A6) — operator review before live; content sync ≠ deploy
+- [Phase 11]: 11-01: DEV_PREVIEW works under astro dev; loader has no watcher, restart after adding a drop
 
 ### Pending Todos
 
@@ -70,12 +71,13 @@ Carried from v1.0:
 | *(none)* | | | |
 | Phase 09 P03 | 1 session | 2 tasks | 9 files |
 | Phase 09 P05 | 20min | 2 tasks | 5 files |
+| Phase 11 P01 | 35min | 3 tasks | 9 files |
 
 ## Session Continuity
 
-Last session: 2026-10-14T16:11:47.273Z
+Last session: 2026-10-14T19:01:37.607Z
 Stopped at: Phase 11 context gathered
-Resume file: .planning/phases/11-open-drops/11-CONTEXT.md
+Resume file: None
 
 ## Operator Next Steps
 

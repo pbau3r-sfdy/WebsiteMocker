@@ -140,7 +140,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 11-01-PLAN.md — Pure libs (drops-core, drops-collection gating, qpdf PDF strip), fixtures with relative dates, `verify-phase-11.sh` dispatcher with `lib` and `pdf` sections, Q6 dev-preview spike (DROP-01, 05, 09)
+- [x] 11-01-PLAN.md — Pure libs (drops-core, drops-collection gating, qpdf PDF strip), fixtures with relative dates, `verify-phase-11.sh` dispatcher with `lib` and `pdf` sections, Q6 dev-preview spike (DROP-01, 05, 09)
 
 **Wave 2** *(blocked on 11-01)*
 
@@ -217,5 +217,5 @@ Plans:
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
 | 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
 | 10. Analytics | v1.2 | 5/5 | Complete   | 2026-10-14 |
-| 11. Open Drops | v1.2 | 0/TBD | Not started | - |
+| 11. Open Drops | v1.2 | 1/6 | In Progress|  |
 | 12. SFDY Cutover | v1.2 | 5/6 | In Progress|  |
