@@ -48,6 +48,14 @@
 - [ ] **DROP-09**: A `verify-phase-11.sh` harness has a static mode (id appears only in its own `dist/d/<id>/`, no sitemap/robots/inbound link, noindex and no-referrer present, expired/withdrawn drops absent, sandbox build has no `/d/`) and a live mode (200 for active, 404 for withdrawn/expired), and prints what it cannot verify (HTTP headers)
 - [ ] **DROP-10**: Operator can create and manage drops through a `/wm-drop` skill; its documentation states that drops are for confidential-but-not-secret material and not for export-controlled or classified data
 
+## Retool before cutover (Phase 11.1)
+
+- [ ] **RETL-01**: The positioning phrase reads "In-Space Power Projection" without "Systems" everywhere on `sfdy-alt-clean-reskin-2` (pages, data files, meta descriptions)
+- [ ] **RETL-02**: The home hero ends with the sentence "We enable European in-space power projection" with the phrase highlighted in the accent colour, and it builds
+- [ ] **RETL-03**: The footer no longer links X, Instagram or Facebook; LinkedIn stays
+- [ ] **RETL-04**: All job postings are removed (content entries, jobs pages, `JobRow`, Nav/Footer links, collection) with the site building cleanly and the files recoverable from git history; this also satisfies CUT-01
+- Noted for Phase 10/12: when analytics is switched on, add a consent banner and update the Data Protection Notice (CUT-03)
+
 ## SFDY Cutover (Phase 12) — draft, to be refined in discuss/plan
 
 - [ ] **CUT-01**: `sfdy-alt-clean-reskin-2` has no jobs pages, jobs content entries, `JobRow` component or jobs links in Nav/Footer, and builds cleanly; the job files stay recoverable from git history
@@ -119,7 +127,11 @@
 | DROP-08 | Phase 11 | Pending |
 | DROP-09 | Phase 11 | Pending |
 | DROP-10 | Phase 11 | Pending |
-| CUT-01 | Phase 12 | Pending |
+| RETL-01 | Phase 11.1 | Pending |
+| RETL-02 | Phase 11.1 | Pending |
+| RETL-03 | Phase 11.1 | Pending |
+| RETL-04 | Phase 11.1 | Pending |
+| CUT-01 | Phase 12 (satisfied by RETL-04 in Phase 11.1) | Pending |
 | CUT-02 | Phase 12 | Pending |
 | CUT-03 | Phase 12 | Pending |
 | CUT-04 | Phase 12 | Pending |

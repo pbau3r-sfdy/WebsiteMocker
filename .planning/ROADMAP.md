@@ -123,6 +123,16 @@ Plans:
 
 **Plans**: TBD
 
+### Phase 11.1: Retool sfdy-alt-clean-reskin-2 before cutover: review feedback and further design changes (INSERTED)
+
+**Goal:** `sfdy-alt-clean-reskin-2` carries the reviewer's wording and footer fixes, the hero closing sentence, and no job postings, ready for the Phase 12 cutover
+**Requirements**: RETL-01, RETL-02, RETL-03, RETL-04
+**Depends on:** Phase 11 (ordering only; no code dependency)
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 11.1 to break down)
+
 ### Phase 12: SFDY Cutover
 
 **Goal**: Operator can publish `sfdy-alt-clean-reskin-2` as the live www.starflight-dynamics.com without breaking contributor content sync, leaking internal pages, or losing the old build's maintainability
