@@ -194,7 +194,7 @@ function cmdNew(flags) {
   }
 
   console.log(`Created drop ${shortId(id, 8)} for ${slug} (expires ${expires})`);
-  console.log(`Local URL path: /d/${id}/`);
+  console.log(`Local URL path: /d/${id}/`); // local-only
   console.log('Next: commit and push the private drops repo, then /wm-publish ' + slug);
 }
 

@@ -60,7 +60,8 @@ jobs:
             // WR-04: strip any newlines from values before writing to GITHUB_OUTPUT
             const domain = w.domain.replace(/[\r\n]/g, '');
             const prod_repo = w.prod_repo.replace(/[\r\n]/g, '');
-            const out = 'domain=' + domain + '\nprod_repo=' + prod_repo;
+            const drops_enabled = (w.drops && w.drops.enabled === true) ? 'true' : 'false';
+            const out = 'domain=' + domain + '\nprod_repo=' + prod_repo + '\ndrops_enabled=' + drops_enabled;
             fs.appendFileSync(process.env.GITHUB_OUTPUT, out + '\n');
             console.log('Validated: stage=' + w.stage + ' domain=' + w.domain + ' prod_repo=' + w.prod_repo);
           "
@@ -73,13 +74,51 @@ jobs:
         env:
           SLUG: ${{ inputs.slug }}
 
+      # ---- Open Drops (Phase 11) ------------------------------------------------
+      # The private drops repo and its checks exist in THIS workflow only. deploy.yml
+      # must never reference drops or the PAT (D-09). Drops logs print counts and
+      # 4-char id prefixes only; the public Actions log must never carry a full id.
+      - name: Checkout private drops
+        if: steps.wiring.outputs.drops_enabled == 'true'
+        # Private repo (D-01, D-02). A failure here must fail the publish loudly, so a
+        # lapsed token never publishes zero drops and thereby unpublishes live ones.
+        uses: actions/checkout@v7
+        with:
+          repository: pbau3r-sfdy/drops
+          token: ${{ secrets.WM_PUBLISH_PAT }}
+          path: _drops
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Install qpdf
+        if: steps.wiring.outputs.drops_enabled == 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y qpdf && qpdf --version
+
+      - name: Drops check (CI)
+        if: steps.wiring.outputs.drops_enabled == 'true'
+        # Output is counts and 4-char prefixes only; --emit-masks makes GitHub redact
+        # the ids from every later log line. GITHUB_TOKEN authenticates the public
+        # gh-pages listing call (rate limits); a 403/429 there is only a WARN here.
+        run: node _scripts/drop.mjs check "$SLUG" --ci --live --emit-masks
+        env:
+          SLUG: ${{ inputs.slug }}
+          DROPS_DIR: ${{ github.workspace }}/_drops
+          GITHUB_TOKEN: ${{ github.token }}
+
       - name: Build site
         # WR-01: slug is passed via env var, not interpolated into the shell string
-        run: node _scripts/build-single.mjs "$SLUG"
+        # Astro prints route paths that contain the drop id; the public Actions log
+        # must not, so the build output is filtered (32-hex ids become <id>).
+        shell: bash
+        run: |
+          set -o pipefail
+          node _scripts/build-single.mjs "$SLUG" 2>&1 | sed -E 's/[0-9a-f]{32}/<id>/g'
         env:
           SLUG: ${{ inputs.slug }}
           SITE_URL: https://${{ steps.wiring.outputs.domain }}
           SITE_BASE: /
+          DROPS_DIR: ${{ steps.wiring.outputs.drops_enabled == 'true' && format('{0}/_drops', github.workspace) || '' }}
+          DROPS_REQUIRE: ${{ steps.wiring.outputs.drops_enabled == 'true' && '1' || '' }}
 
       - name: Inject CNAME
         # WR-01: use env vars, not raw expression interpolation in shell strings
