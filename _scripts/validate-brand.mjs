@@ -13,10 +13,11 @@
  * Exit 1: one or more assertions fail
  */
 
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { fileURLToPath } from 'url';
 
-const ROOT = '/Users/pbau3r/DevWorks/Websites/WebsiteMocker';
+const ROOT = join(fileURLToPath(import.meta.url), '..', '..');
 
 let passed = 0;
 let failed = 0;
@@ -458,6 +459,27 @@ if (jobText) {
   // Step numbering: commit = 5, report = 6
   assert('wm-add-job.md: commit is step 5', jobText.includes('5. **Commit and push**'));
   assert('wm-add-job.md: report is step 6', jobText.includes('6. **Report**'));
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DSYNC-07: design token map (global default + per-site tokenMap overrides)
+// ═══════════════════════════════════════════════════════════════════
+console.log('\n[DSYNC-07] design token map');
+{
+  const TOKEN_NAME = /^--[a-z0-9-]+$/;
+  const mapShapeOk = (m) =>
+    !!m && typeof m === 'object' && !Array.isArray(m) &&
+    Object.entries(m).every(([k, v]) => TOKEN_NAME.test(k) && (v === null || (typeof v === 'string' && TOKEN_NAME.test(v))));
+  const tm = readJSON('_scripts/design-token-map.json');
+  assert('design-token-map.json parses', tm !== null);
+  assert('design-token-map.json version is 1', tm?.version === 1);
+  assert('design-token-map.json map keys and targets are --names', mapShapeOk(tm?.map));
+  for (const dir of readdirSync(join(ROOT, 'sites'))) {
+    const w = readJSON(`sites/${dir}/wiring.json`);
+    if (w?.design?.tokenMap !== undefined) {
+      assert(`${dir}: design.tokenMap keys and targets are --names`, mapShapeOk(w.design.tokenMap));
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════

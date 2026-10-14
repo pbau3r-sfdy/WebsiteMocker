@@ -1,0 +1,10 @@
+/* fixture tokens */
+:root {
+  --brand-primary: #00FB92;
+  --brand-bg: #000;
+  --surface-raised: var(--brand-bg);
+  --unknown-x: 4px;
+}
+@media (prefers-color-scheme: light) {
+  :root { --brand-bg: #fff }
+}

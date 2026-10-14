@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "map": {
+    "--brand-primary": "--accent",
+    "--brand-bg": "--bg-base",
+    "--surface-raised": "--surface-1"
+  }
+}

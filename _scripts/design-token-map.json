@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "map": {
+    "--sfdy-blue": "--sfdy-blue",
+    "--sfdy-cyan": "--sfdy-cyan",
+    "--sfdy-green": "--sfdy-green",
+    "--sfdy-magenta": "--sfdy-magenta",
+    "--sfdy-black": "--sfdy-black",
+    "--sfdy-white": "--sfdy-white",
+    "--ink-950": "--ink-950",
+    "--ink-900": "--ink-900",
+    "--ink-800": "--ink-800",
+    "--bg-base": "--bg-base",
+    "--surface-1": "--surface-1",
+    "--surface-2": "--surface-2",
+    "--text-primary": "--text-primary",
+    "--accent": "--accent",
+    "--surface-page": "--bg-base",
+    "--surface-card": "--surface-1",
+    "--text-body": "--text-primary",
+    "--accent-primary": "--accent"
+  }
+}

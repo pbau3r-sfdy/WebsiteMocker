@@ -1,0 +1,14 @@
+{
+  "slug": "fixture-design",
+  "brand": {
+    "doc_tokens": {
+      "--accent": "#3dffa0",
+      "--bg-base": "#000000"
+    }
+  },
+  "design": {
+    "source": "local",
+    "path": ".",
+    "tokenMap": { "--unknown-x": "--gutter" }
+  }
+}
