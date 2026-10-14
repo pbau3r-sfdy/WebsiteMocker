@@ -2,7 +2,7 @@
 
 ## Overview
 
-Cookie-free Plausible Analytics is provided by the Astro integration `_scripts/plausible.mjs`. It is off by default and switched on per site in `wiring.json`. Currently only `sfdy-alt-clean-reskin-2` is configured (D-05). The script id is public (D-01); no secrets belong in this document.
+Cookie-free Plausible Analytics is provided by the Astro integration `_scripts/plausible.mjs`. It is off by default and switched on per site in `wiring.json`. Currently only `sfdy` is configured (D-05). The script id is public (D-01); no secrets belong in this document.
 
 ## wiring.json analytics keys
 
@@ -35,9 +35,9 @@ ANLY-03 identity violations fail the build with `[plausible] ANLY-03:`.
 
 ## Debug opt-in (D-02)
 
-`analytics.sandboxUsesProdId: true` makes a sandbox build report into the production Plausible site (starflight-dynamics.com). Every such build prints a warning. Sandbox pageviews appear with paths `/WebsiteMocker/sfdy-alt-clean-reskin-2/...`; filter them with Page contains `/WebsiteMocker`.
+`analytics.sandboxUsesProdId: true` makes a sandbox build report into the production Plausible site (starflight-dynamics.com). Every such build prints a warning. Sandbox pageviews appear with paths `/WebsiteMocker/sfdy/...`; filter them with Page contains `/WebsiteMocker`.
 
-Removal: At the Phase 12 cutover, delete analytics.sandboxUsesProdId from sites/sfdy-alt-clean-reskin-2/wiring.json, rebuild, and only then consider enabling a Plausible hostname allowlist (Shields) for starflight-dynamics.com.
+Removal: At the Phase 12 cutover, delete analytics.sandboxUsesProdId from sites/sfdy/wiring.json, rebuild, and only then consider enabling a Plausible hostname allowlist (Shields) for starflight-dynamics.com.
 
 ## Event contract (ANLY-04)
 

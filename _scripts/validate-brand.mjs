@@ -57,7 +57,7 @@ function readText(relPath) {
 // ═══════════════════════════════════════════════════════════════════
 console.log('\n[BRAND-01 Task 1] wiring.json brand stubs — all four active sites');
 
-const ACTIVE_SITES = ['sfdy-alt-clean', 'mogwai-systems', 'parrot-capital', 'crestworks'];
+const ACTIVE_SITES = ['sfdy', 'mogwai-systems', 'parrot-capital', 'crestworks'];
 
 for (const slug of ACTIVE_SITES) {
   const relPath = `sites/${slug}/wiring.json`;

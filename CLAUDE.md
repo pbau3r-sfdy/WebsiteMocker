@@ -69,7 +69,7 @@ git add -A && git commit -m "chore: delete <slug>"
 |---|---|---|---|
 | `sfdy-alt-clean` | Starflight Dynamics GmbH | `pbau3r-sfdy/starflight-dynamics` | starflight-dynamics.com |
 | `sfdy-alt-clean-reskin` | Starflight Dynamics GmbH | — (internal review, sandbox only) | — |
-| `sfdy-alt-clean-reskin-2` | Starflight Dynamics GmbH | — (internal review, Increment 2 texts, sandbox only) | — |
+| `sfdy` | Starflight Dynamics GmbH | — (set in plan 03; sandbox baseline) | — |
 | `mogwai-systems` | MOGWAI / Starflight Dynamics GmbH | `pbau3r-sfdy/mogwai-systems` | mogwai-systems.com |
 | `parrot-capital` | Parrot Capital UG | `pbau3r-sfdy/parrot-capital` | parrot-capital.com |
 | `crestworks` | — | `pbau3r-sfdy/crestworks` | crestworks.co |
@@ -201,7 +201,7 @@ npm run dev             # Dashboard dev server → localhost:4321
 npm run build           # Build all sites → dist/
 node _scripts/build-all.js sfdy         # Build one site + dashboard
 node _scripts/build-all.js parrot-capital
-cd sites/sfdy && npm run dev            # SFDY dev server → localhost:4409
+cd sites/sfdy && npm run dev            # SFDY dev server → localhost:4413
 ```
 
 ## Adding a site

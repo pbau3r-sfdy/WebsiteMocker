@@ -56,6 +56,6 @@
   "notes": "Live at https://www.starflight-dynamics.com — redesign replacing sfdy. Prod repo: pbau3r-sfdy/starflight-dynamics.",
   "archived": true,
   "archived_at": "2026-10-14",
-  "archive_reason": "Superseded 2026-10-14: sfdy-alt-clean-reskin-2 is the SFDY baseline. Live site at www.starflight-dynamics.com keeps serving its last published build until reskin-2 is published; restore with --restore to republish.",
+  "archive_reason": "Superseded 2026-10-14: the renamed sfdy site is the SFDY baseline. Live site at www.starflight-dynamics.com keeps serving its last published build until sfdy is published; restore with --restore to republish.",
   "skip_ci": true
 }

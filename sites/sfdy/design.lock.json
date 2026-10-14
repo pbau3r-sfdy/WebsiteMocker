@@ -51,19 +51,19 @@
   },
   "components": {
     "Band": {
-      "from": "_staging/design/sfdy-alt-clean-reskin-2/sanitised/ui_kits/website/index.html#band",
+      "from": "_staging/design/sfdy/sanitised/ui_kits/website/index.html#band",
       "sha256": "7a2e0f52d5c076f734d6c6ceff02881eb7e2c1bf69424a992626e2ced3e08bba"
     },
     "Hero": {
-      "from": "_staging/design/sfdy-alt-clean-reskin-2/sanitised/ui_kits/website/index.html#hero",
+      "from": "_staging/design/sfdy/sanitised/ui_kits/website/index.html#hero",
       "sha256": "2a886ed76b4de76fd03b5bc4bb1273f49e5ae7988206907a087d232629f9f1d7"
     },
     "News": {
-      "from": "_staging/design/sfdy-alt-clean-reskin-2/sanitised/ui_kits/website/index.html#news",
+      "from": "_staging/design/sfdy/sanitised/ui_kits/website/index.html#news",
       "sha256": "84ff60db53645911767654e08f4b46f036e83e5a1b04b7792033096f8429043f"
     },
     "Partners": {
-      "from": "_staging/design/sfdy-alt-clean-reskin-2/sanitised/ui_kits/website/index.html#partners",
+      "from": "_staging/design/sfdy/sanitised/ui_kits/website/index.html#partners",
       "sha256": "1c07652ec889ae0f134ddd5c3f88b50bcfab172791c0ee8703ddc37cc99f3cd0"
     }
   },

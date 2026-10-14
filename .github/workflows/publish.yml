@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       slug:
-        description: 'Site slug to publish (e.g. sfdy-alt-clean)'
+        description: 'Site slug to publish (e.g. sfdy)'
         required: true
         type: string
 
