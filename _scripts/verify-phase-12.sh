@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+# verify-phase-12.sh: Phase 12 (sfdy cutover) verification.
+# Usage: bash _scripts/verify-phase-12.sh [rename|old|gate|prod|sandbox|ident|sync|sync-live|live|all]
+# Exit codes: 0 = all selected checks pass, 1 = failure, 2 = bad usage.
+# `all` runs only offline sections (never sync-live / live). Sections not yet implemented
+# (ident, sync, sync-live, live: plans 03, 04, 05) print SKIP and do not fail.
+# Builds write to the same dist/sfdy, so they run sequentially.
+
+set -u
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$REPO"
+SLUG=sfdy
+SITE=sites/$SLUG
+DIST=dist/$SLUG
+PROD_URL=https://www.starflight-dynamics.com
+SB_URL=https://pbau3r-sfdy.github.io
+OLD=sfdy-alt-clean-reskin-2
+PASS=0; FAIL=0
+GATE_PAGE="$SITE/src/pages/zz-gate-test.astro"
+
+# Exempt files and lines for the old-slug completeness grep. These MUST NOT be edited to
+# satisfy the check: archived sites are untouchable (D-03) and the history reference is a git blob id.
+ALLOW_FILES="sites/sfdy-alt-clean-reskin/wiring.json sites/sfdy-alt-clean-variant/wiring.json"
+ALLOW_HIST_FILE="_scripts/verify-phase-11-1.sh"
+ALLOW_HIST_PATTERN='0d94909\^:sites/sfdy-alt-clean-reskin-2/'
+
+check() { if [ "$2" = 0 ]; then PASS=$((PASS+1)); echo "  PASS  $1"; else FAIL=$((FAIL+1)); echo "  FAIL  $1"; fi; }
+cleanup() { rm -f "$GATE_PAGE"; }
+trap cleanup EXIT
+
+build_prod() { SITE_URL=$PROD_URL SITE_BASE=/ node _scripts/build-single.mjs $SLUG >/dev/null 2>&1; }
+build_sandbox() { SITE_URL=$SB_URL SITE_BASE=/WebsiteMocker/$SLUG node _scripts/build-single.mjs $SLUG >/dev/null 2>&1; }
+
+sec_rename() {
+  echo; echo "== rename =="
+  check "wiring slug is sfdy" "$(grep -q '"slug": *"sfdy"' $SITE/wiring.json && echo 0 || echo 1)"
+  check "old site folder absent" "$([ ! -e sites/$OLD ] && echo 0 || echo 1)"
+  check "package name @websitemocker/sfdy" "$(grep -q '"name": *"@websitemocker/sfdy"' $SITE/package.json && echo 0 || echo 1)"
+  check "astro base default /WebsiteMocker/sfdy" "$(grep -q "/WebsiteMocker/sfdy'" $SITE/astro.config.mjs && echo 0 || echo 1)"
+  L=$(readlink node_modules/@websitemocker/sfdy 2>/dev/null || true)
+  check "node_modules workspace link resolves to sites/sfdy" "$([ "$L" = "../../sites/sfdy" ] && echo 0 || echo 1)"
+  check "no dangling reskin-2 workspace link" "$([ ! -e node_modules/@websitemocker/$OLD ] && [ ! -L node_modules/@websitemocker/$OLD ] && echo 0 || echo 1)"
+  check "lockfile has sites/sfdy" "$(grep -q '"sites/sfdy": {' package-lock.json && echo 0 || echo 1)"
+  check "lockfile free of old workspace" "$(grep -q "$OLD" package-lock.json && echo 1 || echo 0)"
+
+  # Completeness grep over live files. Frozen .planning docs are excluded by design (history).
+  HITS=$(grep -rIn --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.astro --exclude=verify-phase-12.sh \
+    -e "$OLD" CLAUDE.md AGENTS.md DESIGNER.md PARKED.md docs _scripts sites .github package.json package-lock.json 2>/dev/null || true)
+  BAD=0
+  while IFS= read -r line; do
+    [ -z "$line" ] && continue
+    f=${line%%:*}
+    ok=1
+    for a in $ALLOW_FILES; do [ "$f" = "$a" ] && ok=0; done
+    if [ "$f" = "$ALLOW_HIST_FILE" ] && echo "$line" | grep -q "$ALLOW_HIST_PATTERN"; then ok=0; fi
+    if [ $ok = 0 ]; then echo "  ALLOWED: ${line:0:140}"; else echo "  HIT: ${line:0:140}"; BAD=$((BAD+1)); fi
+  done <<< "$HITS"
+  check "no old slug in live files (allow-list applied)" "$([ $BAD = 0 ] && echo 0 || echo 1)"
+
+  SLUG=sfdy bash _scripts/verify-phase-11-1.sh >/tmp/vp12-111.log 2>&1; check "regression: verify-phase-11-1" "$?"
+  bash _scripts/verify-phase-10.sh all >/tmp/vp12-10.log 2>&1; check "regression: verify-phase-10 all" "$?"
+}
+
+sec_old() {
+  echo; echo "== old =="
+  check "_captures/sfdy exists" "$([ -d _captures/sfdy ] && echo 0 || echo 1)"
+  check "new site tracked (privacy-policy.astro)" "$(git ls-files $SITE | grep -q 'src/pages/privacy-policy.astro' && echo 0 || echo 1)"
+  check "no tracked public/CNAME in sites/sfdy" "$(git ls-files $SITE | grep -q 'public/CNAME' && echo 1 || echo 0)"
+  check "sites/sfdy/public/CNAME file absent" "$([ ! -e $SITE/public/CNAME ] && echo 0 || echo 1)"
+  check "removal commit in sites/sfdy history" "$(git log --diff-filter=D --format=%s -- $SITE | grep -q 'chore: remove archived sites/sfdy' && echo 0 || echo 1)"
+}
+
+sec_gate() {
+  echo; echo "== gate =="
+  cat > "$GATE_PAGE" <<'EOF'
+---
+import Tbd from '../components/Tbd.astro';
+---
+<html><body><p><Tbd id="no-such-id">gate-test-text</Tbd></p></body></html>
+EOF
+  build_prod; B=$?
+  check "production build succeeds with unknown Tbd id" "$([ -f $DIST/index.html ] && echo 0 || echo 1)"
+  P=$DIST/zz-gate-test/index.html
+  check "gate page renders the slot text" "$(grep -q 'gate-test-text' $P 2>/dev/null && echo 0 || echo 1)"
+  check "no class=\"tbd\" in gate page" "$(grep -q 'class="tbd' $P 2>/dev/null && echo 1 || echo 0)"
+  rm -f "$GATE_PAGE"
+  check "gate page removed from source" "$([ ! -e $GATE_PAGE ] && echo 0 || echo 1)"
+}
+
+sec_prod() {
+  echo; echo "== prod =="
+  build_prod
+  check "production build output exists" "$([ -f $DIST/index.html ] && echo 0 || echo 1)"
+  check "no open-points route" "$([ ! -e $DIST/open-points ] && echo 0 || echo 1)"
+  check "no internal strings in dist" "$(grep -rIliE 'open-points|internal review|tbd-pill|data-points=|class="tbd|noindex' $DIST | grep -q . && echo 1 || echo 0)"
+  check "no robots meta in index.html" "$(grep -q 'name="robots"' $DIST/index.html && echo 1 || echo 0)"
+  check ".nojekyll present" "$([ -f $DIST/.nojekyll ] && echo 0 || echo 1)"
+  check "no CNAME (workflow writes it)" "$([ ! -e $DIST/CNAME ] && echo 0 || echo 1)"
+  check "no robots.txt (workflow writes it)" "$([ ! -e $DIST/robots.txt ] && echo 0 || echo 1)"
+  check "no /WebsiteMocker string in dist" "$(grep -rIl '/WebsiteMocker' $DIST | grep -q . && echo 1 || echo 0)"
+  check "/jobs says Coming soon" "$(grep -qi 'Coming soon' $DIST/jobs/index.html && echo 0 || echo 1)"
+  SID=$(grep -o '"scriptId": *"[^"]*"' $SITE/wiring.json | head -1 | sed 's/.*: *"\(.*\)"/\1/')
+  check "production Plausible script id in index.html" "$([ -n "$SID" ] && grep -q "$SID" $DIST/index.html && echo 0 || echo 1)"
+  mkdir -p _staging/phase12 && rm -rf _staging/phase12/prod-dist && cp -R $DIST _staging/phase12/prod-dist
+}
+
+sec_sandbox() {
+  echo; echo "== sandbox =="
+  build_sandbox
+  check "sandbox build has /open-points" "$([ -f $DIST/open-points/index.html ] && echo 0 || echo 1)"
+  check "sandbox build keeps noindex" "$(grep -q noindex $DIST/index.html && echo 0 || echo 1)"
+  check "sandbox build keeps tbd-pill" "$(grep -q tbd-pill $DIST/index.html && echo 0 || echo 1)"
+}
+
+skip() { echo; echo "== $1 =="; echo "  SKIP (not implemented yet)"; }
+
+case "${1:-all}" in
+  rename) sec_rename ;;
+  old) sec_old ;;
+  gate) sec_gate ;;
+  prod) sec_prod ;;
+  sandbox) sec_sandbox ;;
+  ident|sync|sync-live|live) skip "$1" ;;
+  all) sec_rename; sec_old; sec_gate; sec_prod; sec_sandbox; skip ident; skip sync ;;
+  *) echo "usage: $0 [rename|old|gate|prod|sandbox|ident|sync|sync-live|live|all]" >&2; exit 2 ;;
+esac
+
+echo; echo "Result: $PASS passed, $FAIL failed"
+[ $FAIL = 0 ]
