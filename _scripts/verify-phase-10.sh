@@ -15,6 +15,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FX="$REPO/_scripts/fixtures/analytics"
 SC="$REPO/_scripts"
 SB=/WebsiteMocker/fx
+SANDBOX_HOST=pbau3r-sfdy.github.io
 TMPS=()
 cleanup() { for d in "${TMPS[@]:-}"; do [ -n "$d" ] && rm -rf "$d"; done; return 0; }
 trap cleanup EXIT
@@ -50,8 +51,8 @@ has() { printf '%s' "$OUT" | grep -qF -- "$1" && echo 0 || echo 1; }
 hasnt() { printf '%s' "$OUT" | grep -qF -- "$1" && echo 1 || echo 0; }
 both() { [ "$1" = 0 ] && [ "$2" = 0 ] && echo 0 || echo 1; }
 
-# drive <wiring fixture> <base> [command]: run the integration hook, output in OUT
-drive() { run node "$FX/drive-plausible.mjs" "$FX/wiring/$1" "$2" "${3:-build}"; }
+# drive <wiring fixture> <base> [command] [site|none]: run the integration hook, output in OUT
+drive() { run node "$FX/drive-plausible.mjs" "$FX/wiring/$1" "$2" "${3:-build}" "${4:-https://www.example.com}"; }
 # ok_drive: assert rc 0 and no hashBasedRouting, set R
 nohash() { check "$1: no hashBasedRouting" "$(hasnt hashBasedRouting)"; }
 
@@ -120,7 +121,7 @@ if want assert; then
   echo "── ANLY-03: identity assertions ──"
   drive bad-scriptid.json /
   check "ANLY-03 bad scriptId throws" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
-  check "ANLY-03 bad scriptId: no script injection in output" "$(hasnt '<script>alert')"
+  check "ANLY-03 bad scriptId: payload not echoed" "$(hasnt 'alert(1)')"
   drive contradictory.json "$SB"
   check "ANLY-03 sandbox:false + sandboxUsesProdId throws" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
   drive same-ids.json "$SB"
@@ -131,6 +132,31 @@ if want assert; then
   check "ANLY-03 sanitise on legacy site throws" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
   drive bad-host.json /
   check "ANLY-03 bad host throws" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
+  drive bad-exclude.json /
+  check "ANLY-03 non-array exclude throws" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
+  drive bad-eventnames.json /
+  check "ANLY-03 non-string eventNames value throws" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
+  drive inject-domain.json /
+  check "ANLY-03 domain with markup throws" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
+  check "ANLY-03 domain injection not echoed" "$(hasnt 'alert(3)')"
+  drive inject-values.json /
+  check "</script> in exclude/eventNames builds (escaped)" "$(rcis 0)"
+  check "</script> injection: no raw </script> in emitted code" "$(hasnt '</script>')"
+  check "</script> injection: no raw <script> in emitted code" "$(hasnt '<script>')"
+  check "</script> injection: < escaped as \\u003c" "$(has 'u003c')"
+  check "U+2028 escaped in emitted code" "$(hasnt $'\xe2\x80\xa8')"
+  echo ""
+  echo "── WR-05: production site check ──"
+  drive prod-script.json / build none
+  check "production without config.site throws ANLY-03" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
+  drive prod-script.json / build https://other.example
+  check "production site hostname mismatch throws ANLY-03" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
+  drive prod-script.json / build https://www.example.com
+  check "production site www. matches domain (emits)" "$(both "$(rcis 0)" "$(has 'pa-FIXTUREprod01.js')")"
+  drive prod-legacy.json / build none
+  check "production legacy without config.site throws ANLY-03" "$(both "$(rcis 3)" "$(has '[plausible] ANLY-03:')")"
+  drive prod-script.json "$SB" build none
+  check "sandbox build needs no config.site" "$(rcis 0)"
 fi
 
 # ── sanitise ───────────────────────────────────────────────────────────────────
@@ -161,6 +187,17 @@ if want sanitise; then
     esac
   done <<< "$OUT"
   check "sanitise vector runner exited 0" "$(rcis 0)"
+  echo ""
+  echo "── CR-01: exclude end to end through the emitted snippet ──"
+  XW="$FX/wiring/sandbox-exclude.json"
+  run node "$FX/eval-snippet.mjs" "$XW" "$SB" https://x.example "https://$SANDBOX_HOST$SB/preview/a"
+  check "emitted snippet drops excluded path under sandbox base" "$([ "$OUT" = "null" ] && echo 0 || echo 1)"
+  run node "$FX/eval-snippet.mjs" "$XW" "$SB" https://x.example "https://$SANDBOX_HOST$SB/previews/a"
+  check "emitted snippet keeps /previews (segment boundary)" "$(has '"n":"pageview"')"
+  run node "$FX/eval-snippet.mjs" "$XW" "$SB" https://x.example "https://$SANDBOX_HOST$SB//Preview/a"
+  check "emitted snippet drops //Preview/ (normalised)" "$([ "$OUT" = "null" ] && echo 0 || echo 1)"
+  run node "$FX/eval-snippet.mjs" "$XW" / https://www.example.com "https://example.com/preview/a"
+  check "emitted snippet drops excluded path at base /" "$([ "$OUT" = "null" ] && echo 0 || echo 1)"
 fi
 
 # ── gate ───────────────────────────────────────────────────────────────────────

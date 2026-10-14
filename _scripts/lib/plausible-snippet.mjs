@@ -16,7 +16,35 @@ const QUEUE_STUB =
 
 const ID_RE = /^pa-[A-Za-z0-9_-]+$/;
 const HOST_RE = /^https:\/\/[A-Za-z0-9.-]+(:\d+)?\/?$/;
+const DOMAIN_RE = /^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/i;
+const BASE_RE = /^\/[A-Za-z0-9._~\/-]*$/;
+const SLUG_RE = /^[a-z0-9-]*$/;
 const PROP_TYPES = ['news', 'blog', 'announcements', 'press'];
+
+// The one escaping helper for every value embedded in the inline <script> (WR-02):
+// JSON plus < (so </script> and <!-- cannot occur) and the JS line separators.
+function js(v) {
+  return JSON.stringify(v)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
+/** Validate an analytics.host value and return its origin without trailing slash (shared with fetch-analytics-data.mjs). */
+export function hostOrigin(host) {
+  if (!(typeof host === 'string' && HOST_RE.test(host))) {
+    throw new Error('analytics.host must be an https origin (value not echoed)');
+  }
+  return host.replace(/\/$/, '').toLowerCase();
+}
+
+function siteHostname(site) {
+  try {
+    return new URL(String(site)).hostname.replace(/^www\./, '').toLowerCase();
+  } catch {
+    return '';
+  }
+}
 
 function fail(msg) {
   return new Error(`[plausible] ANLY-03: ${msg}`);
@@ -30,7 +58,7 @@ function isSandboxish(domain) {
   return domain === SANDBOX_DOMAIN || domain.endsWith('.github.io');
 }
 
-export function resolveIdentity(wiring, { sandbox }) {
+export function resolveIdentity(wiring, { sandbox, site } = {}) {
   const a = wiring.analytics ?? {};
 
   for (const key of ['scriptId', 'sandboxScriptId']) {
@@ -40,6 +68,16 @@ export function resolveIdentity(wiring, { sandbox }) {
   }
   if (a.host !== undefined && !(typeof a.host === 'string' && HOST_RE.test(a.host))) {
     throw fail(`analytics.host must be an https origin (value not echoed)`);
+  }
+  if (a.exclude !== undefined && !(Array.isArray(a.exclude) && a.exclude.every((x) => typeof x === 'string' && x.startsWith('/')))) {
+    throw fail('analytics.exclude must be an array of path strings starting with "/"');
+  }
+  if (
+    a.eventNames !== undefined &&
+    !(a.eventNames && typeof a.eventNames === 'object' && !Array.isArray(a.eventNames) &&
+      Object.values(a.eventNames).every((x) => typeof x === 'string'))
+  ) {
+    throw fail('analytics.eventNames must map event name strings to strings');
   }
   if (a.sandbox === false && a.sandboxUsesProdId === true) {
     throw fail('analytics.sandbox is false but sandboxUsesProdId is true (contradictory)');
@@ -53,11 +91,22 @@ export function resolveIdentity(wiring, { sandbox }) {
 
   const host = a.host ?? 'https://plausible.io';
   const domain = cleanDomain(a, wiring);
+  if (domain && !DOMAIN_RE.test(domain)) {
+    throw fail('analytics.domain / wiring.domain is not a valid hostname (value not echoed)');
+  }
 
   if (!sandbox) {
     if (!a.scriptId && !domain) return { emit: false, reason: 'no domain' };
     if (isSandboxish(domain)) {
       throw fail(`production build resolves to sandbox identity ${domain}`);
+    }
+    // WR-05: production must be positively identified, not merely "not the sandbox base".
+    if (!site) {
+      throw fail('production build needs the Astro config "site" (SITE_URL) to verify the analytics domain');
+    }
+    const siteHost = siteHostname(site);
+    if (siteHost !== domain.toLowerCase()) {
+      throw fail(`production build site hostname "${siteHost}" does not match analytics domain "${domain}"`);
     }
     if (a.scriptId) {
       return { emit: true, kind: 'script', scriptId: a.scriptId, domain, host, debugOptIn: false, label: a.scriptId };
@@ -81,15 +130,20 @@ export function resolveIdentity(wiring, { sandbox }) {
   }
 
   // Legacy site: documented exception, sandbox previews keep reporting to SANDBOX_DOMAIN.
-  const identity = { emit: true, kind: 'legacy', domain: SANDBOX_DOMAIN, host, debugOptIn: false, label: SANDBOX_DOMAIN };
-  if (identity.domain !== SANDBOX_DOMAIN) throw fail('sandbox legacy identity is not the sandbox domain');
-  return identity;
+  return { emit: true, kind: 'legacy', domain: SANDBOX_DOMAIN, host, debugOptIn: false, label: SANDBOX_DOMAIN };
 }
 
 export const TRANSFORM_FACTORY_SRC = String.raw`function(cfg){
-var HEX=/\/[0-9a-fA-F]{32}(?=\/|$)/g;
-var TOK=/\/[A-Za-z0-9_]{40,}(?=\/|$)/g;
-var SCHEME=/^[a-z][a-z0-9+.-]*:\/\/[^\/]+/i;
+var SCHEME=/^[a-z][a-z0-9+.-]*:\/\/[^\/?#]*/i;
+var UUID=/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+var HEX=/^[0-9a-fA-F]{32}$/;
+var TOK=/^[A-Za-z0-9_]{40,}$/;
+var MIX=/^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9_-]{24,}$/;
+function dec(s){try{return decodeURIComponent(s);}catch(e){return s;}}
+function mask(seg){
+  var d=dec(seg);
+  return(d.indexOf('@')>=0||UUID.test(d)||HEX.test(d)||TOK.test(d)||MIX.test(d))?'_ID_':seg;
+}
 function clean(s){
   if(typeof s!=='string')return s;
   var i=s.indexOf('#');
@@ -97,9 +151,29 @@ function clean(s){
   if(cfg.sanitise){
     i=s.indexOf('?');
     if(i>=0)s=s.slice(0,i);
-    s=s.replace(HEX,'/_ID_').replace(TOK,'/_ID_');
+    var m=SCHEME.exec(s),pre=m?m[0]:'';
+    s=pre+s.slice(pre.length).split('/').map(mask).join('/');
   }
   return s;
+}
+function norm(s){
+  var out=[];
+  dec(s).toLowerCase().split('/').forEach(function(x){
+    if(x===''||x==='.')return;
+    if(x==='..'){out.pop();return;}
+    out.push(x);
+  });
+  return '/'+out.join('/');
+}
+function excluded(path){
+  var p=norm(path),b=cfg.base?norm(cfg.base):'/';
+  if(b!=='/'&&(p===b||p.indexOf(b+'/')===0))p=p.slice(b.length)||'/';
+  var ex=cfg.exclude||[];
+  for(var k=0;k<ex.length;k++){
+    var e=norm(ex[k]);
+    if(e==='/'||p===e||p.indexOf(e+'/')===0)return true;
+  }
+  return false;
 }
 return function(p){
   if(!p)return p;
@@ -110,8 +184,7 @@ return function(p){
     if(h>=0)u=u.slice(0,h);
     var path=u.replace(SCHEME,''),q=path.indexOf('?');
     if(q>=0)path=path.slice(0,q);
-    var ex=cfg.exclude||[];
-    for(var k=0;k<ex.length;k++){if(path.indexOf(ex[k])===0)return null;}
+    if(excluded(path))return null;
     p.u=clean(p.u);
   }
   if(typeof p.r==='string'){
@@ -145,6 +218,8 @@ return function(){
 export function buildSnippet(identity, wiring, { base = '/', slug = '' } = {}) {
   const a = wiring.analytics ?? {};
   const events = a.events ?? {};
+  if (typeof base !== 'string' || !BASE_RE.test(base)) throw fail('base is not a plain path (value not echoed)');
+  if (typeof slug !== 'string' || !SLUG_RE.test(slug)) throw fail('slug is not a plain slug (value not echoed)');
   const host = (identity.host ?? 'https://plausible.io').replace(/\/$/, '');
   const warnings = [];
 
@@ -153,16 +228,17 @@ export function buildSnippet(identity, wiring, { base = '/', slug = '' } = {}) {
       sanitise: a.sanitise !== false,
       exclude: a.exclude ?? [],
       eventNames: a.eventNames ?? {},
+      base,
     };
     const parts = [
       `outboundLinks:${events.outboundLinks !== false}`,
       `fileDownloads:${events.fileDownloads !== false}`,
       `formSubmissions:${events.formSubmissions !== false}`,
-      `transformRequest:(${TRANSFORM_FACTORY_SRC})(${JSON.stringify(cfg)})`,
+      `transformRequest:(${TRANSFORM_FACTORY_SRC})(${js(cfg)})`,
     ];
     if (a.props === true) {
       parts.push(
-        `customProperties:(${PROPS_FACTORY_SRC})(${JSON.stringify({ site: slug, base, types: PROP_TYPES })})`,
+        `customProperties:(${PROPS_FACTORY_SRC})(${js({ site: slug, base, types: PROP_TYPES })})`,
       );
     }
     const src = `${host}/js/${identity.scriptId}.js`;
@@ -170,7 +246,7 @@ export function buildSnippet(identity, wiring, { base = '/', slug = '' } = {}) {
       QUEUE_STUB,
       'window.plausible.init=window.plausible.init||function(i){window.plausible.o=i||{}};',
       `window.plausible.init({${parts.join(',')}});`,
-      `(function(){var s=document.createElement('script');s.async=true;s.src=${JSON.stringify(src)};document.head.appendChild(s)})();`,
+      `(function(){var s=document.createElement('script');s.async=true;s.src=${js(src)};document.head.appendChild(s)})();`,
     ].join('');
     return { code, warnings };
   }
@@ -186,7 +262,7 @@ export function buildSnippet(identity, wiring, { base = '/', slug = '' } = {}) {
   const src = `${host}/js/${file}`;
   const code = [
     QUEUE_STUB,
-    `(function(){var s=document.createElement('script');s.defer=true;s.dataset.domain=${JSON.stringify(identity.domain)};s.src=${JSON.stringify(src)};document.head.appendChild(s)})();`,
+    `(function(){var s=document.createElement('script');s.defer=true;s.dataset.domain=${js(identity.domain)};s.src=${js(src)};document.head.appendChild(s)})();`,
   ].join('');
   return { code, warnings };
 }

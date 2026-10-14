@@ -28,7 +28,8 @@
 // opt-in logs a loud warning on every build; remove sandboxUsesProdId before the
 // Phase 12 cutover. Legacy sites (no scriptId) keep the old behaviour: sandbox previews
 // report to SANDBOX_DOMAIN, filter by page path.
-// Production builds (/wm-publish, base "/") report to the site's own identity.
+// Production builds (/wm-publish, base "/") report to the site's own identity; they
+// need the Astro `site` (SITE_URL) whose hostname matches the resolved Plausible domain.
 // Identity mismatches throw '[plausible] ANLY-03: ...' and fail the build.
 // Nothing is injected in `astro dev`.
 
@@ -49,13 +50,18 @@ export default function plausible() {
 
         const file = join(fileURLToPath(config.root), 'wiring.json');
         if (!existsSync(file)) return;
-        const wiring = JSON.parse(readFileSync(file, 'utf8'));
+        let wiring;
+        try {
+          wiring = JSON.parse(readFileSync(file, 'utf8'));
+        } catch (e) {
+          throw new Error(`[plausible] cannot parse ${file}: ${e.message}`);
+        }
         const a = wiring.analytics ?? {};
         if (a.service !== 'plausible' || a.status !== 'configured') return;
 
         const sandbox = isSandbox(config.base);
         // Not caught on purpose: an ANLY-03 Error must fail `astro build`.
-        const identity = resolveIdentity(wiring, { sandbox });
+        const identity = resolveIdentity(wiring, { sandbox, site: config.site });
         if (!identity.emit) {
           if (identity.reason === 'no domain') {
             logger.warn('analytics.service is plausible but no domain is set; skipping');
