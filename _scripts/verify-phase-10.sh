@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # verify-phase-10.sh — Fixture-only verification for Phase 10: Analytics (ANLY-08)
-# Usage: bash _scripts/verify-phase-10.sh [env|snippet|assert|sanitise|gate|notfound|all]
+# Usage: bash _scripts/verify-phase-10.sh [env|snippet|assert|sanitise|gate|fetch|notfound|all]
 # Exit codes: 0 = all selected checks pass, 1 = one or more failures, 2 = invalid argument
 #
 # Fixtures live in _scripts/fixtures/analytics/. The integration is driven through a stub
@@ -37,8 +37,8 @@ SECTION="${1:-all}"
 want() { [ "$SECTION" = "all" ] || [ "$SECTION" = "$1" ]; }
 
 case "$SECTION" in
-  env|snippet|assert|sanitise|gate|notfound|all) ;;
-  *) echo "Usage: bash _scripts/verify-phase-10.sh [env|snippet|assert|sanitise|gate|notfound|all]" >&2; exit 2 ;;
+  env|snippet|assert|sanitise|gate|fetch|notfound|all) ;;
+  *) echo "Usage: bash _scripts/verify-phase-10.sh [env|snippet|assert|sanitise|gate|fetch|notfound|all]" >&2; exit 2 ;;
 esac
 
 mkroot() { T=$(mktemp -d); T=$(cd "$T" && pwd -P); TMPS+=("$T"); mkdir -p "$T/sites"; }
@@ -214,6 +214,23 @@ if want gate; then
   g gate-sandbox --live;  check "gate-sandbox --live fails (1)" "$(rcis 1)"
   g gate-off;             check "gate-off not applicable (0)" "$(rcis 0)"
   g no-such-slug;         check "unknown slug exits 2" "$(rcis 2)"
+fi
+
+# ── fetch (WR-03, offline: every case fails before any request is made) ───────────
+if want fetch; then
+  echo ""
+  echo "── ANLY-07: stats API host allowlist ──"
+  mkroot
+  mkdir -p "$T/sites/fx"
+  printf '%s' '{"slug":"fx","domain":"example.com","analytics":{"service":"plausible","status":"configured","statsApi":true,"host":"https://evil.example"}}' > "$T/sites/fx/wiring.json"
+  f() { run env WM_ROOT="$T" PLAUSIBLE_API_KEY=sekrit-key-123 "$@" node "$SC/fetch-analytics-data.mjs" fx; }
+  f; check "foreign analytics.host without PLAUSIBLE_HOST refused (1)" "$(both "$(rcis 1)" "$(has 'refusing to send the API key')")"
+  check "key never printed" "$(hasnt sekrit-key-123)"
+  f PLAUSIBLE_HOST=https://other.example; check "PLAUSIBLE_HOST differing from analytics.host refused (1)" "$(rcis 1)"
+  printf '%s' '{"slug":"fx","domain":"example.com","analytics":{"service":"plausible","status":"configured","statsApi":true,"host":"http://plausible.io"}}' > "$T/sites/fx/wiring.json"
+  f; check "http host refused (1)" "$(rcis 1)"
+  check "fetch-analytics-data.mjs sets redirect: 'error'" "$(grep -qF "redirect: 'error'" "$SC/fetch-analytics-data.mjs" && echo 0 || echo 1)"
+  check "fetch-analytics-data.mjs never prints the response body" "$(grep -q 'res.text' "$SC/fetch-analytics-data.mjs" && echo 1 || echo 0)"
 fi
 
 # ── notfound ───────────────────────────────────────────────────────────────────

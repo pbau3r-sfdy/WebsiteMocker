@@ -14,7 +14,8 @@
  *
  * API key: PLAUSIBLE_API_KEY from the environment only (MarketingBridge vault
  * or a CI secret). Never commit it, write it to wiring.json or put it under
- * public/. The key is never printed.
+ * public/. The key is never printed. It is only sent to plausible.io, or to a
+ * self-hosted analytics.host that is also set in PLAUSIBLE_HOST; redirects are refused.
  *
  * Usage:
  *   PLAUSIBLE_API_KEY=... node _scripts/fetch-analytics-data.mjs [slug]
@@ -23,6 +24,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
+import { hostOrigin } from './lib/plausible-snippet.mjs';
 
 const root     = process.env.WM_ROOT || join(fileURLToPath(import.meta.url), '..', '..');
 const sitesDir = join(root, 'sites');
@@ -65,12 +67,19 @@ if (!KEY) {
   process.exit(0);
 }
 
+// The API key is sent to this host, so it is never taken from wiring.json alone: only
+// plausible.io, or a self-hosted origin that is ALSO named in the PLAUSIBLE_HOST
+// environment variable (WR-03).
+const DEFAULT_HOST = 'https://plausible.io';
 function resolveHost(a) {
-  if (!a.host) return 'https://plausible.io';
-  let u;
-  try { u = new URL(a.host); } catch { throw new Error('analytics.host is not a valid URL'); }
-  if (u.protocol !== 'https:') throw new Error('analytics.host must be an https origin');
-  return u.origin;
+  if (!a.host) return DEFAULT_HOST;
+  const origin = hostOrigin(a.host);
+  if (origin === DEFAULT_HOST) return origin;
+  const allowed = process.env.PLAUSIBLE_HOST ? hostOrigin(process.env.PLAUSIBLE_HOST) : '';
+  if (allowed !== origin) {
+    throw new Error('analytics.host is not plausible.io and does not equal PLAUSIBLE_HOST; refusing to send the API key');
+  }
+  return origin;
 }
 
 let failed = false;
@@ -86,11 +95,12 @@ for (const { slug, wiring } of targets) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
       body: JSON.stringify({ site_id: siteId, metrics: METRICS, date_range: '30d' }),
+      redirect: 'error',
       signal: AbortSignal.timeout(30_000),
     });
     if (!res.ok) {
-      const text = await res.text().catch(() => '');
-      throw new Error(`HTTP ${res.status} — ${text.slice(0, 300)}`);
+      // Status only: the response body is never printed.
+      throw new Error(`HTTP ${res.status}`);
     }
     const json = await res.json();
     const m = json?.results?.[0]?.metrics;
