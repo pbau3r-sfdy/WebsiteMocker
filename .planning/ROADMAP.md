@@ -150,7 +150,7 @@ Plans:
 **Wave 3** *(blocked on 11-02, 11-04)*
 
 - [x] 11-03-PLAN.md — Plausible drop whitelist in the shared transform, `Drop Download` hook, vectors, analytics docs, `track` section (DROP-06, 09)
-- [ ] 11-05-PLAN.md — `publish.yml` private drops checkout + qpdf + redacted build, `drops-health.yml` nightly token/expiry watch, `ci` and opt-in `live` sections (DROP-04, 05, 07, 08, 09)
+- [x] 11-05-PLAN.md — `publish.yml` private drops checkout + qpdf + redacted build, `drops-health.yml` nightly token/expiry watch, `ci` and opt-in `live` sections (DROP-04, 05, 07, 08, 09)
 
 **Wave 4** *(blocked on 11-03, 11-05; operator gates G1-G6)*
 
@@ -217,5 +217,5 @@ Plans:
 | 8. Cleanup & Verification | v1.1 | 6/6 | Complete | 2026-08-25 |
 | 9. Claude Design Connectivity | v1.2 | 8/9 | In Progress|  |
 | 10. Analytics | v1.2 | 5/5 | Complete   | 2026-10-14 |
-| 11. Open Drops | v1.2 | 4/6 | In Progress|  |
+| 11. Open Drops | v1.2 | 5/6 | In Progress|  |
 | 12. SFDY Cutover | v1.2 | 5/6 | In Progress|  |
