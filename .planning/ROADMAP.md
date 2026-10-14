@@ -126,7 +126,7 @@ Plans:
 ### Phase 11.1: Retool sfdy-alt-clean-reskin-2 before cutover: review feedback and further design changes (INSERTED)
 
 **Goal:** `sfdy-alt-clean-reskin-2` carries the reviewer's wording and footer fixes, the hero closing sentence, and no job postings, ready for the Phase 12 cutover
-**Requirements**: RETL-01, RETL-02, RETL-03, RETL-04
+**Requirements**: RETL-01, RETL-02, RETL-03, RETL-04, RETL-05
 **Depends on:** Phase 11 (ordering only; no code dependency)
 **Plans:** 2 plans
 
