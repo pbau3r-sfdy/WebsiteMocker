@@ -5,7 +5,7 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import JobRow from '../../components/JobRow.astro';
 import { SITES } from '../../data/sites';
-import { CAREERS_EMAIL, EQUAL_OPPORTUNITY, isPublished } from '../../data/careers';
+import { CAREERS_EMAIL, EQUAL_OPPORTUNITY, isPublished, isTechnical } from '../../data/careers';
 
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const jobs = (await getCollection('jobs'))
@@ -20,7 +20,7 @@ for (const j of jobs) {
   const dept = j.data.department ?? 'General';
   byDept.set(dept, [...(byDept.get(dept) ?? []), j]);
 }
-// Departments with a priority position first, then alphabetical.
+// Departments with a priority position first, then technical before business, then alphabetical.
 const depts = [...byDept]
   .map(([name, list]) => ({
     name,
@@ -28,7 +28,10 @@ const depts = [...byDept]
     id: 'dept-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
     hasPriority: list.some(j => j.data.priority),
   }))
-  .sort((a, b) => Number(b.hasPriority) - Number(a.hasPriority) || a.name.localeCompare(b.name));
+  .sort((a, b) =>
+    Number(b.hasPriority) - Number(a.hasPriority) ||
+    Number(isTechnical(b.name)) - Number(isTechnical(a.name)) ||
+    a.name.localeCompare(b.name));
 
 const sites = Object.values(SITES).map(s => ({
   ...s,

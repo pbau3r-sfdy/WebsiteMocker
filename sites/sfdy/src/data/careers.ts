@@ -24,6 +24,10 @@ export const ENCOURAGEMENT = [
 export const EQUAL_OPPORTUNITY =
   'Starflight Dynamics welcomes applications regardless of gender, age, nationality, disability, religion, or sexual orientation.';
 
+// Departments listed after the technical ones on the overview.
+const NON_TECHNICAL = ['Business & Corporate', 'General'];
+export const isTechnical = (dept: string) => !NON_TECHNICAL.includes(dept);
+
 // Drafts are visible in `astro dev` only.
 export const isPublished = (j: { data: { open?: boolean; draft: boolean } }) =>
   j.data.open !== false && (import.meta.env.DEV || !j.data.draft);
