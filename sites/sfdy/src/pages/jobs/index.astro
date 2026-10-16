@@ -50,7 +50,7 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
     <header class="hero wrap">
       <div class="beam" aria-hidden="true"></div>
       <div class="eyebrow accent">Careers</div>
-      <h1>Build technologies for the high frontier</h1>
+      <h1>Build technologies for the <span class="green">high frontier</span></h1>
       <p class="lede">
         Space is Europe’s first line of defence. We develop the technologies and systems that keep
         it safe, and we are looking for people who want to build them with us.
@@ -166,6 +166,7 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
     color: var(--text-secondary);
   }
   .eyebrow.accent { color: var(--accent); }
+  .green { color: var(--accent); }
 
   .hero { position: relative; padding-top: 88px; padding-bottom: 64px; }
   .beam { position: absolute; left: 0; top: 0; bottom: 0; width: 7px; background: var(--beam); }
