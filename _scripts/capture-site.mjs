@@ -3,7 +3,7 @@
  * capture-site.mjs  –  WebsiteMocker design-DNA extractor (Playwright-based)
  *
  * Usage:
- *   node _scripts/capture-site.mjs <url> <slug> [page1,page2,...]
+ *   node _scripts/capture-site.mjs <url> <slug> [page1,page2,...] [--designlang]
  *
  * Examples:
  *   node _scripts/capture-site.mjs https://www.starflight-dynamics.com sfdy
@@ -14,7 +14,8 @@
  *   ├── capture.json      machine-readable; consumed by /wm-instantiate
  *   ├── tokens.json       design tokens only (shortcut for /wm-instantiate)
  *   ├── assets/           all downloaded images, videos, fonts
- *   └── screenshots/      full-page screenshots per page at desktop + mobile
+ *   ├── screenshots/      full-page screenshots per page at desktop + mobile
+ *   └── designlang/       optional (--designlang): richer design-system extraction
  *
  * What it does:
  *   1. Launches Chromium (full JS rendering — handles Wix, React, Vue, etc.)
@@ -29,6 +30,7 @@
 
 import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'fs/promises';
+import { spawnSync } from 'child_process';
 import { createWriteStream, existsSync } from 'fs';
 import { pipeline } from 'stream/promises';
 import path from 'path';
@@ -41,7 +43,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 // ─── Args ─────────────────────────────────────────────────────────────────────
-const [,, SITE_URL, SLUG, pagesArg] = process.argv;
+const WITH_DESIGNLANG = process.argv.includes('--designlang');
+const [,, SITE_URL, SLUG, pagesArg] = process.argv.filter((a) => a !== '--designlang');
 
 if (!SITE_URL || !SLUG) {
   console.error('Usage: node capture-site.mjs <url> <slug> [/path1,/path2,...]');
@@ -224,6 +227,28 @@ async function extractNav(page) {
     }
     return links;
   });
+}
+
+// ─── designlang (optional) ────────────────────────────────────────────────────
+// Pinned and vetted (no install scripts, no telemetry; LLM calls only with --smart,
+// which we never pass). API keys are stripped from the child env so it stays offline
+// apart from loading the target page. Failure is non-fatal: tokens.json still exists.
+const DESIGNLANG_VERSION = '13.3.2';
+
+function runDesignlang() {
+  const outDir = path.join(OUT_DIR, 'designlang');
+  const env = { ...process.env };
+  for (const k of ['OPENAI_API_KEY', 'ANTHROPIC_API_KEY', 'ATLASCLOUD_API_KEY']) delete env[k];
+  console.log(`\n🎨  designlang@${DESIGNLANG_VERSION} → _captures/${SLUG}/designlang/`);
+  const r = spawnSync('npx', [
+    '--yes', `designlang@${DESIGNLANG_VERSION}`, BASE_URL,
+    '-o', outDir, '-n', SLUG, '-w', '1440', '--wait', '4000', '--dark', '--no-history', '--no-prompts',
+  ], { env, stdio: 'inherit' });
+  if (r.status !== 0) {
+    console.warn('  ⚠️  designlang failed; continuing with tokens.json only');
+    return false;
+  }
+  return true;
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -435,6 +460,8 @@ async function main() {
 
   await writeFile(path.join(OUT_DIR, 'CAPTURE.md'), md);
   console.log('✓ CAPTURE.md written');
+
+  if (WITH_DESIGNLANG) runDesignlang();
 
   // ── Summary ───────────────────────────────────────────────────────────────────
   console.log('\n─────────────────────────────────────────────────────');

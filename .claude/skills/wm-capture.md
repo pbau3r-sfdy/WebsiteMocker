@@ -36,6 +36,26 @@ This launches a real Chromium browser. It:
 
 **Expected time:** 1–3 minutes depending on number of pages and site weight.
 
+#### Optional: richer design tokens (`--designlang`)
+
+```bash
+node _scripts/capture-site.mjs <URL> <slug> [/paths] --designlang
+```
+
+Additionally runs a pinned `designlang` (npx) against the URL and writes the result to
+`_captures/<slug>/designlang/`: palette with usage and tonal ramps, type scale, spacing,
+shadows, radii, contrast audit, Tailwind / CSS vars / DTCG / Figma tokens, `*-DESIGN.md`.
+`tokens.json` and `capture.json` are unchanged (additive, non-fatal on failure).
+
+Use it for Wix and SPA sources, where the built-in token sampling is weakest (e.g. Levion:
+built-in gave a transparent bg and white accent; designlang recovered the real palette).
+On hand-coded sites it mostly confirms the built-in tokens; on placeholder pages nothing helps.
+
+Known limits, review by hand: role labels (primary/accent/secondary) can be wrong (e.g. a
+background tagged "accent", Wix's default link blue as "secondary"); Wix hashed font names
+(`wfont_…`) are not resolved, so map them from the downloaded `assets/*.woff2`.
+Evaluation: GitHub issue #34.
+
 ### 3. Review the output
 
 Read `_captures/<slug>/CAPTURE.md` and report:
