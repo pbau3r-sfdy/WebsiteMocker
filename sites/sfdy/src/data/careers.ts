@@ -28,9 +28,11 @@ export const EQUAL_OPPORTUNITY =
 const NON_TECHNICAL = ['Business & Corporate', 'General'];
 export const isTechnical = (dept: string) => !NON_TECHNICAL.includes(dept);
 
-// Drafts are visible in `astro dev` only.
+// Drafts are visible in `astro dev` and in sandbox builds (base `/WebsiteMocker/<slug>`),
+// never in a production build (base `/`, see /wm-publish).
+const SANDBOX = import.meta.env.BASE_URL !== '/';
 export const isPublished = (j: { data: { open?: boolean; draft: boolean } }) =>
-  j.data.open !== false && (import.meta.env.DEV || !j.data.draft);
+  j.data.open !== false && (import.meta.env.DEV || SANDBOX || !j.data.draft);
 
 export function applyHref(reference: string, title: string) {
   return `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent(`${reference} ${title}`)}`;
