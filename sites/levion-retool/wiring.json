@@ -32,7 +32,17 @@
     }
   },
   "analytics": {
-    "status": "skipped"
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-e1A656KoKplWUvt9HoFkN",
+    "domain": "levion-materials.com",
+    "events": {
+      "outboundLinks": true,
+      "fileDownloads": true,
+      "formSubmissions": true
+    },
+    "sanitise": true,
+    "props": false
   },
   "legal": {
     "impressum": "complete",
