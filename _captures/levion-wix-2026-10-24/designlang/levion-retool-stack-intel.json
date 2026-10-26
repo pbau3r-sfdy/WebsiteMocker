@@ -1,0 +1,13 @@
+{
+  "cms": [
+    "wix"
+  ],
+  "analytics": [
+    "sentry"
+  ],
+  "experimentation": [],
+  "signals": {
+    "scriptCount": 34,
+    "metaCount": 11
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "tone": "friendly",
+  "pronoun": "third-person",
+  "headingStyle": "Title Case",
+  "headingLengthClass": "tight",
+  "ctaVerbs": [
+    {
+      "value": "subscribe",
+      "count": 2
+    }
+  ],
+  "buttonPatterns": [
+    {
+      "value": "subscribe",
+      "count": 2
+    }
+  ],
+  "sampleHeadings": [
+    "THE VISION",
+    "Materials Beyond Gravity",
+    "THE MISSION",
+    "Why Crystals Matter",
+    "THE PROBLEM",
+    "THE VISION",
+    "Materials Beyond Gravity",
+    "THE VISION",
+    "Materials Beyond Gravity",
+    "THE MISSION"
+  ],
+  "stats": {
+    "buttons": 2,
+    "headings": 37
+  }
+}

@@ -1,0 +1,590 @@
+{
+  "pageIntent": {
+    "type": "landing",
+    "confidence": 0.29,
+    "path": "/",
+    "title": "Home | LEVION MATERIALS",
+    "description": "",
+    "signals": [
+      {
+        "kind": "dom",
+        "type": "legal",
+        "weight": 0.4
+      },
+      {
+        "kind": "url",
+        "type": "landing",
+        "weight": 0.45,
+        "detail": "root-path"
+      }
+    ],
+    "alternates": [
+      {
+        "type": "legal",
+        "score": 0.4
+      }
+    ],
+    "needsSmart": true
+  },
+  "sectionRoles": {
+    "sections": [
+      {
+        "index": 0,
+        "tag": "header",
+        "role": "nav",
+        "subrole": null,
+        "confidence": 0.4,
+        "heading": null,
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "w": 1280,
+          "h": 141
+        },
+        "buttonCount": 0,
+        "cardCount": 25,
+        "slots": {
+          "lede": "HOME\nTEAM\nNEWS\nCAREERS\nCONTACT"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 1,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": null,
+        "bounds": {
+          "x": 0,
+          "y": 13,
+          "w": 1280,
+          "h": 128
+        },
+        "buttonCount": 0,
+        "cardCount": 25,
+        "slots": {
+          "lede": "HOME\nTEAM\nNEWS\nCAREERS\nCONTACT"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 2,
+        "tag": "nav",
+        "role": "nav",
+        "subrole": null,
+        "confidence": 0.9,
+        "heading": null,
+        "bounds": {
+          "x": 763,
+          "y": 32,
+          "w": 367,
+          "h": 39
+        },
+        "buttonCount": 0,
+        "cardCount": 25,
+        "slots": {
+          "lede": "HOME\nTEAM\nNEWS\nCAREERS\nCONTACT"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 3,
+        "tag": "main",
+        "role": "testimonial",
+        "subrole": null,
+        "confidence": 0.8,
+        "heading": "THE VISION",
+        "bounds": {
+          "x": 0,
+          "y": 141,
+          "w": 1280,
+          "h": 6853
+        },
+        "buttonCount": 0,
+        "cardCount": 7,
+        "slots": {
+          "heading": "THE VISION",
+          "subheadings": [
+            "Materials Beyond Gravity",
+            "THE MISSION",
+            "Why Crystals Matter",
+            "THE PROBLEM"
+          ],
+          "lede": "ADVANCED MATERIALS MADE IN SPACE"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 4,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": null,
+        "bounds": {
+          "x": 0,
+          "y": 141,
+          "w": 1280,
+          "h": 917
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "lede": "ADVANCED MATERIALS MADE IN SPACE"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 5,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": null,
+        "bounds": {
+          "x": 0,
+          "y": 141,
+          "w": 1280,
+          "h": 917
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "lede": "ADVANCED MATERIALS MADE IN SPACE"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 6,
+        "tag": "section",
+        "role": "testimonial",
+        "subrole": null,
+        "confidence": 0.8,
+        "heading": "THE VISION",
+        "bounds": {
+          "x": 0,
+          "y": 1058,
+          "w": 1280,
+          "h": 750
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "THE VISION",
+          "subheadings": [
+            "Materials Beyond Gravity"
+          ],
+          "lede": "THE VISION\nMaterials Beyond Gravity"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 7,
+        "tag": "section",
+        "role": "testimonial",
+        "subrole": null,
+        "confidence": 0.8,
+        "heading": "THE VISION",
+        "bounds": {
+          "x": 0,
+          "y": 1054,
+          "w": 1280,
+          "h": 754
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "THE VISION",
+          "subheadings": [
+            "Materials Beyond Gravity"
+          ],
+          "lede": "THE VISION\nMaterials Beyond Gravity"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 8,
+        "tag": "section",
+        "role": "feature-grid",
+        "subrole": null,
+        "confidence": 0.8,
+        "heading": "THE MISSION",
+        "bounds": {
+          "x": 0,
+          "y": 1808,
+          "w": 1280,
+          "h": 1961
+        },
+        "buttonCount": 0,
+        "cardCount": 4,
+        "slots": {
+          "heading": "THE MISSION",
+          "subheadings": [
+            "Why Crystals Matter",
+            "THE PROBLEM",
+            "The Problem with Gravity"
+          ],
+          "lede": "THE MISSION\nWhy Crystals Matter"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 9,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": "THE MISSION",
+        "bounds": {
+          "x": 0,
+          "y": 1808,
+          "w": 1280,
+          "h": 1065
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "THE MISSION",
+          "subheadings": [
+            "Why Crystals Matter"
+          ],
+          "lede": "THE MISSION\nWhy Crystals Matter"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 10,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": "THE PROBLEM",
+        "bounds": {
+          "x": 0,
+          "y": 2873,
+          "w": 1280,
+          "h": 896
+        },
+        "buttonCount": 0,
+        "cardCount": 4,
+        "slots": {
+          "heading": "THE PROBLEM",
+          "subheadings": [
+            "The Problem with Gravity"
+          ],
+          "lede": "THE PROBLEM\nThe Problem with Gravity"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 11,
+        "tag": "section",
+        "role": "testimonial",
+        "subrole": null,
+        "confidence": 0.8,
+        "heading": "THE SOLUTION",
+        "bounds": {
+          "x": 0,
+          "y": 3769,
+          "w": 1280,
+          "h": 920
+        },
+        "buttonCount": 0,
+        "cardCount": 3,
+        "slots": {
+          "heading": "THE SOLUTION",
+          "subheadings": [
+            "The Change with Microgravity"
+          ],
+          "lede": "THE SOLUTION\nThe Change with Microgravity"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 12,
+        "tag": "section",
+        "role": "testimonial",
+        "subrole": null,
+        "confidence": 0.8,
+        "heading": "THE SOLUTION",
+        "bounds": {
+          "x": 0,
+          "y": 3769,
+          "w": 1280,
+          "h": 920
+        },
+        "buttonCount": 0,
+        "cardCount": 3,
+        "slots": {
+          "heading": "THE SOLUTION",
+          "subheadings": [
+            "The Change with Microgravity"
+          ],
+          "lede": "THE SOLUTION\nThe Change with Microgravity"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 13,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": "TRACTION",
+        "bounds": {
+          "x": 0,
+          "y": 4689,
+          "w": 1280,
+          "h": 756
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "TRACTION",
+          "subheadings": [
+            "Growth Parameter Observation & Validation Experiment",
+            "GROOVE"
+          ],
+          "lede": "TRACTION\nGrowth Parameter Observation & Validation Experiment\nGROOVE"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 14,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": "TRACTION",
+        "bounds": {
+          "x": 0,
+          "y": 4699,
+          "w": 1280,
+          "h": 687
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "TRACTION",
+          "subheadings": [
+            "Growth Parameter Observation & Validation Experiment",
+            "GROOVE"
+          ],
+          "lede": "TRACTION\nGrowth Parameter Observation & Validation Experiment\nGROOVE"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 15,
+        "tag": "section",
+        "role": "testimonial",
+        "subrole": null,
+        "confidence": 0.8,
+        "heading": "TRUE MICROGRAVITY ONLY EXISTS IN SPACE",
+        "bounds": {
+          "x": 0,
+          "y": 5445,
+          "w": 1280,
+          "h": 880
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "TRUE MICROGRAVITY ONLY EXISTS IN SPACE",
+          "subheadings": [
+            "Why Space is essential"
+          ],
+          "lede": "TRUE MICROGRAVITY ONLY EXISTS IN SPACE\nWhy Space is essential"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 16,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": null,
+        "bounds": {
+          "x": 0,
+          "y": 5445,
+          "w": 1280,
+          "h": 880
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {},
+        "needsSmart": true
+      },
+      {
+        "index": 17,
+        "tag": "section",
+        "role": "testimonial",
+        "subrole": null,
+        "confidence": 0.8,
+        "heading": "TRUE MICROGRAVITY ONLY EXISTS IN SPACE",
+        "bounds": {
+          "x": 0,
+          "y": 5565,
+          "w": 1280,
+          "h": 669.84375
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "TRUE MICROGRAVITY ONLY EXISTS IN SPACE",
+          "subheadings": [
+            "Why Space is essential"
+          ],
+          "lede": "TRUE MICROGRAVITY ONLY EXISTS IN SPACE\nWhy Space is essential"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 18,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": "THANKS TO OUR",
+        "bounds": {
+          "x": 0,
+          "y": 6325,
+          "w": 1280,
+          "h": 669
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "THANKS TO OUR",
+          "subheadings": [
+            "Partners & Supporters"
+          ],
+          "lede": "THANKS TO OUR\nPartners & Supporters"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 19,
+        "tag": "section",
+        "role": "content",
+        "subrole": null,
+        "confidence": 0.3,
+        "heading": "THANKS TO OUR",
+        "bounds": {
+          "x": 0,
+          "y": 6325,
+          "w": 1280,
+          "h": 500
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {
+          "heading": "THANKS TO OUR",
+          "subheadings": [
+            "Partners & Supporters"
+          ],
+          "lede": "THANKS TO OUR\nPartners & Supporters"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 20,
+        "tag": "footer",
+        "role": "footer",
+        "subrole": null,
+        "confidence": 0.95,
+        "heading": "NEWSLETTER",
+        "bounds": {
+          "x": 0,
+          "y": 6994,
+          "w": 1280,
+          "h": 336.203125
+        },
+        "buttonCount": 2,
+        "cardCount": 0,
+        "slots": {
+          "heading": "NEWSLETTER",
+          "ctaCount": 2,
+          "lede": "IMPRINT"
+        },
+        "needsSmart": false
+      },
+      {
+        "index": 21,
+        "tag": "section",
+        "role": "hero",
+        "subrole": null,
+        "confidence": 0.4,
+        "heading": "NEWSLETTER",
+        "bounds": {
+          "x": 0,
+          "y": 6994,
+          "w": 1280,
+          "h": 336.203125
+        },
+        "buttonCount": 2,
+        "cardCount": 0,
+        "slots": {
+          "heading": "NEWSLETTER",
+          "ctaCount": 2,
+          "lede": "IMPRINT"
+        },
+        "needsSmart": true
+      },
+      {
+        "index": 22,
+        "tag": "aside",
+        "role": "sidebar",
+        "subrole": null,
+        "confidence": 0.4,
+        "heading": null,
+        "bounds": {
+          "x": 0,
+          "y": 7330.203125,
+          "w": 1280,
+          "h": 0
+        },
+        "buttonCount": 0,
+        "cardCount": 0,
+        "slots": {},
+        "needsSmart": true
+      }
+    ],
+    "counts": {
+      "nav": 2,
+      "content": 10,
+      "testimonial": 7,
+      "feature-grid": 1,
+      "footer": 1,
+      "hero": 1,
+      "sidebar": 1
+    },
+    "readingOrder": [
+      "nav",
+      "content",
+      "nav",
+      "testimonial",
+      "content",
+      "content",
+      "testimonial",
+      "testimonial",
+      "feature-grid",
+      "content",
+      "content",
+      "testimonial",
+      "testimonial",
+      "content",
+      "content",
+      "testimonial",
+      "content",
+      "testimonial",
+      "content",
+      "content",
+      "footer",
+      "hero",
+      "sidebar"
+    ]
+  }
+}

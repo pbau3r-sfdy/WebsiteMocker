@@ -1,0 +1,53 @@
+{
+  "openGraph": {
+    "title": "Home | LEVION MATERIALS",
+    "url": "https://www.levion-materials.com",
+    "site_name": "Levion Materials",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "Home | LEVION MATERIALS"
+  },
+  "description": null,
+  "canonical": null,
+  "themeColor": null,
+  "viewport": "width=device-width, initial-scale=1",
+  "favicons": [
+    {
+      "rel": "icon",
+      "href": "https://static.wixstatic.com/media/ff65f7_e7b636b028eb45b4b8e28c07d0c7a315%7Emv2.png/v1/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/ff65f7_e7b636b028eb45b4b8e28c07d0c7a315%7Emv2.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "rel": "shortcut icon",
+      "href": "https://static.wixstatic.com/media/ff65f7_e7b636b028eb45b4b8e28c07d0c7a315%7Emv2.png/v1/fill/w_32%2Ch_32%2Clg_1%2Cusm_0.66_1.00_0.01/ff65f7_e7b636b028eb45b4b8e28c07d0c7a315%7Emv2.png",
+      "sizes": "",
+      "type": "image/png"
+    },
+    {
+      "rel": "apple-touch-icon",
+      "href": "https://static.wixstatic.com/media/ff65f7_e7b636b028eb45b4b8e28c07d0c7a315%7Emv2.png/v1/fill/w_180%2Ch_180%2Clg_1%2Cusm_0.66_1.00_0.01/ff65f7_e7b636b028eb45b4b8e28c07d0c7a315%7Emv2.png",
+      "sizes": "",
+      "type": "image/png"
+    }
+  ],
+  "manifest": null,
+  "structuredData": [
+    {
+      "type": "WebSite",
+      "name": "Levion Materials",
+      "sample": "{\"@context\":\"https://schema.org/\",\"@type\":\"WebSite\",\"name\":\"Levion Materials\",\"url\":\"https://www.levion-materials.com\"}"
+    }
+  ],
+  "score": {
+    "hasOg": true,
+    "hasTwitter": true,
+    "hasDescription": false,
+    "hasCanonical": false,
+    "hasStructuredData": true,
+    "hasFavicon": true,
+    "hasThemeColor": false
+  }
+}

@@ -1,0 +1,32 @@
+Build a landing page with this exact visual language.
+COLORS:
+  #000000
+  #ffffff
+  #055f84
+  #0000ee
+  #141414
+  #d96502
+  #116dff
+  #b74101
+  #043c53
+  #969da5
+  #d6d6d6
+FONTS: [object Object], [object Object], [object Object], [object Object]
+SPACING: 1, 8, 16, 24, 29, 37, 40, 43
+RADIUS: 4, 8, 16, 24
+SHADOWS: rgba(0, 0, 0, 0) 0px 0px 0px 0px | rgba(0, 0, 0, 0.25) -1.36px 2.67px 21px 1px | rgba(0, 0, 0, 0.3) 0px 32px 68px 0px
+MATERIAL LANGUAGE: flat
+VOICE: Tone: friendly · Headings: Title Case · CTA verbs: [object Object]
+SECTIONS (in order):
+- testimonial — heading: "THE VISION"
+- testimonial — heading: "THE VISION"
+- testimonial — heading: "THE VISION"
+- feature-grid — heading: "THE MISSION"
+- testimonial — heading: "THE SOLUTION"
+- testimonial — heading: "THE SOLUTION"
+- testimonial — heading: "TRUE MICROGRAVITY ONLY EXISTS IN SPACE"
+- testimonial — heading: "TRUE MICROGRAVITY ONLY EXISTS IN SPACE"
+- footer — heading: "NEWSLETTER"
+- hero — heading: "NEWSLETTER"
+- sidebar
+Use Tailwind. Match these tokens exactly. Keep the material language consistent.

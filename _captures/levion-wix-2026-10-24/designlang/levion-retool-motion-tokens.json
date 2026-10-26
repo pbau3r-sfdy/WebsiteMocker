@@ -1,0 +1,27 @@
+{
+  "$description": "Motion tokens extracted by designlang",
+  "duration": {
+    "instant": {
+      "$value": "80ms",
+      "$type": "duration",
+      "ms": 80
+    },
+    "md": {
+      "$value": "300ms",
+      "$type": "duration",
+      "ms": 300
+    }
+  },
+  "easing": {
+    "ease-in-out-707": {
+      "$value": "cubic-bezier(0, 0, 1, 1)",
+      "$type": "cubicBezier",
+      "family": "ease-in-out"
+    }
+  },
+  "spring": {},
+  "$meta": {
+    "feel": "smooth",
+    "scrollLinked": true
+  }
+}

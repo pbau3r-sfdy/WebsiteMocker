@@ -1,0 +1,46 @@
+{
+  "slug": "levion-legacy",
+  "name": "Levion Materials (legacy mock)",
+  "accent": "#4f8fff",
+  "contact": "lab@levion-materials.com",
+  "stage": 2,
+  "site": "levion-legacy",
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/levion-legacy",
+  "last_deploy": null,
+  "newsletter": {
+    "service": "formspree",
+    "endpoint": "placeholder",
+    "status": "pending"
+  },
+  "socials": {
+    "twitter": null,
+    "linkedin": "levion-materials",
+    "instagram": "levion_materials",
+    "status": "set"
+  },
+  "forms": {
+    "contact": {
+      "service": "formspree",
+      "id": "placeholder",
+      "status": "pending"
+    },
+    "newsletter_signup": {
+      "service": "formspree",
+      "status": "pending"
+    }
+  },
+  "analytics": {
+    "status": "skipped"
+  },
+  "legal": {
+    "impressum": "complete",
+    "privacy": "complete"
+  },
+  "robots": "disallow",
+  "capture": "levion",
+  "notes": "Crystal growth in space. Spin-out from Starflight Dynamics. Built from capture 2026-08-06. Legacy: do not publish; the live domain belongs to levion-materials.",
+  "archived": true,
+  "archived_at": "2026-08-20",
+  "archive_reason": "Old mock of the Wix-era Levion site, superseded by levion-materials (live since 2026-10-26)",
+  "skip_ci": true
+}

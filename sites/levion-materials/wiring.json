@@ -1,0 +1,59 @@
+{
+  "slug": "levion-materials",
+  "name": "Levion Materials",
+  "domain": "www.levion-materials.com",
+  "accent": "#d96502",
+  "contact": "lab@levion-materials.com",
+  "stage": 6,
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/levion-materials",
+  "last_deploy": "2026-10-26",
+  "newsletter": {
+    "service": "mailchimp",
+    "audience_id": "88bca13b57",
+    "server": "us17",
+    "tag_id": "2452",
+    "status": "configured",
+    "note": "Shares the Starflight Dynamics audience; Levion subscribers carry tag 2452"
+  },
+  "socials": {
+    "linkedin": "https://www.linkedin.com/company/levion-materials/",
+    "instagram": "https://www.instagram.com/levion_materials/",
+    "status": "set"
+  },
+  "forms": {
+    "contact": {
+      "service": "web3forms",
+      "status": "configured",
+      "note": "Shares the SFDY Web3Forms key (same mailbox); subject marks Levion messages"
+    },
+    "newsletter_signup": {
+      "service": "mailchimp",
+      "status": "configured"
+    }
+  },
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-e1A656KoKplWUvt9HoFkN",
+    "domain": "levion-materials.com",
+    "events": {
+      "outboundLinks": true,
+      "fileDownloads": true,
+      "formSubmissions": true
+    },
+    "sanitise": true,
+    "props": false
+  },
+  "legal": {
+    "impressum": "complete",
+    "privacy": "complete"
+  },
+  "robots": "disallow",
+  "capture": "levion-wix-2026-10-24",
+  "notes": "Live site (since 2026-10-26) at www.levion-materials.com, rebuilt from the Wix site captured 2026-10-24 (_captures/levion-wix-2026-10-24). Formerly sites/levion-retool. Production repo pbau3r-sfdy/levion-materials.",
+  "jobs": {
+    "template": "sfdy",
+    "path": "/<slug> (original permalink kept)"
+  },
+  "prod_repo": "pbau3r-sfdy/levion-materials"
+}

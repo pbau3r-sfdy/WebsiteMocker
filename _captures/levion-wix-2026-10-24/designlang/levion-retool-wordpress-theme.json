@@ -1,0 +1,197 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "color": "#d96502",
+          "name": "Primary"
+        },
+        {
+          "slug": "secondary",
+          "color": "#116dff",
+          "name": "Secondary"
+        },
+        {
+          "slug": "accent",
+          "color": "#b74101",
+          "name": "Accent"
+        },
+        {
+          "slug": "neutral-1",
+          "color": "#000000",
+          "name": "Neutral 1"
+        },
+        {
+          "slug": "neutral-2",
+          "color": "#ffffff",
+          "name": "Neutral 2"
+        },
+        {
+          "slug": "neutral-3",
+          "color": "#141414",
+          "name": "Neutral 3"
+        },
+        {
+          "slug": "neutral-4",
+          "color": "#969da5",
+          "name": "Neutral 4"
+        },
+        {
+          "slug": "neutral-5",
+          "color": "#d6d6d6",
+          "name": "Neutral 5"
+        },
+        {
+          "slug": "bg-ffffff",
+          "color": "#ffffff",
+          "name": "Background #ffffff"
+        },
+        {
+          "slug": "bg-b74101",
+          "color": "#b74101",
+          "name": "Background #b74101"
+        },
+        {
+          "slug": "bg-043c53",
+          "color": "#043c53",
+          "name": "Background #043c53"
+        }
+      ],
+      "gradients": []
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "wfont_ced490_9eb54a17069041c7b3a2095964951377",
+          "slug": "wfont_ced490_9eb54a17069041c7b3a2095964951377",
+          "name": "wfont_ced490_9eb54a17069041c7b3a2095964951377"
+        },
+        {
+          "fontFamily": "wfont_f941ec_7b8b892c305e412dbd37a4fcbf1ee3f4",
+          "slug": "wfont_f941ec_7b8b892c305e412dbd37a4fcbf1ee3f4",
+          "name": "wfont_f941ec_7b8b892c305e412dbd37a4fcbf1ee3f4"
+        },
+        {
+          "fontFamily": "Arial",
+          "slug": "arial",
+          "name": "Arial"
+        },
+        {
+          "fontFamily": "wfont_66a541_b524e145baef478c9a1712a046b1333b",
+          "slug": "wfont_66a541_b524e145baef478c9a1712a046b1333b",
+          "name": "wfont_66a541_b524e145baef478c9a1712a046b1333b"
+        },
+        {
+          "fontFamily": "Helvetica",
+          "slug": "helvetica",
+          "name": "Helvetica"
+        }
+      ],
+      "fontSizes": [
+        {
+          "size": "64px",
+          "slug": "size-64",
+          "name": "64px"
+        },
+        {
+          "size": "28px",
+          "slug": "size-28",
+          "name": "28px"
+        },
+        {
+          "size": "26px",
+          "slug": "size-26",
+          "name": "26px"
+        },
+        {
+          "size": "20px",
+          "slug": "size-20",
+          "name": "20px"
+        },
+        {
+          "size": "18px",
+          "slug": "size-18",
+          "name": "18px"
+        },
+        {
+          "size": "16px",
+          "slug": "size-16",
+          "name": "16px"
+        },
+        {
+          "size": "14.994px",
+          "slug": "size-14.994",
+          "name": "14.994px"
+        },
+        {
+          "size": "14px",
+          "slug": "size-14",
+          "name": "14px"
+        }
+      ]
+    },
+    "spacing": {
+      "spacingSizes": [
+        {
+          "size": "1px",
+          "slug": "spacing-1",
+          "name": "1px"
+        },
+        {
+          "size": "8px",
+          "slug": "spacing-8",
+          "name": "8px"
+        },
+        {
+          "size": "16px",
+          "slug": "spacing-16",
+          "name": "16px"
+        },
+        {
+          "size": "24px",
+          "slug": "spacing-24",
+          "name": "24px"
+        },
+        {
+          "size": "29px",
+          "slug": "spacing-29",
+          "name": "29px"
+        },
+        {
+          "size": "37px",
+          "slug": "spacing-37",
+          "name": "37px"
+        },
+        {
+          "size": "40px",
+          "slug": "spacing-40",
+          "name": "40px"
+        },
+        {
+          "size": "43px",
+          "slug": "spacing-43",
+          "name": "43px"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "100%",
+      "wideSize": "1400px"
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#ffffff",
+      "text": "#000000"
+    },
+    "typography": {
+      "fontSize": "16px",
+      "lineHeight": "normal",
+      "fontFamily": "wfont_ced490_9eb54a17069041c7b3a2095964951377"
+    },
+    "spacing": {}
+  }
+}
