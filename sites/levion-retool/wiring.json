@@ -9,7 +9,11 @@
   "last_deploy": null,
   "newsletter": {
     "service": "mailchimp",
-    "status": "pending"
+    "audience_id": "88bca13b57",
+    "server": "us17",
+    "tag_id": "2452",
+    "status": "configured",
+    "note": "Shares the Starflight Dynamics audience; Levion subscribers carry tag 2452"
   },
   "socials": {
     "linkedin": "https://www.linkedin.com/company/levion-materials/",
@@ -24,8 +28,7 @@
     },
     "newsletter_signup": {
       "service": "mailchimp",
-      "status": "pending",
-      "note": "Needs a Levion audience; set NEWSLETTER_ACTION in src/data/site.ts"
+      "status": "configured"
     }
   },
   "analytics": {

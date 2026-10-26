@@ -33,16 +33,22 @@ export const SOCIALS: { label: string; href: string }[] = [
 // Public key (safe in page source), created for lab@levion-materials.com at web3forms.com, so messages are delivered to EMAIL.general.
 export const WEB3FORMS_KEY = '5e41296e-dbbc-4bd0-8540-494bf9dd9898';
 
-// Newsletter signup endpoint (same mechanism as starflight-dynamics.com: a Mailchimp hosted form POST).
-// Create an audience for Levion in Mailchimp, copy its "Embedded form" action URL and paste it here.
-export const NEWSLETTER_ACTION = 'REPLACE_WITH_LEVION_MAILCHIMP_FORM_ACTION_URL';
+// Newsletter signup: a Mailchimp hosted-form POST, the same mechanism as starflight-dynamics.com. Levion shares the
+// Starflight Dynamics Mailchimp audience (same controller); Levion subscribers are marked with tag 2452 so they can be
+// targeted separately. Values come from the embedded form "Levion Materials website" (Mailchimp: Forms → Embed).
+export const NEWSLETTER = {
+  action: 'https://starflight-dynamics.us17.list-manage.com/subscribe/post?u=fdebab77920a5ad885afd229c&id=88bca13b57&f_id=002cc2e1f0',
+  tagId: '2452',
+  honeypot: 'b_fdebab77920a5ad885afd229c_88bca13b57',   // bot trap: must stay empty and hidden
+};
+export const NEWSLETTER_ACTION = NEWSLETTER.action;
 
 /** Called from the layout: a production build (base "/") must not ship placeholder integrations. */
 export function assertLaunchReady(base: string) {
   if (base !== '/' && base !== '') return;   // sandbox builds may keep the placeholders
   const open = [
     WEB3FORMS_KEY.startsWith('REPLACE') && 'WEB3FORMS_KEY (contact form)',
-    NEWSLETTER_ACTION.startsWith('REPLACE') && 'NEWSLETTER_ACTION (footer newsletter)',
+    NEWSLETTER.action.startsWith('REPLACE') && 'NEWSLETTER.action (footer newsletter)',
   ].filter(Boolean);
   if (open.length) throw new Error(`[levion-retool] Not launch-ready, set in src/data/site.ts: ${open.join(', ')}`);
 }

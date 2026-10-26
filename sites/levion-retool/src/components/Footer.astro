@@ -1,6 +1,6 @@
 ---
-import { SOCIALS, SITE, COMPANY, NEWSLETTER_ACTION } from '../data/site';
-const live = !NEWSLETTER_ACTION.startsWith('REPLACE');
+import { SOCIALS, SITE, COMPANY, NEWSLETTER } from '../data/site';
+const live = !NEWSLETTER.action.startsWith('REPLACE');
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <footer class="footer">
@@ -16,12 +16,15 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
         {SOCIALS.map(sn => <a href={sn.href} target="_blank" rel="me noopener">{sn.label.toUpperCase()}</a>)}
       </nav>
     </div>
-    <form class="news" action={live ? NEWSLETTER_ACTION : '#'} method="post" target={live ? '_blank' : undefined} onsubmit={live ? undefined : 'return false'}>
+    <form class="news" action={live ? NEWSLETTER.action : '#'} method="post" target={live ? '_blank' : undefined} onsubmit={live ? undefined : 'return false'}>
       <h2>NEWSLETTER</h2>
       <p>Subscribe for the Levion newsletter.</p>
       <label for="nl-email">E-Mail address <span aria-hidden="true">*</span></label>
       <input id="nl-email" type="email" name="EMAIL" required autocomplete="email" />
+      <input type="hidden" name="tags" value={NEWSLETTER.tagId} />
+      <div aria-hidden="true" style="position:absolute;left:-5000px"><input type="text" name={NEWSLETTER.honeypot} tabindex="-1" value="" autocomplete="off" /></div>
       <button type="submit">Subscribe</button>
+      <p class="fine">Double opt-in. You can unsubscribe at any time. See <a href={`${b}/privacy-policy`}>Privacy</a>.</p>
     </form>
   </div>
   <p class="legal wrap">© {new Date().getFullYear()} {COMPANY.name} · {SITE.division}</p>
@@ -43,6 +46,8 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
   .news input { display: block; width: 100%; height: 38px; border: 1px solid #000; border-radius: 0; padding: 0 10px; font: inherit; font-size: 15px; }
   .news button { display: block; margin: 14px 0 0 auto; background: var(--teal); color: #fff; border: 0; border-radius: 0; width: 118px; height: 38px; font: inherit; cursor: pointer; }
   .news button:hover { background: #000; }
+  .news .fine { margin: 12px 0 0; font-size: 12px; line-height: 1.5; letter-spacing: 0; color: var(--text-soft); }
+  .news .fine a { text-decoration: underline; }
   @media (min-width: 721px) { .news { margin-left: -24px; } }   /* same left edge as the contact form column */
   @media (max-width: 720px) { .inner { grid-template-columns: 1fr; } }
 </style>
