@@ -4,9 +4,9 @@
   "domain": "www.levion-materials.com",
   "accent": "#d96502",
   "contact": "lab@levion-materials.com",
-  "stage": 5,
+  "stage": 6,
   "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/levion-retool",
-  "last_deploy": null,
+  "last_deploy": "2026-10-26",
   "newsletter": {
     "service": "mailchimp",
     "audience_id": "88bca13b57",
