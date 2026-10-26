@@ -138,7 +138,7 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
 
     <section class="open wrap">
       <div>
-        <div class="eyebrow">Your role is not listed?</div>
+        <div class="eyebrow">{jobs.length === 0 ? 'Open application' : 'Your role is not listed?'}</div>
         <p>We are always glad to hear from exceptional people. Send us your CV and a short note on what you would like to work on.</p>
       </div>
       <a href={openApplication} class="btn">Send an open application</a>

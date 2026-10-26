@@ -4,7 +4,7 @@ department: "Special Materials"
 sites: [munich]
 workplace: hybrid
 type: full-time
-open: true
+open: false   # closed 2026-10-26: position filled. To reopen: set true and remove the redirect in astro.config.mjs
 date: 2026-10-24   # crawl date of the original posting; set the real publication date
 summary: "You will drive the institutional and programmatic backbone of our in-space materials roadmap, from ESA, DLR and EU programmes to the business model."
 hiring_steps:

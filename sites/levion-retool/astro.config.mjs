@@ -9,5 +9,7 @@ export default defineConfig({
   // Keep the original Wix permalinks working (the redirect target must carry the base path).
   redirects: {
     '/kopie-von-imprint': `${base}/privacy-policy`,
+    // Position filled (closed jobs are not built). Remove this redirect when the posting is reopened.
+    '/program-and-business-dev-manager': `${base}/careers`,
   },
 });
