@@ -24,7 +24,7 @@
     "contact": {
       "service": "web3forms",
       "status": "configured",
-      "note": "Key delivers to lab@levion-materials.com"
+      "note": "Shares the SFDY Web3Forms key (same mailbox); subject marks Levion messages"
     },
     "newsletter_signup": {
       "service": "mailchimp",
