@@ -19,8 +19,8 @@
   "forms": {
     "contact": {
       "service": "web3forms",
-      "status": "pending",
-      "note": "Needs a Levion access key delivering to lab@levion-materials.com; set WEB3FORMS_KEY in src/data/site.ts"
+      "status": "configured",
+      "note": "Key delivers to lab@levion-materials.com"
     },
     "newsletter_signup": {
       "service": "mailchimp",

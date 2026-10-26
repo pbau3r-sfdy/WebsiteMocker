@@ -30,9 +30,8 @@ export const SOCIALS: { label: string; href: string }[] = [
 ];
 
 // Web3Forms public access key for the contact form (same mechanism as starflight-dynamics.com).
-// The key is bound to the recipient address chosen when it is created at web3forms.com, so Levion needs its own
-// key that delivers to EMAIL.general. Replace the placeholder below; until then the form cannot deliver.
-export const WEB3FORMS_KEY = 'REPLACE_WITH_LEVION_WEB3FORMS_ACCESS_KEY';
+// Public key (safe in page source), created for lab@levion-materials.com at web3forms.com, so messages are delivered to EMAIL.general.
+export const WEB3FORMS_KEY = '5e41296e-dbbc-4bd0-8540-494bf9dd9898';
 
 // Newsletter signup endpoint (same mechanism as starflight-dynamics.com: a Mailchimp hosted form POST).
 // Create an audience for Levion in Mailchimp, copy its "Embedded form" action URL and paste it here.
