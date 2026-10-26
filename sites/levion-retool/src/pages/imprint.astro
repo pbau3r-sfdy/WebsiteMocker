@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, COMPANY, EMAIL, SOCIALS } from '../data/site';
+
+const entityLines = [
+  `${COMPANY.street}, ${COMPANY.postcode} ${COMPANY.city}, ${COMPANY.country}`,
+  `Register: ${COMPANY.register}`,
+  `Represented by: ${COMPANY.ceo}, ${COMPANY.ceoTitle}`,
+  `VAT ID: ${COMPANY.vat}`,
+  `Email: ${EMAIL.general}`,
+];
+const rows: [string, string][] = [
+  ['Responsible for content according to § 18 (2) MStV', `${COMPANY.ceo}, address as above`],
+  ['Press', EMAIL.press],
+  ['Consumer dispute resolution', 'We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board.'],
+  ['Liability for content', 'We prepare the content of this website with care but cannot guarantee that it is complete, accurate or current. As a service provider we are responsible for our own content under the general laws (§ 7 (1) DDG). Under §§ 8 to 10 DDG we are not obliged to monitor third-party information we transmit or store. Obligations to remove or block information under the general laws remain unaffected; we act as soon as we become aware of a specific infringement.'],
+  ['Liability for links', 'This website links to external sites over whose content we have no control. The respective provider is responsible for linked content. We checked linked pages for legal infringements when we set the link and remove any link as soon as we become aware of an infringement.'],
+  ['Copyright', 'Content and works on this website are subject to German copyright law. Reproduction, editing or distribution beyond the limits of copyright law requires our prior written consent or that of the respective rights holder.'],
+  ['Image credits', `All images by ${COMPANY.name}. Some are created with AI tools. Partner logos are trademarks of their respective owners.`],
+];
+---
+<Layout title="Imprint" description="Legal information according to § 5 DDG for Levion Materials, a division of Starflight Dynamics GmbH.">
+  <Nav />
+  <main class="wrap">
+    <p class="label">Legal</p>
+    <h1>Imprint</h1>
+    <p class="lede">Information according to § 5 DDG</p>
+
+    <div class="entity">
+      <div class="tag">Germany</div>
+      <h2>Levion Materials c/o {COMPANY.name}</h2>
+      {entityLines.map(l => <p>{l}</p>)}
+    </div>
+    <p class="sub">{SITE.division} It is not a separate legal entity; the managing director is the same.</p>
+
+    <dl>
+      {rows.map(([k, v]) => <div class="row"><dt>{k}</dt><dd>{v}</dd></div>)}
+      <div class="row">
+        <dt>Social media</dt>
+        <dd>This imprint also applies to our profiles on {SOCIALS.map((s, i) => (<Fragment>{i > 0 && (i === SOCIALS.length - 1 ? ' and ' : ', ')}<a href={s.href} target="_blank" rel="me noopener">{s.label}</a></Fragment>))}.</dd>
+      </div>
+    </dl>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main { max-width: 960px; padding-top: 64px; padding-bottom: 96px; }
+  h1 { font-size: clamp(34px, 5vw, 52px); text-transform: uppercase; }
+  .lede { margin: 12px 0 40px; color: var(--text-soft); }
+  .entity { max-width: 460px; padding: 28px; background: var(--surface-1); border: 1px solid var(--border-subtle); border-top: 3px solid var(--accent); display: flex; flex-direction: column; gap: 10px; }
+  .tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .entity h2 { font-size: 20px; text-transform: uppercase; margin-bottom: 6px; }
+  .entity p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
+  .sub { margin-top: 20px; font-size: 15px; color: var(--text-soft); max-width: 62ch; }
+  dl { margin: 56px 0 0; border-top: 1px solid var(--border-strong); }
+  .row { display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 20px 0; border-bottom: 1px solid var(--border-subtle); }
+  dt { flex: 0 0 240px; padding-top: 4px; font-family: var(--font-head); font-size: 10px; font-weight: 700; letter-spacing: .22em; line-height: 1.6; text-transform: uppercase; color: var(--text-soft); }
+  dd { flex: 1 1 420px; min-width: 0; margin: 0; font-size: 15px; line-height: 1.75; color: var(--text-secondary); text-wrap: pretty; }
+  dd a { color: var(--accent); text-decoration: underline; }
+  @media (max-width: 560px) { .entity { padding: 22px 20px; } }
+</style>

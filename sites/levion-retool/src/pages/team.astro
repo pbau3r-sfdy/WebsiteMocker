@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+// The live page shows portraits only, with no names or captions.
+const portraits = [1, 2, 3, 4, 5].map(n => `${b}/images/team/team-${n}.png`);
+---
+<Layout title="Team">
+  <Nav active="team" />
+  <main>
+    <section class="head wrap">
+      <div class="title">
+        <p class="label">The Team</p>
+        <h1>Experts on Earth<br />and in Space</h1>
+      </div>
+      <img src={`${b}/images/v-gradient.png`} alt="" class="mark" width="665" height="325" />
+    </section>
+    <section class="wrap">
+      <ul class="grid">
+        {portraits.map((src, i) => <li><img src={src} alt={`Levion team member ${i + 1}`} width="359" height="359" /></li>)}
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .head { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 20px; gap: 24px; }
+  .title { border-left: 3px solid var(--orange); padding-left: 48px; margin: 90px 0 0 40px; }
+  .label { color: var(--orange); letter-spacing: .12em; text-transform: none; font-size: 13px; }
+  h1 { color: var(--orange); font-size: clamp(36px, 5.4vw, 64px); white-space: nowrap; }
+  .mark { width: min(480px, 40vw); flex: none; height: auto; margin: -20px -90px 0 0; }
+  .grid { list-style: none; margin: 40px auto 110px; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px 40px; max-width: 760px; }
+  .grid li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .grid img { width: 100%; max-width: 340px; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 50%; margin: 0 auto; }
+  @media (max-width: 640px) { .head { flex-direction: column; } .title { margin: 40px 0 0; padding-left: 20px; } h1 { white-space: normal; } .mark { width: 200px; margin: 0; } .grid { gap: 20px; } }
+</style>

@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const posts = (await getCollection('news')).sort((a, c) => c.data.date.valueOf() - a.data.date.valueOf());
+---
+<Layout title="News" description="News from Levion Materials.">
+  <Nav active="news" />
+  <main class="wrap">
+    <h1 class="sr-only">News</h1>
+    <p class="crumb"><a href={`${b}/news`}>All Posts</a></p>
+    <div class="grid">{posts.map(p => <PostCard post={p} />)}</div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main { padding-top: 60px; padding-bottom: 80px; max-width: 1000px; }
+  .crumb { font-size: 14px; color: var(--link); margin: 0 0 40px 26px; }
+  .crumb a { text-decoration: none; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 292px)); gap: 32px; padding: 0 26px; }
+</style>

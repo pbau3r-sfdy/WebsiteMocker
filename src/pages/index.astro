@@ -192,12 +192,12 @@ const buildDate = new Date().toISOString().slice(0, 10);
             </ul>
 
             <div class="card-actions">
-              <a href={sandboxUrl} target="_blank" rel="noopener" class="btn">Preview ↗</a>
-              {isLive && <a href={`https://${site.domain}`} target="_blank" rel="noopener" class="btn primary">Live ↗</a>}
-              <button class="btn quiet rename-btn"  data-rename-slug={site._slug}>Rename</button>
-              <button class="btn quiet"             data-archive-slug={site._slug} style={isArchived ? 'display:none' : ''}>Archive</button>
-              <button class="btn quiet restore"     data-restore-slug={site._slug} style={isArchived ? '' : 'display:none'}>Restore</button>
-              <button class="btn quiet danger delete-btn" data-delete-slug={site._slug} style={isArchived ? '' : 'display:none'}>Delete</button>
+              <a href={sandboxUrl} target="_blank" rel="noopener" class="btn slot-preview">Preview ↗</a>
+              {isLive && <a href={`https://${site.domain}`} target="_blank" rel="noopener" class="btn primary slot-live">Live ↗</a>}
+              <button class="btn quiet rename-btn slot-rename"  data-rename-slug={site._slug}>Rename</button>
+              <button class="btn quiet slot-toggle"      data-archive-slug={site._slug} style={isArchived ? 'display:none' : ''}>Archive</button>
+              <button class="btn quiet restore slot-toggle" data-restore-slug={site._slug} style={isArchived ? '' : 'display:none'}>Restore</button>
+              <button class="btn quiet danger delete-btn slot-delete" data-delete-slug={site._slug} style={isArchived ? '' : 'display:none'}>Delete</button>
             </div>
           </div>
 
@@ -645,7 +645,8 @@ const buildDate = new Date().toISOString().slice(0, 10);
   .site-card:hover { background: var(--surface-1); }
   .card-main {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) 150px minmax(0, 1fr) auto;
+    /* Last column is a fixed width so every row lines up (pill, wiring and button columns), whichever buttons it has. */
+    grid-template-columns: minmax(200px, 1fr) 150px minmax(250px, 1fr) var(--actions-w, 374px);
     gap: 24px; align-items: center;
     padding: 22px 16px;
   }
@@ -672,7 +673,11 @@ const buildDate = new Date().toISOString().slice(0, 10);
   .wiring li.ok { color: var(--text-secondary); }
   .wiring li.ok::before { background: var(--accent); border-color: var(--accent); }
 
-  .card-actions { display: flex; gap: 6px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+  /* Fixed button slots: Preview | Live | Rename | Archive or Restore | Delete. An absent button leaves its slot empty instead of shifting the others. */
+  .card-actions { display: grid; grid-template-columns: 84px 66px 70px 72px 60px; gap: 4px; align-items: center; justify-content: end; }
+  .card-actions .btn { width: 100%; justify-content: center; text-align: center; padding-left: 0; padding-right: 0; }
+  .slot-preview { grid-column: 1; } .slot-live { grid-column: 2; } .slot-rename { grid-column: 3; } .slot-toggle { grid-column: 4; } .slot-delete { grid-column: 5; }
+  .card-actions [style*='display:none'], .card-actions [style*='display: none'] { display: none !important; }
 
   .card-foot {
     display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px;
@@ -778,7 +783,7 @@ const buildDate = new Date().toISOString().slice(0, 10);
   @media (max-width: 1000px) {
     .card-main { grid-template-columns: minmax(0, 1fr) auto; }
     .wiring { grid-column: 1 / -1; order: 3; }
-    .card-actions { grid-column: 1 / -1; order: 4; justify-content: flex-start; }
+    .card-actions { grid-column: 1 / -1; order: 4; justify-content: start; }
   }
   @media (max-width: 720px) {
     .pipeline { display: flex; overflow-x: auto; scrollbar-width: none; margin-bottom: 48px; margin-right: calc(-1 * var(--gutter)); }

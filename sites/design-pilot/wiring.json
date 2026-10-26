@@ -55,5 +55,9 @@
       "--text-primary": "#FFFFFF",
       "--accent": "#00FB92"
     }
-  }
+  },
+  "archived": true,
+  "archived_at": "2026-10-26",
+  "archive_reason": "Retired pilot; not needed",
+  "skip_ci": true
 }

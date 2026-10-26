@@ -1,0 +1,45 @@
+{
+  "slug": "levion-retool",
+  "name": "Levion Materials (retool)",
+  "domain": "www.levion-materials.com",
+  "accent": "#d96502",
+  "contact": "lab@levion-materials.com",
+  "stage": 2,
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/levion-retool",
+  "last_deploy": null,
+  "newsletter": {
+    "service": "mailchimp",
+    "status": "pending"
+  },
+  "socials": {
+    "linkedin": "https://www.linkedin.com/company/levion-materials/",
+    "instagram": "https://www.instagram.com/levion_materials/",
+    "status": "set"
+  },
+  "forms": {
+    "contact": {
+      "service": "web3forms",
+      "status": "pending",
+      "note": "Needs a Levion access key delivering to lab@levion-materials.com; set WEB3FORMS_KEY in src/data/site.ts"
+    },
+    "newsletter_signup": {
+      "service": "mailchimp",
+      "status": "pending",
+      "note": "Needs a Levion audience; set NEWSLETTER_ACTION in src/data/site.ts"
+    }
+  },
+  "analytics": {
+    "status": "skipped"
+  },
+  "legal": {
+    "impressum": "complete",
+    "privacy": "complete"
+  },
+  "robots": "disallow",
+  "capture": "levion-retool",
+  "notes": "Editable rebuild of the live levion-materials.com (Wix) as of 2026-10-24: 10 pages, content verbatim from the live capture. Source of truth for edits; the live Wix site is untouched.",
+  "jobs": {
+    "template": "sfdy",
+    "path": "/<slug> (original permalink kept)"
+  }
+}

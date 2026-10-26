@@ -1,0 +1,56 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { siteLabel, salaryLabel, jobHref } from '../data/careers';
+
+interface Props { job: CollectionEntry<'jobs'>; }
+const { job: j } = Astro.props;
+---
+
+<li data-sites={[...j.data.sites, ...(j.data.locations.length ? ['elsewhere'] : [])].join(' ')}>
+  <a href={jobHref(j.id)} class="row">
+    <div class="row-main">
+      <span class="title">
+        {j.data.title} <span class="mfd">(m/f/d)</span>
+        {j.data.priority && <span class="tag priority">Priority</span>}
+        {j.data.draft && <span class="tag draft">Draft</span>}
+      </span>
+      <span class="summary">{j.data.summary}</span>
+    </div>
+    <div class="row-meta mono">
+      <span>{siteLabel(j.data)}</span>
+      <span>{j.data.type.replace('-', ' ')}</span>
+      {j.data.salary && <span>{salaryLabel(j.data.salary)}</span>}
+    </div>
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>
+</li>
+
+<style>
+  .mono { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto 24px;
+    gap: 12px 32px;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .row-main { display: flex; flex-direction: column; gap: 6px; }
+  .title { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+  .mfd { font-size: 12px; font-weight: 300; color: var(--text-muted); letter-spacing: .08em; }
+  .summary { font-size: 15px; line-height: 1.55; color: var(--text-soft); font-weight: 300; }
+  .row-meta { display: flex; flex-direction: column; gap: 4px; text-align: right; color: var(--text-muted); text-transform: uppercase; }
+  .arrow { color: var(--accent); transition: transform .2s cubic-bezier(.2,.6,.2,1); }
+  .row:hover .arrow { transform: translateX(4px); }
+  .row:hover .title { color: var(--accent); }
+
+  .tag { margin-left: 10px; padding: 2px 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 400; letter-spacing: .14em; vertical-align: middle; border: 1px solid; }
+  .priority { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+  .draft { color: var(--sfdy-magenta); border-color: var(--sfdy-magenta); }
+
+  @media (max-width: 720px) {
+    .row { grid-template-columns: minmax(0, 1fr) 24px; }
+    .row-meta { grid-column: 1; grid-row: 2; text-align: left; }
+    .arrow { grid-row: 1; grid-column: 2; }
+  }
+</style>

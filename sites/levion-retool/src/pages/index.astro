@@ -1,0 +1,203 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (p: string) => `${b}/images/${p}`;
+
+// Mask icons (bolt, laser) are single-colour SVGs tinted via CSS; the others are ready-made orange PNGs.
+const useCases = [
+  { title: 'High Power Electronics',        mask: img('icons/bolt.svg') },
+  { title: 'Optics & Lasers',               mask: img('icons/laser.svg') },
+  { title: 'Sensors',                       png:  img('icons/sensors.png') },
+  { title: 'Radiation Detectors',           png:  img('icons/radiation.png') },
+  { title: 'Energy & Quantum Technologies', png:  img('icons/quantum.png') },
+];
+const partners = [
+  { name: 'ESA',                              href: 'https://www.esa.int/',                                                                             logo: img('partners/esa.png'),         w: 188 },
+  { name: 'DLR – German Aerospace Center',    href: 'https://www.dlr.de/de',                                                                            logo: img('partners/dlr.png'),         w: 235 },
+  { name: 'BSGN – Business in Space Growth Network', href: 'https://bsgn.esa.int/',                                                                     logo: img('partners/bsgn.jpg'),        w: 159 },
+  { name: 'Plug and Play – Startup Lithuania', href: 'https://www.plugandplaytechcenter.com/innovation-services/our-programs/startup-lithuania-accelerator', logo: img('partners/plugandplay.png'), w: 256 },
+];
+---
+<Layout title="Home">
+  <Nav active="home" />
+
+  <main>
+    <section class="hero" style={`background-image:url(${img('hero-crystal.png')})`}>
+      <h1 class="sr-only">Levion Materials: advanced materials made in space</h1>
+      <div class="hero-inner">
+        <img src={img('logo.png')} alt="Levion" class="hero-logo" width="422" height="236" />
+        <p class="tagline">ADVANCED MATERIALS MADE IN SPACE</p>
+      </div>
+    </section>
+
+    <section class="vision" id="vision" style={`--v:url(${img('v-orange.png')})`}>
+      <div class="wrap">
+        <p class="label light">THE VISION</p>
+        <h2>Materials Beyond Gravity</h2>
+        <p>Growing perfect crystals requires an environment Earth cannot provide.</p>
+        <p>Levion Materials (currently under incorporation) is being established as an independent company dedicated to crystal growth in true microgravity — achievable only in space.</p>
+      </div>
+    </section>
+
+    <section class="mission" id="mission">
+      <div class="wrap">
+        <p class="label">THE MISSION</p>
+        <h2>Why Crystals Matter</h2>
+        <p>Many modern technologies rely on crystals – from electronics to lasers to sensors to energy systems.</p>
+        <p>The performance of these technologies depends on how perfect the crystal is.</p>
+      </div>
+      <ul class="cards">
+        {useCases.map(u => (
+          <li>
+            {u.mask
+              ? <span class="ico" style={`-webkit-mask-image:url(${u.mask});mask-image:url(${u.mask})`} aria-hidden="true"></span>
+              : <img src={u.png} alt="" width="82" height="79" />}
+            <span>{u.title}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="problem" id="problem" style={`background-image:url(${img('problem-gripper.png')})`}>
+      <div class="wrap">
+        <div class="col">
+          <p class="label">THE PROBLEM</p>
+          <h2>The Problem with Gravity</h2>
+          <p>On Earth, gravity constantly acts on molten materials during crystal growth.</p>
+          <p>This leads to:</p>
+          <ul>
+            <li>uneven composition</li>
+            <li>internal stress</li>
+            <li>defects &amp; imperfections on atomic up to macroscopic level</li>
+            <li>some material compositions with technological potential are impossible to create</li>
+          </ul>
+          <p><strong>Even in the best laboratories, gravity cannot be switched off.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="solution" id="solution" style={`--v:url(${img('v-teal.png')})`}>
+      <div class="wrap">
+        <div class="col">
+          <p class="label light">THE SOLUTION</p>
+          <h2>The Change with Microgravity</h2>
+          <p>In microgravity, materials behave differently:</p>
+          <ul>
+            <li>no sedimentation</li>
+            <li>no buoyancy-driven convection</li>
+            <li>more uniform growth</li>
+          </ul>
+          <p>Crystals can form in a way that is impossible on Earth.</p>
+          <p>Imagine cooking soup in a pot. On Earth, hot liquid rises, cool liquid sinks, ingredients drift, and every change in temperature restirs the pot. The same forces shape molten material during crystal growth — and they cannot be switched off in a lab. In orbit, those forces vanish. The soup stays still. Heat moves through it without convection. Crystals can form without the turbulence that defines them on Earth.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="traction" id="traction">
+      <div class="wrap">
+        <img src={img('groove-patch.jpg')} alt="GROOVE mission patch" width="354" height="496" class="patch" />
+        <div class="text">
+          <p class="label">TRACTION</p>
+          <h2>GROOVE</h2>
+          <h3>Growth Parameter Observation &amp; Validation Experiment</h3>
+          <p>Levion’s first in-space materials mission, developed in the ESA Business Space Generation Network (BSGN) accelerator.</p>
+          <p>Mission #01 prepares the validation flight for Levion’s microgravity crystal growth process.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="space" id="space" style={`background-image:url(${img('earth-band.jpg')})`}>
+      <div class="wrap">
+        <p class="label light">TRUE MICROGRAVITY ONLY EXISTS IN SPACE</p>
+        <h2>Why Space is essential</h2>
+        <p>Drop towers, parabolic flights, sounding rockets, or simulations can reduce gravity — but only for seconds.</p>
+        <p>Only in orbit can microgravity be sustained for days, weeks, or longer.</p>
+        <p class="strong">Space is not a shortcut. It is a requirement.</p>
+      </div>
+    </section>
+
+    <section class="partners" id="partners">
+      <div class="wrap">
+        <p class="label">THANKS TO OUR</p>
+        <h2>Partners &amp; Supporters</h2>
+        <ul>
+          {partners.map(p => (
+            <li><a href={p.href} target="_blank" rel="noopener" aria-label={p.name}><img src={p.logo} alt={p.name} style={`width:${p.w}px`} /></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  section { position: relative; }
+  h2 { font-size: clamp(32px, 4.4vw, 52px); margin-bottom: 24px; }
+  .label.light { color: #fff; }
+
+  .hero { background-size: cover; background-position: center top; min-height: min(78vw, 917px); }
+  .hero-inner { position: absolute; left: 50%; top: 31%; transform: translateX(-50%); text-align: center; width: min(440px, 80vw); }
+  .hero-logo { width: 100%; height: auto; margin: 0 auto; }
+  .tagline { margin: 10px 0 0; color: var(--orange); letter-spacing: .14em; font-size: clamp(11px, 1.3vw, 15px); font-family: var(--font-head); font-weight: 700; }
+
+  .vision { background: var(--rust) var(--v) no-repeat right -60px bottom / auto 100%; color: #fff; padding: 150px 0 160px; min-height: 560px; }
+  .vision h2 { color: #fff; }
+  .vision .wrap > p:not(.label) { max-width: 420px; }
+
+  .mission { padding: 110px 0 70px; }
+  .mission h2 { color: var(--link); }
+  .mission .wrap > p:not(.label) { max-width: 480px; font-size: 14px; }
+  .cards { list-style: none; margin: 56px auto 0; padding: 0 24px; max-width: 1000px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .cards li { background: #fff; border-radius: 6px; box-shadow: 0 2px 14px rgba(0,0,0,.2); padding: 24px 10px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; min-height: 180px; justify-content: center; }
+  .cards img { width: 52px; height: auto; }
+  .ico { width: 52px; height: 52px; background: var(--orange); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
+  .cards span:last-child { font-family: var(--font-head); font-size: 12px; font-weight: 700; color: var(--orange); letter-spacing: .02em; text-transform: uppercase; line-height: 1.25; }
+
+  .problem { background-color: #e9ecef; background-size: cover; background-position: left center; padding: 150px 0; }
+  .problem .col { margin-left: 44%; max-width: 420px; }
+  .problem h2 { color: var(--link); }
+  .problem ul, .solution ul { margin: 0 0 1em; padding-left: 1.2em; }
+  .problem p, .problem li { font-size: 14px; }
+
+  .solution { background: var(--teal) var(--v) no-repeat right -40px bottom / auto 100%; color: #fff; padding: 150px 0 160px; }
+  .solution h2 { color: #fff; }
+  .solution .col { max-width: 460px; }
+  .solution p, .solution li { font-size: 14px; }
+
+  .traction { padding: 130px 0; }
+  .traction .wrap { display: flex; gap: 44px; align-items: center; }
+  .patch { width: 230px; height: auto; flex: none; }
+  .traction .text { border-left: 3px solid var(--link); padding-left: 24px; max-width: 520px; }
+  .traction h2 { color: var(--orange); font-size: clamp(32px, 4.4vw, 48px); margin-bottom: 12px; }
+  .traction h3 { color: var(--link); font-size: 20px; margin-bottom: 18px; }
+  .traction p { font-size: 14px; }
+
+  .space { background-color: #0b1220; background-size: cover; background-position: center; color: #fff; padding: 140px 0 160px; isolation: isolate; }
+  .space::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.45) 60%, rgba(0,0,0,.2) 100%); }
+  .space h2 { color: #fff; }
+  .space .wrap > p:not(.label) { max-width: 520px; }
+  .space .strong { font-family: var(--font-head); font-weight: 700; }
+
+  .partners { padding: 120px 0 130px; }
+  .partners .wrap { border-left: 3px solid var(--link); padding-left: 28px; margin-left: max(24px, calc((100% - 980px) / 2)); max-width: none; }
+  .partners h2 { color: var(--link); }
+  .partners ul { list-style: none; margin: 40px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 36px 56px; align-items: center; }
+  .partners li img { max-width: 100%; height: auto; }
+
+  @media (max-width: 640px) {
+    .hero { min-height: 340px; background-position: 50% 80%; }
+    .hero-inner { top: 6%; width: 62vw; }
+    .tagline { font-size: 10px; }
+  }
+  @media (max-width: 900px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .problem .col { margin-left: 0; background: rgba(255,255,255,.85); padding: 24px; }
+    .traction .wrap { flex-direction: column; align-items: flex-start; }
+    .vision, .solution { background-size: auto 60%; }
+  }
+</style>

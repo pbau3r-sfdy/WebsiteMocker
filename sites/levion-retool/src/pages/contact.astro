@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { COMPANY, EMAIL, SOCIALS, WEB3FORMS_KEY } from '../data/site';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const icon = (n: string) => `-webkit-mask-image:url(${b}/images/icons/${n}.svg);mask-image:url(${b}/images/icons/${n}.svg)`;
+const socialIcon: Record<string, string> = { LinkedIn: 'linkedin', Instagram: 'instagram' };
+---
+<Layout title="Contact" description="Contact Levion Materials, the Special Materials division of Starflight Dynamics GmbH in Munich.">
+  <Nav active="contact" />
+  <main class="wrap">
+    <h1>Contact</h1>
+    <div class="cols">
+      <ul class="info">
+        <li>
+          <span class="ico" style={icon('pin')} aria-hidden="true"></span>
+          <address>Levion Materials c/o<br />{COMPANY.name}<br />{COMPANY.street}<br />{COMPANY.postcode} {COMPANY.city}, {COMPANY.country}</address>
+        </li>
+        <li><span class="ico" style={icon('mail')} aria-hidden="true"></span><a href={`mailto:${EMAIL.general}`}>{EMAIL.general}</a></li>
+        <li>
+          <span class="ico" style={icon('like')} aria-hidden="true"></span>
+          <span class="social">
+            {SOCIALS.map(sn => (
+              <a href={sn.href} target="_blank" rel="me noopener" aria-label={sn.label}><img src={`${b}/images/icons/${socialIcon[sn.label]}.png`} alt={sn.label} width="24" height="24" /></a>
+            ))}
+          </span>
+        </li>
+      </ul>
+
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+        <input type="hidden" name="subject" value="New contact message — Levion Materials" />
+        <input type="hidden" name="from_name" value="Levion Materials website" />
+        <div class="row">
+          <label><span>First Name</span><input type="text" name="first_name" autocomplete="given-name" /></label>
+          <label><span>Last Name</span><input type="text" name="last_name" autocomplete="family-name" /></label>
+        </div>
+        <label><span>Email <span aria-hidden="true">*</span></span><input type="email" name="email" required autocomplete="email" /></label>
+        <label><span>Message</span><textarea name="message" rows="4" required></textarea></label>
+        <div class="send">
+          <p>We use your details only to answer your message. See <a href={`${b}/privacy-policy`}>Privacy</a>.</p>
+          <button type="submit">Send</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main { max-width: 980px; padding-top: 70px; padding-bottom: 100px; }
+  h1 { font-size: clamp(40px, 5vw, 56px); margin: 0 0 56px 30px; }
+  .cols { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; padding: 0 30px; }
+  .info { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 56px; }
+  .info li { display: flex; gap: 38px; align-items: center; font-size: 15px; }
+  .info a { text-decoration: none; }
+  .info li > a:hover { color: var(--orange); }
+  address { font-style: normal; line-height: 1.5; }
+  .ico { flex: none; width: 28px; height: 28px; background: #000; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
+  .social { display: inline-flex; gap: 8px; }
+  form { display: flex; flex-direction: column; gap: 14px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+  input[type=text], input[type=email], textarea { border: 1px solid #000; border-radius: 0; height: 38px; padding: 0 10px; font: inherit; font-size: 15px; }
+  textarea { height: auto; padding: 8px 10px; resize: vertical; }
+  .send { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+  .send p { flex: 1 1 220px; margin: 0; font-size: 12px; line-height: 1.5; color: var(--text-soft); }
+  .send p a { text-decoration: underline; }
+  button { background: var(--teal); color: #fff; border: 0; width: 118px; height: 38px; font: inherit; cursor: pointer; }
+  button:hover { background: #000; }
+  @media (max-width: 760px) { .cols { grid-template-columns: 1fr; } .info { gap: 28px; } .row { grid-template-columns: 1fr; } }
+</style>
