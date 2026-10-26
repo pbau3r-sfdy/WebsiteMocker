@@ -4,7 +4,7 @@
   "domain": "www.levion-materials.com",
   "accent": "#d96502",
   "contact": "lab@levion-materials.com",
-  "stage": 2,
+  "stage": 5,
   "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/levion-retool",
   "last_deploy": null,
   "newsletter": {
@@ -50,9 +50,10 @@
   },
   "robots": "disallow",
   "capture": "levion-retool",
-  "notes": "Editable rebuild of the live levion-materials.com (Wix) as of 2026-10-24: 10 pages, content verbatim from the live capture. Source of truth for edits; the live Wix site is untouched.",
+  "notes": "Editable rebuild of the live levion-materials.com (Wix) as of 2026-10-24: 10 pages, content verbatim from the live capture. Source of truth for edits; the live Wix site is untouched. Production repo pbau3r-sfdy/levion-materials (existing since 2026-08-07, placeholder gh-pages). Stage 5 = prod-ready; the publish workflow sets stage 6.",
   "jobs": {
     "template": "sfdy",
     "path": "/<slug> (original permalink kept)"
-  }
+  },
+  "prod_repo": "pbau3r-sfdy/levion-materials"
 }
