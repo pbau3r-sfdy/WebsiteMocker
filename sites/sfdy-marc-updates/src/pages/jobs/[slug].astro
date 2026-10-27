@@ -1,0 +1,379 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { SITES, OPERATOR } from '../../data/sites';
+import {
+  CAREERS_EMAIL, OFFERS, ABOUT, ENCOURAGEMENT, EQUAL_OPPORTUNITY,
+  applyHref, siteLabel, salaryLabel, isPublished, jobPlaces,
+} from '../../data/careers';
+
+export async function getStaticPaths() {
+  const jobs = (await getCollection('jobs')).filter(isPublished);
+  return jobs.map(job => ({
+    params: { slug: job.id },
+    props:  { job },
+  }));
+}
+
+const { job } = Astro.props;
+const d = job.data;
+const { Content } = await render(job);
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const location = siteLabel(d);
+const salary   = salaryLabel(d.salary);
+const href     = applyHref(d.reference, d.title);
+const sites    = d.sites.map(k => SITES[k]);
+const employers = [...new Set([...sites.map(s => s.employer), ...(d.locations.length ? [OPERATOR] : [])])];
+const foreignEmployer = employers.some(e => e !== OPERATOR);
+
+const facts = [
+  { label: 'Location',   value: location },
+  { label: 'Department', value: d.department },
+  { label: 'Reports to', value: d.reports_to },
+  { label: 'Start',      value: d.start },
+].filter(f => f.value);
+
+const others = (await getCollection('jobs'))
+  .filter(j => j.id !== job.id && isPublished(j))
+  .slice(0, 3);
+
+const employmentType = { 'full-time': 'FULL_TIME', 'part-time': 'PART_TIME', 'contract': 'CONTRACTOR' }[d.type];
+const site = Astro.site ?? new URL('https://www.starflight-dynamics.com');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: `${d.title} (m/f/d)`,
+  description: `<p>${d.summary}</p>${job.rendered?.html ?? ''}`,
+  identifier: { '@type': 'PropertyValue', name: 'Starflight Dynamics', value: d.reference },
+  datePosted: d.date.toISOString().split('T')[0],
+  ...(d.valid_through && { validThrough: d.valid_through.toISOString() }),
+  employmentType,
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: employers.length === 1 ? employers[0] : 'Starflight Dynamics',
+    sameAs: 'https://www.starflight-dynamics.com',
+    logo: new URL(`${b}/images/logo.png`, site).href,
+  },
+  jobLocation: jobPlaces(d).map((p: { city: string; country: string; street?: string; postcode?: string }) => ({
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      ...(p.street && { streetAddress: p.street }),
+      ...(p.postcode && { postalCode: p.postcode }),
+      addressLocality: p.city,
+      addressCountry: p.country,
+    },
+  })),
+  ...([d.workplace].flat().includes('remote') && { jobLocationType: 'TELECOMMUTE' }),
+  ...(d.salary && {
+    baseSalary: {
+      '@type': 'MonetaryAmount',
+      currency: d.salary.currency,
+      value: {
+        '@type': 'QuantitativeValue',
+        minValue: d.salary.min,
+        ...(d.salary.max && { maxValue: d.salary.max }),
+        unitText: d.salary.period === 'month' ? 'MONTH' : 'YEAR',
+      },
+    },
+  }),
+  directApply: false,
+};
+---
+
+<Layout title={`${d.title} (m/f/d)`} description={d.summary}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Nav />
+
+  <main>
+    <section class="hero wrap">
+      <div class="beam" aria-hidden="true"></div>
+      <a href={`${b}/jobs`} class="back">← All positions</a>
+      <div class="eyebrow accent">Open position{d.department && ` · ${d.department}`}{d.draft && <span class="draft"> · Draft — not published</span>}</div>
+      <h1>{d.title} <span class="mfd">(m/f/d)</span></h1>
+      <dl class="facts">
+        {facts.map(f => (
+          <div><dt>{f.label}</dt><dd>{f.value}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    <div class="cols wrap">
+      <article>
+        <div class="body"><Content /></div>
+
+        {d.eligibility && (
+          <section>
+            <div class="eyebrow">Eligibility</div>
+            <p class="small">{d.eligibility}</p>
+          </section>
+        )}
+
+        {OFFERS.length > 0 && (
+          <section>
+            <div class="eyebrow">What SFDY offers</div>
+            <div class="offers">
+              {OFFERS.map(o => (
+                <div><h4>{o.title}</h4><p>{o.text}</p></div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section>
+          <div class="eyebrow">About Starflight Dynamics</div>
+          {ABOUT.map(p => <p class="small">{p}</p>)}
+          {foreignEmployer && (
+            <p class="small employer">Employer for this position: {employers.join(' / ')}.</p>
+          )}
+        </section>
+
+        <section>
+          <div class="eyebrow">Diversity &amp; encouragement to apply</div>
+          {ENCOURAGEMENT.map(p => <p class="small">{p}</p>)}
+        </section>
+
+        <section>
+          <div class="eyebrow">Data privacy</div>
+          <p class="small">Information on how we process your application data can be found in our <a href={`${b}/privacy-policy`} class="u">privacy notice</a>.</p>
+        </section>
+      </article>
+
+      <aside>
+        <div class="aside-label">How to apply</div>
+        <p>
+          Applications by email to <a href={href}>{CAREERS_EMAIL}</a>, with the reference in the
+          subject line. Include a CV and a cover letter, both as PDF.
+        </p>
+        {d.hiring_steps.length > 0 && (
+          <div class="aside-fact">
+            <div class="label">How we hire</div>
+            <ol class="steps">{d.hiring_steps.map(st => <li>{st}</li>)}</ol>
+          </div>
+        )}
+        <div class="aside-fact">
+          <div class="label">Reference</div>
+          <div class="mono">{d.reference}</div>
+        </div>
+        {salary && (
+          <div class="aside-fact">
+            <div class="label">Salary</div>
+            <div>{salary}</div>
+          </div>
+        )}
+        <a href={href} class="btn">Apply by email</a>
+      </aside>
+    </div>
+
+    {others.length > 0 && (
+      <section class="others wrap">
+        <div class="eyebrow">Other open positions</div>
+        <ul>
+          {others.map(o => (
+            <li>
+              <a href={`${b}/jobs/${o.id}`}>
+                <span class="o-title">{o.data.title}</span>
+                <span class="o-meta">{siteLabel(o.data)}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <p class="eeo wrap">{EQUAL_OPPORTUNITY}</p>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .wrap { max-width: 1200px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .eyebrow.accent { color: var(--accent); }
+  .draft { color: var(--sfdy-magenta); }
+
+  /* Hero */
+  .hero { position: relative; padding-top: 72px; padding-bottom: 56px; }
+  .beam { position: absolute; left: 0; top: 0; bottom: 0; width: 7px; background: var(--beam); }
+  .back {
+    display: inline-block;
+    margin-bottom: 40px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(40px, 7vw, 88px);
+    line-height: .98;
+    text-transform: uppercase;
+    letter-spacing: .005em;
+    margin-top: 20px;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+  .mfd { font-size: .28em; font-weight: 300; letter-spacing: .1em; color: var(--text-muted); vertical-align: middle; white-space: nowrap; }
+  .facts {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .facts > div { padding: 16px 20px 16px 0; }
+  dt, .label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  dd { margin-top: 6px; font-size: 16px; }
+
+  /* Columns */
+  .cols {
+    padding-top: 24px;
+    padding-bottom: 96px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 64px;
+    align-items: flex-start;
+  }
+  article { flex: 1 1 520px; min-width: 0; max-width: 720px; display: flex; flex-direction: column; gap: 64px; }
+  .small { margin-top: 18px; font-size: 16px; line-height: 1.7; color: var(--text-secondary); }
+  .employer { margin-top: 10px; color: var(--text-muted); }
+
+  /* Markdown body mapped onto the template's patterns */
+  .body { display: flex; flex-direction: column; }
+  .body :global(h2) {
+    counter-reset: item;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 64px;
+  }
+  .body :global(h2:first-child) { margin-top: 0; }
+  .body :global(h2 + p) {
+    margin-top: 18px;
+    font-size: 19px;
+    line-height: 1.65;
+    font-weight: 300;
+    color: rgba(255,255,255,.9);
+    text-wrap: pretty;
+  }
+  .body :global(h3) {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-top: 28px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .body :global(ol), .body :global(ul) { list-style: none; }
+  .body :global(h2 + ul) { margin-top: 20px; border-top: 1px solid var(--border-strong); }
+  .body :global(li) {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .body :global(li:last-child) { border-bottom: 0; }
+  .body :global(ol > li) { counter-increment: item; }
+  .body :global(ol > li)::before {
+    content: counter(item, decimal-leading-zero);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    padding-top: 3px;
+  }
+  .body :global(ul > li)::before { content: '→'; color: var(--accent); }
+  .body :global(a) { color: var(--accent); }
+
+  .offers {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--border-subtle);
+    border: 1px solid var(--border-subtle);
+  }
+  .offers > div { background: var(--bg-base); padding: 24px; }
+  .offers h4 { font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+  .offers p { margin-top: 10px; font-size: 15px; line-height: 1.6; color: var(--text-soft); }
+
+  /* Apply card */
+  aside {
+    flex: 0 1 320px;
+    min-width: 260px;
+    position: sticky;
+    top: 100px;
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-top: 3px solid var(--accent);
+    padding: 28px;
+  }
+  .aside-label { font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--text-soft); }
+  aside p { margin-top: 14px; font-size: 15px; line-height: 1.65; color: var(--text-secondary); }
+  aside p a { color: var(--accent); word-break: break-word; }
+  aside p a:hover { color: #fff; }
+  .aside-fact { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-subtle); }
+  .aside-fact > div:last-child { margin-top: 6px; font-size: 14px; }
+  .mono { font-family: var(--font-mono); font-size: 13px; }
+  .btn {
+    display: block;
+    margin-top: 22px;
+    padding: 13px 20px;
+    background: var(--accent);
+    color: #000;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    transition: background .2s cubic-bezier(.2,.6,.2,1);
+  }
+  .btn:hover { background: #fff; color: #000; }
+
+  .steps { list-style: none; margin-top: 10px; padding: 0; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 30px minmax(0, 1fr); padding: 7px 0; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+  .steps li::before { content: counter(s, decimal-leading-zero); font-family: var(--font-mono); font-size: 12px; color: var(--accent); padding-top: 2px; }
+  .small a { color: var(--accent); text-decoration: underline; }
+
+  /* Other positions */
+  .others { padding-bottom: 64px; }
+  .others ul { list-style: none; margin-top: 20px; border-top: 1px solid var(--border-strong); }
+  .others a { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid var(--border-subtle); }
+  .o-title { font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .o-meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+
+  .eeo { padding-top: 32px; padding-bottom: 48px; max-width: 1200px; font-size: 13px; line-height: 1.6; color: var(--text-muted); border-top: 1px solid var(--border-subtle); }
+
+  @media (max-width: 860px) {
+    aside { position: static; flex-basis: 100%; }
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+// News — extracted from Claude Design artifact 2026-10-14
+---
+
+<section class="news">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow">LATEST NEWS</div><a href="#" class="all">ALL NEWS →</a></div>
+    <div class="grid">
+      <a href="#" class="card"><div class="thumb"><img src="../../assets/news/jonas-radtke.jpg" alt="" loading="lazy"></div><div class="body"><span class="mono date">18 JUN 2026</span><h3>New at SFDY: Jonas Radtke, VP Operations</h3></div></a>
+      <a href="#" class="card"><div class="thumb"><img src="../../assets/news/tough-tech.png" alt="" loading="lazy"></div><div class="body"><span class="mono date">01 DEC 2025</span><h3>SFDY featured in the 2025 "Tough Tech by the Tough Ten" Report</h3></div></a>
+      <a href="#" class="card"><div class="thumb"><img src="../../assets/news/reagan-milestone.jpg" alt="" loading="lazy"></div><div class="body"><span class="mono date">04 NOV 2025</span><h3>First ReaGAn Milestone Cleared</h3></div></a>
+      <a href="#" class="card"><div class="thumb"><img src="../../assets/news/startup-lithuania.png" alt="" loading="lazy"></div><div class="body"><span class="mono date">29 SEPT 2025</span><h3>Startup Lithuania Accelerator</h3></div></a>
+      <a href="#" class="card"><div class="thumb"><img src="../../assets/news/baainbw.jpg" alt="" loading="lazy"></div><div class="body"><span class="mono date">29 JUL 2025</span><h3>BAAINBw Contract Awarded</h3></div></a>
+      <a href="#" class="card"><div class="thumb"><img src="../../assets/news/preseed.png" alt="" loading="lazy"></div><div class="body"><span class="mono date">23 JUL 2025</span><h3>Pre-Seed Round Closed</h3></div></a>
+    </div>
+  </div>
+</section>
+
+<style>
+.news {
+  padding:32px var(--gutter) 36px;border-top:1px solid var(--border-subtle)
+}
+.news .grid {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px
+}
+@media (max-width:860px) {
+  .news .grid {
+    grid-template-columns:1fr
+  }
+}
+</style>

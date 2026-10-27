@@ -1,0 +1,49 @@
+---
+/** Sub-page hero: mirrored night-Earth backdrop with parallax, beam, eyebrow and headline.
+    Headline goes in the default slot; `lede` and the `after` slot are optional. */
+import Beam from './Beam.astro';
+interface Props { eyebrow: string; bg?: string; pad?: string; lede?: string; narrow?: boolean; image?: boolean; }
+const { eyebrow, bg = '50% 40%', pad = '72px', lede, narrow = true, image = true } = Astro.props;
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<header class="hero" style={`padding-bottom:${pad}`}>
+  {image && <>
+    <div class="bg" data-parallax="flip" aria-hidden="true" data-print-hide style={`background-image:url('${b}/images/earth-night.webp');background-position:${bg}`}></div>
+    <div class="shade" aria-hidden="true" data-print-hide></div>
+  </>}
+  <Beam />
+  <div class="inner">
+    <slot name="before" />
+    <div class="eyebrow-l">{eyebrow}</div>
+    <h1 class:list={{ narrow }}><slot /></h1>
+    {lede && <p class="lede">{lede}</p>}
+    <slot name="after" />
+  </div>
+</header>
+
+<style>
+  .hero { position: relative; overflow: hidden; padding: 104px var(--gutter) 72px; }
+  .bg {
+    position: absolute; left: 0; right: 0; top: 0; height: 120%;
+    background-size: cover; background-repeat: no-repeat;
+    transform: scaleX(-1); opacity: .6; will-change: transform;
+  }
+  .shade {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, #000 0%, rgba(0,0,0,.8) 38%, rgba(0,0,0,.1) 75%, rgba(0,0,0,0) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0) 60%, #000 100%);
+  }
+  .inner { position: relative; max-width: var(--measure); margin: 0 auto; }
+  .eyebrow-l { font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--accent); }
+  h1 {
+    margin-top: 20px;
+    font-size: clamp(40px, 6.4vw, 84px); font-weight: 700; line-height: .98;
+    letter-spacing: .005em; text-transform: uppercase; text-wrap: balance;
+  }
+  h1.narrow { max-width: 14ch; }
+  h1 :global(.green) { color: var(--accent); }
+  .lede { margin-top: 32px; max-width: 620px; font-size: 19px; line-height: 1.7; font-weight: 300; color: rgba(255,255,255,.80); text-wrap: pretty; }
+  @media (max-width: 440px) { h1 { font-size: 34px; } }
+  @media (max-width: 360px) { h1 { font-size: 30px; } }
+</style>

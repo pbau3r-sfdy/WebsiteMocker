@@ -1,0 +1,148 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Beam from '../components/Beam.astro';
+import NewsCard from '../components/NewsCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+import Footer from '../components/Footer.astro';
+import { CAPABILITIES } from '../data/capabilities';
+import { HOME_DESCRIPTION, HOME_INTRO } from '../data/positioning';
+
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const posts = (await getCollection('news'))
+  .sort((a, z) => z.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+const caps = CAPABILITIES.filter(c => c.home);
+---
+
+<Layout description={HOME_DESCRIPTION}>
+  <Nav overlay />
+
+  <section class="hero">
+    <div class="bg" data-parallax aria-hidden="true" style={`background-image:url('${b}/images/hero-orbital.webp')`}></div>
+    <div class="shade" aria-hidden="true"></div>
+    <Beam />
+    <div class="hero-inner">
+      <div class="wrap">
+        <div class="claim">Technologies for the <span class="green">High Frontier</span></div>
+        <h1><span>We build for</span><span class="green">Europe's defence in space.</span></h1>
+        <div class="where mono">Munich · Vilnius</div>
+        <p class="enable">We enable European <span class="green">in-space power projection</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <p class="wrap"><span>{HOME_INTRO}</span></p>
+  </section>
+
+  <section aria-label="Capabilities" class="caps-wrap">
+    <div class="wrap"><h2 class="label caps-lead">What we build, and where</h2></div>
+    <div class="wrap caps">
+      {caps.map(c => (
+        <a href={`${b}/capabilities#${c.id}`} class="cap">
+          <span class="mono site">{c.site}</span>
+          <span class="name">{c.short}</span>
+          <span class="line">{c.line}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <h2 class="label">Latest news</h2>
+        <a href={`${b}/news`} class="all mono">All news →</a>
+      </div>
+      <div class="grid">
+        {posts.map(post => <NewsCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap partners">
+      <h2 class="label">Ecosystem partners</h2>
+      <div class="logos">
+        <img src={`${b}/images/partners/bavairia.png`} alt="bavAIRia" class="l-bav" />
+        <img src={`${b}/images/partners/bdli-trim.png`} alt="BDLI" class="l-bdli" />
+        <img src={`${b}/images/partners/newspace.png`} alt="NewSpace Initiative of the BDI" class="l-ns" />
+      </div>
+    </div>
+  </section>
+
+  <Newsletter />
+
+  <Footer />
+</Layout>
+
+<style>
+  .green { color: var(--accent); }
+  .label { font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--text-secondary); }
+
+  .hero {
+    position: relative; overflow: hidden;
+    min-height: clamp(620px, 100vh, 980px);
+    display: flex; align-items: flex-start; background: #000;
+  }
+  .bg {
+    position: absolute; left: 0; right: 0; top: clamp(90px, 20vh, 240px); height: 110%;
+    background-size: cover; background-position: 60% 0%; background-repeat: no-repeat;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%); mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
+    will-change: transform;
+  }
+  .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, #000 100%); }
+  .hero-inner { position: relative; flex: 1; min-width: 0; padding: calc(76px + clamp(48px, 9vh, 110px)) var(--gutter) 56px; }
+  .claim { font-size: 12px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; }
+  h1 {
+    margin-top: 20px;
+    font-size: clamp(40px, 6.4vw, 84px); font-weight: 700; line-height: .98;
+    letter-spacing: .005em; text-transform: uppercase;
+  }
+  h1 span { display: block; text-wrap: balance; }
+  .enable { margin-top: 28px; max-width: 32em; font-size: clamp(22px, 2.5vw, 32px); font-weight: 300; line-height: 1.45; }
+  .where { margin-top: 32px; font-size: 12px; letter-spacing: .14em; color: var(--text-secondary); }
+
+  .intro { padding: clamp(56px, 8vw, 104px) var(--gutter) clamp(40px, 6vw, 64px); }
+  .intro p { font-size: clamp(22px, 2.5vw, 32px); line-height: 1.45; font-weight: 300; text-wrap: pretty; }
+  .intro p > span { display: block; max-width: 30em; }
+
+  .caps-wrap { padding: 0 var(--gutter); }
+  .caps-lead { padding-bottom: 20px; }
+  .caps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    border-top: 1px solid var(--border-subtle); border-left: 1px solid var(--border-subtle);
+  }
+  .cap {
+    display: flex; flex-direction: column; gap: 14px; padding: 28px 26px 32px;
+    border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);
+    color: #fff; transition: background .25s;
+  }
+  .cap:hover { background: var(--surface-1); color: var(--accent); }
+  .site { color: var(--text-soft); }
+  .name { font-family: var(--font-display); font-size: 20px; font-weight: 700; line-height: 1.2; text-transform: uppercase; letter-spacing: .02em; }
+  .line { font-size: 15px; line-height: 1.55; font-weight: 300; color: var(--text-secondary); text-wrap: pretty; }
+
+  .block { padding: clamp(64px, 8vw, 96px) var(--gutter) 0; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 20px; }
+  .all { color: var(--accent); white-space: nowrap; letter-spacing: .14em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+
+  .partners {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 32px 64px;
+    padding: 36px 0;
+    border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);
+  }
+  .partners .label { flex: none; }
+  .logos { flex: 1 1 480px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px 48px; }
+  .logos img { width: auto; filter: brightness(0) invert(1); opacity: .85; }
+  .l-bav { height: 44px; }
+  .l-bdli { height: 30px; }
+  .l-ns { height: 52px; }
+
+  @media (max-width: 640px) { .logos { justify-content: flex-start; } }
+  @media (max-width: 400px) { h1 { font-size: 32px; } }
+</style>

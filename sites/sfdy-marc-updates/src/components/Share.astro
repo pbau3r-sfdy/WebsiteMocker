@@ -1,0 +1,46 @@
+---
+// Share links (LinkedIn, X, email), copy-link and print buttons.
+interface Props { title: string; summary?: string; url: string; print?: boolean; }
+const { title, summary = '', url, print = true } = Astro.props;
+const enc = encodeURIComponent;
+const post = [title, summary, url].filter(Boolean).join('\n\n');
+const links = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/feed/?shareActive=true&text=' + enc(post) },
+  { label: 'X',        href: 'https://x.com/intent/post?text=' + enc(title) + '&url=' + enc(url) },
+  { label: 'Email',    href: 'mailto:?subject=' + enc(title + ' · Starflight Dynamics') + '&body=' + enc(post) },
+];
+---
+
+<div class="share">
+  <div class="grid">
+    {links.map(l => <a href={l.href} target="_blank" rel="noopener" class="sbtn">{l.label}</a>)}
+    <button type="button" class="sbtn" data-copy={url} data-label="Copy link">Copy link</button>
+  </div>
+  {print && <button type="button" class="sbtn wide" data-print>Print / PDF</button>}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.dataset.copy!); } catch {}
+      btn.textContent = 'Copied';
+      btn.classList.add('done');
+      setTimeout(() => { btn.textContent = btn.dataset.label!; btn.classList.remove('done'); }, 1600);
+    });
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-print]').forEach(btn =>
+    btn.addEventListener('click', () => window.print()));
+</script>
+
+<style>
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .sbtn {
+    display: block; text-align: center; cursor: pointer;
+    background: none; border: 1px solid var(--border-strong); padding: 9px 10px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--text-secondary);
+    transition: border-color .2s var(--ease), color .2s var(--ease);
+  }
+  .sbtn:hover, .sbtn:global(.done) { border-color: var(--accent); color: var(--accent); }
+  .wide { width: 100%; margin-top: 8px; }
+</style>

@@ -1,0 +1,45 @@
+---
+// Band — extracted from Claude Design artifact 2026-10-14
+---
+
+<section class="band white">
+  <div class="wrap grid">
+    <div class="copy">
+      <div class="eyebrow kicker">SFDY UPDATES</div>
+      <h2>Stay in the loop</h2>
+      <p>Programme milestones, contract awards and company announcements, sent as they happen.</p>
+    </div>
+    <form>
+      <label class="mono" for="mce-EMAIL">Email address</label>
+      <div class="row"><input id="mce-EMAIL" type="email" name="EMAIL" required placeholder="name@organisation.com"><button type="submit">Sign up</button></div>
+      <p class="fine">Mailchimp double opt-in. You can unsubscribe at any time.</p>
+    </form>
+  </div>
+</section>
+
+<style>
+.band {
+  padding:52px var(--gutter)
+}
+.band.white {
+  background:#fff;color:#000
+}
+.band .grid {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center
+}
+.band h2 {
+  font-size:clamp(1.75rem,3.4vw,2.75rem);font-weight:700;text-transform:uppercase;line-height:1.08
+}
+.band.white .kicker {
+  color:#6a7280
+}
+.band.white .copy p {
+  color:#434a57;max-width:42ch;font-size:.9375rem;font-weight:300;line-height:1.65
+}
+.band.white label, .band.white .fine {
+  color:#6a7280
+}
+.band.white input {
+  background:#fff;border:1px solid #C9CFD8;color:#000
+}
+</style>
