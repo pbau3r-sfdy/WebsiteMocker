@@ -5,13 +5,11 @@ sites: [munich]
 workplace: onsite
 type: full-time
 open: true
-draft: true
 reference: "SFDY-OPSC-JDS-26-0029-D01"
 reports_to: "VP Operations"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will get the right parts, from the right suppliers, to our benches on time, and make sure what we design can actually be built."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Introductory call and hiring-manager conversation"

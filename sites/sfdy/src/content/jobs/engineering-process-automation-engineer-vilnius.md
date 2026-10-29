@@ -1,17 +1,15 @@
 ---
 title: "Engineering and Process Automation Engineer"
 department: "Business & Corporate"
-sites: [munich]
+sites: [vilnius]
 workplace: [onsite, hybrid]
 type: full-time
 open: true
-draft: true
-reference: "SFDY-OPSC-JDS-26-0028-D01"
-reports_to: "[TO CONFIRM: reporting line]"
+reference: "SFDY-OPSC-JDS-26-0028-D01-VNO"
+reports_to: "VP Operations"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will sit with our engineers, find the problems that slow them down, and turn them into tools that solve them for good."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Introductory call"
@@ -26,7 +24,7 @@ You will sit with our engineers, find the problems that slow them down, and turn
 
 ### Build tools
 
-1. Work with Propulsion, Platforms and test teams to find the repetitive or hard engineering problems worth codifying
+1. Work with teams across the organisation to find the repetitive or hard engineering tasks worth systematizing and codifying
 1. Build the scripts, tools and toolchains that solve them, using AI-assisted development within our toolchain standards
 1. Automate engineering processes such as test-data evaluation, reporting and document generation, and, where it helps, business processes in finance, contracts and operations
 
@@ -39,7 +37,7 @@ You will sit with our engineers, find the problems that slow them down, and turn
 ### Enablement
 
 1. Help engineers build tools of their own, and share good practice across the team
-1. Work closely with our Chief Architect for Engineering Toolchains in Vilnius
+1. Work closely with our Chief Architect for Engineering Toolchains
 
 ## What we are looking for
 

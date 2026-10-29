@@ -1,17 +1,15 @@
 ---
-title: "Chief Architect, Space Superiority Systems and Concepts"
+title: "Head of Space Superiority, Systems and Concepts"
 department: "Effector Systems"
 sites: [munich]
 workplace: onsite
 type: full-time
 open: true
-draft: true
 reference: "SFDY-PALT-JDS-26-0024-D01"
 reports_to: "CEO"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will design the technologies and concepts that let Europe hold its ground in a contested space domain, and turn them into systems that decide the outcome."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) is required for this role."
 hiring_steps:
   - "Application review"
   - "Introductory conversation"
@@ -34,7 +32,7 @@ You will design the technologies and concepts that let Europe hold its ground in
 
 1. Design new payload and system concepts that deliver decisive effect in orbit, from blank sheet to architecture
 1. Own the system-of-systems architecture that combines our propulsion, platforms, payloads and effectors
-1. Work with the Microwave Effectors Lead and the Platforms team to turn concepts into technology and hardware roadmaps
+1. Build and lead a team of Effector / Payload engineers, and work with the Platforms team to turn concepts into technology and hardware roadmaps
 
 ### Validation & partners
 

@@ -5,13 +5,11 @@ sites: [munich]
 workplace: [onsite, hybrid]
 type: full-time
 open: true
-draft: true
 reference: "SFDY-OPSC-JDS-26-0021-D01"
 reports_to: "CEO"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will own the missions that move SFDY forward as a company, from fundraising and strategic initiatives to the partnerships that shape Europe's defence in space."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Introductory call"
@@ -24,16 +22,17 @@ hiring_steps:
 
 You will own the missions that move SFDY forward as a company, from fundraising and strategic initiatives to the partnerships that shape Europe's defence in space.
 
+### Fundraising & investors
+
+1. Coordinate fundraising with the CEO: build and run the investor pipeline, outreach and data room
+1. Prepare the analyses behind investor conversations, such as market and competitor views and input to financial models and valuation
+1. Prepare board meetings and investor reporting, and follow through on the decisions taken
+
 ### Strategic initiatives
 
 1. Take end-to-end ownership of company-level missions set with the CEO, from preparation and decision to delivery
 1. Drive strategic initiatives across Munich and Vilnius together with the C-level and VPs
 1. Prepare the analyses, decision papers and plans the leadership team needs to move fast
-
-### Fundraising & investors
-
-1. Coordinate fundraising with the CEO: build and run the investor pipeline, outreach and data room
-1. Prepare board meetings and investor reporting, and follow through on the decisions taken
 
 ### Partners & alignment
 
@@ -45,15 +44,17 @@ You will own the missions that move SFDY forward as a company, from fundraising 
 
 ### Must have
 
-- 6+ years in strategy consulting, corporate or investment development, government affairs, or a role working directly with leadership in a scale-up
-- A strong affinity for defence, space or aerospace, and an understanding of what sets these sectors apart
-- A track record of owning complex, cross-functional initiatives from first idea to result
-- Hands-on experience with fundraising, investor relations or building partnership pipelines
+- 4+ years either as an investment analyst or associate at a venture, growth or private-equity fund (or a similar investor), or leading fundraising for a start-up or scale-up yourself, raising capital from investors
+- Hands-on experience building and running an investor or partner pipeline: sourcing, analysis, outreach and data room
 - Structured thinking and sharp writing: you turn ambiguity into clear decision papers
-- Fluent German and English
+- A track record of owning complex, cross-functional initiatives from first idea to result
+- A strong affinity for defence, space or aerospace, and an understanding of what sets these sectors apart
+- Fluent English
 
 ### Nice to have
 
+- German language skills
+- A background in strategy consulting, corporate development or government affairs
 - A network in the European defence, space or investor ecosystem
 - Experience with German or European public institutions (e.g. BAAINBw, DLR, ESA, EDF)
 - Experience in a multi-entity or multi-country organisation
