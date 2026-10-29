@@ -1,5 +1,5 @@
 ---
-title: "Chief Architect, Space Superiority Systems and Concepts"
+title: "Head of Space Superiority, Systems and Concepts"
 department: "Effector Systems"
 sites: [munich]
 workplace: onsite
@@ -34,7 +34,7 @@ You will design the technologies and concepts that let Europe hold its ground in
 
 1. Design new payload and system concepts that deliver decisive effect in orbit, from blank sheet to architecture
 1. Own the system-of-systems architecture that combines our propulsion, platforms, payloads and effectors
-1. Work with the Microwave Effectors Lead and the Platforms team to turn concepts into technology and hardware roadmaps
+1. Build and lead a team of Effector / Payload engineers, and work with the Platforms team to turn concepts into technology and hardware roadmaps
 
 ### Validation & partners
 

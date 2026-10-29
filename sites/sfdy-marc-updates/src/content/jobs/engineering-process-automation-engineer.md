@@ -6,8 +6,8 @@ workplace: [onsite, hybrid]
 type: full-time
 open: true
 draft: true
-reference: "SFDY-OPSC-JDS-26-0028-D01"
-reports_to: "[TO CONFIRM: reporting line]"
+reference: "SFDY-OPSC-JDS-26-0028-D01-MUC"
+reports_to: "VP Operations"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will sit with our engineers, find the problems that slow them down, and turn them into tools that solve them for good."
