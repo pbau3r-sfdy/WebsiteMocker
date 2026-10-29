@@ -5,7 +5,6 @@ sites: [munich]
 workplace: onsite
 type: full-time
 open: true
-draft: true
 reference: "SFDY-OPSC-JDS-26-0029-D01"
 reports_to: "VP Operations"
 start: "As soon as possible"
