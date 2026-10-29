@@ -89,8 +89,9 @@ const jsonLd = {
   <Nav />
 
   <main>
+    <div class="hero-bleed">
+    <div class="beam" aria-hidden="true"></div>
     <section class="hero wrap">
-      <div class="beam" aria-hidden="true"></div>
       <a href={`${b}/jobs`} class="back">← All positions</a>
       <div class="eyebrow accent">Open position{d.department && ` · ${d.department}`}{d.draft && <span class="draft"> · Draft — not published</span>}</div>
       <h1>{d.title} <span class="mfd">(m/f/d)</span></h1>
@@ -100,6 +101,7 @@ const jsonLd = {
         ))}
       </dl>
     </section>
+    </div>
 
     <div class="cols wrap">
       <article>
@@ -206,7 +208,8 @@ const jsonLd = {
 
   /* Hero */
   .hero { position: relative; padding-top: 72px; padding-bottom: 56px; }
-  .beam { position: absolute; left: 0; top: 0; bottom: 0; width: 7px; background: var(--beam); }
+  .hero-bleed { position: relative; }
+  .beam { position: absolute; left: 0; top: 0; bottom: 0; width: 9px; background: var(--beam); }
   .back {
     display: inline-block;
     margin-bottom: 40px;
