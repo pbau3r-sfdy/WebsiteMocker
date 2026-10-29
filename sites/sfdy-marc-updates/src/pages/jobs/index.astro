@@ -50,8 +50,9 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
   <Nav />
 
   <main>
+    <div class="hero-bleed">
+    <div class="beam" aria-hidden="true"></div>
     <header class="hero wrap">
-      <div class="beam" aria-hidden="true"></div>
       <div class="eyebrow accent">Careers</div>
       <h1>Build technologies for the <span class="green">high frontier</span></h1>
       <p class="lede">
@@ -59,6 +60,7 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
         it safe, and we are looking for people who want to build them with us.
       </p>
     </header>
+    </div>
 
     <section class="wrap" aria-label="Our sites">
       <div class="sites">
@@ -172,7 +174,8 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
   .green { color: var(--accent); }
 
   .hero { position: relative; padding-top: 88px; padding-bottom: 64px; }
-  .beam { position: absolute; left: 0; top: 0; bottom: 0; width: 7px; background: var(--beam); }
+  .hero-bleed { position: relative; }
+  .beam { position: absolute; left: 0; top: 0; bottom: 0; width: 9px; background: var(--beam); }
   h1 {
     margin-top: 20px;
     font-family: var(--font-display);
