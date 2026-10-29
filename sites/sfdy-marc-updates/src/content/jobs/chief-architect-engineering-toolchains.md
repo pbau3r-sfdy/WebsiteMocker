@@ -11,7 +11,6 @@ reports_to: "[TO CONFIRM: reporting line]"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will turn the way SFDY builds engineering tools into a company capability: standing on the shoulders of validated tools, and putting what we build into everyone's hands."
-eligibility: "Willingness and eligibility to undergo a national security clearance check in Lithuania may be required for this role, depending on project assignment. [TO CONFIRM: Lithuanian clearance wording]"
 hiring_steps:
   - "Application review"
   - "Introductory call"

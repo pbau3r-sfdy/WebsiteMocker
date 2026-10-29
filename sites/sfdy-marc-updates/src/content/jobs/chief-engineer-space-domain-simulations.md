@@ -11,7 +11,6 @@ reports_to: "[TO CONFIRM: reporting line]"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will build the simulator where Europe learns to win in space: a place to test concepts, rehearse operations and find the theory of victory before anyone has to fight for it."
-eligibility: "Willingness and eligibility to undergo a national security clearance check in Lithuania may be required for this role, depending on project assignment. [TO CONFIRM: Lithuanian clearance wording]"
 hiring_steps:
   - "Application review"
   - "Introductory call"

@@ -10,7 +10,6 @@ reports_to: "VP Operations"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will sit with our engineers, find the problems that slow them down, and turn them into tools that solve them for good."
-eligibility: "Willingness and eligibility to undergo a national security clearance check in Lithuania may be required for this role, depending on project assignment. [TO CONFIRM: Lithuanian clearance wording]"
 hiring_steps:
   - "Application review"
   - "Introductory call"
