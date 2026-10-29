@@ -22,7 +22,7 @@ Over nine months, HQSemis will test whether this translates into a viable servic
 
 Levion Materials is the advanced materials venture of Starflight Dynamics GmbH, dedicated to crystal growth in microgravity. The team combines microgravity R&D expertise with aerospace engineering and commercialization experience, and is working towards its first in-space validation mission, to test the growth process ahead of larger orbital campaigns.
 
-**Media contact:** Levion Material Media Team | [lab@levion-materials.com](mailto:lab@levion-materials.com)
+**Media contact:** Levion Materials Media Team | [lab@levion-materials.com](mailto:lab@levion-materials.com)
 
 ### About ESA BASS
 
