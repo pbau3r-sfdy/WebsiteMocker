@@ -10,7 +10,6 @@ reports_to: "Head of Propulsion"
 start: "January 2027"
 date: 2026-10-16
 summary: "You will own the architecture of our propulsion system and make its subsystems work together as one, from requirements through integration to verification."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Technical exercise with a review conversation"

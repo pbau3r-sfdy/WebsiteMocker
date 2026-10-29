@@ -11,7 +11,6 @@ reports_to: "CEO"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will design the technologies and concepts that let Europe hold its ground in a contested space domain, and turn them into systems that decide the outcome."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) is required for this role."
 hiring_steps:
   - "Application review"
   - "Introductory conversation"

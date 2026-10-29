@@ -11,7 +11,6 @@ reports_to: "CEO"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will own the missions that move SFDY forward as a company, from fundraising and strategic initiatives to the partnerships that shape Europe's defence in space."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Introductory call"

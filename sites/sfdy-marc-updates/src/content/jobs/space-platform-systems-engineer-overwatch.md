@@ -11,7 +11,6 @@ reports_to: "Head of Platforms"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will take our OVERWATCH demonstrator from design to orbit, and prove in flight what agile, high-endurance space systems can do."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Technical exercise with a review conversation"

@@ -10,7 +10,6 @@ reports_to: "VP Operations"
 start: "Q1 2027"
 date: 2026-10-16
 summary: "You will build the program-management and contract-administration backbone for our publicly funded work, from the first milestone plan to the last invoice."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Introductory call and hiring-manager conversation"

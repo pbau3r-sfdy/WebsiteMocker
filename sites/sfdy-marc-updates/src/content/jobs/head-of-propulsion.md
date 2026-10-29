@@ -10,7 +10,6 @@ reports_to: "CEO"
 start: "As soon as possible"
 date: 2026-10-16
 summary: "You will give our Propulsion department dedicated, accountable leadership: setting its direction, building its team and delivering on its commitments, side by side with our technical authority for propulsion."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Introductory conversations"

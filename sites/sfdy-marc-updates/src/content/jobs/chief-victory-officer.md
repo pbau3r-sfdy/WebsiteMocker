@@ -11,7 +11,6 @@ reports_to: "CEO"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will be SFDY's first strategist for the High Frontier: shaping how Europe can prevail in space, and opening the doors that turn our ideas into demonstrators and programmes."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) is required for this role."
 hiring_steps:
   - "Application review"
   - "Introductory conversation with the CEO"

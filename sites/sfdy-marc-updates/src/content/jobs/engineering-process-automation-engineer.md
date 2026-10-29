@@ -11,7 +11,6 @@ reports_to: "VP Operations"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will sit with our engineers, find the problems that slow them down, and turn them into tools that solve them for good."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Introductory call"

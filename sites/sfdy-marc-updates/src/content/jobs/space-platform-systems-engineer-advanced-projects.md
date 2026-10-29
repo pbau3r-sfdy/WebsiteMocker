@@ -11,7 +11,6 @@ reports_to: "Head of Platforms"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "You will shape the next generations of SFDY space platforms, exploring the concepts, orbits and architectures that come after OVERWATCH."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Technical exercise with a review conversation"

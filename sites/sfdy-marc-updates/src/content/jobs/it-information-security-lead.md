@@ -10,7 +10,6 @@ reports_to: "VP Operations"
 start: "As soon as possible"
 date: 2026-10-16
 summary: "You will build SFDY's IT and information-security foundation from the ground up, running the infrastructure and setting the policy for a defence-adjacent company."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) is required for this role."
 hiring_steps:
   - "Application review"
   - "Introductory call and hiring-manager conversation"

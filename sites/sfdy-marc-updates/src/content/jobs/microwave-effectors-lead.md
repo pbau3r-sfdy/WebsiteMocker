@@ -10,7 +10,6 @@ reports_to: "CEO"
 start: "As soon as possible"
 date: 2026-10-16
 summary: "You will build the technical foundation of our microwave effector capability from scratch, from first concepts towards an on-orbit payload."
-eligibility: "Willingness and eligibility to undergo a security clearance check (Sicherheitsüberprüfung, SÜG) may be required for this role, depending on project assignment."
 hiring_steps:
   - "Application review"
   - "Introductory call"
