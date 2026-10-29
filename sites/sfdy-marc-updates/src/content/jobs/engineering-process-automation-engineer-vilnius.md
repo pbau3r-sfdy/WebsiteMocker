@@ -5,7 +5,6 @@ sites: [vilnius]
 workplace: [onsite, hybrid]
 type: full-time
 open: true
-draft: true
 reference: "SFDY-OPSC-JDS-26-0028-D01-VNO"
 reports_to: "VP Operations"
 start: "As soon as possible"
