@@ -5,7 +5,6 @@ sites: [munich]
 workplace: [onsite, hybrid]
 type: full-time
 open: true
-draft: true
 reference: "SFDY-OPSC-JDS-26-0021-D01"
 reports_to: "CEO"
 start: "As soon as possible"
