@@ -26,7 +26,7 @@ You will sit with our engineers, find the problems that slow them down, and turn
 
 ### Build tools
 
-1. Work with our technical and business teams to find the hard engineering challenges, and automate business processes where it helps
+1. Work with teams across the organisation to find the hard engineering challenges, and automate business processes where it helps
 1. Build the scripts, tools and toolchains that solve them, using AI-assisted development within our toolchain standards
 1. Automate engineering processes such as test-data evaluation, reporting and document generation, and, where it helps, business processes in finance, contracts and operations
 
