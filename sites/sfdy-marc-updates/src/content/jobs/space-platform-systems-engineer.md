@@ -5,7 +5,6 @@ sites: [munich]
 workplace: onsite
 type: full-time
 open: true
-draft: true
 reference: "SFDY-SEAT-JDS-26-0022-D01"
 reports_to: "Head of Systems Engineering & AIT"
 start: "As soon as possible"

@@ -5,7 +5,6 @@ sites: [munich]
 workplace: onsite
 type: full-time
 open: true
-draft: true
 reference: "SFDY-SEAT-JDS-26-0023-D01"
 reports_to: "CEO"
 start: "As soon as possible"

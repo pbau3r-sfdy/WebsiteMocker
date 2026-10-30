@@ -1,17 +1,15 @@
 ---
-title: "Chief Architect, Engineering Toolchains"
+title: "Lead Architect for Engineering Toolchains"
 department: "Business & Corporate"
 sites: [vilnius]
 workplace: [onsite, hybrid]
 type: full-time
 open: true
-draft: true
 reference: "SFDY-OPSC-JDS-26-0027-D01"
-reports_to: "[TO CONFIRM: reporting line]"
+reports_to: "CEO"
 start: "As soon as possible"
-date: 2026-10-22
+date: 2026-10-30
 summary: "You will turn the way SFDY builds engineering tools into a company capability: standing on the shoulders of validated tools, and putting what we build into everyone's hands."
-eligibility: "Willingness and eligibility to undergo a national security clearance check in Lithuania may be required for this role, depending on project assignment. [TO CONFIRM: Lithuanian clearance wording]"
 hiring_steps:
   - "Application review"
   - "Introductory call"

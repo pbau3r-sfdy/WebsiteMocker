@@ -5,7 +5,6 @@ sites: [vilnius]
 workplace: [onsite, hybrid]
 type: full-time
 open: true
-draft: true
 reference: "SFDY-MPRE-JDS-26-0026-D01"
 reports_to: "CEO"
 start: "As soon as possible"
