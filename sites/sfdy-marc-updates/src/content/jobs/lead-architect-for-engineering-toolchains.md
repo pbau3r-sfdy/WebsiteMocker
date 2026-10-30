@@ -1,5 +1,5 @@
 ---
-title: "Chief Architect, Engineering Toolchains"
+title: "Lead Architect for Engineering Toolchains"
 department: "Business & Corporate"
 sites: [vilnius]
 workplace: [onsite, hybrid]
@@ -7,9 +7,9 @@ type: full-time
 open: true
 draft: true
 reference: "SFDY-OPSC-JDS-26-0027-D01"
-reports_to: "[TO CONFIRM: reporting line]"
+reports_to: "CEO"
 start: "As soon as possible"
-date: 2026-10-22
+date: 2026-10-30
 summary: "You will turn the way SFDY builds engineering tools into a company capability: standing on the shoulders of validated tools, and putting what we build into everyone's hands."
 hiring_steps:
   - "Application review"
@@ -23,19 +23,19 @@ hiring_steps:
 
 You will turn the way SFDY builds engineering tools into a company capability: standing on the shoulders of validated tools, and putting what we build into everyone's hands.
 
-### Architecture & platform
+### Architecture &amp; platform
 
 1. Own the architecture of SFDY's engineering-toolchain platform: shared infrastructure, data contracts, interfaces and access for every team
 1. Re-architect our first prototype tools into maintained company services
 1. Integrate validated toolboxes from trusted sources rather than reinventing them
 
-### Standards & verification
+### Standards &amp; verification
 
 1. Set the standards that make our tools trustworthy: verification against reference cases, traceable sources, code review and documentation
 1. Establish automated testing, releases and reproducibility for every tool on the platform
 1. Make sure our tools respect licensing, export-control and information-security rules, together with our IT & Information Security Lead
 
-### Practice & enablement
+### Practice &amp; enablement
 
 1. Build the practice that lets engineers turn their own problems into tools, using AI-assisted development responsibly
 1. Coach engineers in Munich and Vilnius, and grow a small toolchain team
