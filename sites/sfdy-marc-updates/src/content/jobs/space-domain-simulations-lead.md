@@ -23,19 +23,19 @@ hiring_steps:
 
 You will build the simulator where Europe learns to win in space: a place to test concepts, rehearse operations and find the theory of victory before anyone has to fight for it.
 
-### Simulation engine &amp; architecture
+### Simulation engine & architecture
 
 1. Own the architecture and technical roadmap of our space domain simulator, from first prototype to a tool the forces rely on
 1. Model what matters in a contested domain: orbital mechanics, manoeuvre and propellant budgets, sensing, communications, power, and the effects of electronic warfare, directed energy and lasers
 1. Extend the simulation from Earth orbit to cislunar space, including Lagrange points and space logistics
 
-### Wargaming &amp; validation
+### Wargaming & validation
 
 1. Make the simulator a strategic wargame as much as a physics engine: scarce resources, lost communications, autonomy, and many actors with incomplete information
 1. Validate the concepts of our Systems Engineering and Platforms teams in simulation, and feed the results back into their designs
 1. Support our Space Superiority, Systems and Concepts team in exercises and wargames with armed forces, nations acting alone or in coalition
 
-### Team &amp; products
+### Team & products
 
 1. Build and lead the simulation engineering team in Vilnius, and set its engineering standards
 1. Turn the simulator into products for planning, training and analysis, including dual-use and commercial derivatives

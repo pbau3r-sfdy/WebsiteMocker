@@ -22,13 +22,13 @@ hiring_steps:
 
 You will start on OVERWATCH, our demonstration mission, and help take it from design to orbit. At the same time this is a general systems engineer role for space platforms, and you grow with the platforms that follow.
 
-### System design &amp; requirements
+### System design & requirements
 
 1. Contribute to the platform system design, initially for the OVERWATCH demonstration mission, from mission requirements to architecture and subsystem specifications
 1. Maintain the system budgets (mass, power, propellant, link, pointing) and prepare the trade-offs behind them
 1. Support the demonstration plan: the systems, modes and manoeuvres the OVERWATCH demonstration must prove in orbit
 
-### Integration &amp; verification
+### Integration & verification
 
 1. Support the integration of our own propulsion and payloads with commercial subsystems into one platform, and keep the interface-control documentation up to date
 1. Prepare system-level verification and test plans together with AIT
