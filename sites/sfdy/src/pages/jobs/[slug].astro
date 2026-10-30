@@ -148,7 +148,7 @@ const jsonLd = {
         <div class="aside-label">How to apply</div>
         <p>
           Applications by email to <a href={href}>{CAREERS_EMAIL}</a>, with the reference in the
-          subject line. Include a CV and a cover letter, both as PDF.
+          subject line. {d.apply_note ?? 'Include a CV and a cover letter, both as PDF.'}
         </p>
         {d.hiring_steps.length > 0 && (
           <div class="aside-fact">
@@ -277,6 +277,14 @@ const jsonLd = {
   .body :global(h2:first-child) { margin-top: 0; }
   .body :global(h2 + p) {
     margin-top: 18px;
+    font-size: 19px;
+    line-height: 1.65;
+    font-weight: 300;
+    color: rgba(255,255,255,.9);
+    text-wrap: pretty;
+  }
+  .body :global(h2 + p + p) {
+    margin-top: 14px;
     font-size: 19px;
     line-height: 1.65;
     font-weight: 300;

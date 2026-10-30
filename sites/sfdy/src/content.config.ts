@@ -26,6 +26,7 @@ const jobs = defineCollection({
       start:          z.string().default('As soon as possible'),
       summary:        z.string(),
       eligibility:    z.string().optional(),
+      apply_note:     z.string().optional(), // replaces the default "Include a CV and a cover letter" sentence in the apply card
       hiring_steps:   z.array(z.string()).default([]), // optional "How we hire" list shown in the apply card
       draft:          z.boolean().default(false), // dev preview only, never built
       priority:       z.boolean().default(false), // pinned to the top of the overview
