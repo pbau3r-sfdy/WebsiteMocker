@@ -11,7 +11,9 @@
     "service": "mailchimp",
     "audience_id": "88bca13b57",
     "server": "us17",
-    "status": "configured"
+    "status": "configured",
+    "tag_id": "989",
+    "tag": "SFDY - L3 - Community"
   },
   "forms": {
     "contact": {

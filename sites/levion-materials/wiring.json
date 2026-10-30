@@ -13,7 +13,8 @@
     "server": "us17",
     "tag_id": "2452",
     "status": "configured",
-    "note": "Shares the Starflight Dynamics audience; Levion subscribers carry tag 2452"
+    "note": "Shares the Starflight Dynamics audience; website signups carry only the L3 Community tag (2452), never L1/L2",
+    "tag": "Levion - L3 - Community"
   },
   "socials": {
     "linkedin": "https://www.linkedin.com/company/levion-materials/",
