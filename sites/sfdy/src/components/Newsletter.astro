@@ -2,6 +2,9 @@
 /** Mailchimp signup card (dark, green top rule). */
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const action = 'https://starflight-dynamics.us17.list-manage.com/subscribe/post?u=fdebab77920a5ad885afd229c&id=88bca13b57&f_id=0027c2e1f0';
+// Website signups land in the public tier only: tag "SFDY - L3 - Community" (never L1 shareholders or L2 investors).
+const tagId = '989';
+const honeypot = 'b_fdebab77920a5ad885afd229c_88bca13b57'; // bot trap: must stay empty and hidden
 ---
 
 <section class="band">
@@ -12,6 +15,8 @@ const action = 'https://starflight-dynamics.us17.list-manage.com/subscribe/post?
       <p>Programme milestones, contract awards and company announcements.</p>
     </div>
     <form action={action} method="post" target="_blank">
+      <input type="hidden" name="tags" value={tagId} />
+      <div style="position:absolute;left:-5000px" aria-hidden="true"><input type="text" name={honeypot} tabindex="-1" value="" /></div>
       <label for="mce-EMAIL">Email address</label>
       <div class="row">
         <input id="mce-EMAIL" type="email" name="EMAIL" required placeholder="name@organisation.com" />
