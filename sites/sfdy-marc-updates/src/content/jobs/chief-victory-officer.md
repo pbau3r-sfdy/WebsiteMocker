@@ -11,6 +11,7 @@ reports_to: "CEO"
 start: "As soon as possible"
 date: 2026-10-22
 summary: "Think of this as the CTO of our space systems: you connect what SFDY can build with what the military world needs, so that we design the right vehicles down the road."
+apply_note: "Include a CV and a reference (a project, thesis or publication), both as PDF. No cover letter needed."
 hiring_steps:
   - "Application with a reference (a project, thesis or publication you are proud of)"
   - "Introductory conversation with the CEO"
