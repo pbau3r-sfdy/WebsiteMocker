@@ -18,7 +18,16 @@
     "contact":           { "service": null, "id": null, "status": null },
     "newsletter_signup": { "service": null, "status": null }
   },
-  "analytics":    { "status": "skipped" },
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-qqtVL377DcGEh_97HjzSY",
+    "host": "https://stats.starflight-dynamics.com",
+    "domain": "crestworks.co",
+    "events": { "outboundLinks": true, "fileDownloads": true, "formSubmissions": true },
+    "sanitise": true,
+    "props": false
+  },
   "legal": {
     "impressum": "complete",
     "privacy":   "complete"

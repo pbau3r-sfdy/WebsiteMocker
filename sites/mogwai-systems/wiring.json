@@ -7,6 +7,16 @@
   "stage": 6,
   "prod_repo": "pbau3r-sfdy/mogwai-systems",
   "last_deploy": "2026-08-18",
+  "analytics": {
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-zJcAxaD-WD_LDReupfwft",
+    "host": "https://stats.starflight-dynamics.com",
+    "domain": "mogwai-systems.com",
+    "events": { "outboundLinks": true, "fileDownloads": true, "formSubmissions": true },
+    "sanitise": true,
+    "props": false
+  },
   "capture": null,
   "brand": {
     "hashtags": ["MOGWAI"],

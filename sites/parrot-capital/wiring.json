@@ -28,7 +28,14 @@
     }
   },
   "analytics": {
-    "status": "skipped"
+    "service": "plausible",
+    "status": "configured",
+    "scriptId": "pa-LE54K2bReUPchDhmFkpk3",
+    "host": "https://stats.starflight-dynamics.com",
+    "domain": "parrot-capital.com",
+    "events": { "outboundLinks": true, "fileDownloads": true, "formSubmissions": true },
+    "sanitise": true,
+    "props": false
   },
   "legal": {
     "impressum": "complete",
