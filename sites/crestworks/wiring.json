@@ -1,22 +1,38 @@
 {
-  "site":         "crestworks",
-  "name":         "Crestworks",
-  "stage":        6,
-  "domain":       "crestworks.co",
-  "capture":      "crestworks-rework",
-  "accent":       "#ff2f92",
-  "contact":      "hello@crestworks.co",
-  "sandbox_url":  "pbau3r-sfdy.github.io/WebsiteMocker/crestworks",
-  "prod_repo":    "pbau3r-sfdy/crestworks",
-  "last_deploy":  "2026-08-19T20:21:15Z",
-  "dns_verified":  "2026-08-19",
-  "dns_provider":  "squarespace",
-  "notes":        "Reworked holding page. Avenir Next, black/magenta palette, brush-rule footer. Live at crestworks.co since 2026-08-19. Renamed from crestworks-rework.",
-  "newsletter":   { "service": null, "endpoint": null, "status": null },
-  "socials":      { "twitter": null, "linkedin": null, "instagram": null, "status": null },
+  "site": "crestworks",
+  "name": "Crestworks",
+  "stage": 6,
+  "domain": "crestworks.co",
+  "capture": "crestworks-rework",
+  "accent": "#ff2f92",
+  "contact": "hello@crestworks.co",
+  "sandbox_url": "pbau3r-sfdy.github.io/WebsiteMocker/crestworks",
+  "prod_repo": "pbau3r-sfdy/crestworks",
+  "last_deploy": "2026-11-06",
+  "dns_verified": "2026-08-19",
+  "dns_provider": "squarespace",
+  "notes": "Reworked holding page. Avenir Next, black/magenta palette, brush-rule footer. Live at crestworks.co since 2026-08-19. Renamed from crestworks-rework.",
+  "newsletter": {
+    "service": null,
+    "endpoint": null,
+    "status": null
+  },
+  "socials": {
+    "twitter": null,
+    "linkedin": null,
+    "instagram": null,
+    "status": null
+  },
   "forms": {
-    "contact":           { "service": null, "id": null, "status": null },
-    "newsletter_signup": { "service": null, "status": null }
+    "contact": {
+      "service": null,
+      "id": null,
+      "status": null
+    },
+    "newsletter_signup": {
+      "service": null,
+      "status": null
+    }
   },
   "analytics": {
     "service": "plausible",
@@ -24,13 +40,17 @@
     "scriptId": "pa-qqtVL377DcGEh_97HjzSY",
     "host": "https://stats.starflight-dynamics.com",
     "domain": "crestworks.co",
-    "events": { "outboundLinks": true, "fileDownloads": true, "formSubmissions": true },
+    "events": {
+      "outboundLinks": true,
+      "fileDownloads": true,
+      "formSubmissions": true
+    },
     "sanitise": true,
     "props": false
   },
   "legal": {
     "impressum": "complete",
-    "privacy":   "complete"
+    "privacy": "complete"
   },
   "brand": {
     "hashtags": [],
