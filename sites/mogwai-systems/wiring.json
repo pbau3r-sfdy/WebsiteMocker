@@ -6,7 +6,7 @@
   "contact": "hive@mogwai-systems.com",
   "stage": 6,
   "prod_repo": "pbau3r-sfdy/mogwai-systems",
-  "last_deploy": "2026-08-18",
+  "last_deploy": "2026-11-06",
   "analytics": {
     "service": "plausible",
     "status": "configured",
