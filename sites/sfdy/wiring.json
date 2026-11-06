@@ -39,7 +39,8 @@
   "analytics": {
     "service": "plausible",
     "status": "configured",
-    "scriptId": "pa-h84OFEpVhPIHGnzKLeThr",
+    "scriptId": "pa-5N9T__tyDSXeNF3A_g7UR",
+    "host": "https://stats.starflight-dynamics.com",
     "domain": "starflight-dynamics.com",
     "events": {
       "outboundLinks": true,
