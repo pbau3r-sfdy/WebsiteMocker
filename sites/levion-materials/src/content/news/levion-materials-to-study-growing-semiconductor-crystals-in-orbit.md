@@ -1,7 +1,7 @@
 ---
 title: "Levion Materials to Study Growing Semiconductor Crystals in Orbit"
 date: 2026-10-29
-readTime: "2 Min. Lesezeit"
+readTime: "2 min read"
 excerpt: "Feasibility study under an ESA contract examines whether space-grown crystals can ease a bottleneck in telluride materials for radiation detection and infrared sensing."
 thumb: "news/hqsemis-thumb.png"
 ---
@@ -20,7 +20,7 @@ Over nine months, HQSemis will test whether this translates into a viable servic
 
 ### About Levion Materials
 
-Levion Materials is the advanced materials venture of Starflight Dynamics GmbH, dedicated to crystal growth in microgravity. The team combines microgravity R&D expertise with aerospace engineering and commercialization experience, and is working towards its first in-space validation mission, to test the growth process ahead of larger orbital campaigns.
+Levion Materials is the advanced materials venture of Starflight Dynamics GmbH, dedicated to crystal growth in microgravity. The team combines microgravity R&D expertise with aerospace engineering and commercialisation experience, and is working towards its first in-space validation mission, to test the growth process ahead of larger orbital campaigns.
 
 **Media contact:** Levion Materials Media Team | [lab@levion-materials.com](mailto:lab@levion-materials.com)
 

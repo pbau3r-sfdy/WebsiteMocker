@@ -53,14 +53,15 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
   <main>
     <div class="band" style={`--band:url(${b}/images/careers-hero.png)`}>
       <header class="hero wrap">
-        <div class="beam" aria-hidden="true"></div>
-        <div class="eyebrow accent">Careers</div>
-        <h1>Join the Levion <span class="green">crew</span></h1>
-        <p class="lede">
-          We're in the business of breaking barriers and exploring new frontiers in space. We're looking
-          for people who are ready to challenge the norms and contribute to our journey of innovation and discovery.
-        </p>
-        <p class="lede strong">If you're passionate about space and want to make a real difference in an exciting industry, this is your opportunity!</p>
+        <div class="title">
+          <p class="label">Careers</p>
+          <h1>Join the Levion crew</h1>
+          <p class="lede">
+            We're in the business of breaking barriers and exploring new frontiers in space. We're looking
+            for people who are ready to challenge the norms and contribute to our journey of innovation and discovery.
+          </p>
+          <p class="lede strong">If you're passionate about space and want to make a real difference in an exciting industry, this is your opportunity!</p>
+        </div>
       </header>
     </div>
 
@@ -174,7 +175,8 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
 </script>
 
 <style>
-  main { min-height: 100vh; }
+  /* Levion CI: Outfit labels instead of the SFDY mono, orange titles, no uppercase headlines. */
+  main { min-height: 100vh; --font-mono: var(--font-head); --ls-eyebrow: .22em; }
   .wrap { max-width: 1200px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
   .mono { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; }
   .eyebrow {
@@ -191,20 +193,20 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
   /* The original hero photo (gripper holding the crystal), mirrored so the subject sits clear of the text column. */
   .band { position: relative; overflow: hidden; background: #eceef1; isolation: isolate; }
   .band::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--band) center / cover no-repeat; transform: scaleX(-1); }
-  .lede.strong { color: var(--accent); margin-top: 16px; }
-  .hero { position: relative; padding-top: 88px; padding-bottom: 64px; }
-  .beam { position: absolute; left: 0; top: 0; bottom: 0; width: 7px; background: var(--beam); }
+  .lede.strong { color: var(--ink); font-weight: 400; margin-top: 16px; }
+  .hero { padding-top: 88px; padding-bottom: 64px; }
+  .title { border-left: 3px solid var(--orange); padding-left: 32px; }
   h1 {
     margin-top: 20px;
     font-family: var(--font-display);
-    font-size: clamp(40px, 7vw, 88px);
+    color: var(--orange);
+    font-size: clamp(36px, 5.4vw, 64px);
     font-weight: 700;
-    line-height: .98;
-    text-transform: uppercase;
+    line-height: 1.05;
     max-width: 16ch;
     text-wrap: balance;
   }
-  .lede { margin-top: 28px; max-width: 620px; font-size: 19px; line-height: 1.65; font-weight: 300; color: var(--text-secondary); }
+  .lede { margin-top: 28px; max-width: 620px; font-size: 18px; line-height: 1.65; font-weight: 300; color: var(--ink); }
 
   .sites {
     display: grid;
@@ -215,8 +217,8 @@ const openApplication = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent('O
   }
   .site { background: var(--bg-base); padding: 28px; }
   .site-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-  .site h2 { font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-  .site .mono { color: var(--accent); text-transform: uppercase; }
+  .site h2 { font-size: 22px; font-weight: 700; color: var(--orange); }
+  .site .mono { color: var(--link); }
   .site p { margin-top: 12px; font-size: 15px; line-height: 1.6; color: var(--text-soft); }
 
   .positions { padding-top: 88px; padding-bottom: 48px; }

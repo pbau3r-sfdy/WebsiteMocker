@@ -12,7 +12,7 @@ const links = [
 ---
 <header class="nav">
   <div class="inner">
-    <a href={`${b}/`} class="logo" aria-label="Levion Materials"><img src={`${b}/images/logo-nav.png`} alt="Levion" width="97" height="53" /></a>
+    <a href={`${b}/`} class="logo" aria-label="Levion Materials"><img src={`${b}/images/logo.svg`} alt="Levion" width="97" height="54" /></a>
     <nav aria-label="Main">
       {links.map(l => <a href={l.href} class:list={['link', { active: l.key === active }]} aria-current={l.key === active ? 'page' : undefined}>{l.label}</a>)}
     </nav>

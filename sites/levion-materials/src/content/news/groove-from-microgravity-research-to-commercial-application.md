@@ -1,7 +1,7 @@
 ---
 title: "GROOVE: From Microgravity Research to Commercial Application"
 date: 2026-04-24
-readTime: "2 Min. Lesezeit"
+readTime: "2 min read"
 excerpt: "We are pleased to introduce “GROOVE” – our current project within the ESA BSGN Business in Space Growth Network Advanced Materials and In-orbit Manufacturing Industry Accelerator. With GROOVE (short for “Growth Parameter Observation & Validation Experiment”), we take a first, focused step toward a new approach to advanced materials production: transferring key manufacturing processes from Earth into space. From Concept to Application For decades, crystal growth under microgr"
 thumb: "news/groove-thumb.png"
 likes: 1
@@ -25,14 +25,14 @@ Such material properties are critical for next-generation technologies, includin
 GROOVE is designed as an early validation mission. The project (including planning, preparation, and testing) focuses on three main aspects:
 
 - Demonstrating the feasibility of space-based manufacturing systems
-- Finetuning the reliable technical operation of specialized hardware for crystal growth processes under microgravity
+- Finetuning the reliable technical operation of specialised hardware for crystal growth processes under microgravity
 - Identifying and overcoming central challenges such as power supply and return
 
 By addressing these elements, we aim to move beyond experimental setups and toward scalable, space-enabled production of high-performance materials.
 
 ### Embedded in the ESA BSGN Accelerator
 
-Our selection as part of the ESA BSGN Advanced Materials and In-orbit Manufacturing Industry Accelerator provides a structured framework to advance GROOVE. Within this program, we refine both the technical and commercial foundations required for future deployment in orbit.The accelerator enables us to systematically prepare the mission while aligning it with long-term industrial objectives.
+Our selection as part of the ESA BSGN Advanced Materials and In-orbit Manufacturing Industry Accelerator provides a structured framework to advance GROOVE. Within this programme, we refine both the technical and commercial foundations required for future deployment in orbit.The accelerator enables us to systematically prepare the mission while aligning it with long-term industrial objectives.
 
 ### Looking Up & Ahead
 

@@ -6,7 +6,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 <footer class="footer">
   <div class="inner">
     <div class="brand">
-      <a href={`${b}/`}><img src={`${b}/images/logo-footer.png`} alt="Levion Materials" width="173" height="97" /></a>
+      <a href={`${b}/`}><img src={`${b}/images/logo.svg`} alt="Levion Materials" width="173" height="97" /></a>
       <nav aria-label="Footer">
         <a href={`${b}/imprint`}>IMPRINT</a>
         <a href={`${b}/contact`}>CONTACT</a>
@@ -18,11 +18,11 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
     <form class="news" action={live ? NEWSLETTER.action : '#'} method="post" target={live ? '_blank' : undefined} onsubmit={live ? undefined : 'return false'}>
       <h2>NEWSLETTER</h2>
-      <p>Subscribe for the Levion newsletter.</p>
-      <label for="nl-email">E-Mail address <span aria-hidden="true">*</span></label>
+      <p>Subscribe to the Levion newsletter.</p>
+      <label for="nl-email">Email address <span aria-hidden="true">*</span></label>
       <input id="nl-email" type="email" name="EMAIL" required autocomplete="email" />
       <input type="hidden" name="tags" value={NEWSLETTER.tagId} />
-      <div aria-hidden="true" style="position:absolute;left:-5000px"><input type="text" name={NEWSLETTER.honeypot} tabindex="-1" value="" autocomplete="off" /></div>
+      <div aria-hidden="true" style="position:absolute;left:-5000px"><input type="text" name={NEWSLETTER.honeypot} aria-label="Leave this field empty" tabindex="-1" value="" autocomplete="off" /></div>
       <button type="submit">Subscribe</button>
       <p class="fine">Double opt-in. You can unsubscribe at any time. See <a href={`${b}/privacy-policy`}>Privacy</a>.</p>
     </form>

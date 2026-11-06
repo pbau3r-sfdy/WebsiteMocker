@@ -10,9 +10,9 @@ const news = defineCollection({
     title:     z.string(),
     date:      z.coerce.date(),
     updated:   z.string().optional(),   // free text, e.g. "Aktualisiert: 11. Mai"
-    readTime:  z.string(),              // e.g. "2 Min. Lesezeit"
+    readTime:  z.string(),              // e.g. "2 min read"
     excerpt:   z.string(),
-    thumb:     z.string(),   // path under public/images, used on /news and in "Aktuelle Beiträge"
+    thumb:     z.string(),   // path under public/images, used on /news and in "Latest posts"
     likes:     z.number().default(0),
   }),
 });
