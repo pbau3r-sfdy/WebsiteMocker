@@ -35,7 +35,8 @@
   "analytics": {
     "service": "plausible",
     "status": "configured",
-    "scriptId": "pa-e1A656KoKplWUvt9HoFkN",
+    "scriptId": "pa-n8H-Zho6tkHZxILYy_jMb",
+    "host": "https://stats.starflight-dynamics.com",
     "domain": "levion-materials.com",
     "events": {
       "outboundLinks": true,
