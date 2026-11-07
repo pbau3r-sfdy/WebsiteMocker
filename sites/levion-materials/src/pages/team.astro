@@ -3,8 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
-// The live page shows portraits only, with no names or captions.
-const portraits = [1, 2, 3, 4, 5].map(n => `${b}/images/team/team-${n}.png`);
+// Portrait n belongs to member n. Names and titles show on hover and keyboard focus, and always on touch screens.
+const team = [
+  { name: 'Philipp Bauer', role: 'CEO' },
+  { name: 'Tina Sorgenfrei', role: 'Chief Materials Scientist' },
+  { name: 'Jonas', role: 'VP Operations' },
+  { name: 'Dmitrii', role: 'Team Leader, Oven Design' },
+  { name: 'Charlotte Frey', role: 'Team Assistance' },
+].map((m, i) => ({ ...m, src: `${b}/images/team/team-${i + 1}.png` }));
 ---
 <Layout title="Team">
   <Nav active="team" />
@@ -18,7 +24,12 @@ const portraits = [1, 2, 3, 4, 5].map(n => `${b}/images/team/team-${n}.png`);
     </section>
     <section class="wrap">
       <ul class="grid">
-        {portraits.map((src, i) => <li><img src={src} alt={`Levion team member ${i + 1}`} width="359" height="359" /></li>)}
+        {team.map(m => (
+          <li tabindex="0">
+            <img src={m.src} alt={m.name} width="359" height="359" />
+            <div class="cap"><strong>{m.name}</strong><span>{m.role}</span></div>
+          </li>
+        ))}
       </ul>
     </section>
   </main>
@@ -32,7 +43,15 @@ const portraits = [1, 2, 3, 4, 5].map(n => `${b}/images/team/team-${n}.png`);
   h1 { color: var(--orange); font-size: clamp(36px, 5.4vw, 64px); white-space: nowrap; }
   .mark { width: min(480px, 40vw); flex: none; height: auto; margin: -20px -90px 0 0; }
   .grid { list-style: none; margin: 40px auto 110px; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px 40px; max-width: 760px; }
+  .grid li { position: relative; max-width: 340px; margin: 0 auto; width: 100%; outline-offset: 4px; }
   .grid li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .cap { position: absolute; inset: 0; border-radius: 50%; background: rgba(4, 60, 83, .82); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 12%; gap: 6px; opacity: 0; transition: opacity .2s; }
+  .cap strong { font-family: var(--font-head); font-size: 20px; line-height: 1.2; }
+  .cap span { font-size: 14px; line-height: 1.3; }
+  .grid li:hover .cap, .grid li:focus .cap, .grid li:focus-within .cap { opacity: 1; }
+  @media (hover: none) {
+    .cap { position: static; opacity: 1; background: none; color: var(--ink); padding: 12px 0 0; border-radius: 0; }
+  }
   .grid img { width: 100%; max-width: 340px; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 50%; margin: 0 auto; }
   @media (max-width: 640px) { .head { flex-direction: column; } .title { margin: 40px 0 0; padding-left: 20px; } h1 { white-space: normal; } .mark { width: 200px; margin: 0; } .grid { gap: 20px; } }
 </style>
