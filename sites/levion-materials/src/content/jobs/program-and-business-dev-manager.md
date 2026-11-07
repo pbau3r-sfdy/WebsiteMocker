@@ -1,6 +1,6 @@
 ---
 title: "Program & Business Development Manager / Microgravity Materials"
-department: "Special Materials"
+department: "Advanced Materials"
 sites: [munich]
 workplace: hybrid
 type: full-time

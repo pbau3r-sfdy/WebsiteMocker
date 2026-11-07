@@ -3,7 +3,7 @@ export const SITE = {
   name: 'Levion Materials',
   tagline: 'Advanced materials made in space',
   url: 'https://www.levion-materials.com',
-  division: 'Levion Materials is the Special Materials division of Starflight Dynamics GmbH.',
+  division: 'Levion Materials is the advanced materials division of Starflight Dynamics GmbH.',
 };
 
 export const COMPANY = {

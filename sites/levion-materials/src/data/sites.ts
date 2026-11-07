@@ -21,7 +21,7 @@ export const SITES: Record<CompanySite['key'], CompanySite> = {
     street: 'Tal 44',
     postcode: '80331',
     employer: OPERATOR,
-    blurb: 'Special Materials division of Starflight Dynamics GmbH: microgravity crystal growth, in-space materials programmes and payloads.',
+    blurb: 'advanced materials division of Starflight Dynamics GmbH: microgravity crystal growth, in-space materials programmes and payloads.',
     salaryRequired: false,
   },
 };

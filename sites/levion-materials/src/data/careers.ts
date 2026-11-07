@@ -9,7 +9,7 @@ export const OFFERS: { title: string; text: string }[] = [];
 
 export const ABOUT = [
   'Levion is a space technology company developing hardware to produce space-grown, high-quality semiconductor crystalline material for applications in radiation detection, medical imaging, and other high-performance sectors. Our flight-ready payload is targeting launch in 2028.',
-  'We are a small, high-output team working across the full development cycle, from system design and ESA review through to flight qualification. Levion Materials is the Special Materials division of Starflight Dynamics GmbH.',
+  'We are a small, high-output team working across the full development cycle, from system design and ESA review through to flight qualification. Levion Materials is the advanced materials division of Starflight Dynamics GmbH.',
 ];
 
 export const ENCOURAGEMENT = [
