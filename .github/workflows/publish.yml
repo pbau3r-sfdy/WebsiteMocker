@@ -130,8 +130,13 @@ jobs:
       - name: Swap robots.txt to Allow
         run: |
           printf 'User-agent: *\nAllow: /\n' > "dist/$SLUG/robots.txt"
+          # Point crawlers at the sitemap when the site ships one.
+          if [ -f "dist/$SLUG/sitemap.xml" ]; then
+            printf '\nSitemap: https://%s/sitemap.xml\n' "$DOMAIN" >> "dist/$SLUG/robots.txt"
+          fi
         env:
           SLUG: ${{ inputs.slug }}
+          DOMAIN: ${{ steps.wiring.outputs.domain }}
 
       - name: Push to production gh-pages
         uses: JamesIves/github-pages-deploy-action@v4.9.0
