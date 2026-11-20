@@ -4,6 +4,7 @@ short: "Second ReaGAn Milestone Cleared"
 date: 2026-11-20
 kicker: "Programme"
 summary: "Our engineering teams have passed the second technical milestone of the ReaGAn programme, keeping the technology on track for its first endurance campaigns in 2027."
+image: "/images/news/reagan-milestone-2.jpg"
 ---
 
 Our engineering teams at STARFLIGHT DYNAMICS have passed the second technical milestone of the ReaGAn programme.
