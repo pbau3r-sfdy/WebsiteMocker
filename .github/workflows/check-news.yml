@@ -1,0 +1,54 @@
+name: Check news build
+
+# Builds only the site(s) a pull request touches, so a bad news article (frontmatter the Astro
+# schema rejects, a missing picture) fails here and never reaches main. The Postiz website channel
+# waits for this check ("check-news") before it merges and publishes.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'sites/*/src/content/news/**'
+      - 'sites/*/public/images/news/**'
+
+permissions:
+  contents: read
+
+jobs:
+  check-news:
+    name: check-news
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Find the changed sites
+        id: sites
+        run: |
+          set -euo pipefail
+          git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- 'sites/*/src/content/news' 'sites/*/public/images/news' \
+            | cut -d/ -f2 | sort -u > sites.txt
+          cat sites.txt
+          # only plain site slugs, never anything else from a path
+          grep -qvE '^[a-z0-9-]+$' sites.txt && { echo 'bad slug'; exit 1; } || true
+          [ -s sites.txt ] || { echo 'no site changed'; exit 1; }
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-fund --no-audit
+
+      - name: Build the changed sites
+        run: |
+          set -euo pipefail
+          while read -r slug; do
+            domain=$(node -e "console.log(JSON.parse(require('fs').readFileSync('sites/$slug/wiring.json','utf-8')).domain||'')")
+            SITE_URL="https://${domain:-example.com}" SITE_BASE=/ node _scripts/build-single.mjs "$slug"
+          done < sites.txt
