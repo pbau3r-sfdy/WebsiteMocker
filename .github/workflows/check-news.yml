@@ -29,7 +29,7 @@ jobs:
         id: sites
         run: |
           set -euo pipefail
-          git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- 'sites/*/src/content/news' 'sites/*/public/images/news' \
+          git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- 'sites/*/src/content/news/*' 'sites/*/public/images/news/*' \
             | cut -d/ -f2 | sort -u > sites.txt
           cat sites.txt
           # only plain site slugs, never anything else from a path
