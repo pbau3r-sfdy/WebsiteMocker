@@ -1,0 +1,4 @@
+# WebsiteMocker sandbox — not indexed
+# Flip to Allow when a site moves to production on its own domain
+User-agent: *
+Disallow: /
